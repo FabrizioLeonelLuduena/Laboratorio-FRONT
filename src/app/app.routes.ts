@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { manualPageGuard } from './manual/manual-page.guard';
+import { manualLayoutGuard } from './manual/manual-layout.guard';
 import { HomeDashboardComponent } from './shared/components/home-dashboard/home-dashboard.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { authGuard } from './shared/guards/auth.guard';
@@ -50,6 +51,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [manualLayoutGuard],
         loadComponent: () =>
           import('../app/manual/manual-layout/manual-layout.component')
             .then(m => m.ManualLayoutComponent),

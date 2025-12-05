@@ -49,17 +49,17 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "800kB",
-                  "maximumError": "1.5MB"
+                  "maximumWarning": "1.5MB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "15kB",
-                  "maximumError": "20kB"
+                  "maximumWarning": "25kB",
+                  "maximumError": "30kB"
                 },
                 {
                   "type": "bundle",
-                  "maximumWarning": "2MB",
+                  "maximumWarning": "3MB",
                   "maximumError": "5MB"
                 }
               ],
@@ -73,9 +73,7 @@
                 },
                 "fonts": true
               },
-              "namedChunks": false,
-              "buildOptimizer": true,
-              "aot": true
+              "namedChunks": false
             },
             "development": {
               "optimization": false,

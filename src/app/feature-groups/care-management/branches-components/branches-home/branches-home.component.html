@@ -1,0 +1,95 @@
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando sucursales...'" />
+}
+
+<!-- Alerts -->
+@if (flash) {
+  <app-generic-alert
+    [type]="flash.type"
+    [title]="flash.title ?? ''"
+    [text]="flash.text"
+  ></app-generic-alert>
+}
+
+<!-- Toolbar -->
+<div class="toolbar"
+     joyrideStep="branchStep1"
+     title="Gestión de sucursales"
+     text="Bienvenido a la Gestión de sucursales. Desde esta pantalla, podrás visualizar y administrar todas las sucursales de la organización de manera centralizada.">
+</div>
+
+<ng-template #statusTemplate let-row>
+  <app-generic-badge
+    [status]="row.status === 'Activo' ? 'activo' : (row.status === 'Mantenimiento' ? 'pendiente' : 'inactivo')"
+    [text]="row.status === 'Activo' ? 'Activo' : (row.status === 'Mantenimiento' ? 'Mantenimiento' : 'Inactivo')">
+  </app-generic-badge>
+</ng-template>
+
+<!-- New template for actions column with p-menu -->
+<ng-template #actionsTemplate let-row let-rowIndex="rowIndex">
+  <div class="flex justify-content-center">
+    <app-generic-button
+      type="custom"
+      icon="pi pi-ellipsis-v"
+      (pressed)="menu.toggle($event)"
+      #menuTrigger>
+    </app-generic-button>
+    <p-menu #menu
+            [model]="getActionsForRow(row)"
+            [popup]="true">
+    </p-menu>
+  </div>
+</ng-template>
+
+<!-- Generic Table -->
+<div joyrideStep="branchStep2"
+     title="Tabla de Sucursales"
+     text="Esta es la tabla de sucursales. Aquí puedes buscar por nombre, filtrar por estado (Activo, Inactivo, etc.) y ordenar las columnas para encontrar rápidamente la información que necesitas.">
+  <div joyrideStep="branchStep5" title="Acciones de Fila" text="La última columna de la tabla contiene las acciones que puedes realizar, como editar o desactivar una sucursal.">
+    <app-generic-table
+      [data]="data()"
+      [columns]="columns"
+      [filters]="tableFilters"
+      [columnTemplates]="columnTemplates"
+      [getActions]="getActionsForRow.bind(this)"
+      [lazy]="true"
+      [totalRecords]="totalRecords"
+      [loading]="loading()"
+      [rows]="10"
+      [rowsOptions]="[5, 10, 20]"
+      [showCreateButton]="true"
+      [showSearch]="true"
+      [showFilters]="true"
+      (filterChange)="onFilterChange($event)"
+      (globalFilterChange)="onGlobalFilterChange($event)"
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+      (create)="onCreate()"
+      (downloadExcel)="onExportExcel($event)"
+      (downloadPdf)="onExportPdf($event)"
+      [createButtonJoyrideConfig]="{ step: 'branchStep3', title: 'Crear Sucursal', text: 'Usa este botón para añadir una nueva sucursal al sistema.' }"
+      [downloadMenuJoyrideConfig]="{ step: 'branchStep4', title: 'Descargar Datos', text: 'Usa este menú para descargar los datos de la tabla en formato Excel o PDF.' }"
+    ></app-generic-table>
+  </div>
+</div>
+
+<!-- Confirmation Modal (shared) -->
+<div class="modal-overlay" *ngIf="showDeleteDialog" (click)="cancelDelete()">
+  <div (click)="$event.stopPropagation()">
+    <app-confirmation-modal
+      icon="pi pi-exclamation-triangle"
+      [title]="confirmTitle"
+      [message]="confirmMessage"
+      (confirmed)="onDeleteConfirmed(deleteDialogData.branchId)"
+      (dismissed)="cancelDelete()"
+    ></app-confirmation-modal>
+  </div>
+</div>
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

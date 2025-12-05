@@ -1,0 +1,119 @@
+/* Contenedor general del diálogo */
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  height: 100%;
+}
+
+/* Form principal - Grid de 4 columnas */
+.extraction-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: start;
+  flex: 1;
+}
+
+/* Filas del formulario - usar display: contents para que los hijos participen en la grid */
+.form-row {
+  display: contents;
+}
+
+/* Primera fila: Protocolo (1 col), Documento (1 col), Apellido y Nombre (2 cols) */
+.form-row.first-row .form-field:nth-child(1) {
+  grid-column: span 1;
+}
+
+.form-row.first-row .form-field:nth-child(2) {
+  grid-column: span 1;
+}
+
+.form-row.first-row .form-field:nth-child(3) {
+  grid-column: span 2;
+}
+
+/* Segunda fila: Cant. Análisis (2 cols), Cant. Tubos (2 cols) */
+.form-row.second-row .form-field:nth-child(1) {
+  grid-column: span 2;
+}
+
+.form-row.second-row .form-field:nth-child(2) {
+  grid-column: span 2;
+}
+
+/* Tercera fila: Indicaciones (2 cols), Observaciones (2 cols) */
+.form-row.third-row .form-field:nth-child(1) {
+  grid-column: span 2;
+}
+
+.form-row.third-row .form-field:nth-child(2) {
+  grid-column: span 2;
+}
+
+/* Campos individuales */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #495057;
+}
+
+/* Inputs y áreas de texto */
+.form-field input,
+.form-field textarea,
+.p-inputtext-sm {
+  width: 100%;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+/* Textarea (PrimeNG y nativo) */
+textarea,
+.p-inputtextarea {
+  resize: vertical;
+  min-height: 80px;
+  margin-top: 0.25rem;
+}
+
+/* Sección de acciones (botones) - ocupa las 4 columnas */
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgb(0 0 0 / 6%);
+}
+
+/* Opcional: mejora visual para inputs deshabilitados */
+input[disabled],
+textarea[disabled] {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Responsive: en pantallas pequeñas, todo ocupa el ancho completo */
+@media (width <= 768px) {
+  .extraction-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row.first-row .form-field:nth-child(1),
+  .form-row.first-row .form-field:nth-child(2),
+  .form-row.first-row .form-field:nth-child(3),
+  .form-row.second-row .form-field:nth-child(1),
+  .form-row.second-row .form-field:nth-child(2),
+  .form-row.third-row .form-field:nth-child(1),
+  .form-row.third-row .form-field:nth-child(2) {
+    grid-column: span 1;
+  }
+}

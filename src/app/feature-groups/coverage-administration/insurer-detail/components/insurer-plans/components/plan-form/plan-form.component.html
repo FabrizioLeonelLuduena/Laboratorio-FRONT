@@ -1,0 +1,24 @@
+
+  @if (alert) {
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  }
+
+  <app-generic-form
+    [fields]="fields"
+    [ngClass]="{ 'view-mode': mode === 'view' }"
+    [initialValue]="initialValue"
+    [title]="title"
+    [saving]="saving"
+    [showHeader]="true"
+    [showAsterisk] ="mode !== 'view'"
+    [showAddons]="mode !== 'view'"
+    [showSubmit]="mode !== 'view'"
+    [showCancel]="true"
+    submitType="save"
+    submitIcon="pi pi-check"
+    [submitLabel]="mode === 'edit' ? 'Guardar' : 'Crear'"
+    cancelLabel="Cancelar"
+    (submitForm)="onSubmit($event)"
+    (cancelForm)="onCancel()">
+  </app-generic-form>
+

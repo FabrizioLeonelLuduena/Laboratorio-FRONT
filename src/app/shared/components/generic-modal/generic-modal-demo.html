@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo — Generic Modal (Final)</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@6.0.1/primeicons.css" />
+
+  <style>
+
+    :root {
+      --brand-primary-700: #008f8c;
+      --on-primary: #fff;
+      --on-surface: #00435d;
+      --on-surface-muted: #757477;
+      --border-color: #d5e2e4;
+      --card: #fff;
+    }
+
+    body {
+      margin: 0;
+      height: 100dvh;
+      display: grid;
+      place-items: center;
+      background: #7f8183;
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", arial, sans-serif;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgb(0 0 0 / 40%);
+      display: grid;
+      place-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      animation: fade 0.18s ease;
+      width: clamp(360px, 80vw, 720px);
+      max-height: 90vh;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: scale(.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: transparent;
+      border: none;
+      color: var(--on-surface);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+      border-radius: 6px;
+    }
+    .close:hover {
+      background: rgb(0 0 0 / 6%);
+    }
+
+    .divider {
+      width: 85%;
+      height: 1px;
+      background: var(--border-color);
+      opacity: 0.6;
+    }
+
+    .content {
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+      text-align: left;
+      color: var(--on-surface-muted);
+    }
+
+    @media (max-width: 600px) {
+      .modal {
+        width: 92vw !important;
+        height: auto !important;
+        padding: 16px;
+      }
+    }
+
+    .generic-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--on-surface);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="overlay">
+  <div class="modal">
+
+    <button class="close" onclick="closeModal()">
+      <i class="pi pi-times"></i>
+    </button>
+
+    <div class="generic-title">Generic modal</div>
+
+    <div class="divider"></div>
+
+    <div class="content">
+      <p>
+Modal generico con un proposito de estandarizar lo visual.
+      </p>
+      <p>
+        El contenido interno, como formularios, botones u otros elementos, será definido
+        por cada grupo dentro del <code>&lt;ng-content&gt;</code> del componente real.
+      </p>
+      <p>
+        El tamaño puede ajustarse por parámetro (<code>[width]</code>, <code>[height]</code>),
+        y el diseño se mantiene completamente responsivo.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function closeModal() {
+    document.querySelector('.overlay').style.display = 'none';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
+</body>
+</html>

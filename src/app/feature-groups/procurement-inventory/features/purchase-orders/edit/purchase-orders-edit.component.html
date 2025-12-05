@@ -1,0 +1,286 @@
+<!-- Contenedor principal -->
+<div class="edit-order-container p-4">
+  <!-- Alerta -->
+  @if (alertType !== null) {
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertText"
+      (closed)="alertType = null">
+    </app-generic-alert>
+  }
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex items-center justify-center py-8">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p class="text-gray-500 ml-3">Cargando orden...</p>
+  </div>
+
+  <!-- Contenido -->
+  <div *ngIf="!loading">
+      <!-- Formulario de la orden -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <!-- Fecha de Orden -->
+        <div class="field">
+          <label for="orderDate" class="block font-medium mb-2">Fecha de orden</label>
+          <p-calendar
+            id="orderDate"
+            [(ngModel)]="orderDate"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            [style]="{'width': '100%'}">
+          </p-calendar>
+        </div>
+
+        <!-- Proveedor -->
+        <div class="field">
+          <label for="supplier" class="block font-medium mb-2">Proveedor</label>
+          <p-dropdown
+            id="supplier"
+            [(ngModel)]="supplierId"
+            [options]="suppliers"
+            optionLabel="companyName"
+            optionValue="id"
+            placeholder="Seleccione un proveedor"
+            [filter]="true"
+            filterBy="companyName"
+            (onChange)="onSupplierChange()"
+            [style]="{'width': '100%'}">
+            <ng-template let-supplier pTemplate="item">
+              <div>
+                <div class="font-medium">{{ supplier.companyName }}</div>
+                <div class="text-12 text-muted">CUIT: {{ supplier.cuit }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <!-- Estado -->
+        <div class="field">
+          <label for="status" class="block font-medium mb-2">Estado</label>
+          <p-dropdown
+            id="status"
+            [(ngModel)]="status"
+            [options]="statusOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccione estado"
+            (onChange)="onStatusChange()"
+            [style]="{'width': '100%'}">
+          </p-dropdown>
+        </div>
+
+        <!-- Ubicación Destino -->
+        <div class="field">
+          <label for="destinationLocation" class="block font-medium mb-2">Ubicación destino</label>
+          <p-dropdown
+            id="destinationLocation"
+            [(ngModel)]="destinationLocationId"
+            [options]="locations"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Seleccione ubicación destino"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            [style]="{'width': '100%'}">
+            <ng-template let-location pTemplate="item">
+              <div>
+                <div class="font-medium">{{ location.name }}</div>
+                <div *ngIf="location.address" class="text-12 text-muted">{{ location.address }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <!-- Motivo de Cancelación (solo visible cuando estado es CANCELLED) -->
+        <div class="field md:col-span-4" *ngIf="status === 'CANCELLED'">
+          <label for="cancellationReason" class="block font-medium mb-2">
+            Motivo de cancelación <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            id="cancellationReason"
+            pInputTextarea
+            [(ngModel)]="cancellationReason"
+            rows="2"
+            class="w-full"
+            placeholder="Ingrese el motivo de la cancelación (obligatorio)"
+            [class.p-invalid]="status === 'CANCELLED' && (!cancellationReason || !cancellationReason.trim())">
+          </textarea>
+          <small class="text-muted">Este campo es obligatorio para cancelar una orden</small>
+        </div>
+
+        <!-- Notas -->
+        <div class="field md:col-span-4">
+          <label for="notes" class="block font-medium mb-2">Notas</label>
+          <textarea
+            id="notes"
+            pInputTextarea
+            [(ngModel)]="notes"
+            rows="3"
+            class="w-full"
+            placeholder="Notas adicionales">
+          </textarea>
+        </div>
+      </div>
+
+      <!-- Gestión de líneas de detalle - Grilla editable -->
+      <div class="details-section pt-4">
+        <div class="purchase-order-items-grid-wrapper">
+          <!-- Details grid -->
+          <div class="custom-items-grid">
+            <!-- Grid header -->
+            <div class="grid-header">
+              <div class="grid-header-cell col-descripcion">Producto del proveedor</div>
+              <div class="grid-header-cell col-uom">Unidad de medida</div>
+              <div class="grid-header-cell col-packaging">Empaque</div>
+              <div class="grid-header-cell col-cantidad">Cantidad</div>
+              <div class="grid-header-cell col-precio">Precio unitario</div>
+              <div class="grid-header-cell col-subtotal">Subtotal</div>
+              <div class="grid-header-cell col-actions">
+                <button
+                  type="button"
+                  class="grid-action-btn add-btn header-add-btn"
+                  (click)="addDetail()"
+                  [disabled]="!supplierId"
+                  title="Agregar detalle">
+                  <i class="pi pi-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Items rows -->
+            <div class="grid-body">
+              <div *ngFor="let detail of details; let i = index" class="grid-row">
+                <!-- Producto del Proveedor -->
+                <div class="grid-cell col-descripcion">
+                  <p-dropdown
+                    [(ngModel)]="detail.supplier_item_id"
+                    [options]="getAvailableItemsForRow(i)"
+                    optionLabel="name"
+                    optionValue="id"
+                    placeholder="Seleccionar producto"
+                    [filter]="true"
+                    filterBy="name"
+                    [showClear]="false"
+                    (onChange)="onDetailSupplierItemChange(i)"
+                    styleClass="grid-dropdown"
+                    appendTo="body">
+                    <!-- Template para el valor seleccionado - solo nombre del supply -->
+                    <ng-template pTemplate="selectedItem">
+                      <span [title]="detail.supply_name">{{ detail.supply_name || 'Seleccionar producto' }}</span>
+                    </ng-template>
+                    <!-- Template para los items de la lista - formato completo -->
+                    <ng-template let-option pTemplate="item">
+                      <span>{{ option.name }}</span>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+
+                <!-- UOM -->
+                <div class="grid-cell col-uom">
+                  <div class="grid-value">
+                    {{ detail.uom_name || '-' }}
+                  </div>
+                </div>
+
+                <!-- Packaging -->
+                <div class="grid-cell col-packaging">
+                  <div class="grid-value">
+                    {{ detail.packaging_description || '-' }}
+                  </div>
+                </div>
+
+                <!-- Cantidad -->
+                <div class="grid-cell col-cantidad">
+                  <input
+                    type="number"
+                    [step]="getQuantityStep(detail)"
+                    [min]="getQuantityStep(detail)"
+                    class="grid-input text-right"
+                    [(ngModel)]="detail.quantity"
+                    [placeholder]="isDecimalQuantityAllowed(detail.uom_name || '') ? '0.0' : '0'"
+                    [title]="isDecimalQuantityAllowed(detail.uom_name || '') ? 'Permite decimales (0.1, 0.2, etc.)' : 'Solo números enteros'" />
+                </div>
+
+                <!-- Precio Unitario (readonly - autocompletado) -->
+                <div class="grid-cell col-precio">
+                  <div class="price-input-wrapper">
+                    <span class="currency-symbol">$</span>
+                    <input
+                      type="text"
+                      class="grid-input text-right price-input"
+                      [value]="detail.unit_price | number:'1.2-2'"
+                      readonly
+                      tabindex="-1"
+                      placeholder="0.00" />
+                  </div>
+                </div>
+
+                <!-- Subtotal (calculado) -->
+                <div class="grid-cell col-subtotal">
+                  <div class="grid-value text-right font-bold">
+                    $ {{ getSubtotal(detail) | number:'1.2-2' }}
+                  </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="grid-cell col-actions">
+                  <button
+                    type="button"
+                    class="grid-action-btn delete-btn"
+                    (click)="deleteDetail(i)"
+                    title="Eliminar detalle">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty message -->
+            <div *ngIf="details.length === 0" class="empty-grid-message">
+              <i class="pi pi-inbox"></i>
+              <p>No hay detalles agregados</p>
+              <small>
+                <span *ngIf="!supplierId">Seleccione un proveedor para agregar items</span>
+                <span *ngIf="supplierId">Haga clic en el botón + para agregar una línea</span>
+              </small>
+            </div>
+          </div>
+
+          <!-- Total -->
+          <div *ngIf="details.length > 0" class="total-section">
+            <div class="total-label">Total de la Orden:</div>
+            <div class="total-value">$ {{ totalAmount | number:'1.2-2' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="mt-6 pt-4 flex justify-between items-center">
+        <app-generic-button
+          type="back"
+          icon="pi pi-arrow-left"
+          (pressed)="onBack()">
+        </app-generic-button>
+
+        <div class="flex gap-3">
+          <app-generic-button
+            text="Cancelar"
+            type="cancel"
+            icon="pi pi-times"
+            [disabled]="saving"
+            (pressed)="cancel()">
+          </app-generic-button>
+          <app-generic-button
+            text="Guardar cambios"
+            type="create"
+            icon="pi pi-file"
+            [disabled]="saving"
+            (pressed)="saveChanges()">
+          </app-generic-button>
+        </div>
+      </div>
+  </div>
+</div>
+

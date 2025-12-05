@@ -1,0 +1,152 @@
+<div class="version-manager-container">
+   @if (loading()) {
+     <app-spinner [overlay]="true" [label]="'Cargando versiones NBU...'" />
+   }
+
+   <div class="version-manager" [class.hidden]="loading()">
+    <!-- Current Version Info -->
+    <div class="current-info">
+      <div class="info-header">
+        <i class="pi pi-bookmark"></i>
+        <span class="section-title">Versión actual</span>
+      </div>
+      <div class="info-content">
+        <span class="current-value">{{ getCurrentVersionLabel() }}</span>
+        @if (currentUb() !== undefined) {
+          <span class="ub-badge">UB: {{ currentUb() }}</span>
+        }
+      </div>
+    </div>
+
+    <p-divider />
+
+  <!-- Two-Step Workflow -->
+  <p-tabs [value]="activeTabIndex()" (valueChange)="onTabChange($event)" styleClass="workflow-tabs">
+    <!-- Step 1: Version Configuration -->
+    <p-tabpanel value="0">
+      <ng-template #header>
+        <div class="tab-header">
+          <i class="pi pi-cog"></i>
+          <span>1. Configurar versión</span>
+        </div>
+      </ng-template>
+
+      <div class="tab-content">
+        <p-message 
+          severity="info" 
+          text="Seleccione la versión NBU y configure el valor UB"
+          styleClass="w-full">
+        </p-message>
+
+        <div class="editor-grid">
+          <!-- Version Selector -->
+          <div class="form-field">
+            <label for="version-select">
+              <i class="pi pi-bookmark"></i>
+              Versión NBU
+            </label>
+            <p-select
+              [ngModel]="selectedVersionId()"
+              (ngModelChange)="selectedVersionId.set($event)"
+              [options]="versionOptions()"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccionar versión"
+              [filter]="true"
+              [loading]="loading()"
+              [disabled]="loading()"
+              styleClass="w-full"
+              inputId="version-select">
+            </p-select>
+          </div>
+
+          <!-- UB Input -->
+          <div class="form-field">
+            <label for="ub-input">
+              <i class="pi pi-hashtag"></i>
+              Valor UB
+            </label>
+            <p-inputnumber
+              [ngModel]="ubValue()"
+              (ngModelChange)="ubValue.set($event)"
+              [min]="0"
+              [showButtons]="true"
+              [disabled]="loading()"
+              placeholder="Ingresar valor UB"
+              styleClass="w-full"
+              inputId="ub-input">
+            </p-inputnumber>
+          </div>
+        </div>
+
+        <!-- Step 1 Actions -->
+        <div class="actions">
+          <app-generic-button
+            type="advance"
+            [disabled]="!isStep1Valid() || loading()"
+            (pressed)="onContinue()">
+          </app-generic-button>
+        </div>
+      </div>
+    </p-tabpanel>
+
+    <!-- Step 2: NBU Selection -->
+    <p-tabpanel value="1">
+      <ng-template #header>
+        <div class="tab-header">
+          <i class="pi pi-list"></i>
+          <span>2. Seleccionar NBUs</span>
+        </div>
+      </ng-template>
+
+      <div class="tab-content">
+        @if (!isStep1Valid()) {
+          <p-message 
+            severity="warn" 
+            text="Debe completar el Paso 1 antes de continuar"
+            styleClass="w-full">
+          </p-message>
+        } @else {
+          <p-message 
+            severity="info" 
+            styleClass="w-full">
+            <ng-template #icon>
+              <i class="pi pi-info-circle"></i>
+            </ng-template>
+            <ng-template #content>
+              <div>
+                <strong>Seleccione los NBUs a asociar con la versión:</strong>
+                <div class="mt-2">
+                  Versión: <strong>{{ selectedVersionLabel() }}</strong> | 
+                  UB: <strong>{{ ubValue() }}</strong>
+                </div>
+              </div>
+            </ng-template>
+          </p-message>
+
+          <!-- NBU Selector Component -->
+          <app-nbu-version-nbu-selector
+            [versionId]="selectedVersionId()"
+            [preSelectedNbuIds]="preSelectedNbuIds()"
+            (nbusSelected)="onNbusSelected($event)">
+          </app-nbu-version-nbu-selector>
+
+          <!-- Step 2 Actions -->
+          <div class="actions-row">
+            <app-generic-button
+              type="back"
+              (pressed)="onBackToStep1()">
+            </app-generic-button>
+
+            <app-generic-button
+              type="save"
+              text="Guardar versión y asociaciones"
+              [disabled]="saving()"
+              (pressed)="onFinalSave()">
+            </app-generic-button>
+          </div>
+        }
+      </div>
+    </p-tabpanel>
+  </p-tabs>
+ </div>

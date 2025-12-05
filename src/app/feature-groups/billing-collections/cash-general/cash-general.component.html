@@ -1,0 +1,132 @@
+<section class="cash-general">
+  <div class="cash-general__alerts">
+    @if (uiMessage()) {
+      <app-generic-alert
+        class="mt-8"
+        [type]="uiMessage()!.type"
+        [title]="uiMessage()!.title"
+        [text]="uiMessage()!.text"
+        (dismissed)="uiMessage.set(null)"
+      >
+      </app-generic-alert>
+    }
+  </div>
+
+  <!-- CARD GLOBAL - CONSOLIDADO TOTAL -->
+  <div class="global-summary card">
+    <div>
+      <p class="global-summary__subtitle">Caja general</p>
+      <strong>Área de facturación</strong>
+    </div>
+    <div class="global-summary__totals">
+      <div>
+        <small>Actual</small>
+        <span class="highlight">
+          {{ mainCurrentAmount() | currency:'ARS':'symbol':'1.0-0' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <p-tabView class="cash-general__tabs">
+    <p-tabPanel header="Resumen de cajas">
+      <div class="cash-general__table-wrapper cash-general__table-wrapper--register">
+        <app-generic-table
+          [columns]="registerColumns()"
+          [data]="registerRows()"
+          [pageable]="true"
+          [showSearch]="true"
+          [showActions]="true"
+          [getActions]="getRegisterTableActions"
+          [showCreateButton]="false"
+          [showDownloadMenu]="true"
+          [loading]="loading()"
+          (downloadExcel)="handleRegisterExport($event, { type: 'excel' })"
+          (downloadPdf)="handleRegisterExport($event, { type: 'pdf' })"
+        >
+        </app-generic-table>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Movimientos">
+      <div class="cash-general__table-wrapper cash-general__table-wrapper--movements">
+        <app-generic-table
+          [columns]="movementColumns()"
+          [data]="movementRows()"
+          [rows]="10"
+          [showSearch]="true"
+          [pageable]="true"
+          [showCreateButton]="false"
+          [showActions]="false"
+          [showDownloadMenu]="true"
+          [loading]="loading()"
+          (downloadExcel)="handleMovementExport($event, { type: 'excel' })"
+          (downloadPdf)="handleMovementExport($event, { type: 'pdf' })"
+        >
+        </app-generic-table>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+
+  <div #registerButtonRef class="tab-register-button">
+    <app-generic-button
+      type="create"
+      text="Registrar"
+      icon="pi pi-plus"
+      (pressed)="navigateToRegister()"
+    >
+    </app-generic-button>
+  </div>
+</section>
+
+<!-- BADGE ESTADO -->
+<ng-template #statusTemplate let-row>
+  <app-generic-badge
+    [status]="getBadgeStatus(row.sessionStatus)"
+    [text]="getStatusLabel(row.sessionStatus)"
+  ></app-generic-badge>
+</ng-template>
+
+<!-- MONTO INICIAL -->
+<ng-template #initialAmountTemplate let-row>
+  <span class="amount text-right">
+    {{ row.initialAmount | currency:'ARS':'symbol':'1.0-0' }}
+  </span>
+</ng-template>
+
+<!-- MONTO ACTUAL -->
+<ng-template #currentAmountTemplate let-row>
+  <span class="amount amount--highlight text-right">
+    {{ row.currentAmount | currency:'ARS':'symbol':'1.0-0' }}
+  </span>
+</ng-template>
+
+<!-- MOVIMIENTOS -->
+<ng-template #movementDateTemplate let-row>
+  <div class="movement-date">
+    <span>{{ row.date | date:'dd/MM/yyyy HH:mm' }}</span>
+  </div>
+</ng-template>
+
+<ng-template #movementTypeTemplate let-row>
+  <app-generic-badge
+    [status]="row.type === 'Ingreso' ? 'activo' : 'inactivo'"
+    [text]="row.type"
+  ></app-generic-badge>
+</ng-template>
+
+<ng-template #movementAmountTemplate let-row>
+  <span
+    class="movement-amount text-right"
+    [class.movement-amount--income]="row.type === 'Ingreso'"
+    [class.movement-amount--expense]="row.type === 'Egreso'"
+  >
+    {{ formatMovementAmount(row.amount, row.type) }}
+  </span>
+</ng-template>
+
+<ng-template #movementBalanceTemplate let-row>
+  <span class="movement-amount text-right">
+    {{ row.balance | currency:'ARS':'symbol':'1.0-0' }}
+  </span>
+</ng-template>

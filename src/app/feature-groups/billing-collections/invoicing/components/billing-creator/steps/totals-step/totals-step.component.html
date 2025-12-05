@@ -1,0 +1,152 @@
+<div class="totals-step">
+  <form [formGroup]="totalsForm" class="totals-form">
+    <!-- Row 1: Main fields (2 columns) -->
+    <div class="form-grid">
+      <!-- Taxable net -->
+      <div class="form-field">
+        <label for="netTaxable" class="required">Neto gravado</label>
+        <p-inputNumber
+          id="netTaxable"
+          formControlName="netTaxable"
+          mode="currency"
+          currency="ARS"
+          locale="es-AR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          placeholder="0,00"
+          [styleClass]="isFieldInvalid('netTaxable') ? 'ng-invalid ng-dirty' : ''"
+        ></p-inputNumber>
+        @if (isFieldInvalid('netTaxable')) {
+          <small class="error-message">
+            {{ getFieldError('netTaxable') }}
+          </small>
+        }
+      </div>
+
+      <!-- Non-taxable net -->
+      <div class="form-field">
+        <label for="netNonTaxable" class="required">Neto no gravado</label>
+        <p-inputNumber
+          id="netNonTaxable"
+          formControlName="netNonTaxable"
+          mode="currency"
+          currency="ARS"
+          locale="es-AR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          placeholder="0,00"
+          [styleClass]="isFieldInvalid('netNonTaxable') ? 'ng-invalid ng-dirty' : ''"
+        ></p-inputNumber>
+        @if (isFieldInvalid('netNonTaxable')) {
+          <small class="error-message">
+            {{ getFieldError('netNonTaxable') }}
+          </small>
+        }
+      </div>
+    </div>
+
+    <!-- Row 2: IVA fields (2 columns) -->
+    <div class="form-grid">
+      <!-- VAT total -->
+      <div class="form-field">
+        <label for="totalVat" class="required">IVA total</label>
+        <p-inputNumber
+          id="totalVat"
+          formControlName="totalVat"
+          mode="currency"
+          currency="ARS"
+          locale="es-AR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          placeholder="0,00"
+          [styleClass]="isFieldInvalid('totalVat') ? 'ng-invalid ng-dirty' : ''"
+        ></p-inputNumber>
+        @if (isFieldInvalid('totalVat')) {
+          <small class="error-message">
+            {{ getFieldError('totalVat') }}
+          </small>
+        }
+      </div>
+
+      <!-- VAT perception (non-editable) -->
+      <div class="form-field">
+        <label for="vatPerception">Percepción de IVA</label>
+        <p-inputNumber
+          id="vatPerception"
+          formControlName="vatPerception"
+          mode="currency"
+          currency="ARS"
+          locale="es-AR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [disabled]="true"
+          placeholder="0,00"
+          styleClass="disabled-field"
+        ></p-inputNumber>
+        <small class="field-help">Se calcula automáticamente</small>
+      </div>
+    </div>
+
+    <!-- Row 3: IIBB perception (2 columns) -->
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="iibbPerception" class="required">Percepción de IIBB</label>
+        <p-inputNumber
+          id="iibbPerception"
+          formControlName="iibbPerception"
+          mode="currency"
+          currency="ARS"
+          locale="es-AR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          placeholder="0,00"
+          [styleClass]="isFieldInvalid('iibbPerception') ? 'ng-invalid ng-dirty' : ''"
+        ></p-inputNumber>
+        @if (isFieldInvalid('iibbPerception')) {
+          <small class="error-message">
+            {{ getFieldError('iibbPerception') }}
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="iibbPerceptionType">Tipo de percepción IIBB</label>
+        <input
+          id="iibbPerceptionType"
+          type="text"
+          pInputText
+          value="Córdoba Capital"
+          [disabled]="true"
+          class="disabled-field"
+        />
+        <small class="field-help">Fijo para Córdoba Capital</small>
+      </div>
+    </div>
+
+    <!-- Row 4: Invoice total (1 column, centered) -->
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="totalInvoice">Total de la factura</label>
+        <p-inputNumber
+          id="totalInvoice"
+          formControlName="totalInvoice"
+          mode="currency"
+          currency="ARS"
+          locale="es-AR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [disabled]="true"
+          placeholder="0,00"
+          styleClass="disabled-field total-field"
+        ></p-inputNumber>
+        <small class="field-help">Se calcula a partir de los ítems</small>
+      </div>
+    </div>
+
+  </form>
+</div>
+

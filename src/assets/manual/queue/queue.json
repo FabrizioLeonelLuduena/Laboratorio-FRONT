@@ -1,0 +1,240 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "colas",
+  "title": "Tótem para turnos",
+  "intro": "Esta pantalla permite al paciente o al operador iniciar el proceso de registro en la cola de atención del laboratorio, seleccionando si posee o no un turno previo.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Paciente",
+      "Secretaría",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Paciente - Secretaría - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "introBlocks": [
+        {
+          "type": "subtitle",
+          "text": "<strong>Pantalla principal</strong>"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario ve una pantalla de bienvenida donde se le solicita seleccionar la opción que corresponda: Con Turno o Sin Turno."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-2.png",
+          "alt": "Pantalla de bienvenida con las opciones Con Turno y Sin Turno"
+        },
+        {
+          "type": "subtitle",
+          "text": "Contenido de la Pantalla"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Con Turno",
+              "Permite continuar el proceso de registro para pacientes que ya tienen un <strong>turno programado</strong>."
+            ],
+            [
+              "Sin Turno",
+              "Permite continuar el proceso de registro para pacientes que acuden <strong>sin un turno previo</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "con-turno",
+      "title": "Con Turno",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón \"Con Turno\", el sistema redirige a la pantalla de registro en cola con la opción correspondiente preseleccionada."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-1.png",
+          "alt": "Formulario de registro en cola con la opción Con Turno seleccionada"
+        },
+        {
+          "type": "subtitle",
+          "text": "Proceso de Registro"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Bloque",
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Identificación",
+              "Número de Documento (DNI)",
+              "Permite ingresar el DNI del paciente. Solo se permiten números (7 a 8 dígitos)."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Nota importante",
+          "text": "El sistema validará que el DNI ingresado coincida con un turno programado para poder registrar al paciente en la cola."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "Valida el DNI ingresado y busca el turno correspondiente para registrar al paciente en la cola de atención."
+            ],
+            [
+              "Retroceder (←)",
+              "Vuelve a la pantalla de bienvenida."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Luego de confirmar el turno, en la pantalla aparecerá el <strong>número de turno</strong> que le corresponde. El paciente se deberá dirigir a la sala de espera para posteriormente ser llamado."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-turn.png",
+          "alt": "Número de turno asignado"
+        },
+        {
+          "type": "paragraph",
+          "text": "Después de aceptar el número de turno, aparecerá una ventana que tendrá un <strong>QR</strong> para recomendar a los pacientes el uso del portal."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-qr.jpg",
+          "alt": "Ventana con QR para portal de pacientes"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "sin-turno",
+      "title": "Sin Turno",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón \"Sin Turno\", el sistema redirige a la pantalla de registro con la opción Sin Turno preseleccionada."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-3.png",
+          "alt": "Formulario de registro en cola con la opción Sin Turno seleccionada"
+        },
+        {
+          "type": "subtitle",
+          "text": "Proceso de Registro"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Bloque",
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Identificación",
+              "Número de Documento (DNI)",
+              "Permite ingresar el DNI del paciente. Solo se permiten números (7 a 8 dígitos)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "Registra el DNI ingresado directamente en la cola de atención como un paciente sin turno."
+            ],
+            [
+              "Retroceder (←)",
+              "Vuelve a la pantalla de bienvenida."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Luego de confirmar, en la pantalla aparecerá el <strong>número de turno</strong> que le corresponde. El paciente se deberá dirigir a la sala de espera para posteriormente ser llamado."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-number.jpg",
+          "alt": "Número de turno asignado para pacientes sin turno"
+        },
+        {
+          "type": "paragraph",
+          "text": "Después de aceptar el número de turno, aparecerá una ventana que tendrá un <strong>QR</strong> para recomendar a los pacientes el uso del portal."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/queue/queue-qr.jpg",
+          "alt": "Ventana con QR para portal de pacientes"
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota importante",
+          "text": "El registro sin turno puede estar sujeto a disponibilidad y a un tiempo de espera mayor en comparación con pacientes con turno."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "colas",
+    "recepción",
+    "registro",
+    "turnos"
+  ]
+}

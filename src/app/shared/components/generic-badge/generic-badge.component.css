@@ -1,0 +1,56 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 70px;
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+}
+
+.badge--activo {
+  background: color-mix(in srgb, var(--brand-success) 15%, white);
+  color: var(--brand-success);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--brand-success) 20%, transparent);
+}
+
+.badge--inactivo {
+  background: color-mix(in srgb, var(--brand-warn) 15%, white);
+  color: var(--brand-warn);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--brand-warn) 20%, transparent);
+}
+
+.badge--pendiente {
+  background: color-mix(in srgb, var(--brand-primary-700) 15%, white);
+  color: var(--brand-primary-700);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--brand-primary-700) 20%, transparent);
+}
+
+.badge--minimo {
+  background: #fef3c7;
+  color: #92400e;
+  box-shadow: 0 1px 2px rgb(245 158 11 / 20%);
+}
+
+.badge--completo {
+  background: #dbeafe;
+  color: #1e40af;
+  box-shadow: 0 1px 2px rgb(59 130 246 / 20%);
+}
+
+.badge--verificado {
+  background: #d1fae5;
+  color: #065f46;
+  box-shadow: 0 1px 2px rgb(16 185 129 / 20%);
+}
+
+@media (width <= 480px) {
+  .badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}

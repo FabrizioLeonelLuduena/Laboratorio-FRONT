@@ -1,0 +1,211 @@
+/* Main container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--canvas);
+}
+
+/* Contenedor principal debajo de navbar y encima de footer */
+.main-layout {
+  display: flex;
+  flex: 1;
+  position: relative;
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+}
+
+/* Reserva espacio para footer fijo solo en desktop */
+@media (width >=960px) {
+  .main-layout {
+    padding-bottom: var(--footer-height);
+  }
+}
+
+/* Sidebar visible en escritorio */
+.sidenav--open {
+  transform: translateX(0);
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  transition: margin-left 0.3s ease;
+  background-color: var(--canvas);
+  width: 100%;
+  overflow-y: auto;
+
+  /* scroll dentro del área de contenido */
+}
+
+/* Ocultar scrollbar solo en escritorio (mantiene scroll) */
+@media (width >=960px) {
+  .main-content {
+    scrollbar-width: none;
+
+    /* Firefox */
+    -ms-overflow-style: none;
+
+    /* IE 10+ */
+  }
+
+  .main-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+/* Cuando el sidebar está abierto en escritorio: empuja el contenido */
+.main-content.sidebar-open {
+  margin-left: 280px;
+
+  /* ancho del sidenav */
+}
+
+/* Contenedor visual de contenido */
+.content-container {
+  margin: 16px;
+  padding: 24px;
+  background: var(--card);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
+  border: 1px solid var(--border-color);
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - 32px);
+  max-height: 100%;
+}
+
+/* Responsive: en móvil no empujamos el contenido */
+@media (width <=959px) {
+  .main-content.sidebar-open {
+    margin-left: 0;
+  }
+}
+
+/* Footer no fijo en móvil: eliminar reserva inferior y recalcular alturas */
+@media (width <=768px) {
+  .main-layout {
+    min-height: calc(100vh - var(--navbar-height));
+    padding-bottom: 0;
+  }
+
+  .sidenav {
+    height: calc(100vh - var(--navbar-height));
+  }
+
+  .content-container {
+    min-height: calc(100vh - var(--navbar-height) - 32px);
+  }
+}
+
+/* Bloqueo de scroll del contenido cuando el sidebar móvil está abierto */
+@media (width <=959px) {
+  body.no-scroll .main-content {
+    overflow: hidden;
+    touch-action: none;
+  }
+}
+
+/* --- Desktop fixed sidebar content styles --- */
+.sidenav__nav {
+  height: 100%;
+  overflow: auto;
+}
+
+.sidenav__list {
+  display: flex;
+  flex-direction: column;
+
+  /* Distribuye para que no quede todo arriba cuando hay pocos ítems */
+  justify-content: space-between;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 12px 8px;
+  min-height: 100%;
+}
+
+.sidenav__item {
+  /* placeholder for future variants */
+}
+
+.sidenav__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  /* separación icono/texto */
+  min-height: 48px;
+
+  /* ítems grandes */
+  padding: 12px 16px;
+
+  /* respiración */
+  border-radius: 8px;
+  color: var(--on-surface);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sidenav__link:hover,
+.sidenav__link:focus-visible {
+  background: var(--surface-alt);
+  transition: background 160ms ease, color 120ms ease;
+}
+
+/* Iconos PrimeIcons al inicio del item */
+.sidenav__link i[class^="pi"],
+.sidenav__sublink i[class^="pi"] {
+  flex: 0 0 22px;
+  width: 22px;
+  text-align: center;
+  font-size: 1.25rem;
+
+  /* ~20px */
+  color: var(--brand-primary-700);
+}
+
+.sidenav__label {
+  flex: 1 1 auto;
+  font-size: 15px;
+}
+
+/* Submenú */
+.sidenav__sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 0 24px;
+
+  /* indent respecto al padre */
+  padding: 0;
+  list-style: none;
+}
+
+.sidenav__sublink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.sidenav__sublink:hover,
+.sidenav__sublink:focus-visible {
+  background: var(--surface-alt);
+}
+
+/* Estado activo (si se aplica clase active desde el router) */
+.sidenav__link.active,
+.sidenav__sublink.active {
+  background: color-mix(in srgb, var(--brand-primary-700) 10%, #fff);
+  box-shadow: inset 3px 0 0 var(--brand-primary-700);
+  font-weight: 600;
+}
+
+.sidenav__link.active i[class^="pi"],
+.sidenav__sublink.active i[class^="pi"] {
+  color: var(--brand-primary-700);
+}

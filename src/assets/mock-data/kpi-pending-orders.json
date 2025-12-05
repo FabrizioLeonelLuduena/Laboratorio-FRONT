@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Órdenes pendientes",
+      "value": 8
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

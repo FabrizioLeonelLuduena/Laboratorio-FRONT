@@ -1,0 +1,36 @@
+<div class="p-card p-shadow-2 rounded-xl overflow-hidden">
+  <p-table
+    [value]="data"
+    class="w-full"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <!-- Encabezados dinámicos -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let column of columns">
+          {{ column.header }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <!-- Filas dinámicas -->
+    <ng-template pTemplate="body" let-rowData>
+      <tr>
+        <td *ngFor="let column of columns">
+          <!-- Si existe cellRenderer usamos ngTemplateOutlet -->
+          <ng-container
+            *ngIf="column.cellRenderer; else defaultCell"
+            [ngTemplateOutlet]="column.cellRenderer"
+            [ngTemplateOutletContext]="{ $implicit: rowData,col: column }"
+          >
+          </ng-container>
+
+          <!-- Celda por defecto -->
+          <ng-template #defaultCell>
+            {{ rowData[column.columnDef] }}
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

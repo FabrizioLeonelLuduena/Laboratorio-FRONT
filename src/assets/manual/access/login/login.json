@@ -1,0 +1,142 @@
+{
+  "id": "login",
+  "moduleId": "autenticacion",
+  "title": "Inicio de Sesión",
+  "intro": "La funcionalidad de inicio de sesión permite que los usuarios internos del laboratorio accedan al sistema utilizando sus credenciales personales. Este proceso garantiza un acceso seguro y adecuado según el rol asignado a cada usuario.",
+
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Usuarios internos del laboratorio"
+    ]
+  },
+
+  "sections": [
+
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Usuarios internos del laboratorio"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "acceso-pantalla",
+      "title": "Acceso a la Pantalla de Inicio de Sesión",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Para comenzar el proceso de autenticación, el usuario debe ingresar a la URL correspondiente y acceder a la página de Inicio de Sesión."
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "<strong> 1. </strong> Abra su navegador web habitual.",
+            "<strong> 2. </strong> Ingrese en la barra de direcciones la URL del Sistema de Gestión del Laboratorio Castillo Chidiak.",
+            "<strong> 3. </strong> Una vez cargada la dirección, será dirigido automáticamente a la pantalla de Inicio de Sesión, donde podrá visualizar el formulario correspondiente."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": " <br>Si la página no carga, verifique su conexión a internet y confirme que la URL ingresada sea correcta."
+        },
+
+
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "ingreso-credenciales",
+      "title": "Ingreso de Credenciales",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Para acceder al sistema, el usuario debe completar el formulario con sus datos personales de autenticación."
+
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/login/login.JPG",
+          "alt": "Pantalla de inicio de sesión"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "<strong>Usuario:</strong> Ingrese su nombre de usuario asignado.",
+            "<strong>Contraseña:</strong> Ingrese su contraseña personal. Por motivos de seguridad, los caracteres aparecerán ocultos."
+
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "acciones-disponibles",
+      "title": "Acciones finales",
+      "blocks": [
+        {
+          "type": "table",
+          "columns": [
+            "Botón/Enlace",
+            "Ícono",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Iniciar Sesión",
+              "<i class='pi pi-sign-in'></i>",
+              "Valida las credenciales ingresadas y permite acceder al sistema."
+            ],
+            [
+              "Recuperar contraseña",
+              "-",
+              "Redirige al proceso de restablecimiento de la contraseña mediante correo electrónico."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Resultados del Inicio de Sesión"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "● Si el usuario y la contraseña son válidos, el sistema permitirá el acceso y lo redirigirá automáticamente a la pantalla principal.",
+            "● Si alguno de los datos es incorrecto, el sistema mostrará un mensaje de error. Verifique que su Usuario y/o Contraseña sean correctos e intente nuevamente."
+          ]
+            },
+
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br> Si el sistema indica que las credenciales son incorrectas, revise la tecla Bloq Mayús y vuelva a ingresar los datos cuidadosamente. Si es necesario, utilice la opción Recuperar contraseña para generar una nueva."
+        }
+      ]
+    }
+  ],
+
+  "tags": [
+    "login",
+    "autenticación",
+    "seguridad",
+    "usuarios"
+  ]
+}

@@ -1,0 +1,52 @@
+@if (insurer) {
+
+
+    <div class="flex gap-2 justify-end">
+        <!--boton editar-->
+        @if (editMode === 'view' && insurer.insurerType !== 'SELF_PAY') {
+          <app-generic-button
+            type="custom"
+            icon="pi pi-pencil"
+            [color]="'--brand-primary-700'"
+            [customTextColor]="'--on-primary'"
+            (pressed)="toggleEdit('edit')"
+            [text]="''"
+          ></app-generic-button>
+        }
+      </div>
+
+    <!-- Wrapper para controlar estilos de labels según modo -->
+    <div class="mode-shell" [class.view-mode]="editMode === 'view'" [class.edit-mode]="editMode === 'edit'">
+      <app-generic-form
+        [fields]="insurerFields"
+        [initialValue]="initialValue"
+        size="full"
+        [showHeader]="false"
+        [showAsterisk]="editMode === 'edit'"
+        [showCard]="false"
+        [showCancel]="editMode === 'edit'"
+        [showSubmit]="editMode === 'edit'"
+        [submitLabel]="'Guardar'"
+        [cancelLabel]="'Cancelar'"
+        [saving]="saving"
+        (submitForm)="onSubmitUpdate($event)"
+        (cancelForm)="toggleEdit('view')"
+      >
+      </app-generic-form>
+    </div>
+
+
+
+  <!-- Alert -->
+  @if (alert) {
+    <app-generic-alert
+      [type]="alert.type"
+      [text]="alert.text">
+    </app-generic-alert>
+  }
+
+} @else {
+  <div class="text-center text-muted mt-10">
+    Cargando información de la aseguradora...
+  </div>
+}

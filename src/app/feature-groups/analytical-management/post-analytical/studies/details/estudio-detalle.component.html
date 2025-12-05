@@ -1,0 +1,57 @@
+@if (estudio) {
+  <div class="detalle-container">
+    @if (alertType !== null) {
+      <app-generic-alert
+        [type]="alertType"
+        [title]="alertTitle"
+        [text]="alertText"
+        (closed)="alertType = null">
+      </app-generic-alert>
+    }
+
+    <div class="detalle-header">
+      <app-generic-button
+        type="back"
+        text="Volver"
+        (pressed)="onVolver()">
+      </app-generic-button>
+
+      <app-generic-button
+        *ngIf="estudio.currentStatus !== 'CLOSED'"
+        text="Validar Todo"
+        icon="pi pi-check-circle"
+        [type]="'custom'"
+        [color]="'var(--brand-primary)'"
+        [disabled]="validatingAll || !hasResultsToValidate()"
+        (pressed)="onValidateAllResults()">
+      </app-generic-button>
+    </div>
+
+    <div class="detalle-content">
+      <div class="detalle-main">
+        <app-estudio-info-card [estudio]="estudio"
+         (firmaRealizada)="onFirmaRealizada()"
+         (firmaExitosa)="onFirmaExitosa($event)"
+         (firmaError)="onFirmaError($event)"
+        >
+        </app-estudio-info-card>
+
+    <app-estudio-results-accordion
+      [results]="estudio.results"
+      [studyStatus]="estudio.currentStatus"
+      [protocolCode]="estudio.protocolCode"
+      (validatedAll)="onFirmaRealizada()"
+      (determinationsEdited)="onDeterminationsEdited()"
+      (showMessage)="onShowMessage($event)">
+    </app-estudio-results-accordion>
+      </div>
+    </div>
+  </div>
+}
+
+@if (loading) {
+  <div class="loading-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p>Cargando detalle del estudio...</p>
+  </div>
+}

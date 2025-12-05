@@ -1,0 +1,21 @@
+<!-- ======================= HEADER SUPERIOR ======================= -->
+<header class="manual-header">
+  <div class="header-left">
+    <h1 class="title" routerLink="/manual">Castillo Laboratorio Chidiak</h1> - <span class="title-span">Manual de Usuario</span>
+  </div>
+</header>
+
+<!-- ======================= CONTENEDOR PRINCIPAL ======================= -->
+<div class="manual-container">
+
+  <aside class="sidebar">
+    <app-manual-sidebar />
+  </aside>
+
+  <main class="content" #contentScroll>
+    <div class="content-wrapper">
+      <router-outlet />
+    </div>
+  </main>
+
+</div>

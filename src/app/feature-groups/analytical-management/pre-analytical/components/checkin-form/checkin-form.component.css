@@ -1,0 +1,105 @@
+:host {
+  /* Input styles */
+  .p-inputtext {
+    font-size: 1rem;
+  }
+
+  /* Button styles */
+  .p-button {
+    transition: all 0.2s;
+  }
+
+  .headerTemplate {
+    background: var(--brand-primary-700);
+  }
+
+  .badge-counter {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #4ade80;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: visible;
+    min-height: 100vh;
+    flex-shrink: 0;
+  }
+
+  .alert-container {
+    position: fixed ;
+    top: 3.5rem ;
+    right: 1rem ;
+    z-index: 99999 ;
+    animation: slide-in 0.3s ease-out;
+    pointer-events: none;
+  }
+
+  .alert-container > * {
+    pointer-events: auto;
+  }
+
+  /* Override p-dialog-mask z-index */
+  .p-dialog-mask {
+    z-index: 40000;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgb(0 0 0 / 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50000 ;
+  }
+
+  .modal-overlay > div {
+    z-index: 20001;
+  }
+
+  .register-button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+    padding-right: 0;
+    margin-top: 1.25rem;
+  }
+}
+
+.validation-messages {
+  min-height: 1.30rem;
+  color: red;
+}
+
+.text-enter{
+  font-size: 14px;
+}
+
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

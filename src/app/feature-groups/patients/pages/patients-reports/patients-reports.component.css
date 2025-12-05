@@ -1,0 +1,29 @@
+/* patients-reports.component.css */
+
+/* Ajustes específicos de PrimeNG */
+::ng-deep .p-calendar .p-inputtext {
+  width: 100%;
+}
+
+::ng-deep p-tag {
+  display: inline-block;
+}
+
+::ng-deep .p-overlaypanel-content {
+  padding: 0;
+}
+
+::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+/* Ajuste del badge en el botón de filtros */
+::ng-deep .p-button .p-badge {
+  min-width: 1.25rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+}

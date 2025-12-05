@@ -1,0 +1,125 @@
+@for (block of blocks; track $index) {
+
+  <!-- Paragraph -->
+  @if (isParagraph(block)) {
+    <p class="mb-3" [innerHTML]="sanitize(block.text)"></p>
+  }
+
+  <!-- Title -->
+  @if (isTitle(block)) {
+    <h2 class="title" [innerHTML]="sanitize(block.text)"></h2>
+  }
+
+  <!-- Subtitle -->
+  @if (isSubtitle(block)) {
+    <h3 class="subtitle" [innerHTML]="sanitize(block.text)"></h3>
+  }
+
+  <!-- Image -->
+  @if (isImage(block)) {
+    <figure class="manual-image">
+      <img
+        [src]="block.src"
+        [alt]="block.alt || 'imagen del manual'"
+        (click)="openImage($event, block.src)"
+        class="manual-image__img"
+      />
+    </figure>
+  }
+
+  <!-- Note -->
+  @if (isNote(block)) {
+    <div class="note" [ngClass]="'note--' + (block.variant || 'info')">
+
+      @if (block.title) {
+        <strong [innerHTML]="sanitize(block.title + ':')"></strong>
+      }
+
+      <span [innerHTML]="sanitize(block.text)"></span>
+    </div>
+  }
+
+  <!-- Badge -->
+  @if (isBadge(block)) {
+    <div class="manual-badge-wrapper">
+      <app-manual-badge
+        [text]="block.text"
+        [color]="block.color"
+        [outline]="(block.outline !== false)">
+      </app-manual-badge>
+    </div>
+  }
+
+  <!-- Dropdown -->
+  @if (isDropdown(block)) {
+    <div class="manual-dropdown">
+      @if (block.label) {
+        <label class="manual-dropdown__label" [innerHTML]="sanitize(block.label)"></label>
+      }
+
+      <select class="manual-dropdown__select"
+              [attr.multiple]="block.multiple ? true : null"
+              (change)="onDropdownChange(block, $event)">
+        @for (opt of block.options; track $index) {
+          <option [value]="opt.value" [selected]="isSelected(block, opt.value)" [innerHTML]="sanitize(opt.label)"></option>
+        }
+      </select>
+
+      @if (block.hint) {
+        <small class="manual-dropdown__hint" [innerHTML]="sanitize(block.hint)"></small>
+      }
+    </div>
+  }
+
+  <!-- Table -->
+  @if (isTable(block)) {
+    <table class="manual-table">
+      <thead>
+      <tr>
+        @for (col of block.columns; track $index) {
+          <th [innerHTML]="sanitize(col)"></th>
+        }
+      </tr>
+      </thead>
+
+      <tbody>
+        @for (row of block.rows; track $index) {
+          <tr>
+            @for (cell of row; track $index) {
+              <td [innerHTML]="sanitize(cell)"></td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <!-- List -->
+  @if (isList(block)) {
+
+    <!-- Unordered -->
+    @if (!block.ordered) {
+      <ul class="manual-list">
+        @for (item of block.items; track $index) {
+          <li [innerHTML]="sanitize(item)"></li>
+        }
+      </ul>
+    }
+
+    <!-- Ordered -->
+    @if (block.ordered) {
+      <ol class="manual-list">
+        @for (item of block.items; track $index) {
+          <li [innerHTML]="sanitize(item)"></li>
+        }
+      </ol>
+    }
+  }
+
+  <!-- ⭐ Divider (línea separadora) -->
+  @if (isDivider(block)) {
+    <hr class="manual-divider">
+  }
+
+}
+<!-- FIN DEL @for -->

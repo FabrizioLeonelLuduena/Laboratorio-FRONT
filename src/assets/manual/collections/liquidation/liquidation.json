@@ -1,0 +1,256 @@
+{
+  "id": "gestion-liquidaciones",
+  "moduleId": "liquidaciones",
+  "title": "Gestión de Liquidaciones",
+  "intro": "La pantalla de Liquidaciones permite visualizar, gestionar y administrar todas las liquidaciones de las obras sociales y aseguradoras. Desde aquí se puede consultar el estado de cada liquidación, confirmarlas, anularlas y descargar los reportes correspondientes.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador",
+      "Facturación"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador - Facturación"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra una lista de todas las <strong>liquidaciones existentes</strong> organizadas por aseguradora, con su estado actual y opciones de gestión."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/liquidation/Pantalla-principal-liquidaciones.jpeg",
+          "alt": "Interfaz principal de liquidaciones"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para <strong>filtrar rápidamente</strong> los resultados."
+            ],
+            [
+              "Carrito de prestaciones",
+              "<i class='pi pi-shopping-cart'></i>",
+              "Muestra el número de prestaciones seleccionadas para liquidar. Al hacer clic, permite revisar y gestionar las prestaciones agregadas."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Genera y descarga un documento con el listado actual de liquidaciones."
+            ],
+            [
+              "Crear Liquidación",
+              "<i class='pi pi-plus'></i>",
+              "Abre la pantalla para crear una <strong>nueva liquidación</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-liquidaciones",
+      "title": "Contenido de la Tabla de Liquidaciones",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información de las <strong>liquidaciones</strong> mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Aseguradora",
+              "Nombre de la <strong>obra social o aseguradora</strong> a la que corresponde la liquidación.",
+              "DASUTEN, OSD, SMG"
+            ],
+            [
+              "Tipo",
+              "Indica el <strong>tipo de liquidación</strong>: Común o Especial.",
+              "Común, Especial"
+            ],
+            [
+              "Periodo",
+              "<strong>Rango de fechas</strong> que abarca la liquidación (fecha desde - fecha hasta).",
+              "02/05/2025 - 21/11/2025"
+            ],
+            [
+              "Prestaciones",
+              "<strong>Cantidad de prestaciones</strong> incluidas en la liquidación.",
+              "676, 10, 20"
+            ],
+            [
+              "Total",
+              "<strong>Monto total</strong> de la liquidación.",
+              "$ 0,00"
+            ],
+            [
+              "Estado",
+              "<strong>Estado actual</strong> de la liquidación.",
+              "INFORMADA, ANULADA, FACTURADA, PENDIENTE"
+            ],
+            [
+              "Acciones",
+              "<strong>Menú desplegable</strong> con opciones disponibles según el estado de la liquidación.",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-liquidacion",
+      "title": "Estados de la Liquidación",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Estados posibles"
+        },
+        {
+          "type": "paragraph",
+          "text": "Las liquidaciones pueden tener <strong>cuatro estados posibles</strong> dentro del sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "INFORMADA",
+          "color": "#d1e7f7"
+        },
+        {
+          "type": "paragraph",
+          "text": "La liquidación ha sido creada y está lista para ser confirmada o procesada."
+        },
+        {
+          "type": "badge",
+          "text": "PENDIENTE",
+          "color": "#E3F1EE"
+        },
+        {
+          "type": "paragraph",
+          "text": "La liquidación está en proceso de preparación o revisión."
+        },
+        {
+          "type": "badge",
+          "text": "FACTURADA",
+          "color": "#d1e7dd"
+        },
+        {
+          "type": "paragraph",
+          "text": "La liquidación ha sido confirmada y procesada exitosamente. Se ha generado la facturación correspondiente."
+        },
+        {
+          "type": "badge",
+          "text": "ANULADA",
+          "color": "#f8d7da"
+        },
+        {
+          "type": "paragraph",
+          "text": "La liquidación ha sido anulada y ya no está activa en el sistema."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información importante",
+          "text": "<br>El estado de la liquidación determina las <strong>acciones disponibles</strong> en el menú de opciones. Por ejemplo, solo las liquidaciones en estado <strong>PENDIENTE</strong> pueden ser confirmadas."
+        }
+      ]
+    },
+    {
+      "id": "acciones-por-estado",
+      "title": "Acciones disponibles según el estado",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Las acciones disponibles en el menú <strong>(⋮)</strong> varían dependiendo del estado de la liquidación:"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado: PENDIENTE"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Confirmar:</strong> Permite confirmar la liquidación y cambiar su estado a FACTURADA.",
+            "<strong>Anular:</strong> Permite anular la liquidación.",
+            "<strong>Descargar Excel:</strong> Genera un archivo Excel con el detalle de la liquidación."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado: INFORMADA"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Descargar Excel:</strong> Genera un archivo Excel con el detalle de la liquidación."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado: FACTURADA"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Cobrar:</strong> Permite registrar el cobro de la liquidación.",
+            "<strong>Descargar Excel:</strong> Genera un archivo Excel con el detalle de la liquidación.",
+            "<strong>Ver factura:</strong> Muestra los detalles de la factura generada."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado: ANULADA"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Cobrar:</strong> Permite registrar el cobro si aplica.",
+            "<strong>Descargar Excel:</strong> Genera un archivo Excel con el detalle de la liquidación."
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "liquidaciones",
+    "facturación",
+    "obras sociales",
+    "aseguradoras",
+    "prestaciones"
+  ]
+}

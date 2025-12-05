@@ -1,0 +1,368 @@
+<div class="generic-procurement-form-wrapper">
+  <!-- Alertas -->
+  <app-generic-alert
+    *ngIf="showAlert"
+    [message]="alertMessage"
+    [type]="alertType"
+    (close)="showAlert = false">
+  </app-generic-alert>
+
+  <!-- Modal de Confirmación -->
+  <app-confirmation-modal
+    *ngIf="showConfirmation"
+    title="Confirmar eliminación"
+    [message]="confirmationMessage"
+    icon="pi pi-trash"
+    (confirmed)="confirmRemoveArrayItem()"
+    (dismissed)="cancelRemoveArrayItem()">
+  </app-confirmation-modal>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-12">
+    <i class="pi pi-spin pi-spinner text-3xl text-blue-600 mb-3"></i>
+    <p class="text-base text-gray-600">
+      {{ config.loadingMessage || 'Cargando datos...' }}
+    </p>
+  </div>
+
+  <!-- Formulario -->
+  <div *ngIf="!loading" class="form-container">
+    <!-- Formulario reactivo -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-layout">
+
+      <!-- Contenido scrolleable -->
+      <div class="form-content-scrollable">
+        <!-- Secciones del formulario -->
+        <div *ngFor="let section of config.sections"
+              [class]="section.customClass || ''"
+              class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden section-card">
+
+          <!-- Campos de la sección -->
+          <div class="p-3 sm:p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
+
+            <!-- Iterar sobre campos -->
+            <ng-container *ngFor="let field of section.fields">
+              <div *ngIf="shouldShowField(field)"
+                    [class.md:col-span-2]="field.colSpan === 12 || field.type === 'textarea' || field.type === 'array'"
+                    [class]="field.customClass || ''">
+
+                <!-- Campo de texto -->
+                <div *ngIf="field.type === 'text' || field.type === 'email'" class="space-y-1">
+                  <label [for]="field.name" class="block text-xs sm:text-sm font-medium text-gray-700">
+                    {{ field.label }}
+                    <span *ngIf="field.required" class="text-red-500">*</span>
+                  </label>
+
+                    <!-- Readonly: mostrar como texto -->
+                    <div *ngIf="field.readonly || config.readonly"
+                         class="flex items-center space-x-2 p-2 bg-white rounded-lg border border-gray-200">
+                      <i *ngIf="field.icon" [class]="field.icon + ' text-gray-500 text-xs'"></i>
+                      <span class="text-xs sm:text-sm text-gray-900 font-medium">
+                        {{ form.get(field.name)?.value || '-' }}
+                      </span>
+                    </div>
+
+                  <!-- Editable: input -->
+                  <div *ngIf="!field.readonly && !config.readonly" class="relative">
+                    <span *ngIf="field.icon"
+                          class="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
+                      <i [class]="field.icon + ' text-gray-400 text-xs'"></i>
+                    </span>
+                    <input
+                      pInputText
+                      [id]="field.name"
+                      [formControlName]="field.name"
+                      [type]="field.type"
+                      [placeholder]="field.placeholder || ''"
+                      [class.pl-10]="field.icon"
+                      [pTooltip]="field.tooltip || ''"
+                      class="w-full p-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      [class.border-red-500]="hasError(field.name)">
+                  </div>
+
+                  <!-- Mensaje de ayuda -->
+                  <p *ngIf="field.helpText && !hasError(field.name)"
+                      class="text-xs text-gray-500 leading-tight">
+                    {{ field.helpText }}
+                  </p>
+
+                  <!-- Mensaje de error -->
+                  <p *ngIf="hasError(field.name)"
+                      class="text-xs text-red-600 flex items-center">
+                    <i class="pi pi-exclamation-circle mr-1 text-xs"></i>
+                    {{ getErrorMessage(field) }}
+                  </p>
+                </div>
+
+                  <!-- Campo CUIT (readonly con formato) -->
+                  <div *ngIf="field.type === 'cuit'" class="space-y-1">
+                    <label class="block text-xs sm:text-sm font-medium text-gray-700">
+                      {{ field.label }}
+                      <span *ngIf="field.required" class="text-red-500">*</span>
+                    </label>
+                    <div class="flex items-center space-x-2 p-2 bg-gray-50 rounded-lg border border-gray-200">
+                      <i *ngIf="field.icon" [class]="field.icon + ' text-gray-500 text-xs'"></i>
+                      <span class="text-xs sm:text-sm text-gray-900 font-medium">
+                        {{ (form.get(field.name)?.value || '') | cuitFormat }}
+                      </span>
+                    </div>
+                    <p *ngIf="field.helpText" class="text-xs text-gray-500 leading-tight">
+                      {{ field.helpText }}
+                    </p>
+                  </div>
+
+                <!-- Campo de número -->
+                <div *ngIf="field.type === 'number'" class="space-y-1">
+                  <label [for]="field.name" class="block text-xs sm:text-sm font-medium text-gray-700">
+                    {{ field.label }}
+                    <span *ngIf="field.required" class="text-red-500">*</span>
+                  </label>
+                  <div class="relative">
+                    <span *ngIf="field.icon"
+                          class="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
+                      <i [class]="field.icon + ' text-gray-400 text-xs'"></i>
+                    </span>
+                    <p-inputNumber
+                      [inputId]="field.name"
+                      [formControlName]="field.name"
+                      [placeholder]="field.placeholder || ''"
+                      [min]="field.min"
+                      [max]="field.max"
+                      [disabled]="!!(field.disabled || field.readonly || config.readonly)"
+                      [inputStyleClass]="'w-full p-2 text-xs sm:text-sm border border-gray-300 rounded-lg ' + (field.icon ? 'pl-10' : '')"
+                      [inputStyle]="(field.readonly || config.readonly) ? {'background-color': 'white', 'color': 'black'} : null">
+                    </p-inputNumber>
+                  </div>
+                  <p *ngIf="hasError(field.name)"
+                      class="text-xs text-red-600 flex items-center">
+                    <i class="pi pi-exclamation-circle mr-1 text-xs"></i>
+                    {{ getErrorMessage(field) }}
+                  </p>
+                </div>
+
+                <!-- Campo de textarea -->
+                <div *ngIf="field.type === 'textarea'" class="space-y-1">
+                  <label [for]="field.name" class="block text-xs sm:text-sm font-medium text-gray-700">
+                    {{ field.label }}
+                    <span *ngIf="field.required" class="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    pInputTextarea
+                    [id]="field.name"
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder || ''"
+                    [rows]="3"
+                    [disabled]="!!(field.disabled || field.readonly || config.readonly)"
+                    class="w-full p-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    [class.border-red-500]="hasError(field.name)"
+                    [ngStyle]="(field.readonly || config.readonly) ? {'background-color': 'white', 'color': 'black'} : null">
+                  </textarea>
+                  <p *ngIf="hasError(field.name)"
+                      class="text-xs text-red-600 flex items-center">
+                    <i class="pi pi-exclamation-circle mr-1 text-xs"></i>
+                    {{ getErrorMessage(field) }}
+                  </p>
+                </div>
+
+                <!-- Campo de checkbox -->
+                <div *ngIf="field.type === 'checkbox' && field.colSpan !== 0" class="flex items-center space-x-2 pt-3">
+                  <p-checkbox
+                    [inputId]="field.name"
+                    [formControlName]="field.name"
+                    [binary]="true"
+                    [disabled]="!!(field.disabled || field.readonly || config.readonly)">
+                  </p-checkbox>
+                  <label [for]="field.name" class="text-xs sm:text-sm font-medium text-gray-700 cursor-pointer">
+                    {{ field.label }}
+                  </label>
+                </div>
+
+                <!-- Campo oculto para checkbox con colSpan 0 -->
+                <input *ngIf="field.type === 'checkbox' && field.colSpan === 0"
+                        type="hidden"
+                        [formControlName]="field.name">
+
+                <!-- Campo de select -->
+                <div *ngIf="field.type === 'select'" class="space-y-1">
+                  <label [for]="field.name" class="block text-xs sm:text-sm font-medium text-gray-700">
+                    {{ field.label }}
+                    <span *ngIf="field.required" class="text-red-500">*</span>
+                  </label>
+                  <p-dropdown
+                    [inputId]="field.name"
+                    [formControlName]="field.name"
+                    [options]="field.options || []"
+                    [placeholder]="field.placeholder || 'Seleccione...'"
+                    [disabled]="!!(field.disabled || field.readonly || config.readonly)"
+                    optionLabel="label"
+                    optionValue="value"
+                    styleClass="w-full text-xs sm:text-sm">
+                  </p-dropdown>
+                  <p *ngIf="hasError(field.name)"
+                      class="text-xs text-red-600 flex items-center">
+                    <i class="pi pi-exclamation-circle mr-1 text-xs"></i>
+                    {{ getErrorMessage(field) }}
+                  </p>
+                </div>
+
+                <!-- Campo de fecha -->
+                <div *ngIf="field.type === 'date'" class="space-y-1">
+                  <label [for]="field.name" class="block text-xs sm:text-sm font-medium text-gray-700">
+                    {{ field.label }}
+                    <span *ngIf="field.required" class="text-red-500">*</span>
+                  </label>
+                  <p-calendar
+                    [inputId]="field.name"
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder || ''"
+                    [disabled]="!!(field.disabled || field.readonly || config.readonly)"
+                    dateFormat="dd/mm/yy"
+                    [showIcon]="true"
+                    [appendTo]="'body'"
+                    styleClass="w-full text-xs sm:text-sm">
+                  </p-calendar>
+                  <p *ngIf="hasError(field.name)"
+                      class="text-xs text-red-600 flex items-center">
+                    <i class="pi pi-exclamation-circle mr-1 text-xs"></i>
+                    {{ getErrorMessage(field) }}
+                  </p>
+                </div>
+
+                <!-- Campo de array (FormArray) -->
+                <div *ngIf="field.type === 'array'" class="space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label class="block text-xs sm:text-sm font-medium text-gray-700">
+                      {{ field.label }}
+                      <span *ngIf="field.required" class="text-red-500">*</span>
+                    </label>
+                    <p-button
+                      *ngIf="!field.readonly && !config.readonly"
+                      icon="pi pi-plus"
+                      (onClick)="addArrayItem(field.name)"
+                      size="small"
+                      severity="success"
+                      [pTooltip]="field.addButtonLabel || 'Agregar'"
+                      tooltipPosition="left">
+                    </p-button>
+                  </div>
+
+                  <!-- Items del array -->
+                  <div [formArrayName]="field.name" class="space-y-2">
+                    <div *ngFor="let _item of getFormArray(field.name).controls; let i = index"
+                          [formGroupName]="i"
+                          class="bg-gray-50 rounded-lg border border-gray-300 p-2.5">
+
+                      <!-- Header del item -->
+                      <div class="flex items-center justify-end mb-2">
+                        <p-button
+                          *ngIf="!field.readonly && !config.readonly"
+                          icon="pi pi-trash"
+                          (onClick)="removeArrayItem(field.name, i)"
+                          size="small"
+                          severity="danger"
+                          [text]="true">
+                        </p-button>
+                      </div>
+
+                      <!-- Campos del item -->
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <ng-container *ngFor="let arrayField of field.arrayFields">
+
+                          <!-- Campo oculto (colSpan 0) - mantener en form pero no renderizar -->
+                          <input *ngIf="arrayField.colSpan === 0"
+                                  type="hidden"
+                                  [formControlName]="arrayField.name">
+
+                            <!-- Campo de texto en array -->
+                            <div *ngIf="(arrayField.type === 'text' || arrayField.type === 'email' || arrayField.type === 'phone') && arrayField.colSpan !== 0"
+                                 [class.sm:col-span-2]="arrayField.colSpan === 12"
+                                 class="space-y-0.5">
+                              <label [for]="arrayField.name + '_' + i"
+                                     class="block text-xs font-medium text-black">
+                                {{ arrayField.label }}
+                                <span *ngIf="arrayField.required" class="text-red-500">*</span>
+                              </label>
+                              <input
+                                pInputText
+                                [id]="arrayField.name + '_' + i"
+                                [formControlName]="arrayField.name"
+                                [type]="arrayField.type === 'email' ? 'email' : 'text'"
+                                [placeholder]="arrayField.placeholder || ''"
+                                [disabled]="!!(arrayField.disabled || arrayField.readonly || config.readonly)"
+                                class="w-full p-1.5 text-xs sm:text-sm border border-gray-300 rounded-lg"
+                                [ngStyle]="(arrayField.readonly || config.readonly) ? {'background-color': 'white', 'color': 'black'} : null">
+                            </div>
+
+                            <!-- Checkbox en array -->
+                            <div *ngIf="arrayField.type === 'checkbox' && arrayField.colSpan !== 0"
+                                 class="flex items-center space-x-1.5 pt-3">
+                              <p-checkbox
+                                [inputId]="arrayField.name + '_' + i"
+                                [formControlName]="arrayField.name"
+                                [binary]="true"
+                                [disabled]="!!(arrayField.disabled || arrayField.readonly || config.readonly)">
+                              </p-checkbox>
+                              <label [for]="arrayField.name + '_' + i"
+                                     class="text-xs font-medium text-black cursor-pointer">
+                                {{ arrayField.label }}
+                              </label>
+                            </div>
+
+                        </ng-container>
+                      </div>
+                    </div>
+
+                    <!-- Mensaje si no hay items -->
+                    <div *ngIf="getFormArray(field.name).length === 0"
+                          class="text-center py-4 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
+                      <i class="pi pi-inbox text-xl mb-1 block"></i>
+                      <p class="text-xs">No hay {{ field.label.toLowerCase() }} agregados</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </ng-container>
+
+            </div>
+          </div>
+        </div>
+        <!-- Fin de secciones -->
+      </div>
+      <!-- Fin contenido scrolleable -->
+
+      <!-- Botones de acción - Sticky footer -->
+      <div *ngIf="config.showSubmitButton !== false || config.showCancelButton !== false"
+            class="form-actions-sticky">
+        <div class="flex flex-col sm:flex-row justify-end gap-2">
+
+          <!-- Botón Cancelar -->
+          <p-button
+            *ngIf="config.showCancelButton !== false"
+            [label]="config.cancelButtonLabel || 'Cancelar'"
+            [icon]="config.cancelButtonIcon || 'pi pi-times'"
+            (onClick)="onCancel()"
+            [disabled]="saving"
+            severity="secondary"
+            styleClass="w-full sm:w-auto">
+          </p-button>
+
+          <!-- Botón Guardar -->
+          <p-button
+            *ngIf="config.showSubmitButton !== false && !config.readonly"
+            type="submit"
+            [label]="config.submitButtonLabel || (config.isEditMode ? 'Guardar Cambios' : 'Crear')"
+            [icon]="config.submitButtonIcon || 'pi pi-check'"
+            [loading]="saving"
+            [disabled]="form.invalid || saving"
+            [severity]="submitSeverity"
+            styleClass="w-full sm:w-auto">
+          </p-button>
+        </div>
+      </div>
+      <!-- Fin botones sticky -->
+
+    </form>
+  </div>
+</div>

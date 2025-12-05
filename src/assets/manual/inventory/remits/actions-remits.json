@@ -1,0 +1,164 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Remitos",
+  "intro": "Esta sección detalla cómo gestionar el ciclo de vida de las recepciones y transferencias.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note-remitos",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "generacion-remitos",
+      "title": "Generación de Remitos",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Es importante distinguir el origen del remito para entender su aparición en la lista. El sistema diferencia entre dos tipos:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/remits/remits-external-table.jpeg",
+          "alt": "Tabla de remitos externos"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Remitos Externos:</strong> Se originan desde las Órdenes de Compra. Una vez marcada como recibida y validados los lotes, el remito aparece automáticamente aquí.",
+            "<strong>Remitos Internos:</strong> Se generan a partir de un 'Movimiento de Stock' de tipo transferencia entre sucursales."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Para generar remitos externos, debe dirigirse primero a la sección de <strong>Órdenes de Compra</strong>."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "transferencias-internas",
+      "title": "Gestionar Transferencias Internas",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cuando llega mercadería de otra sucursal, el usuario debe actuar sobre los remitos en estado <strong>PENDIENTE</strong> desde la pestaña <strong>Interno</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/remits/remits-internal-table.jpeg",
+          "alt": "Tabla de remitos internos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmar Transferencia"
+        },
+        {
+          "type": "paragraph",
+          "text": "Acceda al menú de acciones <strong>(⋮)</strong> y seleccione la opción <strong>Confirmar transferencia</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/remits/remits-internal-confirm.jpeg",
+          "alt": "Confirmar remito interno"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema mostrará una <strong>Pantalla</strong> con un tilde de éxito preguntando: '¿Está seguro que desea confirmar esta transferencia como completada?'. Al confirmar, el remito pasa a estado <span class=\"badge status-success\">RECIBIDO</span> y el stock se actualiza."
+        },
+        {
+          "type": "subtitle",
+          "text": "Cancelar Transferencia"
+        },
+        {
+          "type": "paragraph",
+          "text": "Acceda al menú de acciones <strong>(⋮)</strong> y seleccione la opción <strong>Cancelar transferencia</strong>."
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema mostrará una advertencia crítica. Si acepta, el sistema creará un movimiento inverso para devolver el stock a la ubicación de origen y el remito pasará a estado <span class=\"badge status-danger\">CANCELADO</span>."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "gestionar-devoluciones",
+      "title": "Gestionar Devoluciones (Externos)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Si la mercadería recibida de un proveedor presenta fallas tras haber sido aceptada, se puede gestionar una devolución parcial o total."
+        },
+        {
+          "type": "paragraph",
+          "text": "En la pestaña <strong>Externo</strong>, expanda la fila del remito correspondiente y haga clic en el botón rojo <strong>Gestionar Devoluciones</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/remits/remits-external-return.jpeg",
+          "alt": "Devolución de remito externo"
+        },
+        {
+          "type": "paragraph",
+          "text": "La <strong>Pantalla</strong> cambiará para permitirle seleccionar mediante casillas (checkbox) qué productos específicos desea devolver."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Devolver Seleccionados</strong>",
+              "Genera un movimiento de 'Egreso' descontando la mercadería y cambia el estado a DEVUELTO."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Esta acción impacta directamente en el stock, generando un egreso automático para ajustar el inventario real."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "remitos",
+    "acciones",
+    "transferencias",
+    "internos",
+    "externos",
+    "devoluciones"
+  ]
+}

@@ -1,0 +1,51 @@
+<section class="insurer-contacts-section">
+
+
+  @if (showForm && contactTypes.length > 0) {
+
+      <app-generic-form
+        [fields]="contactFields"
+        [initialValue]="contactInitialValue"
+        [saving]="formSaving"
+        [showHeader]="false"
+        [showCard]="false"
+        submitType="save"
+        submitIcon="pi pi-check"
+        submitLabel="Guardar"
+        (submitForm)="onSubmitContact($event)"
+        (cancelForm)="onCancelForm()"
+      ></app-generic-form>
+  }
+
+  <app-generic-table
+    [data]="insurerContacts"
+    [columns]="[
+      { field: 'contactTypeName', header: 'Tipo de contacto', sortable: true },
+      { field: 'contact', header: 'Contacto', sortable: true }
+    ]"
+    [pageable]="false"
+    [loading]="loading"
+    [getActions]="getActions"
+    (create)="openCreateForm()"
+    (downloadExcel)="onExportExcel()"
+    (downloadPdf)="onExportPdf()"
+  ></app-generic-table>
+
+
+  @if (alert) {
+    <app-generic-alert
+      [type]="alert.type"
+      [text]="alert.text">
+    </app-generic-alert>
+  }
+
+  @if (showDeleteModal && contactToDelete) {
+    <app-confirmation-modal
+      icon="pi pi-trash"
+      title="Eliminar contacto"
+      [message]="'¿Seguro que deseas eliminar este contacto?'"
+      (confirmed)="onConfirmDelete()"
+      (dismissed)="onCancelDelete()"
+    ></app-confirmation-modal>
+  }
+</section>

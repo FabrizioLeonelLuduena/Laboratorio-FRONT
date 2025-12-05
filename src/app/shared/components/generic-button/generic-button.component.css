@@ -1,0 +1,127 @@
+:host {
+  display: inline-flex;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 120ms ease, transform 80ms ease;
+  color: #fff;
+  background: var(--brand-primary-700);
+  user-select: none;
+}
+
+button:hover {
+  filter: brightness(0.9);
+}
+
+/* Fix: No aplicar brightness cuando el botón solo tiene icono (como el de 3 puntos) */
+button:has(i:only-child):hover,
+button.custom:has(i):not(:has(span)):hover {
+  filter: none;
+  background: var(--surface-hover, rgb(0 0 0 / 5%));
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.search {
+  background: var(--card);
+  color: var(--brand-primary-700);
+  border: 1px solid var(--brand-primary-700);
+}
+
+.search:hover {
+  filter: brightness(1.05);
+}
+
+.save {
+  background: var(--brand-primary-700);
+}
+
+.accept {
+  background: var(--brand-primary-700);
+}
+
+.cancel {
+  background: var(--brand-warn);
+}
+
+.back,
+.search {
+  background: var(--card);
+  color: var(--on-surface);
+  border: 1px solid #d5e2e4;
+}
+
+.advanced,
+.search {
+  background: var(--card);
+  color: var(--on-surface);
+  border: 1px solid #d5e2e4;
+}
+
+.create {
+  background: var(--brand-primary-700);
+}
+
+button i {
+  font-size: 16px;
+  display: inline-block;
+  line-height: 1;
+}
+
+/* stylelint-disable declaration-no-important */
+button.alternative {
+  background: var(--brand-accent) !important;
+  color: #fff !important;
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 80%, black) !important;
+}
+/* stylelint-enable declaration-no-important */
+
+button.alternative:hover {
+  filter: brightness(1.1);
+}
+
+/* stylelint-disable declaration-no-important */
+button.alternative i {
+  color: #fff !important;
+}
+/* stylelint-enable declaration-no-important */
+
+.invoice {
+  background: var(--brand-primary-700) ;
+}
+
+.invoicePrint {
+  background: var(--brand-primary-700);
+}
+
+
+
+@media (width <= 768px) {
+  button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+:host(.fill) {
+  display: flex;
+  width: 100%;
+}
+
+:host(.fill) .btn {
+  width: 100%;
+  justify-content: flex-start;
+  padding-left: 12px;
+}

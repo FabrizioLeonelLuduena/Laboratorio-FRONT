@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo GenericAlert Estándar</title>
+  <style>
+    :root {
+      --brand-success: #5c9f3c;
+      --brand-warn: #d32f2f;
+      --brand-accent: #ff0000;
+      --border-color: #d5e2e4;
+      --card: #ffffff;
+      --on-surface: #00435d;
+      --on-surface-muted: #757477;
+    }
+
+    body {
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: #f4f7fa;
+      padding: 40px;
+      color: var(--on-surface);
+    }
+
+    .heading {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .text-14 {
+      margin: 0;
+      font-size: 14px;
+      color: var(--on-surface-muted);
+    }
+
+    .alert {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--card);
+      box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+      width: 100%;
+      max-width: 480px;
+      margin: 20px auto;
+      transition: all 0.2s ease;
+    }
+
+    .alert__icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .alert__content {
+      flex: 1;
+      color: var(--on-surface);
+    }
+
+    /* === VARIANTES === */
+    .alert--success {
+      background: #e8f5e9;
+      border: 1px solid var(--brand-success);
+      border-left: 6px solid var(--brand-success);
+    }
+
+    .alert--success .alert__icon,
+    .alert--success .heading {
+      color: var(--brand-success);
+    }
+
+    .alert--error {
+      background: #ffebee;
+      border: 1px solid var(--brand-warn);
+      border-left: 6px solid var(--brand-warn);
+    }
+
+    .alert--error .alert__icon,
+    .alert--error .heading {
+      color: var(--brand-warn);
+    }
+
+    .alert--warning {
+      background: #fff3e0;
+      border: 1px solid var(--brand-accent);
+      border-left: 6px solid var(--brand-accent);
+    }
+
+    .alert--warning .alert__icon,
+    .alert--warning .heading {
+      color: var(--brand-accent);
+    }
+
+    @media (width <= 768px) {
+      .alert {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .alert__icon {
+        margin-bottom: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="alert alert--success">
+  <div class="alert__icon">✔</div>
+  <div class="alert__content">
+    <h4 class="heading">Éxito</h4>
+    <p class="text-14">Los datos fueron guardados correctamente.</p>
+  </div>
+</div>
+
+<div class="alert alert--error">
+  <div class="alert__icon">✖</div>
+  <div class="alert__content">
+    <h4 class="heading">Error</h4>
+    <p class="text-14">No se pudo procesar la información.</p>
+  </div>
+</div>
+
+<div class="alert alert--warning">
+  <div class="alert__icon">⚠</div>
+  <div class="alert__content">
+    <h4 class="heading">Advertencia</h4>
+    <p class="text-14">Revisar antes de continuar con la acción.</p>
+  </div>
+</div>
+
+</body>
+</html>

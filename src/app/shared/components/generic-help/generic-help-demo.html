@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo — Generic Help Minimal</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/primeicons@6.0.1/primeicons.css"
+  />
+
+  <style>
+    :root {
+      --brand-primary-700: #008f8c;
+      --on-primary: #fff;
+      --on-surface: #00435d;
+      --border-color: #d5e2e4;
+      --card: #fff;
+      --background: #f4f6f8;
+    }
+
+    body {
+      font-family: "Roboto", system-ui, sans-serif;
+      background: var(--background);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .help-button {
+      background: transparent;
+      border: none;
+      color: var(--on-primary);
+      font-size: 26px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1200;
+    }
+
+    .help-button:hover {
+      opacity: 0.85;
+      transform: scale(1.1);
+    }
+
+    .help-button:active {
+      transform: scale(0.95);
+    }
+
+    .demo-bg {
+      background: linear-gradient(135deg, #00bbb8 0%, #00435d 100%);
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+
+    .fake-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .fake-modal.active {
+      display: flex;
+    }
+
+    .fake-modal-content {
+      background: var(--card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+      max-width: 420px;
+      color: var(--on-surface);
+      text-align: left;
+      position: relative;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fake-modal-content h2 {
+      margin-top: 0;
+      color: var(--on-surface);
+    }
+
+    .close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--on-surface);
+    }
+
+    @media (max-width: 600px) {
+      .help-button {
+        font-size: 22px;
+        bottom: 16px;
+        right: 16px;
+      }
+
+      .fake-modal-content {
+        max-width: 90%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="demo-bg"></div>
+
+<button class="help-button" onclick="openHelp()">
+  <i class="pi pi-question-circle"></i>
+</button>
+
+<div class="fake-modal" id="helpModal">
+  <div class="fake-modal-content">
+    <span class="close" onclick="closeHelp()">&times;</span>
+    <h2>Guia de usuario</h2>
+    <p>Desde esta pantalla podés visualizar, editar y eliminar registros.</p>
+    <ul>
+      <li>El ícono <i class="pi pi-pencil"></i> edita un registro.</li>
+      <li>El ícono <i class="pi pi-trash"></i> elimina uno existente.</li>
+      <li>El botón <i class="pi pi-plus"></i> permite agregar un nuevo registro.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function openHelp() {
+    document.getElementById("helpModal").classList.add("active");
+  }
+  function closeHelp() {
+    document.getElementById("helpModal").classList.remove("active");
+  }
+</script>
+</body>
+</html>

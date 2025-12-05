@@ -1,0 +1,124 @@
+<section class="provided-details-wrapper">
+  <app-generic-header-card title="Prestaciones del convenio" (backPressed)="goBack()"> </app-generic-header-card>
+
+  <ng-template #selectTpl let-row>
+    <input type="checkbox" [checked]="row.selected" (change)="toggleSelect(row)" />
+  </ng-template>
+
+  <ng-template #amountCoveredTpl let-row>
+    <span [class.excluded-text]="row.excluded">{{ row.amountCovered }}</span>
+  </ng-template>
+
+  <ng-template #statusTpl let-row>
+    <app-generic-badge
+      [status]="badgeStatus(row)"
+      [text]="row.excluded ? 'Excluida' : statusToSpanish(row.status)"
+    ></app-generic-badge>
+  </ng-template>
+
+  @if (data.length) {
+    <div class="actions-bar border-t border-b border-surface-200 py-2 px-3 bg-surface-50 rounded mb-4 mt-2">
+      <div class="flex items-center gap-2">
+        <app-generic-button
+          type="custom"
+          icon="pi pi-check-square"
+          [text]="allVisibleSelected() ? 'Deseleccionar todos' : 'Seleccionar todos'"
+          (pressed)="toggleSelectAllVisible()"
+          [disabled]="!data.length"
+          [color]="'--brand-primary-700'"
+          [customTextColor]="'--on-primary'"
+          [borderColor]="'--brand-primary-700'"
+        ></app-generic-button>
+        <app-generic-button
+          type="custom"
+          icon="pi pi-times"
+          [disabled]="selectedIds.size === 0"
+          (pressed)="clearSelection()"
+          [color]="'--surface-200'"
+          [customTextColor]="'--text-color-secondary'"
+          [borderColor]="'--brand-primary-700'"
+        ></app-generic-button>
+        <span class="count">Seleccionadas: {{ selectedIds.size }}</span>
+        <span class="count" *ngIf="excludedCount > 0">Excluidas: {{ excludedCount }}</span>
+      </div>
+      <div class="flex items-center gap-2 ml-auto">
+        <app-generic-button
+          type="custom"
+          icon="pi pi-ban"
+          [text]="'Excluir'"
+          [disabled]="selectedIds.size === 0"
+          (pressed)="excludeSelected()"
+          [color]="'--brand-accent'"
+          [customTextColor]="'--on-primary'"
+          [borderColor]="'--brand-accent'"
+        ></app-generic-button>
+      </div>
+    </div>
+  }
+
+  <app-generic-table
+    [data]="data"
+    [columns]="columns"
+    [pageable]="false"
+    [loading]="loading"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [expandedRowTemplate]="analysisTpl"
+    [dataKey]="'id'"
+    [columnTemplates]="columnTemplates"
+    [showActions]="false"
+    [showCreateButton]="false"
+    [showSearch]="true"
+    [showFilters]="true"
+    [filters]="tableFilters"
+    [showDownloadMenu]="false"
+    (filterChange)="onTableFilterChange($event)"
+    (globalFilterChange)="onTableSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+  ></app-generic-table>
+
+  <!-- Expanded row template: analyses and patient details -->
+  <ng-template #analysisTpl let-row>
+
+      <div class="mb-3">
+        <div class="patient-card flex items-center gap-4 p-3 rounded shadow bg-surface-100 mb-2">
+          <span class="pi pi-user text-2xl text-brand-primary-700"></span>
+          <div>
+            <div class="font-semibold text-brand-primary-700">{{ row.patient }}</div>
+            <div class="text-sm text-surface-600">Documento: <span class="font-medium">{{ row.dni }}</span></div>
+            <div class="text-sm text-surface-600">N° autorización: <span class="font-medium">{{ row.authorizationNumber }}</span></div>
+          </div>
+        </div>
+      </div>
+      @if (row?.analysisAmounts?.length) {
+        <div class="mini-table-wrapper overflow-x-auto">
+          <table class="mini-table w-full border-collapse text-sm">
+            <thead>
+              <tr class="bg-surface-200 text-brand-primary-700">
+                <th class="py-2 px-3 text-left font-semibold">Análisis</th>
+                <th class="py-2 px-3 text-right font-semibold">Importe cubierto</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (a of row.analysisAmounts; track a.analysisId) {
+                <tr class="border-b border-surface-300 hover:bg-surface-50">
+                  <td class="py-2 px-3">{{ a.analysisName }}</td>
+                  <td class="py-2 px-3 text-right">{{ a.coveredAmount | currency: 'ARS' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <span class="text-surface-600">Sin análisis disponibles</span>
+      }
+
+  </ng-template>
+
+  <ng-template #reincludeTpl let-row>
+    @if (row.excluded) {
+      <app-generic-button type="alternative" text="Reincluir" (pressed)="reinclude(row)"></app-generic-button>
+    }
+  </ng-template>
+</section>

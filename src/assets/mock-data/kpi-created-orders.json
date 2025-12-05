@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Órdenes creadas",
+      "value": 45
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

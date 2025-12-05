@@ -1,0 +1,124 @@
+{
+  "id": "screen",
+  "moduleId": "autenticacion",
+  "title": "Pantalla y acciones principales",
+
+  "intro": "La pantalla principal del Sistema de Gestión del Laboratorio Castillo Chidiak muestra las herramientas de navegación y accesos rápidos a las funcionalidades más importantes que tiene disponibles cada usuario según su rol.",
+
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Usuarios internos del laboratorio",
+      "Administradores",
+      "Secretaría"
+    ]
+  },
+
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br>Usuarios internos del laboratorio"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "herramientas-principales",
+      "title": "Herramientas de la pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al ingresar al sistema, se visualizan los elementos de navegación esenciales que permiten acceder rápidamente a los distintos módulos y funciones."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/screen/home.jpg",
+          "alt": "Vista general de la pantalla principal del sistema"
+        },
+        {
+          "type": "subtitle",
+          "text": "Contenido de las herramientas principales"
+        },
+        {
+          "type": "table",
+          "columns": ["Herramienta", "Ícono", "Descripción"],
+          "rows": [
+            [
+              "Dashboard",
+              "-",
+              "Pantalla principal con resúmenes, estadísticas y accesos rápidos según el rol del usuario."
+            ],
+            [
+              "Barra lateral",
+              "<i class='pi pi-bars'></i>",
+              "Despliega el menú de navegación principal con accesos directos a los módulos del sistema. Puede ocultarse durante la navegación."
+            ],
+            [
+              "Tutorial",
+              "<i class='pi pi-question-circle'></i>",
+              "Abre la sección de instrucciones y guías paso a paso sobre el uso del sistema."
+            ],
+            [
+              "Notificaciones",
+              "<i class='pi pi-bell'></i>",
+              "Muestra alertas importantes, recordatorios y notificaciones relacionadas con tareas pendientes."
+            ],
+            [
+              "Usuario",
+              "<i class='pi pi-user'></i>",
+              "Permite acceder al Perfil, Ajustes y Cerrar Sesión."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>La barra lateral y los íconos superiores permanecen visibles en todas las pantallas del sistema, facilitando la navegación independiente de la sección en que se encuentre el usuario."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "acciones-configuracion",
+      "title": "Acciones de configuración de la cuenta",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al presionar el ícono de Usuario ubicado en la esquina superior derecha, se despliega un menú que permite gestionar opciones vinculadas a la cuenta."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Perfil</strong>: muestra información personal del usuario.",
+            "<strong>Ajustes</strong>: permite modificar configuraciones relacionadas a la cuenta.",
+            "<strong>Cerrar sesión</strong>: finaliza la sesión activa evitando accesos no autorizados."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br> La pantalla de Inicio se adaptará automáticamente según el rol del usuario, mostrando únicamente los módulos a los que tenga acceso."
+        }
+      ]
+    }
+
+  ],
+
+  "tags": [
+    "pantalla principal",
+    "navegación",
+    "interfaz",
+    "configuración",
+    "manual"
+  ]
+}

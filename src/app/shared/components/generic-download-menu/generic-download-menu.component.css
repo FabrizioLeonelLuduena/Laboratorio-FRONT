@@ -1,0 +1,91 @@
+:root {
+  --text: #003771;
+  --surface: #fff;
+  --border: #e6e6e6;
+  --card: #fff;
+  --brand-accent: #f33;
+}
+
+.download-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.download-menu-container button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.06s ease;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  transform: translateY(0);
+  will-change: transform, background;
+}
+
+.download-menu-container button svg,
+.download-menu-container button i {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-block;
+}
+
+.download-menu-container button:hover {
+  background: color-mix(in srgb, var(--surface) 80%, var(--text) 5%);
+  background: rgb(0 55 113 / 4%);
+  transform: translateY(-1px);
+}
+
+.download-menu-container button:active {
+  background: color-mix(in srgb, var(--surface) 95%, var(--text) 5%);
+  background: rgb(0 55 100 / 2%);
+  transform: translateY(0.5px);
+  box-shadow: 0 0 0 2px transparent;
+}
+
+.download-menu-container button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(51 102 255 / 12%);
+  border-color: var(--brand-accent);
+}
+
+.download-menu-container .indicator-badge {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--brand-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px var(--card);
+  padding: 0 3px;
+}
+
+.download-menu-container ul {
+  z-index: 999;
+  margin: 6px 0 0;
+  padding: 8px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 6%);
+}
+
+.animate-fade-in {
+  animation: fade-in 0.15s ease-out;
+}

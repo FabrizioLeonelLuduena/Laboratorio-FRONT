@@ -1,0 +1,122 @@
+<app-generic-modal-form
+  [visible]="visible"
+  [title]="'Agregar medio de pago'"
+  [width]="'600px'"
+  (closed)="onClose()">
+  <div class="edit-payment-modal">
+    <form [formGroup]="paymentForm" class="payment-form">
+      <!-- Payment Method Selection -->
+      <div class="form-grid">
+        <div class="form-field full-width">
+          <label for="paymentMethod" class="required">Medio de pago</label>
+          <p-dropdown
+            id="paymentMethod"
+            formControlName="paymentMethod"
+            [options]="paymentMethodOptions"
+            placeholder="Seleccione medio de pago"
+            [styleClass]="isFieldInvalid('paymentMethod') ? 'ng-invalid ng-dirty' : ''"
+            optionLabel="label"
+            optionValue="value"
+          ></p-dropdown>
+          <small class="error-message" *ngIf="isFieldInvalid('paymentMethod')">
+            {{ getFieldError('paymentMethod') }}
+          </small>
+        </div>
+      </div>
+
+      <!-- Fund Destination (Always visible and disabled) -->
+      <!--<div class="form-grid">
+        <div class="form-field full-width">
+          <label for="fundDestination" class="required">Destino Fondo</label>
+          <p-dropdown
+            id="fundDestination"
+            formControlName="fundDestination"
+            [options]="fundDestinationOptions"
+            placeholder="Sucursal centro"
+            optionLabel="label"
+            optionValue="value"
+          ></p-dropdown>
+        </div>
+      </div>
+      -->
+      <!-- Bank (Only for TRANSFERENCIA) -->
+      <div class="form-grid" *ngIf="shouldShowBank()">
+        <div class="form-field full-width">
+          <label for="bank">Entidad de destino</label>
+          <p-dropdown
+            id="bank"
+            formControlName="bank"
+            [options]="bankOptions"
+            placeholder="Seleccione entidad de destino"
+            optionLabel="label"
+            optionValue="value"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <!-- Amount with Use Remaining Balance button -->
+      <div class="amount-section">
+        <div class="form-field">
+          <label for="amount" class="required">Importe</label>
+          <div class="amount-input-group">
+            <p-inputNumber
+              (onFocus)="selectAll($event)"
+              id="amount"
+              formControlName="amount"
+              mode="currency"
+              currency="ARS"
+              locale="es-AR"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              [min]="minAmount"
+              [max]="maxAmount"
+              placeholder="0.00"
+              (onInput)="onAmountInput($event)"
+              (onBlur)="onAmountBlur()"
+              (keydown)="onAmountKeyDown($event)"
+              [styleClass]="isFieldInvalid('amount') ? 'ng-invalid ng-dirty' : ''"
+            ></p-inputNumber>
+            <app-generic-button
+              *ngIf="remainingBalance > 0"
+              type="custom"
+              text="Usar saldo restante"
+              icon="pi pi-calculator"
+              color="--card"
+              customTextColor="--on-surface"
+              borderColor="--border-color"
+              (pressed)="fillRemainingBalance()"
+            ></app-generic-button>
+          </div>
+          <small class="error-message" *ngIf="isFieldInvalid('amount')">
+            {{ getFieldError('amount') }}
+          </small>
+        </div>
+      </div>
+
+      <!-- Summary Info (Always visible) -->
+      <div class="info-card">
+        <div class="info-row">
+          <span class="info-label">Total factura:</span>
+          <span class="info-value">${{ totalAmount.toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Saldo pendiente:</span>
+          <span class="info-value">${{ remainingBalance.toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+        </div>
+      </div>
+    </form>
+
+    <!-- Modal Footer (Always visible) -->
+    <div class="modal-footer">
+      <app-generic-button
+        type="cancel"
+        (pressed)="cancel()"
+      ></app-generic-button>
+      <app-generic-button
+        type="save"
+        [disabled]="paymentForm.invalid"
+        (pressed)="save()"
+      ></app-generic-button>
+    </div>
+  </div>
+</app-generic-modal-form>

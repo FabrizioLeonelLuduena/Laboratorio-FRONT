@@ -1,0 +1,130 @@
+/* ========== ESTILOS COMPARTIDOS DE GRILLA ========== */
+@import '../../../../../shared/styles/grid-styles.css';
+
+/* ========== FIX PARA DROPDOWN QUE SE CORTA ========== */
+.custom-items-grid {
+  overflow: visible;
+}
+
+.grid-body {
+  overflow: visible auto;
+}
+
+.grid-cell.col-descripcion {
+  overflow: visible;
+  z-index: 10;
+}
+
+/* ========== ESTILOS DEL FORMULARIO GENÉRICO ========== */
+app-generic-procurement-form ::ng-deep .form-actions,
+app-generic-procurement-form ::ng-deep .p-button-group,
+app-generic-procurement-form ::ng-deep .button-container {
+  display: none;
+}
+
+app-generic-procurement-form ::ng-deep .p-card,
+app-generic-procurement-form ::ng-deep .card,
+app-generic-procurement-form ::ng-deep .form-container {
+  margin-top: 0;
+  padding-top: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+app-generic-procurement-form ::ng-deep .p-card-body,
+app-generic-procurement-form ::ng-deep .p-card-content {
+  padding: 0;
+}
+
+/* ========== ESTILOS ESPECÍFICOS DE PURCHASE ORDERS ========== */
+
+/* Wrapper de la grilla */
+.purchase-order-items-grid-wrapper {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* Override de columnas para 7 columnas específicas de purchase orders */
+.purchase-order-items-grid-wrapper .grid-header,
+.purchase-order-items-grid-wrapper .grid-row {
+  grid-template-columns: 2fr 120px 150px 100px 120px 150px 70px;
+}
+
+/* Ajustar la celda col-descripcion para que ocupe el espacio del 2fr */
+.purchase-order-items-grid-wrapper .grid-cell.col-descripcion {
+  max-width: none;
+  min-width: 0;
+}
+
+/* Sección de total */
+.total-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-top: 2px solid #e5e7eb;
+}
+
+.total-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.total-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #14b8a6;
+}
+
+/* Wrapper específico para input de precio con símbolo $ */
+.price-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.price-input {
+  padding-left: 1.5rem;
+  background-color: #f3f4f6;
+}
+
+/* Evitar que el signo $ se separe del número */
+.purchase-order-items-grid-wrapper .grid-value {
+  white-space: nowrap;
+}
+
+/* Asegurar que el subtotal no se desborde */
+.purchase-order-items-grid-wrapper .col-subtotal .grid-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (width <= 1400px) {
+  .purchase-order-items-grid-wrapper .grid-header,
+  .purchase-order-items-grid-wrapper .grid-row {
+    grid-template-columns: 1.5fr 100px 130px 90px 110px 130px 70px;
+  }
+}
+
+@media (width <= 1200px) {
+  .purchase-order-items-grid-wrapper .grid-header,
+  .purchase-order-items-grid-wrapper .grid-row {
+    grid-template-columns: 1fr 90px 120px 80px 100px 120px 60px;
+    font-size: 0.8rem;
+  }
+}

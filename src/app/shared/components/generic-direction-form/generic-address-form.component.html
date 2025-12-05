@@ -1,0 +1,112 @@
+<form [formGroup]="form" class="addr-form">
+  <div class="addr-grid-two-rows" [attr.data-layout]="layout">
+    
+    <!-- FILA 1: Provincia, Ciudad, Código Postal, Calle -->
+    <div class="addr-row addr-row-1">
+      <!-- Provincia -->
+      @if (shouldRender('province')) {
+        <div class="addr-field">
+          <label id="lbl-province">Provincia</label>
+          <p-select
+            [inputId]="'province'"
+            formControlName="province"
+            [options]="provinces"
+            optionLabel="nombre"
+            optionValue="nombre"
+            [filter]="true"
+            [filterBy]="'nombreAscii'"
+            filterPlaceholder="Buscar..."
+            placeholder="Selecciona una provincia"
+            panelStyleClass="select-panel surface"
+            styleClass="field-input w-100"
+            [showClear]="true"
+            [attr.aria-labelledby]="'lbl-province'"
+            [attr.aria-invalid]="getErrorMessage('province') ? 'true' : 'false'"
+          ></p-select>
+          <small class="error" *ngIf="getErrorMessage('province')">{{ getErrorMessage('province') }}</small>
+        </div>
+      }
+
+      <!-- Ciudad -->
+      @if (shouldRender('city')) {
+        <div class="addr-field">
+          <label id="lbl-city">Ciudad</label>
+          <p-select
+            [inputId]="'city'"
+            formControlName="city"
+            [options]="cities"
+            optionLabel="nombre"
+            optionValue="nombre"
+            [filter]="true"
+            [filterBy]="'nombreAscii'"
+            filterPlaceholder="Buscar..."
+            placeholder="Selecciona una ciudad"
+            panelStyleClass="select-panel surface"
+            styleClass="field-input w-100"
+            [showClear]="true"
+            [attr.aria-labelledby]="'lbl-city'"
+            [attr.aria-invalid]="getErrorMessage('city') ? 'true' : 'false'"
+          ></p-select>
+          <small class="error" *ngIf="getErrorMessage('city')">{{ getErrorMessage('city') }}</small>
+        </div>
+      }
+
+      <!-- Código Postal -->
+      @if (shouldRender('postalCode')) {
+        <div class="addr-field">
+          <label id="lbl-postalCode">Código Postal</label>
+          <p-inputNumber
+            inputId="postalCode"
+            formControlName="postalCode"
+            [useGrouping]="false"
+            [minFractionDigits]="0"
+            [maxFractionDigits]="0"
+            [showButtons]="false"
+            [placeholder]="'Ej: 5000'"
+            [attr.aria-labelledby]="'lbl-postalCode'"
+            [attr.aria-invalid]="getErrorMessage('postalCode') ? 'true' : 'false'"
+          ></p-inputNumber>
+          <small class="error" *ngIf="getErrorMessage('postalCode')">{{ getErrorMessage('postalCode') }}</small>
+        </div>
+      }
+
+      <!-- Calle -->
+      @if (shouldRender('street')) {
+        <div class="addr-field">
+          <label for="street">Calle</label>
+          <input id="street" type="text" pInputText formControlName="street" placeholder="Ej: Av. Colón" [attr.aria-invalid]="getErrorMessage('street') ? 'true' : 'false'" />
+          <small class="error" *ngIf="getErrorMessage('street')">{{ getErrorMessage('street') }}</small>
+        </div>
+      }
+    </div>
+
+    <!-- FILA 2: Número, Piso/Departamento, Barrio -->
+    <div class="addr-row addr-row-2">
+      <!-- Número -->
+      @if (shouldRender('number')) {
+        <div class="addr-field">
+          <label id="lbl-number">Número</label>
+          <p-inputNumber inputId="number" formControlName="number" [useGrouping]="false" [placeholder]="'Ej: 1234'" [attr.aria-labelledby]="'lbl-number'" [attr.aria-invalid]="getErrorMessage('number') ? 'true' : 'false'"></p-inputNumber>
+          <small class="error" *ngIf="getErrorMessage('number')">{{ getErrorMessage('number') }}</small>
+        </div>
+      }
+
+      <!-- Piso / Departamento -->
+      @if (shouldRender('floor')) {
+        <div class="addr-field">
+          <label for="floor">Piso / Departamento</label>
+          <input id="floor" type="text" pInputText formControlName="floor" placeholder="Ej: 2° A" [attr.aria-invalid]="getErrorMessage('floor') ? 'true' : 'false'" />
+        </div>
+      }
+
+      <!-- Barrio -->
+      @if (shouldRender('neighborhood')) {
+        <div class="addr-field">
+          <label for="neighborhood">Barrio</label>
+          <input id="neighborhood" type="text" pInputText formControlName="neighborhood" placeholder="Ej: Nueva Córdoba" [attr.aria-invalid]="getErrorMessage('neighborhood') ? 'true' : 'false'" />
+        </div>
+      }
+    </div>
+
+  </div>
+</form>

@@ -1,0 +1,93 @@
+.doctor-autocomplete-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.doctor-label {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.required-indicator {
+  color: #ef4444;
+  margin-left: 0.25rem;
+  font-weight: bold;
+}
+
+.doctor-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.doctor-autocomplete-input {
+  flex: 1;
+  min-width: 50000px;
+  max-width: 100%;
+}
+
+.doctor-autocomplete-input ::ng-deep .p-autocomplete-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.doctor-autocomplete-input ::ng-deep .p-autocomplete-input:focus {
+  outline: none;
+  border-color: #06c;
+  box-shadow: 0 0 0 3px rgb(0 102 204 / 10%);
+}
+
+.doctor-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+  
+}
+
+.doctor-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.doctor-tuition {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+/* Doctor Info Display Styles */
+.doctor-info-display {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.doctor-info-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.doctor-info-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.doctor-info-value {
+  font-size: 0.875rem;
+  color: #333;
+}
+
+/* Modal styles handled by generic modal component */

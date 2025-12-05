@@ -1,0 +1,75 @@
+.purchase-order-view-form ::ng-deep section.stack-16 {
+  padding: 0;
+  margin: 0;
+}
+
+.purchase-order-view-form ::ng-deep textarea {
+  width: 100%;
+  min-height: 80px;
+}
+
+::ng-deep .p-datatable-wrapper .p-datatable-tfoot > tr > td {
+  background-color: #f8f9fa;
+  border-top: 2px solid #dee2e6;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.purchase-orders-view-container {
+  padding: 1rem;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-item label {
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.detail-item span {
+  color: #1f2937;
+}
+
+
+@media (width <= 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    justify-content: stretch;
+  }
+
+  .header-actions p-button {
+    flex: 1;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

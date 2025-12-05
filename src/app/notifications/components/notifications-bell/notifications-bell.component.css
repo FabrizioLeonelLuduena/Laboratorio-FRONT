@@ -1,0 +1,215 @@
+.notif-bell-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 9999;
+}
+
+.bell-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.bell-btn:hover {
+  background: rgb(0 0 0 / 6%);
+}
+
+.bell-icon {
+  width: 22px;
+  height: 22px;
+  fill: currentcolor;
+  color: #444;
+}
+
+.badge-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d93025;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.titleColor {
+  color: black;
+  font-weight: bold;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  width: min(420px, 90vw);
+  max-height: 60vh;
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 6px;
+  padding-bottom: 18px;
+  padding-inline: 16px;
+  border-bottom: 1px solid rgb(0 0 0 / 6%);
+  font-weight: 600;
+}
+
+/* Botón 'Marcar todas' */
+.mark-all-btn:disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.75; /* opcional, visualiza que está inactivo */
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.icon-btn:hover {
+  background: rgb(0 0 0 / 6%);
+}
+
+.dropdown-body {
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.state {
+  padding: 12px;
+  color: #555;
+}
+
+.state.error {
+  color: #b00020;
+}
+
+.empty {
+  padding: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+.notif-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notif-item {
+  display: flex;
+  width: 100%;
+  padding: 12px;
+  border-bottom: 1px solid rgb(0 0 0 / 6%);
+  cursor: pointer;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.icon[data-type="SUCCESS"] {
+  background: #e6f4ea;
+  color: #137333;
+}
+
+.icon[data-type="WARNING"] {
+  background: #fff4e5;
+  color: #b06000;
+}
+
+.icon[data-type="ERROR"] {
+  background: #fde8e8;
+  color: #b3261e;
+}
+
+.icon[data-type="INFO"],
+.icon:not([data-type]) {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+
+.icon-placeholder {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.title {
+  font-weight: 600;
+  color: #222;
+}
+
+.timestamp {
+  color: #666;
+  font-size: 12px;
+}
+
+.tiny-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #137333;
+  font-weight: 700;
+}
+
+.tiny-btn:hover {
+  background: rgb(19 115 51 / 8%);
+}
+
+.message {
+  color: #333;
+  margin-top: 2px;
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  color: #666;
+  font-size: 12px;
+}
+
+.link {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

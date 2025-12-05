@@ -1,0 +1,104 @@
+<div class="stack-12">
+  <h2 class="title-24">Demo AdvancedTable</h2>
+  <p>
+    Esta demo fue movida aquí desde Coverage Home. A continuación se muestra un ejemplo de uso del
+    componente AdvancedTable con plantilla expandida, filtros y acciones. Copiá este ejemplo en un
+    componente de tu feature para probarlo.
+  </p>
+
+  <h3 class="title-20">Ejemplo</h3>
+
+  <p>
+    Si necesitás una demo ejecutable, importá el componente
+    <code>AdvancedTableDemoComponent</code> en una ruta temporal y renderealo.
+  </p>
+
+  <p-card class="mt-16">
+    <app-advanced-table
+      [data]="rows"
+      [columns]="columns"
+      [config]="config"
+      [toolbarTitle]="tableTitle"
+      [filtersActive]="filtersActive"
+      [filtersCount]="filtersCount"
+      [rowTypeKey]="rowTypeKey"
+      [rowTypeActions]="rowTypeActions"
+      (action)="onRowAction($event)"
+      (exportAction)="onExport($event)"
+      (addClicked)="onAdd()"
+      (filterAction)="onFilterEvent($event)"
+      [expandedTemplate]="expandedTpl"
+      [filterTemplate]="filterTpl"
+    ></app-advanced-table>
+
+    <!-- Contenido expandido por fila -->
+    <ng-template #expandedTpl let-row>
+      <div class="stack-12">
+        <div class="title-20">Detalles</div>
+        <div class="grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+          <div>
+            <div class="subtle">Nombre</div>
+            <div>{{ row?.nombre }}</div>
+          </div>
+          <div>
+            <div class="subtle">Aseguradora</div>
+            <div>{{ row?.aseguradora }}</div>
+          </div>
+          <div>
+            <div class="subtle">Tipo</div>
+            <div>{{ row?.tipo }}</div>
+          </div>
+          <div>
+            <div class="subtle">Estado</div>
+            <div>{{ row?.estado }}</div>
+          </div>
+          <div>
+            <div class="subtle">Prima</div>
+            <div>{{ row?.prima | currency:'ARS':'symbol':'1.0-0' }}</div>
+          </div>
+          <div>
+            <div class="subtle">Actualizado</div>
+            <div>{{ row?.actualizado }}</div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Panel de filtros -->
+    <ng-template #filterTpl let-api>
+      <div class="stack-12">
+        <div class="title-20">Filtros</div>
+        <div class="form-grid-2">
+          <div>
+            <label class="subtle">Estado</label>
+            <p-select
+              [options]="[
+                { label: 'Todos', value: '' },
+                { label: 'Activo', value: 'activo' },
+                { label: 'Inactivo', value: 'inactivo' }
+              ]"
+              [(ngModel)]="filterStatus"
+              (ngModelChange)="onFilterStatusChange($event)"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccionar"
+              styleClass="w-100"
+              [overlayOptions]="{ appendTo: 'body', autoZIndex: true, baseZIndex: 11000 }"
+              (onShow)="onSelectShow()"
+              (onHide)="onSelectHide()"
+              (onChange)="onSelectChange($event); api.emit('apply', { status: filterStatus, minPrima: filterMinPrima })"
+            ></p-select>
+          </div>
+          <div>
+            <label class="subtle">Prima mínima</label>
+            <input pInputText type="number" [(ngModel)]="filterMinPrima" class="w-100" placeholder="Ej. 20000" />
+          </div>
+        </div>
+        <div class="actions-end">
+          <button pButton type="button" class="p-button-outlined" (click)="onFilterClearClicked(api)">Limpiar</button>
+          <button pButton type="button" (click)="onFilterApplyClicked(api)">Aplicar</button>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

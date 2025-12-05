@@ -1,0 +1,53 @@
+<p-card class="flex flex-col h-full transition-shadow duration-200">
+  <div class="flex items-start justify-between gap-3 pb-3 border-b border-[var(--border-color)] mb-4">
+    <div class="flex items-start gap-2 flex-1 min-w-0">
+      <i [ngClass]="icon" class="text-base text-[var(--brand-primary)] shrink-0 mt-0.5"></i>
+      <div class="min-w-0 flex-1">
+        <h3 class="text-base font-semibold text-[var(--on-surface)] m-0 leading-tight overflow-hidden text-ellipsis whitespace-nowrap">
+          {{ title }}
+        </h3>
+      </div>
+    </div>
+    @if (description || helpText) {
+      <p-button
+        icon="pi pi-info-circle"
+        [text]="true"
+        [rounded]="true"
+        size="small"
+        class="w-7 h-7 min-w-7 self-start"
+        (onClick)="toggleInfo()">
+      </p-button>
+    }
+  </div>
+
+  <div class="flex-1 border border-[var(--border-color)] rounded-lg bg-[var(--surface-card)] overflow-hidden h-full">
+    <div class="h-full min-h-[320px]">
+      <div class="w-full h-full flex py-2 justify-center">
+        <div [style.width]="chartType === 'pie' || chartType === 'doughnut' ? '60%' : '100%'" [style.height]="chartType === 'pie' || chartType === 'doughnut' ? '60%' : '100%'" class="flex items-center justify-center">
+          <p-chart [type]="chartType" [data]="data" [options]="resolvedOptions" class="w-full h-full"></p-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (footer) {
+    <p class="text-xs text-[var(--on-surface-muted)] mt-3 mb-0">
+      {{ footer }}
+    </p>
+  }
+</p-card>
+
+<p-dialog
+  [header]="title"
+  [(visible)]="infoVisible"
+  [modal]="true"
+  [style]="{ width: '50vw', maxWidth: '600px' }"
+  [draggable]="false"
+  [resizable]="false">
+  @if (description) {
+    <p class="m-0 text-base">{{ description }}</p>
+  }
+  @if (helpText) {
+    <p class="mt-3 text-sm text-[var(--on-surface-muted)]">{{ helpText }}</p>
+  }
+</p-dialog>

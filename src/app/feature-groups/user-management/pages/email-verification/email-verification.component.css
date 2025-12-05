@@ -1,0 +1,238 @@
+/* Contenedor principal */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--canvas);
+  padding: 20px;
+}
+
+.auth-background {
+  width: 100%;
+  max-width: 500px;
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
+  overflow: hidden;
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header con logo */
+.auth-header {
+  background: var(--brand-primary-700);
+  color: var(--on-primary);
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-img {
+  width: 140px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0;
+  color: var(--on-primary);
+  letter-spacing: 0.3px;
+}
+
+/* Contenido principal */
+.verification-content {
+  padding: 40px;
+  background: var(--card);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Mensaje de éxito */
+.success-content {
+  text-align: center;
+}
+
+.success-icon {
+  margin-bottom: 24px;
+}
+
+.success-icon i {
+  font-size: 64px;
+  color: var(--brand-success);
+}
+
+.success-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0 0 16px;
+}
+
+.success-message {
+  font-size: 16px;
+  color: var(--on-surface-muted);
+  margin: 0 0 16px;
+}
+
+.success-message strong {
+  color: var(--brand-success);
+  font-weight: 600;
+}
+
+.success-instructions {
+  font-size: 14px;
+  color: var(--on-surface-muted);
+  margin: 0 0 32px;
+  line-height: 1.5;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-link {
+  text-decoration: none;
+  width: 100%;
+}
+
+.success-actions app-generic-button {
+  width: 100%;
+}
+
+/* Mensaje de error (token inválido) */
+.error-content {
+  text-align: center;
+}
+
+.error-icon {
+  margin-bottom: 24px;
+}
+
+.error-icon i {
+  font-size: 64px;
+  color: var(--brand-danger);
+}
+
+.error-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0 0 16px;
+}
+
+.error-message {
+  font-size: 16px;
+  color: var(--on-surface-muted);
+  margin: 0 0 16px;
+}
+
+.error-instructions {
+  font-size: 14px;
+  color: var(--on-surface-muted);
+  margin: 0 0 32px;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.error-actions app-generic-button {
+  width: 100%;
+}
+
+/* Footer */
+.auth-footer {
+  background: var(--surface-alt);
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.footer-text {
+  margin: 0;
+  color: var(--on-surface-muted);
+  font-size: 14px;
+}
+
+/* Alerta dentro del contenido */
+.verification-content app-generic-generic-alert {
+  margin-bottom: 24px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Ajustar espacio cuando hay alerta visible */
+.verification-content .error-content,
+.verification-content .success-content,
+.verification-content > div {
+  margin-top: 0;
+}
+
+.verification-content .success-content,
+.verification-content .error-content {
+  padding-top: 0;
+}
+
+/* Responsive Design */
+@media (width <= 768px) {
+  .auth-container {
+    padding: 10px;
+  }
+
+  .verification-content {
+    padding: 32px 24px;
+  }
+
+  .brand-title {
+    font-size: 19px;
+  }
+
+  .success-icon i,
+  .error-icon i {
+    font-size: 48px;
+  }
+}
+
+@media (width <= 480px) {
+  .auth-header {
+    padding: 32px 20px;
+  }
+
+  .verification-content {
+    padding: 24px 20px;
+  }
+
+  .logo-img {
+    width: 120px;
+  }
+
+  .logo-section {
+    gap: 16px;
+  }
+
+  .brand-title {
+    font-size: 17px;
+  }
+}

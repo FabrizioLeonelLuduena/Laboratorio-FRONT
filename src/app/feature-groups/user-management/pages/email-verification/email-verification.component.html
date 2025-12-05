@@ -1,0 +1,93 @@
+<!-- Spinner overlay durante loading -->
+@if (loading) {
+  <app-spinner
+    [overlay]="true"
+    [label]="loadingMessage">
+  </app-spinner>
+}
+
+<div class="auth-container font-body">
+  <div class="auth-background">
+    <div class="auth-card">
+
+      <!-- Header con logo -->
+      <div class="auth-header">
+        <div class="logo-section">
+          <img src="LCC-logo-horizontal.png" alt="Logo LCC" class="logo-img" />
+          <h1 class="brand-title">Sistema de Gestión de Laboratorio</h1>
+        </div>
+      </div>
+
+      <!-- Contenido principal -->
+      <div class="verification-content">
+
+        <!-- Alert Component -->
+        @if (showAlert) {
+          <app-generic-alert
+            [type]="alertType"
+            [text]="alertMessage">
+          </app-generic-alert>
+        }
+
+        <!-- Error de token inválido -->
+        @if (tokenError) {
+          <div class="error-content">
+          <div class="error-icon">
+            <i class="pi pi-times-circle"></i>
+          </div>
+          <h2 class="error-title">Enlace Inválido o Expirado</h2>
+          <p class="error-message">
+            El enlace de verificación no es válido o ha expirado.
+          </p>
+          <p class="error-instructions">
+            Si necesitas verificar tu email, por favor contacta al administrador o solicita un nuevo enlace de verificación.
+          </p>
+
+          <div class="error-actions">
+            <a routerLink="/login" class="btn-link">
+              <app-generic-button
+                text="Ir al Login"
+                type="custom">
+              </app-generic-button>
+            </a>
+          </div>
+          </div>
+        }
+
+        <!-- Mensaje de éxito -->
+        @if (emailVerified && !tokenError) {
+          <div class="success-content">
+          <div class="success-icon">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <h2 class="success-title">¡Email Verificado!</h2>
+          <p class="success-message">
+            Tu email ha sido verificado exitosamente.
+          </p>
+          <p class="success-instructions">
+            Ahora puedes acceder a todas las funcionalidades del sistema.
+          </p>
+
+          <div class="success-actions">
+            <a routerLink="/login" class="btn-link">
+              <app-generic-button
+                text="Ir al Login"
+                type="custom">
+              </app-generic-button>
+            </a>
+          </div>
+          </div>
+        }
+
+      </div>
+
+      <!-- Footer -->
+      <div class="auth-footer">
+        <p class="footer-text">
+          © 2025 Laboratorio Castillo Chidiac. Todos los derechos reservados.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

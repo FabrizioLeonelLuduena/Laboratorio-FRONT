@@ -1,0 +1,49 @@
+<div class="min-h-screen bg-[var(--background)]">
+  @if(showAlert()) {
+    <app-generic-alert
+      [message]="alertMessage()"
+      [type]="alertType()"
+      (close)="showAlert.set(false)">
+    </app-generic-alert>
+  }
+  <p-toast position="top-right"></p-toast>
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+  <div class="max-w-full mx-auto px-4 py-4 md:pb-[calc(24px+var(--footer-height,52px)+16px)]">
+    <!-- Filtros globales del dashboard -->
+    <section class="mb-4">
+      <app-reporting-filters (filtersApplied)="onFiltersApplied($event)"></app-reporting-filters>
+    </section>
+
+    <!-- Loading indicator -->
+    @if (isLoading()) {
+      <section class="mb-6">
+        <div class="flex items-center justify-center gap-3 p-8 bg-[var(--surface)] rounded-lg border border-[var(--border-color)]">
+          <i class="pi pi-spin pi-spinner text-2xl text-[var(--brand-primary)]"></i>
+          <span class="text-[var(--on-surface-muted)] text-sm">Cargando datos del dashboard...</span>
+        </div>
+      </section>
+    }
+
+    <!-- Sección de 8 KPIs en 2 filas de 4 columnas -->
+    <section class="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-2 lg:grid-cols-4">
+      @for (metric of metrics(); track trackByMetric($index, metric)) {
+        <app-dashboard-metric-card [metric]="metric"></app-dashboard-metric-card>
+      }
+    </section>
+
+    <!-- Sección de Alertas: Stock Crítico y Exceso de Stock -->
+    <section class="grid grid-cols-1 gap-4 mb-6 lg:grid-cols-2">
+      <app-dashboard-critical-stock></app-dashboard-critical-stock>
+      <app-dashboard-excess-stock></app-dashboard-excess-stock>
+    </section>
+
+    <!-- Sección de gráficos detallados con tarjetas tipo reporting -->
+    <section class="mb-6">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        @for (card of graphCards(); track $index) {
+          <app-reporting-card [reportingData]="card"></app-reporting-card>
+        }
+      </div>
+    </section>
+  </div>
+</div>

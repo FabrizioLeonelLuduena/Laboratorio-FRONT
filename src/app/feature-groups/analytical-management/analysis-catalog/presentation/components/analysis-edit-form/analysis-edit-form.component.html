@@ -1,0 +1,121 @@
+<div class="edit-form-container">
+  <!-- Spinner overlay while saving -->
+  @if (saving()) {
+    <app-spinner 
+      [overlay]="true" 
+      [label]="'Guardando cambios...'">
+    </app-spinner>
+  }
+
+  <!-- Alert -->
+  @if (showAlert) {
+    <app-generic-alert
+      [message]="alertMessage"
+      [type]="alertType"
+      (close)="showAlert = false">
+    </app-generic-alert>
+  }
+
+  <!-- Tabs for different sections -->
+  <p-tabs [(value)]="activeTab">
+    <p-tablist>
+      <p-tab value="basic">
+        <div class="tab-header">
+          <i class="pi pi-file-edit"></i>
+          <span>Información básica</span>
+        </div>
+      </p-tab>
+      <p-tab value="associations">
+        <div class="tab-header">
+          <i class="pi pi-link"></i>
+          <span>Asociaciones</span>
+        </div>
+      </p-tab>
+      <p-tab value="determinations">
+        <div class="tab-header">
+          <i class="pi pi-flask"></i>
+          <span>Determinaciones</span>
+        </div>
+      </p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <!-- Basic Information Tab -->
+      <p-tabpanel value="basic">
+        <div class="tab-content">
+          <app-generic-form
+            [fields]="formFields"
+            [initialValue]="initialValue"
+            [saving]="saving()"
+            [maxCols]="2"
+            [showHeader]="false"
+            (submitForm)="onSubmit($event)"
+            (cancelForm)="onCancel()">
+          </app-generic-form>
+        </div>
+      </p-tabpanel>
+
+      <!-- Associations Tab -->
+      <p-tabpanel value="associations">
+        <div class="tab-content">
+          <div class="associations-grid">
+            <!-- NBU Selector -->
+            <app-analysis-nbu-selector
+              [currentNbu]="analysis.nbu"
+              [disabled]="saving()"
+              (nbuSelected)="onNbuSelected($event)">
+            </app-analysis-nbu-selector>
+
+            <!-- Sample Type Selector -->
+            <app-analysis-sample-type-selector
+              [currentSampleType]="analysis.sampleType"
+              [disabled]="saving()"
+              (sampleTypeSelected)="onSampleTypeSelected($event)">
+            </app-analysis-sample-type-selector>
+
+            <!-- Worksheet Setting Selector -->
+            <app-analysis-worksheet-setting-selector
+              [currentWorksheetSetting]="analysis.worksheetSetting"
+              [disabled]="saving()"
+              (worksheetSettingSelected)="onWorksheetSettingSelected($event)">
+            </app-analysis-worksheet-setting-selector>
+          </div>
+
+          <!-- Info message -->
+          <div class="info-message">
+            <i class="pi pi-info-circle"></i>
+            <div class="message-content">
+              <strong>Nota:</strong>
+              <span>Los cambios en las asociaciones se guardarán cuando hagas clic en el botón "Guardar" en la pestaña de Información básica.</span>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="actions-footer">
+            <app-generic-button
+              type="cancel"
+              [disabled]="saving()"
+              (pressed)="onCancel()">
+            </app-generic-button>
+            <app-generic-button
+              type="save"
+              [disabled]="saving()"
+              (pressed)="onSubmit(initialValue)">
+            </app-generic-button>
+          </div>
+        </div>
+      </p-tabpanel>
+
+      <!-- Determinations Tab -->
+      <p-tabpanel value="determinations">
+        <div class="tab-content">
+          <app-analysis-determinations-manager
+            [currentDeterminations]="analysis.determinations || []"
+            (determinationsAdded)="onDeterminationsAdded($event)"
+            (determinationRemoved)="onDeterminationRemoved($event)">
+          </app-analysis-determinations-manager>
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>

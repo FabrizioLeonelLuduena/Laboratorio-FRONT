@@ -1,0 +1,44 @@
+@if (showAlert()) {
+  <div class="alert-container">
+    <app-generic-alert
+      [type]="alertType()"
+      [title]="alertTitle()"
+      [text]="alertText()">
+    </app-generic-alert>
+  </div>
+}
+
+<div class="container">
+  @if (loading()) {
+    <div class="flex justify-center items-center h-64">
+      <app-spinner [overlay]="false" label="Cargando formulario..."></app-spinner>
+    </div>
+  } @else if (worksheetData()) {
+
+    <!-- Header -->
+    <app-worksheet-fill-header
+      [worksheetName]="worksheetData()!.worksheetName"
+      [sampleCount]="getTotalPatientsCount()"
+      [saving]="saving()"
+      (saveWorksheet)="onSave()"
+      (cancelWorksheet)="onCancel()">
+    </app-worksheet-fill-header>
+
+    <!-- Results tables - one per analysis -->
+    @for (analysis of worksheetData()!.analyses; track analysis.analysisId) {
+      @if (analysis.patients && analysis.patients.length > 0) {
+        <app-worksheet-results-table
+          [analysis]="analysis"
+          [formValues]="formValues"
+          (valueChange)="onValueChange($event)">
+        </app-worksheet-results-table>
+      } @else {
+        <p>No hay muestras pendientes para este análisis en el área seleccionada.</p>
+      }
+    }
+  } @else {
+    <div class="empty-state">
+      <p>No se encontró el formulario</p>
+    </div>
+  }
+</div>

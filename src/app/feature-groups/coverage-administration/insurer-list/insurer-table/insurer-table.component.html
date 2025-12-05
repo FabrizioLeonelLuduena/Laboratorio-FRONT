@@ -1,0 +1,56 @@
+<section class="insurer-table">
+  @if (loading()) {
+    <app-spinner
+      [overlay]="true"
+      [label]="'Cargando usuarios...'" />
+  }
+
+  @if (alert) {
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  }
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <!-- Generic Table -->
+    <div>
+      <div>
+        <app-generic-table
+          [data]="insurers"
+          [columns]="columns"
+          [filters]="filters"
+          [pageable]="true"
+          [rows]="5"
+          [loading]="loading()"
+          [showActions]="true"
+          [getActions]="getActions.bind(this)"
+          (filterChange)="onFilterChange($event)"
+          (create)="onAddClicked()"
+          (downloadExcel)="onExportExcel()"
+          (downloadPdf)="onExportPdf()"
+        ></app-generic-table>
+      </div>
+    </div>
+  </div>
+
+  @if (showDeleteModal) {
+    <app-confirmation-modal
+      icon="pi pi-trash"
+      title="Confirmar eliminación"
+      [message]="'¿Seguro que deseas eliminar ' + (selectedInsurer?.name ?? '') + '?'"
+      (confirmed)="confirmDelete()"
+      (dismissed)="cancelDelete()"
+    >
+    </app-confirmation-modal>
+  }
+  @if (showActivateModal) {
+    <app-confirmation-modal
+      icon="pi pi-check"
+      title="Confirmar activación"
+      [message]="'¿Seguro que deseas activar ' + (selectedInsurer?.name ?? '') + '?'"
+      (confirmed)="confirmActivate()"
+      (dismissed)="cancelActivate()"
+    >
+    </app-confirmation-modal>
+  }
+</section>
+
+<app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>

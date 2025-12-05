@@ -1,0 +1,137 @@
+@if (alertType) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText">
+  </app-generic-alert>
+}
+
+<div class="payment-summary-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner label="Cargando resumen del pago..."></app-spinner>
+    </div>
+  } @else if (paymentData()) {
+    <p-card class="summary-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-content">
+            <div class="header-text">
+              <h2>Pago registrado</h2>
+              <p class="subtitle">El pago para esta atención ya fue procesado</p>
+            </div>
+          </div>
+          <div class="payment-badge">
+            <app-generic-badge status="completo" [text]="safePaymentData().status || 'COMPLETADO'"></app-generic-badge>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="summary-content">
+        <!-- Payment Information Accordion -->
+        <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
+
+          <!-- Payment Details Section -->
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-info-circle"></i>
+                <span class="accordion-title">Información del pago</span>
+              </div>
+            </ng-template>
+            <div class="info-section">
+              <div class="info-row">
+                <span class="info-label">N° de pago:</span>
+                <span class="info-value">#{{ safePaymentData().paymentId }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Fecha:</span>
+                <span class="info-value">{{ safePaymentData().date }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Estado:</span>
+                <span class="info-value">
+                  <app-generic-badge status="completo" [text]="safePaymentData().status || 'COMPLETADO'"></app-generic-badge>
+                </span>
+              </div>
+            </div>
+          </p-accordionTab>
+
+          <!-- Items Charged Section -->
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-list"></i>
+                <span class="accordion-title">Items cobrados</span>
+              </div>
+            </ng-template>
+            <div class="items-section">
+              @for (item of safePaymentData().items; track item.description) {
+                <div class="item-row">
+                  <span class="item-description">{{ item.description }}</span>
+                  <span class="item-amount">{{ item.amount | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                </div>
+              }
+            </div>
+          </p-accordionTab>
+
+          <!-- Payment Methods Section -->
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-wallet"></i>
+                <span class="accordion-title">Medios de pago</span>
+              </div>
+            </ng-template>
+            <div class="payment-methods-section">
+              @for (method of safePaymentData().paymentMethods; track method.method) {
+                <div class="payment-method-row">
+                  <span class="method-name">{{ method.method }}</span>
+                  <span class="method-amount">{{ method.amount | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                </div>
+              }
+            </div>
+          </p-accordionTab>
+
+          <!-- Totals Section -->
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-dollar"></i>
+                <span class="accordion-title">Totales</span>
+              </div>
+            </ng-template>
+            <div class="totals-section">
+              <div class="total-row">
+                <span class="total-label">Subtotal:</span>
+                <span class="total-value">{{ safePaymentData().totals.subtotal | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+              <div class="total-row">
+                <span class="total-label">IVA:</span>
+                <span class="total-value">{{ safePaymentData().totals.iva | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+              <p-divider></p-divider>
+              <div class="total-row grand-total">
+                <span class="total-label">Total pagado:</span>
+                <span class="total-value">{{ safePaymentData().totals.total | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+            </div>
+          </p-accordionTab>
+
+        </p-accordion>
+
+        <!-- Info Message -->
+        <app-generic-alert
+          type="info"
+          title=""
+          text="El pago ya fue registrado. No es posible modificar o crear un nuevo pago para esta atención.">
+        </app-generic-alert>
+      </div>
+    </p-card>
+  } @else {
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>No se pudo cargar la información del pago</p>
+    </div>
+  }
+</div>

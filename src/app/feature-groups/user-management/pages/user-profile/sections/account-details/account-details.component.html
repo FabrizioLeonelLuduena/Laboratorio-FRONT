@@ -1,0 +1,168 @@
+<div class="section-container">
+  <div class="section-header">
+    <div>
+      <h2>
+        <i class="pi pi-id-card"></i>
+        Detalles de la cuenta
+      </h2>
+      <p class="section-description">
+        Edita tu información personal
+      </p>
+    </div>
+    @if (!isEditing()) {
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="enableEditing()"
+      >
+        <i class="pi pi-pencil"></i>
+        Editar
+      </button>
+    }
+  </div>
+
+  <!-- Messages -->
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <i class="pi pi-check-circle"></i>
+      <span>{{ successMessage() }}</span>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  <!-- Edit Form -->
+  <form [formGroup]="editForm" (ngSubmit)="saveChanges()" class="edit-form">
+    <div class="form-grid">
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="firstName" class="form-label">
+          Nombre <span class="required">*</span>
+        </label>
+        <input
+          id="firstName"
+          type="text"
+          class="form-control"
+          formControlName="firstName"
+          placeholder="Ingresa tu nombre"
+        />
+        @if (getFieldError('firstName'); as error) {
+          <small class="error-text">{{ error }}</small>
+        }
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="lastName" class="form-label">
+          Apellido <span class="required">*</span>
+        </label>
+        <input
+          id="lastName"
+          type="text"
+          class="form-control"
+          formControlName="lastName"
+          placeholder="Ingresa tu apellido"
+        />
+        @if (getFieldError('lastName'); as error) {
+          <small class="error-text">{{ error }}</small>
+        }
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username" class="form-label">
+          Nombre de Usuario <span class="required">*</span>
+        </label>
+        <input
+          id="username"
+          type="text"
+          class="form-control"
+          formControlName="username"
+          placeholder="Nombre de usuario"
+        />
+        @if (getFieldError('username'); as error) {
+          <small class="error-text">{{ error }}</small>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">
+          Correo Electrónico <span class="required">*</span>
+        </label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="correo@ejemplo.com"
+        />
+        @if (getFieldError('email'); as error) {
+          <small class="error-text">{{ error }}</small>
+        }
+      </div>
+
+      <!-- Document -->
+      <div class="form-group">
+        <label for="document" class="form-label">
+          Documento <span class="required">*</span>
+        </label>
+        <input
+          id="document"
+          type="text"
+          class="form-control"
+          formControlName="document"
+          placeholder="Número de documento"
+        />
+        @if (getFieldError('document'); as error) {
+          <small class="error-text">{{ error }}</small>
+        }
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    @if (isEditing()) {
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelEditing()"
+          [disabled]="isSaving()"
+        >
+          <i class="pi pi-times"></i>
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="editForm.invalid || isSaving()"
+        >
+          @if (isSaving()) {
+            <i class="pi pi-spin pi-spinner"></i>
+            Guardando...
+          } @else {
+            <i class="pi pi-check"></i>
+            Guardar Cambios
+          }
+        </button>
+      </div>
+    }
+  </form>
+
+  <!-- Help Text -->
+  <div class="help-section">
+    <div class="alert alert-info">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>Importante:</strong> Los cambios en tu información personal
+        se aplicarán en todo el sistema. Asegúrate de que los datos sean correctos
+        antes de guardar.
+      </div>
+    </div>
+  </div>
+</div>

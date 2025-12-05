@@ -1,0 +1,261 @@
+/* Sidebar general */
+.app-sidebar {
+  position: fixed;
+  top: var(--navbar-height, 64px);
+  left: 0;
+  height: calc(100vh - var(--navbar-height, 64px));
+  border-right: 1px solid var(--border-color);
+  z-index: 1;
+  background-color: var(--surface);
+  box-shadow: 2px 0 6px rgb(0 0 0 / 10%);
+}
+
+/* Contenedor de navegación con scroll para no amontonar */
+.sidebar-nav {
+  height: 100%;
+  overflow: auto;
+}
+
+/* Ajusta padding interno y separación entre ítems; ocupa todo el alto */
+.app-sidebar .menu-list {
+  margin: 0;
+  padding: 12px 8px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* separación vertical entre grupos */
+  min-height: 100%;
+  justify-content: space-between; /* reparte el espacio vertical */
+}
+
+/* Footer */
+.sidenav-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 8px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Sidebar header */
+.sidenav-header {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--surface);
+}
+
+.sidenav-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+
+/* Menu group styles */
+.menu-group {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+
+/* Enlaces de grupo y enlaces simples */
+.menu-group-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px; /* ítems más grandes */
+  padding: 12px 16px; /* más respiración */
+  margin: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  gap: 12px; /* separación icono/texto */
+  color: var(--on-surface);
+}
+
+.menu-group-content:hover,
+.menu-group-content:focus-visible {
+  background: var(--surface-alt);
+}
+
+/* Iconos PrimeIcons al inicio del item */
+.menu-group-content i[class^="pi"] {
+  flex: 0 0 20px;
+  width: 20px;
+  text-align: center;
+  font-size: 1.25rem; /* ~20px */
+  color: var(--brand-primary-700);
+}
+
+.menu-group-title {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+}
+
+/* Align arrow icon to the right */
+.menu-group-content .pi-angle-down,
+.menu-group-content .pi-angle-up {
+  margin-left: auto;
+}
+
+/* Indicador de expandir/colapsar */
+.expand-button {
+  margin-right: 8px;
+}
+
+/* Submenu styles */
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0 0 24px; /* indent y separación superior */
+}
+
+.submenu .submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.submenu .submenu-item:hover,
+.submenu .submenu-item:focus-visible {
+  background: var(--surface-alt);
+}
+
+/* Estados activos */
+.menu-group-content.active,
+.submenu .submenu-item.active {
+  background: color-mix(in srgb, var(--brand-primary-700) 10%, #fff);
+  box-shadow: inset 3px 0 0 var(--brand-primary-700);
+  font-weight: 600;
+}
+
+.menu-group-content.active i[class^="pi"],
+.submenu .submenu-item.active i[class^="pi"] {
+  color: var(--brand-primary-700);
+}
+
+/* ================= Desktop fixed sidebar (dentro del componente) ================= */
+.sidenav {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  width: 280px;
+  height: calc(100vh - var(--navbar-height) - var(--footer-height));
+  background: var(--card);
+  border-right: 1px solid var(--border-color);
+  box-shadow: 3px 0 6px rgb(0 0 0 / 10%);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 900;
+  overflow: auto;
+}
+
+.sidenav--open {
+  transform: translateX(0);
+}
+
+.sidenav__nav {
+  height: 100%;
+  overflow: auto;
+}
+
+.sidenav__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 12px 8px;
+  min-height: 100%;
+}
+
+.sidenav__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--on-surface);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+
+.sidenav__link:hover,
+.sidenav__link:focus-visible {
+  background: var(--surface-alt);
+  transition: background 160ms ease, color 120ms ease;
+}
+
+.sidenav__link i[class^="pi"],
+.sidenav__sublink i[class^="pi"] {
+  flex: 0 0 22px;
+  width: 22px;
+  text-align: center;
+  font-size: 1.25rem;
+  color: var(--brand-primary-700);
+}
+
+.sidenav__label {
+  flex: 1 1 auto;
+  font-size: 15px;
+}
+
+/* Align arrow icon to the right on desktop */
+.sidenav__link .pi-angle-down,
+.sidenav__link .pi-angle-up {
+  margin-left: auto;
+}
+
+.sidenav__sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.sidenav__sublink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.sidenav__sublink:hover,
+.sidenav__sublink:focus-visible {
+  background: var(--surface-alt);
+}
+
+.sidenav__link.active,
+.sidenav__sublink.active {
+  background: color-mix(in srgb, var(--brand-primary-700) 10%, #fff);
+  box-shadow: inset 3px 0 0 var(--brand-primary-700);
+  font-weight: 600;
+}
+
+.sidenav__link.active i[class^="pi"],
+.sidenav__sublink.active i[class^="pi"] {
+  color: var(--brand-primary-700);
+}

@@ -1,0 +1,141 @@
+:root {
+  --download-arrow-color: var(--brand-accent, #003771);
+}
+
+.filter-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.filter-button-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-button-wrapper button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e6e6e6);
+  color: var(--text, #003771);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.06s ease;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 40%);
+}
+
+.filter-button-wrapper button i,
+.filter-button-wrapper button svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-block;
+}
+
+/* stylelint-disable-next-line color-function-notation */
+.filter-button-wrapper button:hover {
+  background: color-mix(in srgb, var(--surface, #fff) 80%, var(--text, #003771) 5%);
+  transform: translateY(-1px);
+}
+
+.filter-button-wrapper button:active {
+  transform: translateY(0);
+}
+
+.indicator-badge {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--brand-accent, #f33);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px var(--card, #fff);
+  padding: 0 3px;
+}
+
+.filter-panel {
+  padding: 1rem;
+  min-width: 260px;
+}
+
+.filter-title {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.filter-title h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.filter-section {
+  margin-bottom: 1rem;
+}
+
+.filter-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.date-range-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.date-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 4px;
+  background: var(--card, #fff);
+  color: var(--on-surface);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}

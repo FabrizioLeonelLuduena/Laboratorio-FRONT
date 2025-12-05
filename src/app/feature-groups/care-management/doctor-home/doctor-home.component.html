@@ -1,0 +1,125 @@
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando medicos...'" />
+}
+
+
+<!-- Alerts -->
+@if (flash) {
+  <app-generic-alert
+    [type]="flash.type"
+    [title]="flash.title ?? ''"
+    [text]="flash.text"
+  ></app-generic-alert>
+}
+
+<!-- Toolbar -->
+<div class="toolbar"
+     joyrideStep="doctorStep1"
+     title="Gestión de médicos"
+     text="Bienvenido a la Gestión de médicos. Desde aquí podrás administrar el alta, baja y modificación de los médicos del sistema.">
+</div>
+
+<!-- Template for name column with Dr./Dra. prefix -->
+<ng-template #nameTpl let-row>
+  {{ (row.title ?? (row.gender === 'FEMALE' ? 'Dra.' : 'Dr.')) }} {{ row.name }}{{ row.lastName ? ' ' + row.lastName : '' }}
+</ng-template>
+
+<ng-template #statusTemplate let-row>
+  <app-generic-badge
+    [status]="row.status === 'ACTIVE' ? 'activo' : 'inactivo'"
+    [text]="row.status === 'ACTIVE' ? 'Activo' : 'Inactivo'">
+  </app-generic-badge>
+</ng-template>
+
+<!-- New template for actions column with p-menu -->
+<ng-template #actionsTemplate let-row let-rowIndex="rowIndex">
+  <div class="flex justify-content-center">
+    <app-generic-button
+      type="custom"
+      icon="pi pi-ellipsis-v"
+      (pressed)="menu.toggle($event)"
+      #menuTrigger>
+    </app-generic-button>
+    <p-menu #menu
+            [model]="getRowActions(row)"
+            [popup]="true">
+    </p-menu>
+  </div>
+</ng-template>
+
+<div class="doctor-crud">
+
+  <!-- Dynamic form -->
+  @if (showForm) {
+    <div class="form-shell">
+      <div class="form-card">
+        <app-generic-dynamic-form
+          [title]="formTitle"
+          [fields]="formFields"
+          [initialValue]="initialValue"
+          [saving]="saving"
+          (submitForm)="onDynamicSubmit($event)"
+          (cancelForm)="onDynamicCancel()">
+        </app-generic-dynamic-form>
+      </div>
+    </div>
+  }
+
+  <!-- Table with generic table -->
+  @if (!showForm) {
+    <div class="table-section"
+         joyrideStep="doctorStep2"
+         title="Tabla de Médicos"
+         text="Esta tabla muestra todos los médicos. Puedes usar el buscador y los filtros para encontrar a alguien rápidamente.">
+      <div joyrideStep="doctorStep5" title="Acciones de Fila" text="La última columna de la tabla contiene las acciones que puedes realizar, como editar o desactivar un médico.">
+        <app-generic-table
+          [totalRecords]="totalRecords"
+          [data]="doctors"
+          [columns]="tableColumns"
+          [filters]="tableFilters"
+          [dataKey]="'id'"
+          [rows]="5"
+          [rowsOptions]="[5, 10, 25]"
+          [loading]="loading()"
+          [getActions]="getRowActions"
+          [columnTemplates]="columnTemplates"
+          (filterChange)="onFilterChange($event)"
+          (downloadExcel)="onExportExcel($event)"
+          (downloadPdf)="onExportPdf($event)"
+          (create)="onAdd()"
+          [pageable]="true"
+          (pageChange)="onPageChange($event)"
+          [lazy]="true"
+          (globalFilterChange)="onGlobalFilterChange($event)"
+          (sortChange)="onSortChange($event)"
+          [createButtonJoyrideConfig]="{ step: 'doctorStep3', title: 'Crear Médico', text: 'Usa este botón para dar de alta un nuevo médico en el sistema.' }"
+          [downloadMenuJoyrideConfig]="{ step: 'doctorStep4', title: 'Descargar Datos', text: 'Usa este menú para exportar la lista de médicos en formato Excel o PDF.' }">
+        </app-generic-table>
+      </div>
+    </div>
+  }
+
+  <!-- Status change confirmation modal -->
+  @if (showConfirmModal) {
+    <div class="modal-overlay" (click)="cancelStatusChange()">
+      <div (click)="$event.stopPropagation()">
+        <app-confirmation-modal
+          icon="pi pi-exclamation-triangle"
+          [title]="confirmTitle"
+          [message]="confirmMessage"
+          (confirmed)="executeStatusChange()"
+          (dismissed)="cancelStatusChange()">
+        </app-confirmation-modal>
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

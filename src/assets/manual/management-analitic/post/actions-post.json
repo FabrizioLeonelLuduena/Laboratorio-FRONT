@@ -1,0 +1,222 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "post-analitica",
+  "title": "Acciones de Validación y Firma",
+  "intro": "Gestión del proceso de control de calidad, validación y firma electrónica de los resultados de laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Técnico Bioquímico",
+      "Bioquímico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+     {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Técnico Bioquímico - Bioquímico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "proceso-validacion",
+      "title": "Proceso de Validación y Firma",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar <strong><i class='pi pi-eye'></i></strong> desde la pantalla de <strong>Estudios pendientes</strong>, accederá a la pantalla de <strong>Validar y Firmar</strong> donde se realiza el control profesional de los resultados."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/post/post-analytic-validation.jpeg",
+          "alt": "Validación post-analítica"
+        },
+        {
+          "type": "subtitle",
+          "text": "Encabezado y Acciones Globales"
+        },
+        {
+          "type": "paragraph",
+          "text": "En la parte superior verá los datos del paciente y los botones para gestionar la firma:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Firma Parcial",
+              "Aplica la firma solo a los <strong>resultados ya revisados</strong>, manteniendo el trámite abierto para futuras cargas."
+            ],
+            [
+              "Firmar Total",
+              "Aplica la firma final a todo el estudio, <strong>cierra el trámite</strong> y libera el informe para su entrega."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Firmar Total (Verde)",
+              "<strong>Confirma y libera</strong> el estudio completo."
+            ],
+            [
+              "Volver / Anterior",
+              "Regresa al listado principal <strong>guardando los cambios parciales</strong> pero sin finalizar el estudio."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>La validación y firma constituye el <strong>control de calidad final</strong>. Por favor, revise atentamente todos los valores y alertas antes de confirmar."
+        }
+      ]
+    },
+    {
+      "id": "edicion-determinacion",
+      "title": "Edición de Resultados",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al presionar el botón <strong>Editar</strong> de un grupo (ej. Hemograma), se abrirá una ventana que permite corregir los valores de cada análisis."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/post/post-edit.jpg",
+          "alt": "Editar post-analítica"
+        },
+        {
+          "type": "paragraph",
+          "text": "Dentro de esta ventana, podrá modificar los valores y agregar observaciones si es necesario."
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Dato",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Valor *",
+              "Espacio <strong>obligatorio</strong> para ingresar o corregir el resultado numérico."
+            ],
+            [
+              "Observaciones",
+              "Espacio para añadir notas internas o justificar una corrección (Ej. 'Se cargó mal el dato anterior')."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado de las determinaciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema le indicará si el dato es nuevo o si ya existía previamente:"
+        },
+        {
+          "type": "badge",
+          "text": "EXISTENTE",
+          "color": "#3b82f6"
+        },
+        {
+          "type": "paragraph",
+          "text": "Indica que este análisis ya tenía un valor <strong>cargado con anterioridad</strong>."
+        },
+        {
+          "type": "badge",
+          "text": "NUEVO",
+          "color": "#22c55e"
+        },
+        {
+          "type": "paragraph",
+          "text": "Indica que es la <strong>primera vez</strong> que se ingresa un valor para este análisis."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "✓ Nota importante",
+          "text": "<br>Cualquier modificación realizada aquí actualizará el resultado final. Recuerde guardar los cambios antes de salir."
+        }
+      ]
+    },
+    {
+      "id": "opciones-validacion",
+      "title": "Opciones de Validación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Existen dos formas de confirmar que los resultados son correctos:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/post/post-analytic-validation.jpeg",
+          "alt": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Validar Todo",
+              "Confirma <strong>todos los resultados</strong> visibles en la pantalla en un solo paso."
+            ],
+            [
+              "Validar (Por Grupo)",
+              "Confirma únicamente los resultados <strong>de esa sección específica</strong> (ej. solo valida el Hemograma)."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Al validar, verá que los resultados cambian de color (generalmente a verde o con una marca), indicando que están listos para ser firmados."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "post-analítica",
+    "validación",
+    "firma",
+    "resultados",
+    "control"
+  ]
+}

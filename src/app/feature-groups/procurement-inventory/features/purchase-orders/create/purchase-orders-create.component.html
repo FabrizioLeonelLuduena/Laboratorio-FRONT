@@ -1,0 +1,190 @@
+<!-- Alert -->
+<app-generic-alert
+  *ngIf="showAlert"
+  [message]="alertMessage"
+  [type]="alertType">
+</app-generic-alert>
+
+<!-- Formulario genérico de procurement-inventory -->
+<app-generic-procurement-form
+  [title]="'Nueva orden de compra'"
+  [config]="formConfig"
+  [saving]="saving"
+  (formSubmit)="onFormSubmit($event)"
+  (formCancel)="onFormCancel()"
+  (formChange)="onFormChange($event)">
+</app-generic-procurement-form>
+
+<!-- Detail lines management -->
+<div class="details-section mt-6">
+  <div class="purchase-order-items-grid-wrapper">
+    <!-- Details grid -->
+    <div class="custom-items-grid">
+      <!-- Grid header -->
+      <div class="grid-header">
+        <div class="grid-header-cell col-descripcion">Producto del proveedor</div>
+        <div class="grid-header-cell col-uom">Unidad de medida</div>
+        <div class="grid-header-cell col-packaging">Empaque</div>
+        <div class="grid-header-cell col-cantidad">Cantidad</div>
+        <div class="grid-header-cell col-precio">Precio unitario</div>
+        <div class="grid-header-cell col-subtotal">Subtotal</div>
+        <div class="grid-header-cell col-actions">
+          <button
+            type="button"
+            class="grid-action-btn add-btn header-add-btn"
+            (click)="addNewItem()"
+            title="Agregar detalle">
+            <i class="pi pi-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Items rows -->
+      <div class="grid-body">
+        @for (item of editableItems; track $index; let i = $index) {
+          <div class="grid-row">
+            <!-- Producto del proveedor -->
+            <div class="grid-cell col-descripcion">
+              <p-dropdown
+                [(ngModel)]="item.supplier_item_id"
+                [options]="getAvailableItemsForRow(i)"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Seleccionar producto"
+                [filter]="true"
+                filterBy="name"
+                [showClear]="false"
+                [disabled]="!selectedSupplierId"
+                (onChange)="onSupplierItemSelected(i, item.supplier_item_id)"
+                styleClass="grid-dropdown"
+                appendTo="body">
+                <!-- Template para el valor seleccionado - solo nombre del supply -->
+                <ng-template pTemplate="selectedItem">
+                  <span [title]="item.supply_name">{{ item.supply_name || 'Seleccionar producto' }}</span>
+                </ng-template>
+                <!-- Template para los items de la lista - formato completo -->
+                <ng-template let-option pTemplate="item">
+                  <span>{{ option.name }}</span>
+                </ng-template>
+              </p-dropdown>
+            </div>
+
+            <!-- UOM -->
+            <div class="grid-cell col-uom">
+              <div class="grid-value">
+                {{ item.uom_name || '-' }}
+              </div>
+            </div>
+
+            <!-- Packaging -->
+            <div class="grid-cell col-packaging">
+              <div class="grid-value">
+                {{ item.packaging_description || '-' }}
+              </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="grid-cell col-cantidad">
+              <input
+                type="number"
+                [step]="getQuantityStep(item)"
+                [min]="getQuantityStep(item)"
+                class="grid-input text-right"
+                [(ngModel)]="item.quantity"
+                (ngModelChange)="onQuantityChange(i)"
+                [attr.data-row]="i"
+                [attr.data-col]="'quantity'"
+                (keydown)="onKeyDown($event, i, 'quantity')"
+                (focus)="onCellFocus(i, 'quantity')"
+                [placeholder]="isDecimalQuantityAllowed(item.uom_name || '') ? '0.0' : '0'"
+                [title]="isDecimalQuantityAllowed(item.uom_name || '') ? 'Permite decimales (0.1, 0.2, etc.)' : 'Solo números enteros'"
+                required />
+            </div>
+
+            <!-- Unit price (readonly - auto-filled when selecting an item -->
+            <div class="grid-cell col-precio">
+              <div class="price-input-wrapper">
+                <span class="currency-symbol">$</span>
+                <input
+                  type="text"
+                  class="grid-input text-right price-input"
+                  [value]="item.unit_price | number:'1.2-2'"
+                  readonly
+                  tabindex="-1"
+                  placeholder="0.00" />
+              </div>
+            </div>
+
+            <!-- Subtotal (calculated) -->
+            <div class="grid-cell col-subtotal">
+              <div class="grid-value text-right font-bold">
+                $ {{ (item.quantity * item.unit_price) | number:'1.2-2' }}
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="grid-cell col-actions">
+              <button
+                type="button"
+                class="grid-action-btn delete-btn"
+                (click)="deleteItem(i)"
+                [disabled]="!userCanCreate"
+                title="Eliminar">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Empty message -->
+      @if (editableItems.length === 0) {
+        <div class="empty-grid-message">
+          <i class="pi pi-inbox"></i>
+          <p>No hay detalles agregados</p>
+          <small>
+            <span>Haga clic en el botón + para agregar una línea</span>
+          </small>
+        </div>
+      }
+    </div>
+
+    <!-- Total -->
+    @if (editableItems.length > 0) {
+      <div class="total-section">
+        <div class="total-label">Total de la Orden:</div>
+        <div class="total-value">$ {{ totalAmount | number:'1.2-2' }}</div>
+      </div>
+    }
+
+    <!-- Botones de acción -->
+    <div class="mt-6 pt-4 flex justify-between items-center">
+      <app-generic-button
+        type="back"
+        icon="pi pi-arrow-left"
+        (pressed)="onBack()">
+      </app-generic-button>
+
+      <div class="flex gap-3">
+        <app-generic-button
+          text="Cancelar"
+          type="cancel"
+          icon="pi pi-times"
+          [disabled]="saving"
+          (pressed)="onFormCancel()">
+        </app-generic-button>
+        <app-generic-button
+          [text]="saving ? 'Guardando...' : 'Crear orden de compra'"
+          type="create"
+          icon="pi pi-plus"
+          [disabled]="saving || editableItems.length === 0"
+          (pressed)="triggerFormSubmit()">
+        </app-generic-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,204 @@
+<div class="table-wrapper">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      @if (showSearch) {
+        <span class="search-box">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            placeholder="Buscar..."
+            [value]="globalFilterValue()"
+            (input)="onGlobalFilter($event)"
+          />
+        </span>
+      }
+
+      @if (showFilters && filters && filters.length > 0) {
+        <app-filter
+          [filters]="filters"
+          [autoApply]="autoApplyFilters"
+          (filterChange)="onFilterChange($event)"
+        ></app-filter>
+      }
+    </div>
+
+    <div class="toolbar-right">
+      @if (showDownloadMenu) {
+        @if (downloadMenuJoyrideConfig) {
+          <div
+            [joyrideStep]="downloadMenuJoyrideConfig.step"
+            [title]="downloadMenuJoyrideConfig.title"
+            [text]="downloadMenuJoyrideConfig.text">
+            <app-generic-download-menu
+              [showExcel]="showExcelOption"
+              [showPdf]="showPdfOption"
+              [disabled]="data.length === 0"
+              (downloadExcel)="onExportExcel()"
+              (downloadPdf)="onExportPdf()"
+            ></app-generic-download-menu>
+          </div>
+        } @else {
+          <app-generic-download-menu
+            [showExcel]="showExcelOption"
+            [showPdf]="showPdfOption"
+            [disabled]="data.length === 0"
+            (downloadExcel)="onExportExcel()"
+            (downloadPdf)="onExportPdf()"
+          ></app-generic-download-menu>
+        }
+      }
+
+      @if (showCreateButton) {
+        @if (createButtonJoyrideConfig) {
+          <div
+            [joyrideStep]="createButtonJoyrideConfig.step"
+            [title]="createButtonJoyrideConfig.title"
+            [text]="createButtonJoyrideConfig.text">
+            <app-generic-button
+              type="create"
+              (pressed)="onCreate()"
+            ></app-generic-button>
+          </div>
+        } @else {
+          <app-generic-button
+            type="create"
+            (pressed)="onCreate()"
+          ></app-generic-button>
+        }
+      }
+    </div>
+  </div>
+
+  <p-table
+    [value]="filteredData()"
+    [columns]="columns"
+    [paginator]="pageable"
+    [rows]="rows"
+    [first]="first"
+    [rowsPerPageOptions]="rowsOptions"
+    [paginatorPosition]="paginatorPosition"
+    [lazy]="lazy"
+    [totalRecords]="totalRecords"
+    (onPage)="onPage($event)"
+    (onSort)="onSort($event)"
+    [loading]="loading"
+    [dataKey]="dataKey"
+    [expandedRowKeys]="expandedRowKeys"
+    (onRowExpand)="onRowExpand($event.data)"
+    (onRowCollapse)="onRowCollapse($event.data)"
+    styleClass="p-datatable-gridlines"
+  >
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        @if (expandedRowTemplate) {
+          <th class="w-10"></th>
+        }
+        @for (col of columns; track col) {
+          <th [pSortableColumn]="col.sortable ? col.field : null">
+            {{ col.header }}
+            @if (col.sortable) {
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            }
+          </th>
+        }
+        @if(showActions){
+         <th class="text-center w-16">Acciones</th>
+        }
+      </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-row let-columns="columns" let-rowIndex="rowIndex">
+      <tr>
+        @if (expandedRowTemplate) {
+          <td class="text-center">
+            <button
+              pButton
+              pRipple
+              type="button"
+              class="p-button-rounded p-button-text"
+              (click)="toggleRow(row)"
+              aria-label="Expandir fila"
+            >
+              <i
+                class="pi"
+                [ngClass]="expandedRowKeys[row[dataKey]] ? 'pi-chevron-down' : 'pi-chevron-right'"
+              ></i>
+            </button>
+          </td>
+        }
+
+        @for (col of columns; track col) {
+          <td>
+            <!-- If the column provides a custom template via col.template or columnTemplates map -->
+            @if (col.template || columnTemplates.has(col.field)) {
+              @if (col.template) {
+                <ng-container [ngTemplateOutlet]="col.template" [ngTemplateOutletContext]="{ $implicit: row, rowIndex: rowIndex }"></ng-container>
+              } @else {
+                <ng-container
+                  [ngTemplateOutlet]="columnTemplates.get(col.field)!" [ngTemplateOutletContext]="{ $implicit: row, rowIndex: rowIndex }"
+                ></ng-container>
+              }
+            } @else {
+              <!-- Default rendering -->
+              @switch (col.field) {
+                @case ('isActive') {
+                  <app-generic-badge [status]="row[col.field] ? 'activo' : 'inactivo'"></app-generic-badge>
+                }
+                @case ('is_active') {
+                 <app-generic-badge [status]="row[col.field] ? 'activo' : 'inactivo'"></app-generic-badge>
+                }
+                @case ('statusText') {
+                  <app-generic-badge
+                    [status]="row.status === 'MIN' ? 'minimo' : row.status === 'COMPLETE' ? 'completo' : row.status === 'VERIFIED' ? 'verificado' : 'inactivo'"
+                    [text]="row[col.field]"
+                  ></app-generic-badge>
+                }
+                @default {
+                  <span>{{ renderCell(row,col)}}</span>
+                }
+              }
+
+            }
+          </td>
+        }
+        @if(showActions){
+          <td class="text-center">
+            <app-generic-menu
+              [items]="getActions(row)"
+              [rowData]="row"
+              (actionSelected)="onActionSelected($event)"
+            ></app-generic-menu>
+          </td>
+        }
+      </tr>
+
+      @if (expandedRowKeys[row[dataKey]]) {
+        <tr>
+          <td [attr.colspan]="totalColspan">
+            @if (expandedRowTemplate) {
+              <ng-container
+                [ngTemplateOutlet]="expandedRowTemplate" [ngTemplateOutletContext]="{ $implicit: row }"
+              ></ng-container>
+            } @else {
+              <div class="p-3 bg-gray-50 border rounded">
+                <strong>Detalles:</strong>
+                <pre>{{ row | json }}</pre>
+              </div>
+            }
+          </td>
+        </tr>
+      }
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="totalColspan" class="text-center p-4">
+          <i class="pi pi-info-circle text-xl"></i> Sin registros disponibles
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

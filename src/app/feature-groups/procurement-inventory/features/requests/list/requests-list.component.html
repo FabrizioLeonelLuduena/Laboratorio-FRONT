@@ -1,0 +1,90 @@
+<div class="requests-list-container">
+  <div class="header">
+    <h1>Solicitudes</h1>
+    <p>Consulta las solicitudes del sistema</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-section">
+    <div class="filter-row">
+      <div class="filter-field">
+        <label for="statusFilter">Estado:</label>
+        <p-dropdown
+          id="statusFilter"
+          [(ngModel)]="filters.status"
+          [options]="statusOptions"
+          placeholder="Seleccionar estado"
+          (onChange)="onFilterChange()"
+          [showClear]="true">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field">
+        <label for="originLocationIdFilter">ID Ubicación Origen:</label>
+        <p-inputNumber
+          id="originLocationIdFilter"
+          [(ngModel)]="filters.originLocationId"
+          placeholder="ID ubicación origen"
+          (onInput)="onFilterChange()"
+          [showClear]="true">
+        </p-inputNumber>
+      </div>
+
+      <div class="filter-field">
+        <label for="destinationLocationIdFilter">ID Ubicación Destino:</label>
+        <p-inputNumber
+          id="destinationLocationIdFilter"
+          [(ngModel)]="filters.destinationLocationId"
+          placeholder="ID ubicación destino"
+          (onInput)="onFilterChange()"
+          [showClear]="true">
+        </p-inputNumber>
+      </div>
+
+      <div class="filter-field">
+        <label for="fromDateFilter">Desde:</label>
+        <p-calendar
+          id="fromDateFilter"
+          [(ngModel)]="filters.fromDate"
+          placeholder="Seleccionar fecha"
+          dateFormat="dd/mm/yy"
+          (onSelect)="onFilterChange()"
+          [showClear]="true">
+        </p-calendar>
+      </div>
+
+      <div class="filter-field">
+        <label for="toDateFilter">Hasta:</label>
+        <p-calendar
+          id="toDateFilter"
+          [(ngModel)]="filters.toDate"
+          placeholder="Seleccionar fecha"
+          dateFormat="dd/mm/yy"
+          (onSelect)="onFilterChange()"
+          [showClear]="true">
+        </p-calendar>
+      </div>
+
+      <div class="filter-actions">
+        <p-button
+          label="Limpiar Filtros"
+          icon="pi pi-filter-slash"
+          (onClick)="clearFilters()"
+          severity="secondary">
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <app-advanced-table
+    [data]="requests"
+    [columns]="columns"
+    [config]="tableConfig"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [actionItems]="actions"
+    (lazyLoad)="onLazyLoad($event)"
+    (action)="onAction($event)">
+  </app-advanced-table>
+</div>

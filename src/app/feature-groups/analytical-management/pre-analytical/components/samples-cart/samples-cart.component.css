@@ -1,0 +1,37 @@
+:host {
+    /* Smooth transitions for interactive elements */
+  .cursor-pointer {
+    transition: background-color 0.15s ease;
+  }
+
+  /* Chevron icon smooth rotation */
+  .pi-chevron-right,
+  .pi-chevron-down {
+    transition: transform 0.2s ease;
+  }
+
+  .flex.gap-3 {
+    gap: 0.75rem;
+    padding-top:  1rem;
+  }
+}
+
+.empty-cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.cart-header{
+  color: var(--on-surface);
+}
+
+.txt{
+  color: var(--on-surface);
+}
+
+
+

@@ -1,0 +1,61 @@
+/* Estilos para impresión simplificada de código */
+@page {
+  size: 80mm;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  width: 80mm;
+  padding: 10mm;
+  text-align: center;
+  background: white;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.type {
+  color: white;
+  padding: 5px;
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.type.with-appointment {
+  background: #4CAF50;
+}
+
+.type.without-appointment {
+  background: #2196F3;
+}
+
+.code {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 20px 0;
+  border: 2px solid #000;
+  padding: 15px;
+}
+
+.info {
+  font-size: 10px;
+  margin-top: 15px;
+  color: #666;
+}
+
+@media print {
+  body {
+    padding: 5mm;
+  }
+}
+

@@ -1,0 +1,126 @@
+<div class="container mx-auto p-6">
+
+  @if (showAlert()){
+    <div class="alert-container">
+      <app-generic-alert
+        [type]="alertType()"
+        [title]="alertTitle()"
+        [text]="alertMessage()">
+      </app-generic-alert>
+    </div>
+  }
+
+  <!-- ========== Header ========== -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="title-20 font-display">Planillas de trabajo</h1>
+    </div>
+    <div class="txt">
+      <app-generic-button
+        type="create"
+        icon="pi pi-plus"
+        (pressed)="onCreateNew()">
+      </app-generic-button>
+    </div>
+  </div>
+
+  @if(loading()){
+    <div class="flex justify-center items-center h-64">
+      <app-spinner
+        [overlay]="false"
+        label="Cargando planillas...">
+      </app-spinner>
+    </div>
+  } @else {
+    <!-- ========== Tabla con datos ========== -->
+    @if(templates().length > 0){
+      <app-generic-table
+        [data]="filteredTemplates()"
+        [columns]="columns"
+        [filters]="filters"
+        [getActions]="getActions"
+        [dataKey]="'analysisId'"
+        [rows]="10"
+        [rowsOptions]="[5, 10, 25]"
+        [pageable]="true"
+        [loading]="loading()"
+        [showCreateButton]="false"
+        (filterChange)="onFilterChange($event)"
+        (downloadExcel)="onExport($event, { type: 'excel' })"
+        (downloadPdf)="onExport($event, { type: 'pdf' })">
+      </app-generic-table>
+    } @else {
+      <!-- ========== Estado vacío ========== -->
+      <div class="empty-state-container">
+        <div class="empty-state">
+          <i class="pi pi-inbox empty-state-icon"></i>
+
+          <h3 class="heading mb-2">No hay planillas creadas</h3>
+
+          <p class="text-14 text-gray-600 mb-6">
+            Crea tu primera planilla de trabajo para comenzar
+          </p>
+        </div>
+      </div>
+    }
+  }
+</div>
+
+<!-- Modal for creating/editing template -->
+@if (showTemplateModal()) {
+  <app-generic-modal-form
+    [visible]="true"
+    [title]="editingTemplateId() ? 'Editar planilla de trabajo' : 'Nueva planilla de trabajo'"
+    [width]="'700px'"
+    [height]="'75vh'"
+    (closed)="onModalClosed()">
+
+    <app-template-management
+      [isModal]="true"
+      [templateId]="editingTemplateId()"
+      (modalClosed)="onModalClosed()">
+    </app-template-management>
+  </app-generic-modal-form>
+}
+
+<!-- Modal for viewing worksheet details -->
+@if (showDetailModal() && worksheetDetail()) {
+  <app-generic-modal-form
+    [visible]="true"
+    [title]="'Detalle de la Planilla'"
+    [width]="'600px'"
+    [height]="'auto'"
+    (closed)="onDetailModalClosed()">
+
+    <div class="detail-content">
+      <!-- Name -->
+      <div class="detail-field">
+        <label class="detail-label">Nombre:</label>
+        <span class="detail-value">{{ worksheetDetail()?.worksheetName || worksheetDetail()?.name || 'Sin nombre' }}</span>
+      </div>
+
+      <!-- Number of analyses -->
+      <div class="detail-field">
+        <label class="detail-label">Cantidad de análisis:</label>
+        <span class="detail-value">{{ worksheetDetail()?.analyses?.length || 0 }}</span>
+      </div>
+
+      <!-- List of analyses -->
+      <div class="detail-field">
+        <label class="detail-label">Análisis:</label>
+        <div class="analysis-detail-list">
+          @if (worksheetDetail()?.analyses && worksheetDetail()!.analyses!.length > 0) {
+            @for (analysis of worksheetDetail()!.analyses; track analysis.id) {
+              <div class="analysis-detail-item">
+                <span class="analysis-detail-name">Análisis: {{ analysis.analysisName || 'Sin nombre' }}</span>
+              </div>
+            }
+          } @else {
+            <p class="empty-message">No hay análisis asociados</p>
+          }
+        </div>
+      </div>
+    </div>
+
+  </app-generic-modal-form>
+}

@@ -1,0 +1,127 @@
+<section class="extraction-container">
+  <!-- Alerts -->
+  @if (loading()) {
+    <app-spinner
+      [overlay]="true"
+      [label]="'Cargando extracciones...'" />
+  }
+
+  @if (flash) {
+    <app-generic-alert
+      [type]="flash.type"
+      [title]="flash.title ?? ''"
+      [text]="flash.text"
+    ></app-generic-alert>
+  }
+
+  <!-- MAIN CONTENT AREA (Tables) -->
+  <div class="tables-section">
+    <ng-template #attentionNumberTpl let-row>
+      {{ row.attentionNumber }}
+    </ng-template>
+
+    <ng-template #urgentTpl let-row>
+      @if (row.isUrgent) {
+        <app-generic-badge [status]="'inactivo'" [text]="'Sí'"></app-generic-badge>
+      } @else {
+        <app-generic-badge [status]="'activo'" [text]="'No'"></app-generic-badge>
+      }
+    </ng-template>
+
+    <ng-template #actionsTpl let-row>
+      <app-generic-button
+        type="custom"
+        [text]="'Extraer'"
+        [color]="'success'"
+        (pressed)="onAttendClick(row)">
+      </app-generic-button>
+    </ng-template>
+
+    <ng-template #boxAssignedTpl let-row>
+      {{ row.boxAssigned || '—' }}
+    </ng-template>
+
+    <ng-template #endTpl let-row>
+      <app-generic-button
+        type="custom"
+        [text]="'Finalizar'"
+        [color]="'success'"
+        (pressed)="onEndClick(row)">
+      </app-generic-button>
+    </ng-template>
+
+    <div class="tables-row">
+      <!-- WAITING -->
+      <div class="table-container">
+        <h2 class="title">En espera</h2>
+        <app-generic-table
+          [columns]="awaitingColumns"
+          [data]="awaitingExtractions"
+          [showSearch]="false"
+          [showCreateButton]="false"
+          [showDownloadMenu]="false"
+          [columnTemplates]="columnTemplatesAwaiting"
+          [pageable]="false"
+          [showActions]="false">
+        </app-generic-table>
+      </div>
+
+      <!-- EN EXTRACCIÓN -->
+      <div class="table-container">
+        <h2 class="title">En extracción</h2>
+        <app-generic-table
+          [columns]="inColumns"
+          [data]="inExtractions"
+          [showSearch]="false"
+          [showCreateButton]="false"
+          [showDownloadMenu]="false"
+          [columnTemplates]="columnTemplatesIn"
+          [pageable]="false"
+          [showActions]="false">
+        </app-generic-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <!-- EXTRACTORES -->
+    <div class="extractors-container">
+      @for (ext of extractors; track $index) {
+        <div
+          (click)="selectExtractor(ext)"
+          class="extractor-box"
+          [class.selected]="isExtractorSelected(ext)">
+          <span class="extractor-key">{{ ext.key }}</span>
+          <div class="extractor-name">{{ getExtractorDisplayName(ext) }}</div>
+          @if (isExtractorSelected(ext)) {
+            <div class="selected-indicator">Seleccionado</div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- CONFIG BUTTON -->
+    <div class="config-button-container">
+      <app-generic-button
+        type="custom"
+        [text]="'Configurar box'"
+        [icon]="'pi pi-cog'"
+        [color]="'primary'"
+        (pressed)="openBoxConfig()">
+      </app-generic-button>
+    </div>
+  </div>
+
+  <!-- Box Config Modal -->
+  <app-generic-modal-form
+    [visible]="showBoxConfigModal"
+    [title]="'Configurar box'"
+    [width]="'400px'"
+    (closed)="closeBoxConfig()">
+    <app-box-config-dialog
+      [extractors]="extractors"
+      [inExtractions]="inExtractions"
+      (result)="onBoxConfigResult($event)">
+    </app-box-config-dialog>
+  </app-generic-modal-form>
+</section>

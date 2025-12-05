@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo — Generic Badge</title>
+  <style>
+    :root {
+      --brand-success: #5c9f3c;
+      --brand-warn: #d32f2f;
+      --brand-primary-700: #008f8c;
+    }
+
+    body {
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      height: 100dvh;
+      background: #f4f7fa;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      min-width: 70px;
+      user-select: none;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .badge:hover {
+      filter: brightness(0.95);
+      transform: translateY(-1px);
+    }
+
+    .badge--activo {
+      background: color-mix(in srgb, var(--brand-success) 20%, white);
+      color: var(--brand-success);
+    }
+
+    .badge--inactivo {
+      background: color-mix(in srgb, var(--brand-warn) 20%, white);
+      color: var(--brand-warn);
+    }
+
+    .badge--pendiente {
+      background: color-mix(in srgb, var(--brand-primary-700) 20%, white);
+      color: var(--brand-primary-700);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .badge {
+        font-size: 11px;
+        padding: 3px 8px;
+        min-width: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<span class="badge badge--activo">Activo</span>
+<span class="badge badge--inactivo">Inactivo</span>
+<span class="badge badge--pendiente">Pendiente</span>
+
+</body>
+</html>

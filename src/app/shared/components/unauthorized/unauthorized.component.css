@@ -1,0 +1,16 @@
+.unauthorized-container {
+  text-align: center;
+  padding: 4rem;
+}
+
+.unauthorized-icon {
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.unauthorized-link {
+  text-decoration: none;
+  color: var(--primary-color);
+}

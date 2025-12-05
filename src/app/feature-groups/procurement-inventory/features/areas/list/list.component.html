@@ -1,0 +1,77 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- Alertas -->
+  @if(showAlert) {
+  <app-generic-alert
+    [message]="alertMessage"
+    [type]="alertType"
+    (close)="showAlert = false"
+  >
+  </app-generic-alert>
+  }
+
+  <!-- Header -->
+  <div class="flex justify-between items-start mb-8 p-6 bg-white rounded-xl shadow-sm">
+    <div class="flex-1">
+      <h2 class="text-3xl font-semibold text-gray-800 mb-2">Gestión de Áreas</h2>
+      <p class="text-gray-600">Administra las áreas dentro de los depósitos</p>
+    </div>
+
+    <div class="flex gap-3">
+      <p-button
+        label="Nueva Área"
+        icon="pi pi-plus"
+        (onClick)="openCreateDialog()"
+        [disabled]="loading"
+        styleClass="p-button-primary">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Loading indicator -->
+  @if (loading && areas.length === 0) {
+    <div class="flex justify-center items-center min-h-96 bg-white rounded-xl shadow-sm">
+      <div class="text-center text-gray-600">
+        <i class="pi pi-spinner pi-spin text-4xl mb-4 block"></i>
+        <p class="text-lg">Cargando áreas...</p>
+      </div>
+    </div>
+  }
+
+  <!-- Table -->
+  @if (!loading || areas.length > 0) {
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <app-generic-table
+        [data]="areas"
+        [columns]="columns"
+        [filters]="filters"
+        [getActions]="getActionsForArea"
+        [loading]="loading"
+        [rows]="10"
+        [rowsOptions]="[5, 10, 25]"
+        (filterChange)="onFilterChange($event)"
+        (downloadExcel)="onExportExcel()"
+        (downloadPdf)="onExportPdf()"
+        (create)="openCreateDialog()">
+      </app-generic-table>
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (!loading && areas.length === 0) {
+    <div class="flex justify-center items-center min-h-96 bg-white rounded-xl shadow-sm">
+      <div class="text-center max-w-md p-8">
+        <i class="pi pi-map text-6xl text-gray-300 mb-6 block"></i>
+        <h3 class="text-xl font-semibold text-gray-700 mb-4">No hay áreas registradas</h3>
+        <p class="text-gray-500 mb-6 leading-relaxed">
+          Comienza creando tu primera área para organizar el inventario dentro de los depósitos.
+        </p>
+        <p-button
+          label="Crear Área"
+          icon="pi pi-plus"
+          (onClick)="openCreateDialog()"
+          styleClass="p-button-primary">
+        </p-button>
+      </div>
+    </div>
+  }
+</div>

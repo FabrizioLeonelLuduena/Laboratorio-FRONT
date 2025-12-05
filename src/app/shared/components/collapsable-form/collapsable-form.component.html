@@ -1,0 +1,73 @@
+<div class="mx-auto w-full" [ngClass]="sizeClass">
+  <p-panel [toggleable]="true" [(collapsed)]="collapsed">
+    <!-- HEADER -->
+    <ng-template pTemplate="header">
+      <h3 class="title-20 font-display">
+        @if (collapsed) {
+          {{ summary || title }}
+        } @else {
+          {{ title }}
+        }
+      </h3>
+    </ng-template>
+
+    <!-- CONTENT -->
+    <form [formGroup]="form" class="space-y-3 font-body">
+      @for (field of fields; track field.name) {
+        <div class="flex flex-col">
+          <label class="text-14 font-medium">{{ field.label }}</label>
+
+          <!-- TEXT / EMAIL / TEL -->
+          @if (field.type === 'text' || field.type === 'email' || field.type === 'tel') {
+            <input
+              pInputText
+              [type]="field.type"
+              formControlName="{{ field.name }}"
+              [placeholder]="field.placeholder ?? ''"
+              class="w-full text-14 font-body" />
+          }
+
+          <!-- NUMBER -->
+          @if (field.type === 'number') {
+            <input
+              pInputNumber
+              formControlName="{{ field.name }}"
+              [placeholder]="field.placeholder ?? ''"
+              class="w-full text-14 font-body" />
+          }
+
+          <!-- SELECT -->
+          @if (field.type === 'select') {
+            <p-dropdown
+              [options]="field.options ?? []"
+              optionLabel="label"
+              optionValue="value"
+              formControlName="{{ field.name }}"
+              [placeholder]="field.placeholder ?? 'Seleccione una opción'"
+              class="w-full text-14 font-body">
+            </p-dropdown>
+          }
+        </div>
+      }
+    </form>
+
+    <!-- FOOTER -->
+    <ng-template pTemplate="footer">
+      <div class="flex justify-between mt-3">
+        <app-generic-button
+          type="cancel"
+          text="Cancelar"
+          icon="pi pi-times"
+          (pressed)="onCancel()">
+        </app-generic-button>
+
+        <app-generic-button
+          type="save"
+          text="Guardar"
+          icon="pi pi-check"
+          (pressed)="onSave()">
+        </app-generic-button>
+      </div>
+    </ng-template>
+  </p-panel>
+</div>

@@ -1,0 +1,150 @@
+<!--
+  branch-card-detail.component.html
+  ====================================
+  Refactored template with a flatter design.
+-->
+
+<div class="branch-detail-page">
+
+  <!-- Loading & Error States -->
+  @if (loading) {
+    <div class="loading-state">
+      <app-spinner label="Cargando datos de la sucursal..."></app-spinner>
+    </div>
+  }
+  @if (error && !loading) {
+    <div class="error-state">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+      <button pButton label="Volver" icon="pi pi-arrow-left" class="p-button-raised" (click)="goBack()"></button>
+    </div>
+  }
+
+  <!-- Main Content -->
+  @if (!loading && !error && branch) {
+    <div class="two-card-layout">
+
+      <!-- ==================== LEFT CARD: GENERAL INFO ==================== -->
+      <p-card class="branch-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <div class="header-content">
+              <i class="pi pi-building header-icon"></i>
+              <div class="header-info">
+                <h3 class="branch-name">{{ branch.description }}</h3>
+                <span class="branch-code">Código: {{ branch.code }}</span>
+              </div>
+            </div>
+            <div class="header-actions">
+              <app-generic-badge [status]="getBadgeStatus(branch.status)" [text]="branch.status"></app-generic-badge>
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="card-body">
+          <!-- General Info -->
+          <section class="info-section">
+            <h4 class="detail-section-title"><i class="pi pi-info-circle"></i>Información General</h4>
+            <div class="info-grid">
+              <div class="info-item"><label>Responsable</label><p>{{ branch.responsibleName || '-' }}</p></div>
+              <div class="info-item"><label>Cantidad de Boxes</label><p>{{ branch.boxCount }}</p></div>
+              <div class="info-item"><label>Cajas Registradoras</label><p>{{ branch.registerCount }}</p></div>
+            </div>
+          </section>
+
+          <!-- Contact & Location -->
+          <section class="info-section">
+            <h4 class="detail-section-title"><i class="pi pi-map-marker"></i>Contacto y Ubicación</h4>
+            <div class="info-grid contact-grid">
+              <div class="info-item">
+                <label><i class="pi pi-phone"></i>Teléfono</label>
+                <p>{{ phoneContact?.contact || '-' }}</p>
+              </div>
+              <div class="info-item">
+                <label><i class="pi pi-envelope"></i>Email</label>
+                <p>{{ emailContact?.contact || '-' }}</p>
+              </div>
+              <div class="info-item">
+                <label><i class="pi pi-whatsapp"></i>WhatsApp</label>
+                <p>{{ whatsappContact?.contact || '-' }}</p>
+              </div>
+            </div>
+            <div class="info-item address-item">
+              <label><i class="pi pi-map-marker"></i>Dirección</label>
+              <a [href]="getGoogleMapsUrl()" target="_blank" rel="noopener noreferrer" class="address-link">
+                {{ branch.fullAddress || 'No disponible' }}
+                <i class="pi pi-external-link"></i>
+              </a>
+            </div>
+          </section>
+
+          <!-- Schedules -->
+          <section class="info-section">
+            <h4 class="detail-section-title"><i class="pi pi-calendar"></i>Horarios</h4>
+            @if (branch.schedules && branch.schedules.length > 0) {
+              <div class="schedule-grid">
+                @for (schedule of branch.schedules; track schedule) {
+                  <div class="schedule-card">
+                    <div class="schedule-header">
+                      <i class="pi pi-clock"></i>
+                      <span class="schedule-type">{{ (scheduleTypeLabel[schedule.scheduleType] || schedule.scheduleType) | uppercase }}</span>
+                    </div>
+                    <div class="schedule-body"><p>{{ formatSchedule(schedule) }}</p></div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <p>No hay horarios disponibles.</p>
+            }
+          </section>
+        </div>
+      </p-card>
+
+      <!-- ==================== RIGHT CARD: AREAS & SECTIONS ==================== -->
+      <p-card class="branch-card">
+         <div class="card-body">
+            <h4 class="detail-section-title"><i class="pi pi-th-large"></i>Áreas y Secciones</h4>
+            @if (branch.areas && branch.areas.length > 0) {
+              <p-accordion [multiple]="true">
+                @for (area of branch.areas; track area.id) {
+                  <p-accordionTab styleClass="area-accordion-tab">
+                    <ng-template pTemplate="header">
+                      <div class="accordion-header">
+                        <span class="accordion-title">{{ area.name }}</span>
+                        <div class="header-tags">
+                          <app-generic-badge [status]="area.isActive ? 'activo' : 'inactivo'" [text]="area.isActive ? 'Activo' : 'Inactivo'"></app-generic-badge>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <div class="area-content">
+                      <div class="area-details">
+                        <div class="detail-item"><strong>Tipo:</strong> {{ area.type | uppercase }}</div>
+                        <div class="detail-item"><strong>Externa:</strong> {{ (area.isExternal ? 'Sí' : 'No') | uppercase }}</div>
+                      </div>
+                      @if (area.sections && area.sections.length > 0) {
+                        <div class="sections-list">
+                          <h5 class="sections-title">Secciones</h5>
+                          @for (section of area.sections; track section.id) {
+                            <div class="section-item">
+                              <span>{{ section.name }}</span>
+                              <app-generic-badge [status]="section.isActive ? 'activo' : 'inactivo'" [text]="section.isActive ? 'Activo' : 'Inactivo'"></app-generic-badge>
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </p-accordionTab>
+                }
+              </p-accordion>
+            } @else {
+              <div class="no-data-placeholder">
+                <i class="pi pi-inbox"></i>
+                <p>No hay áreas definidas para esta sucursal.</p>
+              </div>
+            }
+         </div>
+      </p-card>
+
+    </div>
+  }
+</div>

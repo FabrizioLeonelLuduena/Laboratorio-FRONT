@@ -1,0 +1,134 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0 14px;
+  min-height: 42px;
+}
+
+.search-box i {
+  color: var(--brand-primary-700);
+  font-size: 16px;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--on-surface);
+  flex: 1;
+  min-width: 200px;
+}
+
+:host ::ng-deep .p-button.p-button-text.p-button-rounded {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr.p-datatable-row-expansion {
+  background-color: #f9fafb;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr.p-datatable-row-expansion td {
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+:host ::ng-deep .expanded-row-content {
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 0.5rem;
+}
+
+:host ::ng-deep .expanded-row-section {
+  margin-bottom: 1.5rem;
+}
+
+:host ::ng-deep .expanded-row-section:last-child {
+  margin-bottom: 0;
+}
+
+:host ::ng-deep .expanded-row-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--brand-primary-700);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+}
+
+:host ::ng-deep .expanded-row-fields {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+:host ::ng-deep .expanded-row-fields p {
+  margin: 0;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+:host ::ng-deep .expanded-row-fields p strong {
+  color: #000;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .expanded-row-fields p span {
+  color: #000;
+  font-weight: 400;
+}
+
+:host ::ng-deep .expanded-row-divider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 1.5rem 0;
+}
+
+@media (width <= 1024px) {
+  :host ::ng-deep .expanded-row-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  :host ::ng-deep .expanded-row-fields {
+    grid-template-columns: 1fr;
+  }
+}

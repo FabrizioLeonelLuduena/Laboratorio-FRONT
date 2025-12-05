@@ -1,0 +1,400 @@
+.billing-creator-container {
+  max-width: 100%;
+  margin: 0;
+  padding: 1.5rem;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+}
+
+.billing-creator-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Section 1: Invoice Data (always visible)
+.section-invoice-data {
+  flex-shrink: 0;
+}
+
+// Section 2: Items (always visible)
+.section-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Actions Footer
+.actions-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-top: 2px solid var(--surface-border);
+  background: var(--surface-50);
+  margin-top: auto;
+  flex-shrink: 0;
+
+  .footer-left {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .p-button {
+    min-width: 120px;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+  }
+
+  .validation-hint {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--surface-600);
+    max-width: 28rem;
+  }
+}
+
+// Billing summary removed to save space and match client wireframes
+
+// Step 3: Summary Layout (4 columns: Totals fields | Totals fields | Payment Methods | Summary Card)
+.summary-step-wrapper {
+  height: 100%;
+}
+
+.summary-layout-4col {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr;
+  gap: 1rem;
+
+  .totals-fields-section,
+  .payment-methods-section,
+  .summary-card-section {
+    display: flex;
+    flex-direction: column;
+
+    .section-title {
+      margin: 0 0 0.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    .section-subtitle {
+      margin: 0 0 0.5rem;
+      font-size: 0.7rem;
+      color: var(--on-surface-muted);
+    }
+  }
+
+  // Columns 1-2: Totals form fields
+  .totals-fields-section {
+    app-totals-step {
+      flex: 1;
+      overflow: hidden auto;
+      min-height: 0;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--surface-100);
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--surface-400);
+        border-radius: 3px;
+
+        &:hover {
+          background: var(--surface-500);
+        }
+      }
+    }
+  }
+
+  // Column 3: Payment methods
+  .payment-methods-section {
+    app-payment-methods-step {
+      flex: 1;
+      overflow: hidden auto;
+      min-height: 0;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--surface-100);
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--surface-400);
+        border-radius: 3px;
+
+        &:hover {
+          background: var(--surface-500);
+        }
+      }
+    }
+  }
+
+  // Column 4: Summary card with accordion
+  .summary-card-section {
+    gap: 0.5rem;
+
+    .attach-button {
+      width: 100%;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      padding: 0.4rem 0.75rem;
+    }
+
+    .summary-accordion {
+      .p-accordion-header-link {
+        background: var(--brand-primary);
+        border-color: var(--brand-primary);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        cursor: pointer;
+
+        &:hover {
+          background: var(--brand-primary-700);
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgb(0 187 184 / 30%);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        .accordion-header-content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          width: 100%;
+
+          .accordion-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &::after {
+              content: "\e933"; /* pi-chevron-down */
+              font-family: primeicons, sans-serif;
+              font-size: 0.7rem;
+              transition: transform 0.3s ease;
+            }
+          }
+
+          .accordion-total {
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-align: left;
+          }
+        }
+      }
+
+      .p-accordion-header-link[aria-expanded="true"] {
+        .accordion-header-content .accordion-title::after {
+          transform: rotate(180deg);
+        }
+      }
+
+      .p-accordion-content {
+        padding: 0;
+        border: none;
+        background: transparent;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .summary-totals-card {
+      background: var(--surface-50);
+      border: 2px solid var(--brand-primary);
+      border-radius: 8px;
+      padding: 0.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px rgb(0 187 184 / 15%);
+
+      .card-title {
+        margin: 0 0 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--brand-primary);
+        text-align: center;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--brand-primary);
+      }
+
+      .summary-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        padding: 0.35rem 0;
+
+        .summary-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 0.75rem;
+
+          &.total {
+            margin-top: 0.35rem;
+            padding-top: 0.35rem;
+
+            .label {
+              font-size: 0.85rem;
+              font-weight: 700;
+              color: var(--brand-primary);
+            }
+
+            .value {
+              font-size: 0.95rem;
+              font-weight: 800;
+              color: var(--brand-primary);
+            }
+
+            &.vertical {
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+              gap: 0.35rem;
+
+              .value {
+                font-size: 1.1rem;
+              }
+            }
+          }
+
+          .label {
+            font-weight: 500;
+            color: var(--on-surface-muted);
+          }
+
+          .value {
+            font-weight: 600;
+            color: var(--on-surface);
+
+            &.paid {
+              color: var(--green-600);
+            }
+
+            &.remaining {
+              color: var(--orange-600);
+
+              &.zero {
+                color: var(--green-600);
+              }
+            }
+          }
+        }
+      }
+
+      .summary-divider {
+        height: 1px;
+        background: var(--border-color);
+        margin: 0.3rem 0;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (width <= 1200px) {
+  .billing-creator-content {
+    gap: 1.5rem;
+  }
+}
+
+@media (width <= 768px) {
+  .billing-creator-container {
+    padding: 1rem;
+  }
+
+  .billing-creator-content {
+    gap: 1rem;
+  }
+
+  .actions-footer {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+
+    .footer-left,
+    .footer-right {
+      width: 100%;
+      justify-content: center;
+
+      .p-button {
+        flex: 1;
+        min-width: auto;
+      }
+    }
+  }
+}
+
+// Loading overlay
+.loading-overlay {
+  inset: 0;
+  position: fixed;
+  background: rgb(0 0 0 / 30%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  .loading-spinner {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  }
+}
+
+// Preview modal
+.preview-modal-content {
+  max-height: 70vh;
+  overflow: hidden auto;
+  padding: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--surface-100);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--surface-400);
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--surface-500);
+    }
+  }
+}
+

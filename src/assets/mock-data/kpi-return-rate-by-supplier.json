@@ -1,0 +1,31 @@
+{
+  "data": [
+    {
+      "label": "Distribuidora Médica del Sur S.A.",
+      "value": 2.1
+    },
+    {
+      "label": "Insumos Hospitalarios Córdoba",
+      "value": 3.8
+    },
+    {
+      "label": "Suministros Quirúrgicos Paraná",
+      "value": 4.5
+    },
+    {
+      "label": "Laboratorios Unidos S.R.L.",
+      "value": 2.9
+    },
+    {
+      "label": "Equipamiento Médico Rosario",
+      "value": 5.2
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

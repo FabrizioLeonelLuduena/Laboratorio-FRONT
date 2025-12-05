@@ -1,0 +1,108 @@
+<p-card class="col-span-full">
+  <div class="flex items-center justify-between gap-3 pb-3 border-b border-[var(--border-color)] mb-4">
+    <div class="flex items-center gap-2">
+      <i class="pi pi-exclamation-circle text-lg text-[var(--brand-primary)]"></i>
+      <h3 class="text-sm font-semibold text-[var(--on-surface)] m-0 sm:text-base">
+        Insumos en Exceso
+      </h3>
+      <p-button
+        icon="pi pi-question-circle"
+        [text]="true"
+        [rounded]="true"
+        [outlined]="true"
+        size="small"
+        class="w-7 h-7 min-w-7 p-0"
+        (onClick)="openHelpModal()">
+      </p-button>
+    </div>
+    <span class="text-xs font-medium text-[var(--on-surface-muted)] sm:text-sm">
+      {{ totalExcess() }} insumos en {{ locationAlerts().length }} ubicaciones
+    </span>
+  </div>
+
+  @if (isLoading()) {
+    <div class="flex items-center justify-center py-8">
+      <i class="pi pi-spin pi-spinner text-2xl text-[var(--brand-primary)]"></i>
+    </div>
+  } @else if (locationAlerts().length === 0) {
+    <div class="flex flex-col items-center justify-center py-8 text-center">
+      <i class="pi pi-check-circle text-4xl text-green-500 mb-3"></i>
+      <p class="text-sm text-[var(--on-surface-muted)] m-0">
+        No hay insumos en exceso en este momento
+      </p>
+    </div>
+  } @else {
+    <div class="max-h-96 overflow-y-auto border border-[var(--border-color)] rounded-lg">
+      @for (location of locationAlerts(); track location.locationId; let isLast = $last) {
+        <div class="flex items-center justify-between px-4 py-3 hover:bg-[var(--surface-hover)] transition-colors"
+             [class.border-b]="!isLast"
+             [class.border-[var(--border-color)]]="!isLast">
+          <div class="flex items-center gap-3">
+            <i class="pi pi-map-marker text-base text-[var(--primary-color)]"></i>
+            <div>
+              <span class="text-sm font-semibold text-[var(--on-surface)]">
+                {{ location.locationName }}
+              </span>
+              <span class="text-xs text-[var(--on-surface-muted)] ml-2">
+                ({{ location.alerts.length }} insumos)
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            @if (location.criticalCount > 0) {
+              <span class="flex items-center gap-2 text-xs font-medium text-red-600">
+                <span class="block h-2.5 w-2.5 rounded-full bg-red-500"></span>
+                {{ location.criticalCount }}
+              </span>
+            }
+            @if (location.warningCount > 0) {
+              <span class="flex items-center gap-2 text-xs font-medium text-yellow-600">
+                <span class="block h-2.5 w-2.5 rounded-full bg-yellow-400"></span>
+                {{ location.warningCount }}
+              </span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="flex justify-end items-center gap-2 mt-3">
+      <p-button
+        label="Ver más"
+        icon="pi pi-external-link"
+        [outlined]="true"
+        size="small"
+        class="text-xs"
+        (onClick)="viewDetails()">
+      </p-button>
+    </div>
+  }
+</p-card>
+
+<!-- Help modal -->
+<p-dialog
+  [(visible)]="showHelpModal"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '450px', maxWidth: '90vw' }"
+  header="Insumos en Exceso">
+  <div class="flex flex-col gap-3">
+    <div class="flex items-start gap-3 p-3 bg-[var(--surface-ground)] rounded-lg border border-[var(--border-color)]">
+      <i class="pi pi-exclamation-circle text-3xl text-[var(--brand-primary)] mt-1"></i>
+      <div class="flex-1">
+        <p class="text-sm text-[var(--on-surface)] m-0 leading-relaxed">
+          Insumos con stock por encima del umbral máximo en cada ubicación. Pueden requerir redistribución o ajuste de pedidos para optimizar el espacio de almacenamiento.
+        </p>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cerrar"
+      icon="pi pi-times"
+      [text]="true"
+      (onClick)="closeHelpModal()">
+    </p-button>
+  </ng-template>
+</p-dialog>

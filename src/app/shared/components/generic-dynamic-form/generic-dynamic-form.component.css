@@ -1,0 +1,217 @@
+:host {
+  display: block;
+}
+
+/* Form container sin borde */
+.form-container {
+  padding: 0;
+}
+
+.header {
+  margin-bottom: 0.5rem;
+}
+
+.heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ===== Grid por [data-span] (no inline styles) ===== */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.form-grid-2 [data-span="1"] {
+  grid-column: span 1;
+}
+
+.form-grid-2 [data-span="2"] {
+  grid-column: span 2;
+}
+
+.form-grid-2 [data-span="3"],
+.form-grid-2 [data-span="4"] {
+  grid-column: 1 / -1;
+}
+
+/* ===== Layout base ===== */
+.field-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-input {
+  min-width: 0;
+}
+
+/* Requerido: asterisco */
+.req {
+  color: var(--brand-warn);
+  margin-left: 4px;
+}
+
+/* Label rojo si inválido */
+label[data-invalid="true"] {
+  color: var(--brand-warn);
+}
+
+/* Pie fijo (evita reflow al aparecer error) */
+.field-foot {
+  min-height: 20px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Error solo texto (fuente más pequeña) */
+.form-error-pill {
+  color: var(--brand-warn);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.form-hint {
+  color: var(--on-surface-muted);
+  font-size: var(--font-size-small);
+}
+
+/* Checkbox layout */
+.checkbox-shell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.checkbox-label {
+  cursor: pointer;
+}
+
+/* DatePicker shell (sin inputgroup) */
+.control-shell {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px;
+  transition: outline-color 120ms ease;
+}
+
+.control-shell[data-invalid="true"] {
+  outline: 1px solid var(--brand-warn);
+  border-radius: 8px;
+}
+
+/* Overlay del DatePicker */
+.datepicker-panel {
+  z-index: 1100;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ===== Estados de error en InputGroup ===== */
+
+/* Borde rojo al contenedor interno */
+:host ::ng-deep p-inputgroup.has-error .p-inputgroup {
+  outline: 1px solid var(--brand-warn);
+  border-radius: 8px;
+}
+
+/* Addons también en rojo (borde/texto) */
+:host ::ng-deep p-inputgroup.has-error .p-inputgroup-addon {
+  color: var(--brand-warn);
+  border-color: var(--brand-warn);
+}
+
+/* ===== Que los hijos de Prime ocupen el ancho ===== */
+:host ::ng-deep p-inputgroup .p-inputgroup {
+  width: 100%;
+}
+
+:host ::ng-deep p-select,
+:host ::ng-deep .p-select {
+  width: 100%;
+}
+
+:host ::ng-deep p-inputnumber,
+:host ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+:host ::ng-deep p-datepicker,
+:host ::ng-deep .p-datepicker {
+  width: 100%;
+}
+
+:host ::ng-deep p-chips,
+:host ::ng-deep .p-chips {
+  width: 100%;
+}
+
+
+/* Textarea */
+:host ::ng-deep textarea.p-inputtextarea {
+  height: auto;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+
+/* Radio group */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  padding: 8px 12px;
+}
+
+.radio-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== Buscador del select: full width + placeholder visible ===== */
+:host ::ng-deep .p-select-panel .p-select-filter-container {
+  padding: 8px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+:host ::ng-deep .p-select-panel .p-select-filter,
+:host ::ng-deep .p-select-panel .p-inputtext {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  color: var(--on-surface);
+}
+
+:host ::ng-deep .p-select-panel .p-inputtext::placeholder {
+  color: var(--on-surface-muted);
+}
+
+:host ::ng-deep .p-select-panel .p-select-items {
+  padding-top: 4px;
+}
+
+/* Utilitaria */
+.flex-auto-min0 {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Micro */
+.date-ctrl {
+  display: block;
+}

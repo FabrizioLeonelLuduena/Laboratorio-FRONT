@@ -1,0 +1,183 @@
+@if (alertType !== null) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText"
+    (close)="alertType = null">
+  </app-generic-alert>
+}
+
+@if (loading) {
+  <div class="flex items-center justify-center py-8">
+    <p class="text-gray-500">Cargando datos de la nota de entrega...</p>
+  </div>
+} @else if (initialValue) {
+  <div class="edit-goods-receipt-container">
+    <app-generic-form
+      [fields]="formFields"
+      [initialValue]="initialValue"
+      [saving]="saving"
+      [maxCols]="gridColumns"
+      [title]="'Editar nota de entrega'"
+      [showHeader]="false"
+      [showCancel]="false"
+      [showSubmit]="false"
+      [submitLabel]="'Guardar nota de entrega'"
+      [cancelLabel]="'Cancelar'"
+      [submitType]="'create'"
+      [submitIcon]="'pi pi-check'"
+      (submitForm)="onFormSubmit($event)"
+      (cancelForm)="onCancel()">
+    </app-generic-form>
+
+    <div class="border-t border-gray-200 my-6"></div>
+
+    <!-- Grilla de items - Estructura idéntica a invoice-items-step -->
+    <div class="receipt-items-grid-wrapper">
+      <div class="custom-items-grid">
+        <!-- Header de la grilla -->
+        <div class="grid-header">
+          <div class="grid-header-cell col-descripcion">Producto</div>
+          <div class="grid-header-cell col-solicitada">Cantidad solicitada</div>
+          <div class="grid-header-cell col-recibida">Cantidad recibida</div>
+          <div class="grid-header-cell col-lote">Lote</div>
+          <div class="grid-header-cell col-vencimiento">Vencimiento</div>
+          <div class="grid-header-cell col-notas">Observaciones</div>
+          <div class="grid-header-cell col-actions">
+            <button
+              type="button"
+              class="grid-action-btn add-btn header-add-btn"
+              (click)="addNewItem()"
+              title="Agregar producto">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Rows de items -->
+        <div class="grid-body">
+          @for (item of details; let i = $index; track i) {
+            <div class="grid-row">
+
+              <!-- Item del Proveedor -->
+              <div class="grid-cell col-descripcion">
+                <p-dropdown
+                  [(ngModel)]="item.supplierItemId"
+                  [options]="supplierItems"
+                  optionLabel="name"
+                  optionValue="id"
+                  placeholder="Seleccionar producto"
+                  [filter]="true"
+                  filterBy="name"
+                  [showClear]="false"
+                  appendTo="body"
+                  styleClass="grid-dropdown"
+                  [disabled]="true"
+                  [pTooltip]="item.supplierItemId ? getSupplierItemName(item.supplierItemId) : ''"
+                  tooltipPosition="top">
+                  <ng-template let-supplierItem pTemplate="item">
+                    <div class="font-medium">{{ supplierItem.name }}</div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+
+              <!-- Cantidad Solicitada -->
+              <div class="grid-cell col-solicitada">
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  class="grid-input text-right"
+                  [(ngModel)]="item.requestedQuantity"
+                  placeholder="0"
+                  disabled />
+              </div>
+
+              <!-- Cantidad Recibida -->
+              <div class="grid-cell col-recibida">
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  class="grid-input text-right"
+                  [(ngModel)]="item.receivedQuantity"
+                  placeholder="0"
+                  required />
+              </div>
+
+              <!-- Lote -->
+              <div class="grid-cell col-lote">
+                <input
+                  type="text"
+                  class="grid-input"
+                  [(ngModel)]="item.batchNumber"
+                  placeholder="Ej: L-001" />
+              </div>
+
+              <!-- Vencimiento -->
+              <div class="grid-cell col-vencimiento">
+                <input
+                  type="date"
+                  class="grid-input"
+                  [(ngModel)]="item.expirationDate"
+                  placeholder="dd/mm/aaaa" />
+              </div>
+
+              <!-- Observaciones -->
+              <div class="grid-cell col-notas">
+                <input
+                  type="text"
+                  class="grid-input"
+                  [(ngModel)]="item.notes"
+                  placeholder="Observaciones..." />
+              </div>
+
+              <!-- Actions -->
+              <div class="grid-cell col-actions">
+                <button
+                  type="button"
+                  class="grid-action-btn delete-btn"
+                  (click)="removeDetail(i)"
+                  title="Eliminar">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Empty state -->
+        @if (details.length === 0) {
+          <div class="empty-grid-message">
+            <i class="pi pi-inbox"></i>
+            <p>No hay productos agregados</p>
+            <small>Presiona el botón "+" para agregar productos</small>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center mt-6">
+      <app-generic-button
+        type="back"
+        icon="pi pi-arrow-left"
+        (pressed)="onBack()">
+      </app-generic-button>
+
+      <div class="flex gap-3">
+        <app-generic-button
+          text="Cancelar"
+          type="cancel"
+          [disabled]="saving"
+          (pressed)="onCancel()">
+        </app-generic-button>
+
+        <app-generic-button
+          [text]="saving ? 'Guardando...' : 'Guardar cambios'"
+          type="create"
+          icon="pi pi-check"
+          [disabled]="saving"
+          (pressed)="triggerSubmit()">
+        </app-generic-button>
+      </div>
+    </div>
+  </div>
+}

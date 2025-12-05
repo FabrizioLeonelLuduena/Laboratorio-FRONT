@@ -1,0 +1,18 @@
+<button
+  type="button"
+  class="help-button"
+  [ngClass]="position"
+  (click)="openHelp()"
+  title="Ver ayuda"
+>
+  <i class="pi pi-question-circle"></i>
+</button>
+
+<app-generic-modal-form
+  *ngIf="visible"
+  [visible]="visible"
+  [title]="title"
+  (closed)="closeHelp()"
+>
+  <div class="help-content" [innerHTML]="content"></div>
+</app-generic-modal-form>

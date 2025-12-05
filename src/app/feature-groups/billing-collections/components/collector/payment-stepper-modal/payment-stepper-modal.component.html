@@ -1,0 +1,64 @@
+<div class="payment-stepper-container">
+
+  <!-- Stepper Header -->
+  <div class="stepper-header">
+    <p-steps
+      [model]="stepItems"
+      [activeIndex]="activeIndex"
+      [readonly]="true"
+      styleClass="custom-steps">
+    </p-steps>
+  </div>
+
+  <!-- Step Content -->
+  <div class="step-content" *ngIf="currentStep">
+
+    <!-- Payment Method Title -->
+    <div class="step-title">
+      <h2>{{ currentStep.label }}</h2>
+      <p class="step-amount">Monto: {{ currentStep.amount | currency:'ARS':'symbol-narrow':'1.2-2' }}</p>
+    </div>
+
+    <!-- CASH Step -->
+    <div class="step-body" *ngIf="getStepType(currentStep.paymentMethod) === 'cash'">
+      <div class="waiting-icon">
+        <i class="pi pi-clock" [class]="getPaymentIcon(currentStep.paymentMethod)"></i>
+      </div>
+      <p class="waiting-message">Esperando confirmación del pago en efectivo...</p>
+    </div>
+
+    <!-- TRANSFER Step -->
+    <div class="step-body" *ngIf="getStepType(currentStep.paymentMethod) === 'transfer'">
+      <div class="waiting-icon">
+        <i class="pi pi-clock" [class]="getPaymentIcon(currentStep.paymentMethod)"></i>
+      </div>
+      <p class="waiting-message">Esperando confirmación de la transferencia...</p>
+    </div>
+
+    <!-- QR Step -->
+    <div class="step-body qr-step" *ngIf="getStepType(currentStep.paymentMethod) === 'qr'">
+      <div class="qr-container">
+        <div class="qr-placeholder">
+          <i class="pi pi-qrcode qr-icon"></i>
+          <p class="qr-message">Escanee el código QR para realizar el pago</p>
+        </div>
+      </div>
+      <p class="qr-info">El pago se completará automáticamente al confirmar la transacción</p>
+    </div>
+
+  </div>
+
+  <!-- Step Actions -->
+  <div class="step-actions" *ngIf="!isQRStep">
+    <button
+      pButton
+      type="button"
+      [label]="buttonLabel"
+      icon="pi pi-check"
+      [loading]="isProcessing"
+      (click)="onContinue()"
+      class="p-button-primary continue-btn">
+    </button>
+  </div>
+
+</div>

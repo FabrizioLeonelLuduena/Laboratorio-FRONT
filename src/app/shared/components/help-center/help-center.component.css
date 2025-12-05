@@ -1,0 +1,134 @@
+/* General title */
+.help-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #02423b;
+  text-align: left;
+}
+
+/* Grid con tarjetas iguales */
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  gap: 28px;
+}
+
+.p-button-rounded{
+  border-radius: 0.5rem;
+  width: 5rem;
+}
+
+/* Aumentar el encabezado del modal */
+/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+::ng-deep .p-dialog .p-dialog-header {
+  padding-bottom: 0;
+}
+
+/* stylelint-disable-next-line selector-pseudo-element-no-unknown, declaration-no-important */
+::ng-deep .p-dialog .p-dialog-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--brand-secondary);
+}
+
+.help-card.clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.help-card.clickable:hover {
+  box-shadow: 0 6px 16px rgb(0 0 0 / 10%);
+  border: 2px solid #56aea7;
+}
+
+/* Tarjeta */
+.help-card {
+  background: #fff;
+  border: 2px solid #c5efe7;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  counter-reset: step; /* ← movido aquí para evitar selector duplicado */
+}
+
+/* Header de la tarjeta */
+.help-header {
+  display: flex;
+  align-items: start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.help-icon {
+  width: 54px;
+  height: 54px;
+  background: #d7f3ee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #04897a;
+  font-size: 1.5rem;
+}
+
+.help-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--brand-secondary)
+}
+
+.help-description {
+  margin-top: 4px;
+  color: #507c73;
+  font-size: 0.92rem;
+}
+
+/* Lista numerada custom */
+.help-steps {
+  margin: 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #02423b;
+  font-size: 0.95rem;
+}
+
+.help-steps li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  padding-left: 32px;
+}
+
+.help-steps li::before {
+  content: counter(step);
+  counter-increment: step;
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  background: #d7f3ee;
+  color: #04897a;
+  border-radius: 50%;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Permitir scroll interno sin romper el modal */
+/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+.p-dialog-content {
+  max-height: calc(100vh - 200px); /* deja espacio para header y footer */
+  overflow-y: auto;
+  padding-right: 8px; /* evita que el scroll tape contenido */
+}

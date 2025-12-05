@@ -1,0 +1,143 @@
+<section class="cash-detail">
+  <div class="cash-detail__header-card card">
+    <div class="cash-detail__info">
+      <div class="cash-detail__main">
+        <div class="cash-detail__amount">
+          <span>Total actual</span>
+          <strong>
+            {{ detailSummary().total | currency:'ARS':'symbol':'1.0-0' }}
+          </strong>
+        </div>
+
+        <div class="cash-detail__meta">
+          <span class="cash-detail__meta-item meta-box">
+            <span>
+              <i class="pi pi-briefcase"></i> {{ detailSummary().boxName || 'N/A' }}
+            </span>
+          </span>
+        </div>
+
+        <div class="cash-detail__meta">
+          <span class="cash-detail__meta-item meta-branch">
+            <span>
+              <i class="pi pi-building"></i> {{ detailSummary().branchName || 'N/A' }}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <app-generic-button
+      type="custom"
+      text="Transferir"
+      icon="pi pi-building-columns"
+      color="--brand-warn"
+      (pressed)="openEmptyModal()"
+    >
+    </app-generic-button>
+  </div>
+
+  @if (alertMessage()) {
+    <app-generic-alert
+      [type]="alertMessage()!.type"
+      [title]="alertMessage()!.title"
+      [text]="alertMessage()!.text"
+      (dismissed)="alertMessage.set(null)"
+    >
+    </app-generic-alert>
+  }
+
+  <div class="cash-detail__table-wrapper">
+    <app-generic-table
+      [columns]="movementColumns()"
+      [data]="filteredSessions()"
+      [filters]="tableFilters()"
+      [rows]="10"
+      [pageable]="true"
+      [showActions]="false"
+      [showCreateButton]="false"
+      [showFilters]="true"
+      [showDownloadMenu]="true"
+      [loading]="loading()"
+      (filterChange)="handleFilterChange($event)"
+      (downloadExcel)="handleExportAction($event, { type: 'excel' })"
+      (downloadPdf)="handleExportAction($event, { type: 'pdf' })"
+    >
+    </app-generic-table>
+  </div>
+</section>
+
+<app-generic-modal-form
+  [visible]="amountModalVisible()"
+  title="Monto a transferir"
+  width="430px"
+  (closed)="closeAmountModal()"
+>
+  <div class="cash-detail__modal">
+
+    <p>Ingresá el monto que querés transferir a la caja grande.</p>
+
+    <div class="form-field mt-4">
+      <label class="form-label">Monto</label>
+      <input
+        type="number"
+        class="form-input"
+        [(ngModel)]="transferAmount"
+        placeholder="0"
+        min="0"
+      />
+    </div>
+
+    <div class="cash-detail__modal-actions mt-6">
+      <app-generic-button
+        type="cancel"
+        (pressed)="closeAmountModal()">
+      </app-generic-button>
+
+      <app-generic-button
+        type="custom"
+        text="Confirmar"
+        icon="pi pi-check"
+        color="--brand-primary-700"
+        (pressed)="confirmTransfer()"
+      >
+      </app-generic-button>
+    </div>
+  </div>
+</app-generic-modal-form>
+
+<ng-template #openedTemplate let-row>
+  <div class="cash-detail__date">
+    <span>{{ row.openedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+  </div>
+</ng-template>
+
+<ng-template #closedTemplate let-row>
+  <ng-container *ngIf="row.closedAt; else noClose">
+    <div class="cash-detail__date">
+      <span>{{ row.closedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #noClose>
+  <span>-</span>
+</ng-template>
+
+<ng-template #initialCashTemplate let-row>
+  <span class="cash-detail__amount-cell">
+    {{ row.initialCash | currency:'ARS':'symbol':'1.0-0' }}
+  </span>
+</ng-template>
+
+<ng-template #finalCashTemplate let-row>
+  <span class="cash-detail__amount-cell">
+    {{ row.finalCash | currency:'ARS':'symbol':'1.0-0' }}
+  </span>
+</ng-template>
+
+<ng-template #statusTemplate let-row>
+  <app-generic-badge
+    [status]="getBadgeStatus(row.status)"
+    [text]="getStatusLabel(row.status)"
+  ></app-generic-badge>
+</ng-template>

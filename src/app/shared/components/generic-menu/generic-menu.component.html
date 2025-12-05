@@ -1,0 +1,39 @@
+<div class="relative inline-block">
+  @if (items.length === 1) {
+    <!-- Single action: show direct button -->
+    <button
+      pButton
+      type="button"
+      [icon]="items[0].icon ?? 'pi pi-eye'"
+      class="p-button-text p-button-rounded single-action-button"
+      [title]="items[0].label ?? ''"
+      (click)="handleAction($event, items[0])"
+    ></button>
+  } @else {
+    <!-- Multiple actions: show ⋮ Menu trigger button -->
+    <button
+      #menuButton
+      pButton
+      type="button"
+      [icon]="icon"
+      class="p-button-text p-button-rounded"
+      (click)="popover.toggle($event)"
+    ></button>
+
+    <!-- Floating panel with menu options -->
+    <p-popover #popover>
+      <ng-template pTemplate="content">
+        <ul class="menu-container">
+          @for (item of items; track item.id || item.label) {
+            <li class="menu-item" (click)="handleAction($event, item)">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span>{{ item.label }}</span>
+            </li>
+          }
+        </ul>
+      </ng-template>
+    </p-popover>
+  }
+</div>

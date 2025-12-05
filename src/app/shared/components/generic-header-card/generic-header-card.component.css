@@ -1,0 +1,9 @@
+/* src/app/shared/components/generic-header-card/generic-header-card.component.scss */
+:host {
+  display: block;
+}
+
+header {
+  padding-top: 0 ;
+  padding-bottom: 1rem;
+}

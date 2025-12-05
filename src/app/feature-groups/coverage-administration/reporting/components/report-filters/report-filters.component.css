@@ -1,0 +1,30 @@
+.report-filters {
+  padding-bottom: .5rem;
+  border-radius: 10px;
+  margin-bottom: .75rem;
+}
+
+.filters-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  gap: .5rem .75rem;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  min-width: 0;
+}
+
+label {
+  font-size: .85rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+button[pButton] {
+  height: 38px;
+  align-self: flex-start;
+}

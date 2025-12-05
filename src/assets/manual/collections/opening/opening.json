@@ -1,0 +1,185 @@
+{
+  "id": "apertura-caja",
+  "moduleId": "caja",
+  "title": "Apertura de Caja",
+  "intro": "Este módulo gestiona el flujo de efectivo diario de la sucursal. Dependiendo del estado actual (Abierta o Cerrada), permite registrar movimientos, consultar el historial de transacciones y realizar la apertura o cierre de jornada.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrativo",
+      "Secretaria"
+    ]
+  },
+  "sections": [
+     {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador - Facturación"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "caja-cerrada",
+      "title": "Estado: Caja Cerrada",
+      "blocks": [
+
+        {
+          "type": "badge",
+          "text": "CERRADA",
+          "color": "#FCA5A5"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta pantalla aparece cuando no se ha iniciado la jornada o ya se ha realizado el cierre del día anterior. Permite realizar la <strong>Apertura de Caja diaria</strong> para comenzar a operar."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-box-closed.jpg",
+          "alt": "Interfaz de Caja Cerrada"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Abrir caja",
+              "<i class='pi pi-unlock'></i>",
+              "Redirige al formulario de apertura donde deberá completar la información inicial (monto base, usuario y sucursal)."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "caja-abierta",
+      "title": "Estado: Caja Abierta",
+      "blocks": [
+        {
+          "type": "badge",
+          "text": "ABIERTA",
+          "color": "#86EFAC"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cuando la caja se encuentra <strong>abierta</strong>, el usuario visualiza la tabla de movimientos del día. Desde aquí se pueden gestionar las operaciones diarias y auditar los ingresos y egresos."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-principal.jpg",
+          "alt": "Interfaz de Caja Abierta"
+        },
+        {
+          "type": "subtitle",
+          "text": "Herramientas Superiores"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para <strong>filtrar rápidamente</strong> los resultados de la tabla (Fecha, Tipo, Monto, Usuario)."
+            ],
+            [
+              "Filtro Avanzado",
+              "<i class='pi pi-filter'></i>",
+              "Despliega opciones para segmentar los movimientos por características específicas."
+            ],
+            [
+              "Registrar",
+              "<i class='pi pi-plus'></i>",
+              "Permite cargar un <strong>nuevo movimiento</strong>, seleccionando entre dos tipos: <strong>Depósito</strong> o <strong>Extracción</strong>."
+            ],
+            [
+              "Cerrar caja",
+              "<i class='pi pi-lock'></i>",
+              "Finaliza la jornada, registra el cierre y genera el <strong>resumen del día</strong> (ingresos, egresos y saldo final)."
+            ],
+            [
+              "Orden",
+              "<i class='pi pi-sort-alt'></i>",
+              "Permite cambiar el orden de visualización de la tabla (ascendente o descendente)."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Utilice el botón de <strong>Búsqueda</strong> para localizar rápidamente movimientos específicos por monto o usuario sin necesidad de recorrer toda la lista manualmente."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "tabla-movimientos",
+      "title": "Contenido de Tabla de Movimientos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El listado central detalla cada operación realizada durante el turno abierto:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Fecha",
+              "Fecha y hora exacta de la transacción."
+            ],
+            [
+              "Tipo",
+              "Naturaleza del movimiento (Ej: <strong>Extracción</strong> o <strong>Depósito</strong>)."
+            ],
+            [
+              "Monto operado",
+              "Valor monetario asociado a la transacción."
+            ],
+            [
+              "Monto previo",
+              "Saldo que existía en la caja <strong>antes</strong> de realizar dicho movimiento."
+            ],
+            [
+              "Usuario",
+              "Nombre del usuario (Administrativo/Secretaria) que registró la transacción."
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "caja",
+    "tesorería",
+    "apertura",
+    "cierre",
+    "movimientos"
+  ]
+}

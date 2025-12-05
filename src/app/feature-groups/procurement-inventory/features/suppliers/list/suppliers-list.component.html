@@ -1,0 +1,98 @@
+<div>
+  @if(showAlert) {
+  <app-generic-alert
+    [message]="alertMessage"
+    [type]="alertType"
+    (close)="showAlert = false"
+  >
+  </app-generic-alert>
+  }
+
+  <app-generic-table
+    #genericTable
+    [data]="suppliers()"
+    [columns]="columns"
+    [filters]="filters"
+    [getActions]="getActionsForSupplier.bind(this)"
+    [loading]="loading"
+    [expandable]="true"
+    [expandedRowTemplate]="expandedTpl"
+    [rows]="10"
+    [rowsOptions]="[5, 10, 25]"
+    (filterChange)="onFilterChange($event)"
+    (downloadExcel)="onExportExcel()"
+    (downloadPdf)="onExportPdf()"
+    (create)="createSupplier()"
+  >
+  </app-generic-table>
+
+  <!-- Unit Price Template -->
+  <ng-template #unitPriceTemplate let-row>
+    <div style="text-align: right;">
+      <span>{{ row.unitPrice | currency:'ARS':'symbol-narrow' }}</span>
+    </div>
+  </ng-template>
+
+  <!-- Expanded row template -->
+  <ng-template #expandedTpl let-row>
+    <ng-container *ngIf="ensureSupplierItemsLoaded(row.id)">
+      @if (loadingItemsMap.get(row.id)) {
+        <div class="text-gray-600 italic">Cargando productos...</div>
+      } @else if (getSupplierItemsForTable(row.id).length === 0) {
+        <div class="text-gray-600 italic">Sin productos registrados para este proveedor</div>
+      } @else {
+        <app-generic-table
+          [data]="getSupplierItemsForTable(row.id)"
+          [columns]="supplierItemColumns"
+          [showFilters]="false"
+          [showCreateButton]="false"
+          [showActions]="false"
+          [showSearch]="false"
+          [showDownloadMenu]="false"
+          [pageable]="false"
+          [loading]="false"
+          [expandable]="false"
+        >
+        </app-generic-table>
+      }
+    </ng-container>
+  </ng-template>
+
+  @if(showDeactivationModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [icon]="'pi pi-exclamation-triangle'"
+      [title]="'Desactivar proveedor'"
+      [message]="deactivationModalMessage"
+      [showContent]="true"
+      (confirmed)="confirmDeactivation()"
+      (dismissed)="closeDeactivationModal()"
+    >
+    </app-confirmation-modal>
+  </div>
+  }
+
+  @if(showReactivationModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [icon]="'pi pi-check-circle'"
+      [title]="'Reactivar proveedor'"
+      [message]="reactivationModalMessage"
+      [showContent]="false"
+      (confirmed)="confirmReactivation()"
+      (dismissed)="closeReactivationModal()"
+    >
+    </app-confirmation-modal>
+  </div>
+  }
+
+  <!-- Tutorial Overlay -->
+  <app-tutorial-overlay
+    #tutorialOverlay
+    [config]="tutorialConfig"
+  ></app-tutorial-overlay>
+</div>

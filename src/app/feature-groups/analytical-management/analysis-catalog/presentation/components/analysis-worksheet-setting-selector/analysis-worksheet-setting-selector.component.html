@@ -1,0 +1,121 @@
+<div class="worksheet-setting-selector-container">
+  <div class="selector-header">
+    <label for="worksheetSettingSelector" class="selector-label">
+      <i class="pi pi-table"></i>
+      Configuración de hoja
+    </label>
+    <div class="action-buttons">
+      <app-generic-button
+        type="custom"
+        text="Editar"
+        icon="pi pi-pencil"
+        color="--brand-primary-700"
+        customTextColor="--on-primary"
+        [disabled]="!selectedWorksheetSettingId()"
+        (pressed)="openEditModal()"
+      />
+      <app-generic-button
+        type="create"
+        (pressed)="openAddModal()"
+      />
+    </div>
+  </div>
+  
+  <p-select
+    id="worksheetSettingSelector"
+    [options]="options()"
+    [(ngModel)]="selectedWorksheetSettingId"
+    [filter]="true"
+    filterBy="label,description"
+    [placeholder]="loading() ? 'Cargando configuraciones de hoja...' : 'Seleccionar configuración de hoja'"
+    [disabled]="disabled || loading()"
+    [showClear]="true"
+    optionLabel="label"
+    optionValue="value"
+    (onChange)="onSelectionChange($event)"
+    styleClass="w-full">
+    
+    <ng-template pTemplate="selectedItem" let-selectedOption>
+      @if (selectedOption) {
+        <div class="selected-worksheet-setting">
+          <i class="pi pi-table"></i>
+          <div class="selected-content">
+            <span class="setting-name">{{ selectedOption.label }}</span>
+            @if (selectedOption.description) {
+              <span class="setting-description">{{ selectedOption.description }}</span>
+            }
+          </div>
+        </div>
+      }
+    </ng-template>
+    
+    <ng-template pTemplate="item" let-option>
+      <div class="worksheet-setting-option">
+        <i class="pi pi-table"></i>
+        <div class="option-content">
+          <span class="setting-name">{{ option.label }}</span>
+          @if (option.description) {
+            <span class="setting-description">{{ option.description }}</span>
+          }
+        </div>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="empty">
+      <div class="empty-state">
+        <i class="pi pi-info-circle"></i>
+        <span>No hay configuraciones de hoja disponibles</span>
+      </div>
+    </ng-template>
+  </p-select>
+  
+  @if (loading()) {
+    <small class="loading-hint">
+      <i class="pi pi-spin pi-spinner"></i>
+      Cargando configuraciones de hoja disponibles...
+    </small>
+  }
+  
+  <small class="selector-hint">
+    <i class="pi pi-info-circle"></i>
+    Seleccione la configuración de hoja de trabajo para este análisis
+  </small>
+</div>
+
+<!-- List All Modal with WorksheetSetting Table -->
+<app-generic-modal-form
+  [visible]="showHelpModal()"
+  title="Gestionar Configuraciones de Hoja"
+  [width]="'900px'"
+  (closed)="closeHelpModal()">
+  <app-worksheet-setting-home
+    [analyses]="allAnalyses()"
+    [readonly]="false" />
+</app-generic-modal-form>
+
+<!-- Edit Modal for Selected Worksheet Setting -->
+<app-generic-modal-form
+  [visible]="showEditModal()"
+  [title]="'Editar Configuración de Hoja'"
+  [width]="'600px'"
+  (closed)="closeEditModal()">
+  <app-worksheet-setting-edit-form
+    *ngIf="selectedWorksheetSettingForEdit()"
+    [worksheetSetting]="selectedWorksheetSettingForEdit()!"
+    (save)="onWorksheetSettingSaved($event)"
+    (cancelled)="closeEditModal()">
+  </app-worksheet-setting-edit-form>
+</app-generic-modal-form>
+
+<!-- Add New Modal -->
+<app-generic-modal-form
+  [visible]="showAddModal()"
+  [title]="'Agregar Nueva Configuración de Hoja'"
+  [width]="'600px'"
+  (closed)="closeAddModal()">
+  <app-worksheet-setting-edit-form
+    [worksheetSetting]="null"
+    (save)="onWorksheetSettingSaved($event)"
+    (cancel)="closeAddModal()">
+  </app-worksheet-setting-edit-form>
+</app-generic-modal-form>

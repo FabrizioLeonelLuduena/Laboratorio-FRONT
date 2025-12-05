@@ -1,0 +1,24 @@
+<!-- Main container -->
+<div
+  class="alert"
+  [ngClass]="{
+    'alert--success': type === 'success',
+    'alert--error': type === 'error',
+    'alert--warning': type === 'warning',
+    'alert--info': type === 'info'
+  }"
+>
+  <!-- Dynamic icon according to type -->
+  <div class="alert__icon">
+    <i *ngIf="type === 'success'" class="pi pi-check-circle"></i>
+    <i *ngIf="type === 'error'" class="pi pi-times-circle"></i>
+    <i *ngIf="type === 'warning'" class="pi pi-exclamation-triangle"></i>
+    <i *ngIf="type === 'info'" class="pi pi-info-circle"></i>
+  </div>
+
+  <!-- Content: title + text -->
+  <div class="alert__content">
+    <h4 class="heading">{{ title }}</h4>
+    <p class="text-14">{{ message || text }}</p>
+  </div>
+</div>

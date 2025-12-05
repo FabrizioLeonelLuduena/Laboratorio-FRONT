@@ -1,0 +1,13 @@
+<div class="min-h-screen">
+  <div class="w-full mx-auto px-6 pb-6 md:pb-[calc(24px+var(--footer-height,52px)+16px)]">
+    <app-care-reporting-filters (filtersApplied)="onFiltersApplied($event)"></app-care-reporting-filters>
+
+    <hr class="my-4 border-t border-[var(--border-color)] opacity-70" />
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      @for (card of cards(); track card.title) {
+        <app-care-reporting-card [reportingData]="card"></app-care-reporting-card>
+      }
+    </section>
+  </div>
+  </div>

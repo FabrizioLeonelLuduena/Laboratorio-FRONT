@@ -1,0 +1,39 @@
+<section class="p-4 mb-6 bg-[var(--surface-card)] border border-[var(--border-color)] rounded-lg">
+  <div class="flex flex-wrap items-end gap-4">
+    <!-- Date From -->
+    <div class="flex flex-col" style="min-width: 150px;">
+      <label for="dateFrom" class="mb-1 text-sm font-medium">Desde</label>
+      <p-datePicker inputId="dateFrom" [(ngModel)]="dateFrom" [maxDate]="maxDate" dateFormat="dd/mm/yy" showIcon="true" styleClass="w-full"></p-datePicker>
+    </div>
+
+    <!-- Date To -->
+    <div class="flex flex-col" style="min-width: 150px;">
+      <label for="dateTo" class="mb-1 text-sm font-medium">Hasta</label>
+      <p-datePicker inputId="dateTo" [(ngModel)]="dateTo" [maxDate]="maxDate" dateFormat="dd/mm/yy" showIcon="true" styleClass="w-full"></p-datePicker>
+    </div>
+
+    <!-- Insurer Dropdown -->
+    <div class="flex flex-col flex-auto" style="min-width: 200px;">
+      <label for="insurer" class="mb-1 text-sm font-medium">Aseguradora</label>
+      <p-dropdown inputId="insurer" [options]="insurerOptions" [(ngModel)]="insurerId" placeholder="Todas" [showClear]="true" styleClass="w-full"></p-dropdown>
+    </div>
+
+    <!-- Coverage Type Dropdown -->
+    <div class="flex flex-col flex-auto" style="min-width: 200px;">
+      <label for="coverageType" class="mb-1 text-sm font-medium">Tipo cobertura</label>
+      <p-dropdown inputId="coverageType" [(ngModel)]="coverageType" [options]="coverageTypeOptions" placeholder="Todos" [showClear]="true" styleClass="w-full"></p-dropdown>
+    </div>
+
+    <!-- Site Dropdown -->
+    <div class="flex flex-col flex-auto" style="min-width: 180px;">
+      <label for="site" class="mb-1 text-sm font-medium">Sede</label>
+      <p-dropdown inputId="site" [options]="siteOptions" [(ngModel)]="siteId" placeholder="Todas" [showClear]="true" styleClass="w-full"></p-dropdown>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-end gap-2">
+      <button pButton type="button" label="Aplicar" icon="pi pi-filter" (click)="applyFilters()"></button>
+      <button pButton type="button" label="Limpiar" icon="pi pi-times" (click)="clearFilters()" styleClass="p-button-text"></button>
+    </div>
+  </div>
+</section>

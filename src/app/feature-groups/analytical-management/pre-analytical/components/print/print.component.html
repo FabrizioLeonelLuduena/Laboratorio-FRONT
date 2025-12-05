@@ -1,0 +1,316 @@
+<div class="main-container">
+  <!-- Alert Section -->
+  @if (showAlert()) {
+    <app-generic-alert
+      [type]="alertType()"
+      [title]="alertTitle()"
+      [text]="alertText()"
+    />
+  }
+
+
+
+  <div class="content-wrapper">
+
+      <!-- Search Form -->
+      <div class="search-container search-section">
+            <!-- Header Section -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold">Impresión de rótulos</h2>
+                <p>
+                    Busque protocolos para acumular rótulos y imprimirlos juntos.
+                </p>
+            </div>
+            <div>
+              <div class="form-group">
+                <span class="search-box">
+                  <i class="pi pi-search"></i>
+                  <input
+                    pInputText
+                    id="protocol"
+                    type="text"
+                    [(ngModel)]="protocolNumber"
+                    (keydown)="onProtocolInput($event)"
+                    maxlength="8"
+                    placeholder="Ingrese o escanee un protocolo."
+                    inputmode="numeric"
+                  />
+                </span>
+              </div>
+            </div>
+
+            <!-- Templates - MUST be outside conditional blocks -->
+            <ng-template #checkboxTemplate let-row>
+              <input
+                type="checkbox"
+                [(ngModel)]="row.selected"
+                class="custom-checkbox"
+                [attr.aria-label]="'Seleccionar rótulo ' + row.id"
+              />
+            </ng-template>
+
+            <ng-template #analysisTemplate let-row>
+              <span
+                [pTooltip]="row.analysisName"
+                tooltipPosition="top"
+                class="analysis-name-abbreviated"
+              >
+                {{ getAbbreviatedAnalysisName(row.analysisName) }}
+              </span>
+            </ng-template>
+
+            <ng-template #statusTemplate let-row>
+              <app-generic-badge
+                [status]="getStatusBadgeType(row.status)"
+                [text]="getStatusLabel(row.status)"
+              />
+            </ng-template>
+
+            <ng-template #quantityTemplate let-row>
+              <input
+                type="number"
+                [(ngModel)]="row.quantity"
+                min="1"
+                max="99"
+                maxlength="2"
+                class="quantity-input-simple"
+                [disabled]="!row.selected"
+                (input)="onQuantityInput($event, row)"
+                [attr.aria-label]="'Cantidad para rótulo ' + row.id"
+              />
+            </ng-template>
+
+            <ng-template #actionsTemplate let-row>
+              <button
+                type="button"
+                class="p-button p-button-text p-button-danger p-button-sm"
+                pButton
+                icon="pi pi-trash"
+                (click)="onRemoveSample(row)"
+                pTooltip="Eliminar"
+                tooltipPosition="left"
+                aria-label="Eliminar rótulo"
+              ></button>
+            </ng-template>
+
+            <!-- Template for configuration analysis names -->
+            <ng-template #configAnalysisTemplate let-row>
+              <span
+                [pTooltip]="row.analysisNames"
+                tooltipPosition="top"
+                class="analysis-name-abbreviated"
+              >
+                {{ getAbbreviatedAnalysisNames(row.analysisNames) }}
+              </span>
+            </ng-template>
+
+            <!-- Results Table -->
+            @if (searching) {
+              <div class="results-section empty">
+                <p class="text-center text-muted py-8">
+                  <app-spinner label="Buscando protocolo..." [overlay]="false"></app-spinner>
+                </p>
+              </div>
+            } @else if (protocolNumber && protocolNumber.trim().length > 0) {
+              <div class="results-section">
+                <!-- Protocol and Patient Info -->
+                @if (samples.length > 0) {
+                  <div class="protocol-info mb-4">
+                    <strong>Último protocolo:</strong> {{ protocolNumber }} -
+                    <strong>Paciente:</strong> {{ patientName }}
+                  </div>
+                }
+
+                <!-- Generic Table -->
+                <app-generic-table
+                  [data]="samples"
+                  [columns]="columns"
+                  [columnTemplates]="columnTemplates"
+                  [showCreateButton]="false"
+                  [showSearch]="false"
+                  [showFilters]="false"
+                  [showDownloadMenu]="false"
+                  [showActions]="false"
+                  [pageable]="true"
+                  [dataKey]="'id'"
+                >
+                </app-generic-table>
+
+                <!-- Action Buttons -->
+                @if (samples.length > 0) {
+                  <div class="flex gap-3 justify-end mt-4">
+                    <app-generic-button
+                      type="custom"
+                      text="Imprimir"
+                      icon="pi pi-print"
+                      color="--brand-primary-700"
+                      (pressed)="onPrint()"
+                      [disabled]="!hasSelectedSamples()"
+                    />
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="results-section empty">
+                <p class="text-center text-muted py-8">
+                  Aquí se mostrarán los resultados de la búsqueda del protocolo.
+                </p>
+              </div>
+            }
+        </div>
+
+        <!-- Label Configuration Card -->
+        <div class="config-card">
+            <div class="config-header">
+                <h2 class="text-xl font-semibold">Configuración de rótulos por análisis</h2>
+                <p class="text-sm text-[var(--on-surface)]">
+                Defina la cantidad y el nombre de los rótulos a imprimir para cada análisis.
+                </p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mb-4">
+                <span class="search-box">
+                    <i class="pi pi-search"></i>
+                    <input
+                        pInputText
+                        id="configSearch"
+                        type="text"
+                        [(ngModel)]="configSearchTerm"
+                        (ngModelChange)="onConfigSearchChange()"
+                        placeholder="Buscar por nombre de análisis..."
+                    />
+                </span>
+            </div>
+
+            <!-- Configuration Table -->
+            <app-generic-table
+                [data]="filteredConfigurations"
+                [columns]="configColumns"
+                [columnTemplates]="configColumnTemplates"
+                [showCreateButton]="true"
+                [showSearch]="false"
+                [showFilters]="false"
+                [showDownloadMenu]="false"
+                [showActions]="true"
+                [pageable]="true"
+                [dataKey]="'id'"
+                [getActions]="getConfigActions.bind(this)"
+                (create)="onCreateConfig()"
+            >
+            </app-generic-table>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Configuration Modal -->
+<app-generic-modal-form
+  [visible]="showConfigModal"
+  [title]="isEditMode ? 'Editar configuración' : 'Nueva configuración'"
+  [width]="'650px'"
+  (closed)="onCloseConfigModal()"
+>
+  <div class="modal-content">
+    <form class="config-form">
+      <!-- Name Input -->
+      <div class="form-group">
+        <label for="configName" class="form-label required">
+          Nombre de la configuración
+        </label>
+        <input
+          type="text"
+          id="configName"
+          class="form-input"
+          [(ngModel)]="configFormData.name"
+          name="configName"
+          placeholder="Ingrese un nombre para la configuración"
+          maxlength="21"
+          required
+        />
+        <div *ngIf="configFormData.name && configFormData.name.trim().length > 21" class="text-sm text-error mt-1">
+          El nombre no puede exceder los 21 caracteres.
+        </div>
+      </div>
+
+      <!-- Analysis MultiSelect -->
+      <div class="form-group">
+        <label for="analysisIds" class="form-label required">
+          Análisis
+        </label>
+        <p-multiSelect
+          #multiselect
+          id="analysisIds"
+          [(ngModel)]="configFormData.analysisIds"
+          [options]="analysisOptions"
+          optionDisabled="disabled"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Seleccione uno o más análisis"
+          [filter]="true"
+          filterBy="fullName"
+          filterPlaceholder="Buscar análisis..."
+          [showClear]="false"
+          [showToggleAll]="false"
+          display="chip"
+          name="analysisIds"
+          [disabled]="isEditMode"
+          styleClass="w-full multiselect-no-arrow"
+          [panelStyle]="{'max-height': '300px', 'overflow-y': 'auto'}"
+          [autoZIndex]="true"
+          [maxSelectedLabels]="3"
+          selectedItemsLabel="{0} elementos seleccionados"
+          (onChange)="onAnalysisSelectionChange()"
+        >
+          <ng-template let-option pTemplate="selectedItem">
+            <span [pTooltip]="option.fullName" tooltipPosition="top" class="analysis-chip">
+              {{ option.name }}
+            </span>
+          </ng-template>
+          <ng-template let-option pTemplate="item">
+            <div
+              (click)="onAnalysisItemClick()"
+              [pTooltip]="option.fullName"
+              tooltipPosition="right"
+              class="analysis-option"
+            >
+              {{ option.name }}
+            </div>
+          </ng-template>
+        </p-multiSelect>
+      </div>
+
+      <!-- Print Count Input -->
+      <div class="form-group">
+        <label for="printCount" class="form-label required">
+          Cantidad a imprimir
+        </label>
+        <input
+          type="number"
+          id="printCount"
+          class="form-input"
+          [(ngModel)]="configFormData.printCount"
+          name="printCount"
+          min="1"
+          max="99"
+          placeholder="Ingrese cantidad"
+          required
+        />
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <app-generic-button
+          type="cancel"
+          (pressed)="onCloseConfigModal()"
+        />
+        <app-generic-button
+          type="accept"
+          (pressed)="onSaveConfig()"
+          [disabled]="!isConfigFormValid()"
+        />
+      </div>
+    </form>
+  </div>
+</app-generic-modal-form>

@@ -1,0 +1,13 @@
+::ng-deep .p-datatable-tbody > tr > td {
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+::ng-deep .p-datatable-tbody > tr:hover > td {
+  cursor: pointer;
+  background-color: #e6f0ff
+}
+
+::ng-deep .p-datatable-tbody > tr.selected-row > td {
+  font-weight: 600;
+  background-color: #d0e2ff
+}

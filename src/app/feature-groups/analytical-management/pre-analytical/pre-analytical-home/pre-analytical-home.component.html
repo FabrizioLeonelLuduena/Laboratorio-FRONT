@@ -1,0 +1,272 @@
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando muestras...'" />
+}
+<div class="min-h-screen pb-4 slider-table-container">
+
+  <!-- Slider Row -->
+  <div class="slider-container">
+    <div class="slider-wrapper">
+      @for (option of sliderOptions; track option.value) {
+        <div
+          class="slider-option"
+          [class.active]="selectedOption === option.value"
+          (click)="onSliderChange(option.value)">
+          <span class="tab-label">{{ option.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Generic Table -->
+  <div class="table-container" [class.loading]="loading" (keydown)="onSearchKeyDown($event)">
+      <div class="table-with-dates-wrapper">
+        <app-generic-table
+          #genericTable
+          [data]="tableData"
+          [columns]="columns"
+          [filters]="filters"
+          [loading]="loading()"
+          [pageable]="true"
+          [lazy]="true"
+          [totalRecords]="totalRecords"
+          [rows]="pageSize"
+          [rowsOptions]="[5, 10, 20]"
+          [showSearch]="true"
+          [showFilters]="true"
+          [showActions]="false"
+          [showDownloadMenu]="false"
+          [showCreateButton]="false"
+          [dataKey]="'id'"
+          [columnTemplates]="columnTemplates"
+          (filterChange)="onFilterChange($event)"
+          (pageChange)="onPageChange($event)"
+          (create)="onAddClicked()">
+        </app-generic-table>
+      </div>
+  </div>
+
+  <!-- Action Buttons -->
+  @if (selectedOption !== 'to_process') {
+    <div class="flex justify-between items-center gap-2 mt-4">
+      @if (selectedOption === 'to_discard') {
+        <!-- Discard mode: only show Descartar button -->
+        <div></div>
+        <div class="flex gap-2">
+          <app-generic-button
+            type="create"
+            text="Descartar"
+            [disabled]="isSampleBulkActionDisabled"
+            (pressed)="onDiscard()">
+          </app-generic-button>
+        </div>
+      } @else {
+        <!-- Normal mode: show all workflow buttons -->
+        <div class="flex gap-2">
+          <app-generic-button
+            type="back"
+            text="← Anterior"
+            [disabled]="isPreviousStateDisabled"
+            (pressed)="onPreviousState()">
+          </app-generic-button>
+        </div>
+        <div class="flex gap-2">
+          <app-generic-button
+            type="alternative"
+            text="Rechazar muestra"
+            [disabled]="isSampleBulkActionDisabled"
+            (pressed)="onRejectSample()">
+          </app-generic-button>
+          <app-generic-button
+            type="advance"
+            [disabled]="isSampleBulkActionDisabled"
+            (pressed)="onNextState()">
+          </app-generic-button>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- Processing mode: show Cargar resultados button -->
+    <div class="flex justify-end gap-2 mt-4">
+      <app-generic-button
+        type="create"
+        text="Cargar resultados"
+        (pressed)="onLoadResults()">
+      </app-generic-button>
+    </div>
+  }
+</div>
+
+<!-- Checkbox Template for Table Rows -->
+<ng-template #checkboxTemplate let-row>
+  <p-checkbox
+    [binary]="true"
+    [ngModel]="row.selected"
+    (ngModelChange)="onRowSelectionChange(row, $event)">
+  </p-checkbox>
+</ng-template>
+
+<!-- Destination Select Template for Transport State -->
+<ng-template #destinationSelectTemplate let-row>
+  <div style="width: 100%;">
+    <p-dropdown
+      [options]="destinationOptions"
+      [(ngModel)]="row.destinationId"
+      (ngModelChange)="onDestinationChange(row, $event)"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Seleccionar destino"
+      appendTo="body"
+      [style]="{'width': '100%', 'min-width': '150px'}">
+    </p-dropdown>
+  </div>
+</ng-template>
+
+<!-- Status Badge Template -->
+<ng-template #statusBadgeTemplate let-row>
+  <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: nowrap;">
+    <app-generic-badge
+      [status]="getStatusBadgeType(row)"
+      [text]="row.status">
+    </app-generic-badge>
+    @if (row.rawData?.urgent === true && row.rawData?.status !== LabelStatus.REJECTED) {
+      <app-generic-badge
+        status="inactivo"
+        text="URGENTE">
+      </app-generic-badge>
+    }
+  </div>
+</ng-template>
+
+<!-- Actions Template -->
+<ng-template #actionsTemplate let-row>
+  @if (shouldShowActionsMenu(row)) {
+    <!-- Show menu for multiple actions -->
+    <app-generic-menu
+      [items]="getActions(row)"
+      [rowData]="row"
+    ></app-generic-menu>
+  } @else {
+    <!-- Show direct button for single action -->
+    @if (getActions(row).length > 0) {
+      <button
+        pButton
+        type="button"
+        [icon]="getActions(row)[0].icon"
+        class="p-button-text p-button-rounded"
+        [pTooltip]="getActions(row)[0].label"
+        tooltipPosition="left"
+        (click)="getActions(row)[0].command()"
+      ></button>
+    }
+  }
+</ng-template>
+
+<!-- Next State Confirmation Modal -->
+@if (nextStateModalConfig) {
+  <ng-container *ngTemplateOutlet="genericModalTemplate; context: { $implicit: nextStateModalConfig }"></ng-container>
+}
+
+<!-- Reject Sample Confirmation Modal -->
+@if (cancelRejectModalConfig) {
+  <ng-container *ngTemplateOutlet="genericModalTemplate; context: { $implicit: cancelRejectModalConfig }"></ng-container>
+}
+
+<!-- Detail Modal -->
+@if (detailModalConfig) {
+  <ng-container *ngTemplateOutlet="genericModalTemplate; context: { $implicit: detailModalConfig }"></ng-container>
+}
+
+<!-- Mark as Lost Modal -->
+@if (markAsLostModalConfig) {
+  <ng-container *ngTemplateOutlet="genericModalTemplate; context: { $implicit: markAsLostModalConfig }"></ng-container>
+}
+
+<!-- Send to Branch Modal -->
+@if (sendToBranchModalConfig) {
+  <ng-container *ngTemplateOutlet="genericModalTemplate; context: { $implicit: sendToBranchModalConfig }"></ng-container>
+}
+
+<!-- Generic Modal Template -->
+<ng-template #genericModalTemplate let-modalConfig>
+  <app-generic-modal-form
+    [visible]="modalConfig.visible"
+    [title]="modalConfig.title"
+    [width]="modalConfig.width || '600px'"
+    height="auto"
+    (closed)="modalConfig.onClose()"
+  >
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        @if (modalConfig.fields && modalConfig.fields.length > 0) {
+          <div class="modal-fields-grid">
+            @for (field of modalConfig.fields; track $index) {
+              <div class="modal-field" [class.modal-field-full]="field.fullWidth">
+                <span class="modal-label">{{ field.label }}</span>
+                @if (field.isHtml) {
+                  <span class="modal-value" [innerHTML]="field.value"></span>
+                } @else {
+                  <span class="modal-value">{{ field.value }}</span>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        @if (modalConfig.textarea) {
+          <textarea
+            [(ngModel)]="cancellationReason"
+            [rows]="modalConfig.textarea.rows || 3"
+            class="modal-textarea"
+            [placeholder]="modalConfig.textarea.placeholder">
+          </textarea>
+        }
+      </div>
+
+      <div class="modal-actions">
+        @if (modalConfig.showCloseButton) {
+          <button
+            pButton
+            type="button"
+            label="Cerrar"
+            class="p-button-secondary"
+            (click)="modalConfig.onClose()">
+          </button>
+        } @else {
+          @for (button of (modalConfig.buttons ?? []); track $index) {
+            <button
+              pButton
+              type="button"
+              [label]="button.label"
+              [class]="'p-button-' + button.type"
+              (click)="button.action()">
+            </button>
+          }
+        }
+      </div>
+    </div>
+  </app-generic-modal-form>
+</ng-template>
+
+<!-- Alert Message -->
+@if (showAlert) {
+  <app-generic-alert
+    [type]="alertType"
+    [text]="alertMessage">
+  </app-generic-alert>
+}
+
+<!-- Worksheet List Modal -->
+<app-generic-modal-form
+  [visible]="showWorksheetListModal"
+  [title]="'Cargar resultados'"
+  [width]="'600px'"
+  [height]="'50vh'"
+  (closed)="onCloseWorksheetListModal()">
+  <app-worksheet-list></app-worksheet-list>
+</app-generic-modal-form>
+
+<!-- Tutorial Overlay -->
+
+<app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>

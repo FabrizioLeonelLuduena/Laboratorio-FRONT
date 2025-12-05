@@ -1,0 +1,692 @@
+<div class="form-wrapper">
+  <form *ngIf="patientForm" [formGroup]="patientForm" class="form-container">
+    @if (alertType !== null) {
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertText"
+      (dismissed)="alertType = null"
+    >
+    </app-generic-alert>
+    }
+
+    <div class="stepper-layout">
+      <!-- CONTENIDO PRINCIPAL -->
+      <div class="stepper-content">
+        <div class="stepper-header">
+          <p-stepper [value]="currentStep + 1" [linear]="true">
+            <p-step-list>
+              <p-step [value]="1">Paciente</p-step>
+              @if (guardians.length > 0) {
+              <p-step [value]="2">Tutor</p-step>
+              }
+              <p-step [value]="guardians.length > 0 ? 3 : 2"
+                >Verificación</p-step
+              >
+            </p-step-list>
+          </p-stepper>
+
+          <!-- Badge de verificado oculto -->
+          <!-- <div *ngIf="patientStatusLabel" class="status-badge-wrapper">
+            <app-generic-badge
+              [status]="patientStatusBadgeType"
+              [text]="patientStatusLabel">
+            </app-generic-badge>
+          </div> -->
+        </div>
+
+        <!-- Panels: siempre montados pero ocultos vía [hidden] para preservar estado -->
+        <div class="stepper-panels">
+          <!-- STEP 1: PATIENT FORM -->
+          <div class="step-panel" [hidden]="currentStep !== 0">
+            <!-- Basic data section -->
+            <section class="sec-basic">
+              <div class="form-section">
+                <h3 class="form-section-header">Datos básicos</h3>
+              </div>
+
+              <app-generic-form
+                #basicGF
+                class="basic-grid"
+                title=""
+                [fields]="basicFields"
+                [initialValue]="basicInitial"
+                [maxCols]="4"
+                (submitForm)="onBasicFormSubmit($event)"
+              >
+              </app-generic-form>
+              @if (($any(patientForm.get('dni'))?.hasError('dniTaken') &&
+              $any(patientForm.get('dni'))?.touched) ||
+              ($any(basicGF?.form)?.get('dni')?.hasError('dniTaken') &&
+              $any(basicGF?.form)?.get('dni')?.touched)) {
+              <div class="form-error mt-8">
+                ⚠️ El documento ingresado ya se encuentra registrado en el
+                sistema
+              </div>
+              } @if ($any(patientForm.get('birthDate'))?.touched &&
+              $any(patientForm.get('birthDate'))?.hasError('minAge')) {
+              <div class="form-error mt-8">
+                Debe tener al menos
+                {{
+                  $any(patientForm.get("birthDate"))?.getError("minAge")
+                    ?.requiredAge
+                }}
+                años (actual:
+                {{
+                  $any(patientForm.get("birthDate"))?.getError("minAge")
+                    ?.actualAge
+                }})
+              </div>
+              }
+            </section>
+
+            <!-- Coverages (aseguradora) -->
+            <section class="sec-coverages-inline">
+              <div class="v2-header">
+                <h3 class="form-section-header">Aseguradora</h3>
+              </div>
+
+              <div formArrayName="coverages" class="coverage-content-wrapper">
+                @for (coverage of coverages.controls; track coverage; let i =
+                $index) {
+                <div [formGroupName]="i" class="coverage-inline-item">
+                  <div class="coverage-fields-row">
+                    <app-insurer-plan-selector
+                      [planId]="coverage.get('planId')?.value"
+                      (planSelected)="onPlanSelected(i, $event)"
+                      (insurerSelected)="onInsurerSelected(i, $event)"
+                      [filtrosBusqueda]="['code', 'acronym', 'name']"
+                      [showLoadingBanner]="false"
+                    >
+                    </app-insurer-plan-selector>
+
+                <!-- Nro Afiliado (se oculta para SELF_PAY) -->
+                @if (!particularCoveragesMap.get(i)) {
+                  <div class="form-field-inline">
+                    <label
+                      class="text-14 font-medium"
+                      [for]="'memberNumber-' + i"
+                      [attr.data-invalid]="coverage.get('memberNumber')?.invalid && coverage.get('memberNumber')?.touched ? 'true' : null">
+                      N° afiliado <span class="req">*</span>
+                    </label>
+
+                      <div class="field-input">
+                        <input
+                          [id]="'memberNumber-' + i"
+                          type="text"
+                          formControlName="memberNumber"
+                          placeholder="Ej: 123456789"
+                          class="w-full p-inputtext"
+                          [class.p-invalid]="
+                            coverage.get('memberNumber')?.invalid &&
+                            coverage.get('memberNumber')?.touched
+                          "
+                          (blur)="markMemberNumberTouched(i)"
+                          [attr.aria-invalid]="
+                            coverage.get('memberNumber')?.invalid &&
+                            coverage.get('memberNumber')?.touched
+                              ? 'true'
+                              : null
+                          "
+                          [attr.aria-describedby]="
+                            coverage.get('memberNumber')?.invalid &&
+                            coverage.get('memberNumber')?.touched
+                              ? 'err-memberNumber-' + i
+                              : null
+                          "
+                          [attr.maxlength]="20"
+                        />
+                      </div>
+
+                      <div class="field-foot">
+                        @if (coverage.get('memberNumber')?.invalid &&
+                        coverage.get('memberNumber')?.touched) {
+                        <small
+                          class="form-error-pill"
+                          [id]="'err-memberNumber-' + i"
+                          role="alert"
+                        >
+                          @if
+                          ($any(coverage.get('memberNumber'))?.hasError('required'))
+                          { El número de afiliado es obligatorio } @else if
+                          ($any(coverage.get('memberNumber'))?.hasError('maxlength'))
+                          { El número de afiliado no debe superar los 20
+                          caracteres }
+                        </small>
+                        }
+                      </div>
+                    </div>
+                    }
+
+                    <div class="coverage-inline-actions">
+                      <p-checkbox
+                        [inputId]="'isPrimary-' + i"
+                        formControlName="isPrimary"
+                        (onChange)="markAsPrimary(i)"
+                        [binary]="true"
+                      >
+                      </p-checkbox>
+                      <label [for]="'isPrimary-' + i" class="checkbox-label"
+                        >Principal</label
+                      >
+
+                  @if (coverages.length < MAX_COVERAGES && i === coverages.length - 1) {
+                    <app-generic-button
+                      type="create"
+                      icon="pi pi-plus"
+                      (click)="$event.preventDefault(); addCoverageInline();"
+                      tooltip="Agregar cobertura"
+                      styleClass="p-button-rounded p-button-text">
+                    </app-generic-button>
+                  } @else {
+                    <app-generic-button
+                      type="custom"
+                      icon="pi pi-trash"
+                      (click)="$event.preventDefault(); removeItem('coverages', i)"
+                      [disabled]="coverages.length <= 1"
+                      tooltip="Eliminar cobertura"
+                      [color]="'--brand-warn'"
+                      [customTextColor]="'--on-primary'">
+                    </app-generic-button>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+              @if (coverages.errors && (coverages.dirty || coverages.touched)) {
+              <div class="array-errors mt-8">
+                @if (coverages.hasError('minLength')) {
+                <div class="form-error">
+                  Debe agregar al menos una cobertura
+                </div>
+                } @if (coverages.hasError('maxLength')) {
+                <div class="form-error">No puede tener más de 1 cobertura</div>
+                } @if (coverages.hasError('uniquePrimary')) {
+                <div class="form-error">
+                  Solo puede haber una cobertura principal
+                </div>
+                }
+              </div>
+              }
+            </section>
+
+            <!-- Addresses (opcional) -->
+            <section class="sec-addresses-inline">
+              <div class="v2-header">
+                <h3 class="form-section-header">
+                  Domicilio <span class="optional-label">(opcional)</span>
+                </h3>
+              </div>
+
+              <div class="address-content-wrapper">
+                <div formArrayName="addresses">
+                  @for (address of addresses.controls; track address; let i =
+                  $index) {
+                  <div [formGroupName]="i" class="address-inline-item">
+                    <div class="address-content">
+                      <app-generic-address-form
+                        #addressForm
+                        [requiredFields]="[]"
+                        [optionalFields]="[
+                          'street',
+                          'number',
+                          'province',
+                          'city',
+                          'postalCode',
+                          'floor',
+                          'neighborhood'
+                        ]"
+                        layout="columns"
+                        [initialValues]="getAddressInitialData(i)"
+                        (addressChange)="onAddrChange($event, i)"
+                      >
+                      </app-generic-address-form>
+                    </div>
+                  </div>
+                  }
+                </div>
+              </div>
+            </section>
+
+
+            <!-- Botones de navegación del paso 1 -->
+            <div class="step-actions step-actions-1">
+              <app-generic-button
+                text="Cancelar"
+                type="cancel"
+                (pressed)="goBack()"
+              >
+              </app-generic-button>
+
+              <div class="step-actions-right">
+                <!-- Botones de tutor solo en modo creación -->
+                @if (!isEditMode()) {
+                  @if (guardians.length === 0) {
+                  <button
+                    pButton
+                    type="button"
+                    class="btn-tutor-toggle"
+                    icon="pi pi-user-plus"
+                    label="Agregar tutor"
+                    title="Agregar tutor"
+                    (click)="$event.preventDefault(); addGuardian()"
+                  ></button>
+                  } @else {
+                  <button
+                    pButton
+                    type="button"
+                    class="btn-tutor-toggle tutor-added"
+                    icon="pi pi-check"
+                    label="Tutor agregado"
+                    title="Tutor agregado - Click para quitar"
+                    (click)="$event.preventDefault(); removeGuardian()"
+                  ></button>
+                  }
+                }
+                <app-generic-button
+                  text="Siguiente"
+                  type="advance"
+                  (pressed)="nextStep()"
+                >
+                </app-generic-button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: GUARDIAN -->
+          <div
+            class="step-panel"
+            [hidden]="currentStep !== 1 || guardians.length === 0"
+          >
+            <section class="v2-section sec-guardian">
+              <div class="form-section">
+                <h3 class="form-section-header">Datos del tutor</h3>
+              </div>
+
+              @if (guardians.length > 0) {
+              <app-generic-form
+                #guardianGF
+                class="guardian-grid"
+                title=""
+                [fields]="guardianFields"
+                [initialValue]="guardianInitial"
+                [maxCols]="4"
+                (submitForm)="upsertGuardian($event)"
+              >
+              </app-generic-form>
+              } @if (guardians.length > 0) {
+              <div class="verify-row" [formGroup]="$any(guardians.at(0))">
+                <p-checkbox
+                  binary="true"
+                  formControlName="verify"
+                  inputId="chk-guardian-verify"
+                >
+                </p-checkbox>
+                <label for="chk-guardian-verify" class="checkbox-label">
+                  Tutor verificado
+                </label>
+              </div>
+              }
+            </section>
+
+            <!-- Botones de navegación del paso 2 -->
+            <div class="step-actions step-actions-2">
+              <app-generic-button
+                text="Anterior"
+                type="back"
+                (pressed)="previousStep()"
+              >
+              </app-generic-button>
+              <app-generic-button
+                text="Siguiente"
+                type="advance"
+                (pressed)="nextStep()"
+              >
+              </app-generic-button>
+            </div>
+          </div>
+
+          <!-- STEP 3: SUMMARY AND VERIFICATION -->
+          <div
+            class="step-panel"
+            [hidden]="currentStep !== (guardians.length > 0 ? 2 : 1)"
+          >
+            <section class="v2-section summary-section">
+              <div class="form-section">
+                <h2 class="summary-title">Resumen del paciente</h2>
+              </div>
+
+              <!-- Basic data -->
+              <div class="summary-group summary-group-basic">
+                <h3 class="form-section-header">Datos básicos</h3>
+                <div class="summary-list">
+                  <div class="summary-list-item">
+                    <div class="summary-list-content">
+                      <div class="summary-row">
+                        <div class="summary-item">
+                          <span class="summary-label">Documento:</span>
+                          <span class="summary-value">{{
+                            patientForm.get("dni")?.value
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Apellido:</span>
+                          <span class="summary-value">{{
+                            patientForm.get("lastName")?.value
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Nombre:</span>
+                          <span class="summary-value">{{
+                            patientForm.get("firstName")?.value
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label"
+                            >Fecha de nacimiento:</span
+                          >
+                          <span class="summary-value">{{
+                            patientForm.get("birthDate")?.value
+                              | date : "dd/MM/yyyy"
+                          }}</span>
+                        </div>
+                      </div>
+
+                      <div class="summary-row">
+                        <div class="summary-item">
+                          <span class="summary-label">Sexo al nacer:</span>
+                          <span class="summary-value">
+                            @if (patientForm.get('sexAtBirth')?.value ===
+                            'MALE') { Masculino } @else if
+                            (patientForm.get('sexAtBirth')?.value === 'FEMALE')
+                            { Femenino } @else {
+                            {{
+                              patientForm.get("sexAtBirth")?.value || "Otro"
+                            }}
+                            }
+                          </span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Género:</span>
+                          <span class="summary-value">
+                            @if (patientForm.get('gender')?.value === 'MALE') {
+                            Masculino } @else if
+                            (patientForm.get('gender')?.value === 'FEMALE') {
+                            Femenino } @else { Otro }
+                          </span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Teléfono:</span>
+                          <span class="summary-value">{{
+                            patientForm.get("phone")?.value || "—"
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Email:</span>
+                          <span class="summary-value">{{
+                            patientForm.get("email")?.value || "—"
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        <!-- Guardian (if exists) -->
+        @if (guardians.length > 0) {
+          <div class="summary-group summary-group-guardian">
+            <h3 class="form-section-header">
+              Tutor
+              <app-generic-badge
+                [status]="guardians.at(0).get('verify')?.value ? 'verificado' : 'inactivo'"
+                [text]="guardians.at(0).get('verify')?.value ? 'VERIFICADO' : 'RECHAZADO'">
+              </app-generic-badge>
+            </h3>
+
+                <div class="summary-list">
+                  <div class="summary-list-item">
+                    <div class="summary-list-content">
+                      <div class="summary-grid">
+                        <div class="summary-item">
+                          <span class="summary-label">Relación:</span
+                          ><span class="summary-value">{{
+                            guardians.at(0).get("relation")?.value
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Documento:</span
+                          ><span class="summary-value">{{
+                            guardians.at(0).get("dni")?.value
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Apellido:</span
+                          ><span class="summary-value">{{
+                            guardians.at(0).get("lastName")?.value
+                          }}</span>
+                        </div>
+                        <div class="summary-item">
+                          <span class="summary-label">Nombre:</span
+                          ><span class="summary-value">{{
+                            guardians.at(0).get("firstName")?.value
+                          }}</span>
+                        </div>
+                        @if (guardians.at(0).get('phone')?.value) {
+                        <div class="summary-item">
+                          <span class="summary-label">Teléfono:</span
+                          ><span class="summary-value">{{
+                            guardians.at(0).get("phone")?.value
+                          }}</span>
+                        </div>
+                        } @if (guardians.at(0).get('email')?.value) {
+                        <div class="summary-item">
+                          <span class="summary-label">Email:</span
+                          ><span class="summary-value">{{
+                            guardians.at(0).get("email")?.value
+                          }}</span>
+                        </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
+
+              <!-- Coverages + Addresses -->
+              <div class="summary-sections-vertical">
+                <!-- Coverages -->
+                <div class="summary-group summary-group-coverages">
+                  <h3 class="form-section-header">Coberturas</h3>
+
+                  @if (coverages.length > 0) {
+                  <div class="summary-list">
+                    @for (coverage of coverages.controls; track $index; let i =
+                    $index) {
+                    <div class="summary-list-item">
+                      <div class="summary-list-content">
+                        <div class="summary-row">
+                          <div class="summary-item">
+                            <span class="summary-label">Aseguradora:</span>
+                            <span class="summary-value">{{
+                              coverage.get("insurerName")?.value || "—"
+                            }}</span>
+                          </div>
+
+                          <div class="summary-item">
+                            <span class="summary-label">Plan:</span>
+                            <span class="summary-value">{{
+                              coverage.get("planName")?.value ||
+                                getPlanNameById(
+                                  coverage.get("planId")?.value
+                                ) ||
+                                "—"
+                            }}</span>
+                          </div>
+
+                              @if (!particularCoveragesMap.get(i)) {
+                                <div class="summary-item">
+                                  <span class="summary-label">N° Afiliado:</span>
+                                  <span class="summary-value">{{ coverage.get('memberNumber')?.value || '—' }}</span>
+                                </div>
+                              }
+
+                        <!-- Badge Principal -->
+                        <div class="summary-item">
+                          <span class="summary-label"></span>
+                            @if (coverage.get('isPrimary')?.value) {
+                            <app-generic-badge status="verificado" text="PRINCIPAL"></app-generic-badge>
+                          }
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <p class="summary-empty">No se agregaron coberturas</p>
+            }
+          </div>
+
+
+                <!-- Addresses -->
+                <div class="summary-group summary-group-addresses">
+                  <h3 class="form-section-header">Domicilio</h3>
+
+                  @if (hasAnyAddressData) {
+                  <div class="summary-list">
+                    @for (address of addresses.controls; track $index; let i = $index) {
+                      @if (hasAddressData(i)) {
+                        <div class="summary-list-item">
+                          <div class="summary-list-content">
+                            <div class="summary-row">
+                              <div class="summary-item">
+                                <span class="summary-label">Provincia:</span>
+                                <span class="summary-value">{{
+                                  address.get("province")?.value || "—"
+                                }}</span>
+                              </div>
+                              <div class="summary-item">
+                                <span class="summary-label">Ciudad:</span>
+                                <span class="summary-value">{{
+                                  address.get("city")?.value || "—"
+                                }}</span>
+                              </div>
+                              <div class="summary-item">
+                                <span class="summary-label">Barrio:</span>
+                                <span class="summary-value">{{
+                                  address.get("neighborhood")?.value || "—"
+                                }}</span>
+                              </div>
+                              <div class="summary-item">
+                                <span class="summary-label">CP:</span>
+                                <span class="summary-value">{{
+                                  address.get("postalCode")?.value ||
+                                    address.get("zipCode")?.value ||
+                                    "—"
+                                }}</span>
+                              </div>
+                            </div>
+
+                          <!-- ROW 2: Street - Number - Flat/Apartment - Main -->
+                          <div class="summary-row">
+                            <div class="summary-item">
+                              <span class="summary-label">Calle:</span>
+                              <span class="summary-value">{{ address.get('street')?.value || '—' }}</span>
+                            </div>
+                            <div class="summary-item">
+                              <span class="summary-label">Número:</span>
+                              <span class="summary-value">{{ address.get('number')?.value || address.get('streetNumber')?.value || '—' }}</span>
+                            </div>
+                            <div class="summary-item">
+                              <span class="summary-label">Piso/Depto:</span>
+                              <span class="summary-value">{{ address.get('floor')?.value || address.get('apartment')?.value || '—' }}</span>
+                            </div>
+                            <div class="summary-item">
+                              <span class="summary-label"></span>
+                                @if (address.get('isPrimary')?.value) {
+                                <app-generic-badge status="verificado" text="PRINCIPAL"></app-generic-badge>
+                              } @else {
+                                <span class="summary-value"> </span>
+                              }
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      }
+                    }
+                  </div>
+                } @else {
+                  <p class="summary-empty">No se agregaron domicilios</p>
+                }
+              </div>
+
+        </div>
+      </section>
+
+            <!-- Botones de navegación del paso 3 -->
+            <div class="step-actions step-actions-3">
+              <app-generic-button
+                text="Anterior"
+                type="back"
+                (pressed)="previousStep()"
+              >
+              </app-generic-button>
+              <app-generic-button
+                [text]="alreadyVerified ? 'Guardar' : 'Verificar'"
+                type="save"
+                icon="pi pi-check-circle"
+                (pressed)="openVerifyModal()"
+              >
+              </app-generic-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Confirmation Modal -->
+  <app-confirmation-modal
+    *ngIf="verifyModalOpen"
+    icon="✔"
+    [title]="
+      alreadyVerified ? 'Guardar paciente' : 'Verificar y guardar paciente'
+    "
+    [message]="
+      alreadyVerified
+        ? '¿Confirmás que deseas guardar este paciente?'
+        : '¿Confirmás que deseas verificar y guardar este paciente?'
+    "
+    (confirmed)="onVerifyConfirm()"
+    (dismissed)="onVerifyDismiss()"
+  >
+  </app-confirmation-modal>
+
+  @if (alertType !== null) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText"
+    (dismissed)="alertType = null"
+  >
+  </app-generic-alert>
+  }
+</div>
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>
+<app-tutorial-overlay
+  #tutorialOverlayStep2
+  [config]="tutorialConfigStep2"
+></app-tutorial-overlay>
+<app-tutorial-overlay
+  #tutorialOverlayStep3
+  [config]="tutorialConfigStep3"
+></app-tutorial-overlay>

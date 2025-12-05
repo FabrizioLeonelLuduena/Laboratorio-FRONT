@@ -1,0 +1,194 @@
+<section class="payments">
+  <header class="payments__header">
+    <div class="payments__headline">
+      <h1 class="payments__title">Registro de Dep&oacute;sito</h1>
+      <div class="payments__context">
+        @if (attentionBilling(); as billing) {
+          <span class="payments__context-item">
+            Protocolo <strong>#{{ billing.protocolNumber }}</strong>
+          </span>
+          <span class="payments__context-divider" aria-hidden="true"></span>
+          <span class="payments__context-item">{{ billing.sucursal }}</span>
+        } @else {
+          <span class="payments__context-item">
+            Seleccione una atenci&oacute;n para iniciar el cobro.
+          </span>
+        }
+      </div>
+    </div>
+    @if (attentionBilling(); as billing) {
+      <div class="payments__meta">
+        <span class="payments__meta-label">Fecha</span>
+        <span>{{ billing.date | date:'dd/MM/yyyy' }}</span>
+        <span class="payments__meta-label">Registrado por</span>
+        <span>{{ billing.username }}</span>
+      </div>
+    }
+  </header>
+
+  @if (uiAlert(); as alert) {
+    <app-generic-alert
+      [type]="alert.type"
+      [title]="alert.title || ''"
+      [text]="alert.text">
+    </app-generic-alert>
+  }
+
+  @if (loading()) {
+    <div class="payments__state">
+      <app-spinner label="Cargando datos..."></app-spinner>
+    </div>
+  } @else {
+    @if (attentionBilling(); as billing) {
+      <div class="payments__grid">
+        <section class="payments__column payments__column--primary">
+          <section class="payments-card payments-card--details">
+            <header class="payments-card__header">
+              <h2 class="payments-card__title">Datos de la atenci&oacute;n</h2>
+            </header>
+            <div class="payments-card__body payments-details">
+              <dl class="payments-details__list" aria-label="Resumen del paciente">
+                <div class="payments-details__item">
+                  <dt>DNI</dt>
+                  <dd>{{ billing.dni }}</dd>
+                </div>
+                <div class="payments-details__item">
+                  <dt>Paciente</dt>
+                  <dd>{{ billing.fullName }}</dd>
+                </div>
+                <div class="payments-details__item">
+                  <dt>Protocolo</dt>
+                  <dd>#{{ billing.protocolNumber }}</dd>
+                </div>
+                <div class="payments-details__item">
+                  <dt>Registrado por</dt>
+                  <dd>{{ billing.username }}</dd>
+                </div>
+              </dl>
+              <div class="payments-notes">
+                <label class="payments-notes__label" for="payment-observations">
+                  Observaciones
+                </label>
+                <textarea
+                  id="payment-observations"
+                  class="payments-notes__textarea"
+                  rows="2"
+                  maxlength="500"
+                  [formControl]="observationsControl"
+                  placeholder="Notas internas sobre el cobro.">
+                </textarea>
+                <span class="payments-notes__counter">
+                  {{ observationsControl.value.length }}/500
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section class="payments-card payments-card--table">
+            <header class="payments-card__header">
+              <h2 class="payments-card__title">Detalle de servicios</h2>
+              <span class="payments-badge">{{ rows().length }} registros</span>
+            </header>
+            <div class="payments-table">
+              <app-basic-table
+                [columns]="tableColumns"
+                [data]="rows()">
+              </app-basic-table>
+            </div>
+          </section>
+        </section>
+
+        <aside class="payments__column payments__column--side">
+          <section class="payments-card payments-card--summary">
+            <header class="payments-card__header payments-card__header--stacked">
+              <h2 class="payments-card__title">Resumen y cobro</h2>
+              <p class="payments-card__subtitle">
+                Total sugerido ${{ suggestedAmount() | number:'1.2-2' }}
+              </p>
+            </header>
+
+            <div class="payments-summary">
+              <div class="payments-summary__item">
+                <span class="payments-summary__label">Subtotal</span>
+                <span class="payments-summary__value">
+                  ${{ calculateSubtotal() | number:'1.2-2' }}
+                </span>
+              </div>
+              <div class="payments-summary__item">
+                <span class="payments-summary__label">Cobertura</span>
+                <span class="payments-summary__value payments-summary__value--muted">
+                  -${{ calculateCoverage() | number:'1.2-2' }}
+                </span>
+              </div>
+              <div class="payments-summary__item">
+                <span class="payments-summary__label">Coseguro</span>
+                <span class="payments-summary__value">
+                  ${{ calculateCoseguro() | number:'1.2-2' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="payments-form" role="group" aria-label="Formulario de cobro">
+              <div class="payments-form__row">
+                <label class="payments-form__label" for="payment-method">
+                  M&eacute;todo de pago
+                </label>
+                <select
+                  id="payment-method"
+                  class="payments-form__control"
+                  [formControl]="paymentMethodControl">
+                  @for (option of paymentMethodOptions; track option.value) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              </div>
+
+              @if (paymentMethodControl.value === 'CASH') {
+                @let difference = getDifference();
+                <div class="payments-form__row payments-form__row--compact">
+                  <label class="payments-form__label" for="paid-amount">
+                    Monto entregado
+                  </label>
+                  <input
+                    id="paid-amount"
+                    type="number"
+                    class="payments-form__control"
+                    [formControl]="paidAmountControl"
+                    min="0"
+                    step="0.01" />
+                </div>
+
+                <div
+                  class="payments-difference"
+                  [class.payments-difference--positive]="difference > 0"
+                  [class.payments-difference--negative]="difference < 0"
+                  [class.payments-difference--neutral]="difference === 0">
+                  <span>Vuelto ${{ difference | number:'1.2-2' }}</span>
+                </div>
+              }
+            </div>
+
+            <footer class="payments-actions" aria-label="Acciones del cobro">
+              <app-generic-button
+                type="custom"
+                text="Confirmar pago"
+                icon="pi pi-check"
+                color="--brand-primary-700"
+                customTextColor="--on-primary"
+                [disabled]="loading()"
+                (pressed)="submitPayment()">
+              </app-generic-button>
+            </footer>
+          </section>
+
+        </aside>
+      </div>
+    } @else {
+      <div class="payments__state payments__state--empty">
+        <p class="text-14 muted">
+          Seleccione una atenci&oacute;n para iniciar el cobro.
+        </p>
+      </div>
+    }
+  }
+</section>

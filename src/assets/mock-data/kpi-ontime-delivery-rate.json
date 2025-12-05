@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Entregas a tiempo",
+      "value": 87.5
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

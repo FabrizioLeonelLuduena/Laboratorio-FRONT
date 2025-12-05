@@ -1,0 +1,253 @@
+<div class="settings-container">
+  <!-- Header -->
+  <div class="settings-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="pi pi-cog"></i>
+      </div>
+      <div>
+        <h1>Configuración</h1>
+        <p>Personaliza tu experiencia en el sistema de laboratorio</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Layout -->
+  <div class="settings-content">
+    <!-- Sidebar Navigation -->
+    <aside class="settings-sidebar">
+      <nav class="settings-nav">
+        @for (section of menuSections; track section.id) {
+          <button
+            class="nav-item"
+            [class.active]="activeSection() === section.id"
+            (click)="changeSection(section.id)"
+          >
+            <i [class]="section.icon"></i>
+            <span>{{ section.label }}</span>
+          </button>
+        }
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="settings-main">
+      <!-- Messages -->
+      @if (successMessage()) {
+        <div class="alert alert-success">
+          <i class="pi pi-check-circle"></i>
+          <span>{{ successMessage() }}</span>
+        </div>
+      }
+
+      @if (errorMessage()) {
+        <div class="alert alert-danger">
+          <i class="pi pi-exclamation-triangle"></i>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+
+      <form [formGroup]="settingsForm" (ngSubmit)="savePreferences()">
+        @switch (activeSection()) {
+          @case ('preferences') {
+            <!-- Preferences Section -->
+            <div class="section-container">
+              <div class="section-header">
+                <h2>
+                  <i class="pi pi-cog"></i>
+                  Preferencias de la aplicación
+                </h2>
+                <p class="section-description">
+                  Personaliza cómo funciona la aplicación para ti
+                </p>
+              </div>
+
+              <div class="form-grid">
+                <!-- Table Page Size -->
+                <div class="form-group">
+                  <label for="tablePageSize" class="form-label">
+                    <i class="pi pi-table"></i>
+                    Filas por página en tablas
+                  </label>
+                  <select id="tablePageSize" class="form-control" formControlName="tablePageSize">
+                    <option [ngValue]="5">5 filas</option>
+                    <option [ngValue]="10">10 filas</option>
+                    <option [ngValue]="15">15 filas</option>
+                    <option [ngValue]="20">20 filas</option>
+                  </select>
+                  <small class="help-text">Cantidad predeterminada de resultados por página</small>
+                </div>
+
+                <!-- Default Branch -->
+                <div class="form-group">
+                  <label for="defaultBranch" class="form-label">
+                    <i class="pi pi-building"></i>
+                    Sucursal por defecto
+                  </label>
+                  <select id="defaultBranch" class="form-control" formControlName="defaultBranchId">
+                    <option [ngValue]="null">Ninguna (seleccionar cada vez)</option>
+                    @for (branch of branches(); track branch.id) {
+                      <option [ngValue]="branch.id">{{ branch.description }}</option>
+                    }
+                  </select>
+                  <small class="help-text">Sucursal predeterminada al crear registros</small>
+                </div>
+              </div>
+            </div>
+          }
+
+          @case ('notifications') {
+            <!-- Notifications Section -->
+            <div class="section-container">
+              <div class="section-header">
+                <h2>
+                  <i class="pi pi-bell"></i>
+                  Notificaciones
+                </h2>
+                <p class="section-description">
+                  Configura cómo y cuándo recibir notificaciones
+                </p>
+              </div>
+
+              <div class="notifications-list">
+                <!-- Browser Notifications -->
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <div class="notification-icon">
+                      <i class="pi pi-desktop"></i>
+                    </div>
+                    <div>
+                      <h4>Notificaciones del navegador</h4>
+                      <p>Recibe alertas en tiempo real en tu navegador</p>
+                    </div>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" formControlName="notificationsBrowser" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <!-- Email Notifications -->
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <div class="notification-icon">
+                      <i class="pi pi-envelope"></i>
+                    </div>
+                    <div>
+                      <h4>Notificaciones por correo</h4>
+                      <p>Recibe resúmenes y alertas importantes por email</p>
+                    </div>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" formControlName="notificationsEmail" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <!-- System Notifications -->
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <div class="notification-icon">
+                      <i class="pi pi-bell"></i>
+                    </div>
+                    <div>
+                      <h4>Notificaciones del sistema</h4>
+                      <p>Alertas sobre operaciones del laboratorio y actualizaciones</p>
+                    </div>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" formControlName="notificationsSystem" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="alert alert-info">
+                <i class="pi pi-info-circle"></i>
+                <div>
+                  <strong>Nota:</strong> Las notificaciones del navegador requieren
+                  permiso de tu sistema operativo. Si las activas y no ves notificaciones,
+                  verifica los permisos en la configuración de tu navegador.
+                </div>
+              </div>
+            </div>
+          }
+
+          @case ('security') {
+            <!-- Security Section -->
+            <div class="section-container">
+              <div class="section-header">
+                <h2>
+                  <i class="pi pi-shield"></i>
+                  Seguridad y privacidad
+                </h2>
+                <p class="section-description">
+                  Administra la seguridad de tu cuenta
+                </p>
+              </div>
+
+              <div class="security-options">
+                <div class="security-item">
+                  <div class="security-icon">
+                    <i class="pi pi-user"></i>
+                  </div>
+                  <div class="security-content">
+                    <h4>Información de la cuenta</h4>
+                    <p>Usuario: <strong>{{ currentUser()?.username }}</strong></p>
+                    <p>Email: <strong>{{ currentUser()?.email }}</strong></p>
+                  </div>
+                </div>
+
+                <div class="security-item">
+                  <div class="security-icon">
+                    <i class="pi pi-lock"></i>
+                  </div>
+                  <div class="security-content">
+                    <h4>Contraseña</h4>
+                    <p>Para cambiar tu contraseña, visita la sección de "Centro de seguridad" en tu perfil.</p>
+                    <a routerLink="/user-management/profile" class="link-button">
+                      Ir al Centro de Seguridad
+                      <i class="pi pi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="security-item">
+                  <div class="security-icon">
+                    <i class="pi pi-download"></i>
+                  </div>
+                  <div class="security-content">
+                    <h4>Descargar mis datos</h4>
+                    <p>Descarga una copia de tu información personal almacenada en el sistema.</p>
+                    <button type="button" class="btn btn-outline" (click)="downloadUserData()">
+                      <i class="pi pi-download"></i>
+                      Descargar datos
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="resetToDefaults()"
+            [disabled]="isSaving()"
+          >
+            <i class="pi pi-refresh"></i>
+            Restablecer valores predeterminados
+          </button>
+          <app-generic-button
+            type="save"
+            [disabled]="settingsForm.invalid || isSaving()"
+            (pressed)="savePreferences()"
+          ></app-generic-button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>

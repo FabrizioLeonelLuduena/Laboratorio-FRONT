@@ -1,0 +1,9 @@
+<!-- Generic form -->
+<app-generic-form
+  [fields]="formFields"
+  [saving]="saving"
+  [initialValue]="detailData || null"
+  [maxCols]="2"
+  (submitForm)="onFormSubmit($event)"
+  (cancelForm)="onFormCancel()">
+</app-generic-form>

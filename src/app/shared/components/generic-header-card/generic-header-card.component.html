@@ -1,0 +1,28 @@
+<header class="flex items-center border-b" style="border-color: var(--border-color);">
+  <div class="flex-1">
+    @if (returnButton) {
+    <app-generic-button
+      *ngIf="showBackButton"
+      type="back"
+      (pressed)="toReturn()">
+    </app-generic-button>
+    }
+  </div>
+
+  <div class="flex-1 text-center">
+    <h2 class="title-24">{{ title | titlecase }}</h2>
+  </div>
+
+  <div class="flex-1 flex justify-end">
+    <app-generic-button
+      *ngIf="showOptionalButton"
+      type="create"
+      [text]="optionalButtonText"
+      [icon]="optionalButtonIcon"
+      (pressed)="onOptionalButtonPress()">
+    </app-generic-button>
+  </div>
+</header>
+<ng-content></ng-content>
+
+

@@ -1,0 +1,46 @@
+/* Layout mínimo para la ventana de filtros usando utilidades globales */
+.filters-pane {
+  min-width: 300px;
+}
+
+.filters-pane .group-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.filters-pane .group-content.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.filters-pane label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Badge de estado */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.status-badge--active {
+  background: #ecfdf5; /* green-50 */
+  color: #065f46; /* green-800 */
+  border-color: #a7f3d0; /* green-200 */
+}
+
+.status-badge--inactive {
+  background: #fef2f2; /* red-50 */
+  color: #991b1b; /* red-800 */
+  border-color: #fecaca; /* red-200 */
+}

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint:*)",
+      "Bash(while read:*)",
+      "Bash(do grep -A 1 \"onExport\\|onTableExportAction\" \"$f\")",
+      "Bash(git checkout:*)",
+      "Bash(npm run lint:css:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

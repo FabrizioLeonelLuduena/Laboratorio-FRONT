@@ -1,0 +1,526 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "preanalitica",
+  "title": "Gestión de Pre-Analítica",
+  "intro": "Esta pantalla permite visualizar, filtrar y gestionar las muestras según su estado dentro del flujo pre‑analítico. Incluye acciones críticas como rechazo, derivación, carga de resultados y descarte de material.",
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Bioquímico - Técnico- Administrador"
+        }
+      ]
+    },
+    {
+      "id": "pantalla-principal",
+      "introBlocks": [
+        {
+          "type": "subtitle",
+          "text": "<strong>Pantalla principal"
+        },
+        {
+          "type": "paragraph",
+          "text": "La pantalla principal se organiza en <strong>pestañas</strong> que representan las distintas etapas del ciclo de vida de la muestra. Por defecto, se visualiza el <strong>Ingreso de muestra</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-income.png",
+          "alt": "Pantalla principal: Ingreso de muestra"
+        },
+        {
+          "type": "paragraph",
+          "text": "A medida que la muestra avanza, se ubicará en las siguientes pestañas:"
+        },
+        {
+          "type": "badge",
+          "text": "INGRESO DE MUESTRA",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Estado inicial. La muestra ha sido registrada en el sistema, pero aún no ha pasado por las validaciones administrativas o técnicas."
+        },
+        {
+          "type": "badge",
+          "text": "A PREPARAR",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestras aceptadas listas para acondicionamiento."
+        },
+        {
+          "type": "badge",
+          "text": "EN TRÁNSITO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Indica el traslado físico hacia el sector correspondiente."
+        },
+        {
+          "type": "badge",
+          "text": "RECIBIDO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Confirmación de recepción correcta en el área de destino."
+        },
+        {
+          "type": "badge",
+          "text": "PROCESANDO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Etapa previa al análisis clínico (carga de resultados)."
+        },
+        {
+          "type": "badge",
+          "text": "EN DERIVACIÓN",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestras enviadas a laboratorios externos o sedes centrales."
+        },
+        {
+          "type": "badge",
+          "text": "A DESCARTAR",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestras no aptas, rechazadas o que ya finalizaron su ciclo."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "etapa-ingreso",
+      "title": "Ingreso de Muestra",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "En este punto, el laboratorio registra y valida las muestras recolectadas. Su objetivo es confirmar que la muestra existe, está identificada y puede avanzar."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-income.png",
+          "alt": "Pantalla de Ingreso"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados y Selección"
+        },
+        {
+          "type": "badge",
+          "text": "RECOLECTADO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestra física existente y registrada."
+        },
+        {
+          "type": "badge",
+          "text": "URGENTE",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "Prioridad en el procesamiento."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "Para gestionar las muestras, utilice el <strong>checklist</strong> a la izquierda de cada fila."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Disponibles en Ingreso"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Icono/Botón",
+            "Resultado"
+          ],
+          "rows": [
+            [
+              "Volver a extracción",
+              "<i class='pi pi-arrow-left'></i>",
+              "Devuelve la muestra a la etapa anterior si hubo un error de ingreso."
+            ],
+            [
+              "Rechazar muestra",
+              "<i class='pi pi-times'></i>",
+              "Envía la muestra directamente a la etapa <strong>A DESCARTAR</strong> (requiere motivo)."
+            ],
+            [
+              "Estado siguiente",
+              "<i class='pi pi-arrow-right'></i>",
+              "Avanza la muestra a <strong>A Preparar</strong> o <strong>En Tránsito</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+  "id": "etapa-preparar",
+  "title": "A Preparar",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "En esta etapa se gestionan las muestras que ya han sido ingresadas y aceptadas, pero que requieren un proceso de acondicionamiento, alicuotado o preparación previa antes de ser enviadas a tránsito o procesadas."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/management-analitic/pre/pre-preparing.png",
+      "alt": "Pantalla A Preparar"
+    },
+    {
+      "type": "subtitle",
+      "text": "Estados y Prioridades"
+    },
+    {
+      "type": "badge",
+      "text": "EN PREPARACIÓN",
+      "color": "#008F8C"
+    },
+    {
+      "type": "paragraph",
+      "text": "Indica que la muestra está en la bandeja de trabajo lista para ser acondicionada."
+    },
+    {
+      "type": "badge",
+      "text": "URGENTE",
+      "color": "#008F8C"
+    },
+    {
+      "type": "paragraph",
+      "text": "Etiqueta visual para priorizar la preparación de la muestra."
+    },
+    {
+      "type": "subtitle",
+      "text": "Acciones Disponibles"
+    },
+    {
+      "type": "paragraph",
+      "text": "Seleccione una o varias muestras utilizando las casillas de verificación (checkbox) a la izquierda para habilitar los botones de acción superior."
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Acción",
+        "Botón/Icono",
+        "Descripción"
+      ],
+      "rows": [
+        [
+          "Volver etapa anterior",
+          "<strong>Anterior</strong>",
+          "Regresa la muestra a la etapa de 'Ingreso' si fue avanzada por error."
+        ],
+        [
+          "Rechazar muestra",
+          "<strong>Rechazar muestra</strong>",
+          "Envía la muestra a la etapa 'A Descartar'. Requiere indicar un motivo de rechazo."
+        ],
+        [
+          "Avanzar etapa",
+          "<strong>+ Estado siguiente</strong>",
+          "Mueve la muestra a la siguiente etapa lógica (generalmente 'En Tránsito' o 'Recibido')."
+        ],
+        [
+          "Ver detalle",
+          "<i class='pi pi-eye'></i>",
+          "Permite visualizar la información completa de la muestra sin modificar su estado."
+        ]
+      ]
+    }
+  ]
+},
+    {
+      "id": "etapas-transito-recepcion",
+      "title": "Tránsito y Recepción",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "En Tránsito"
+        },
+        {
+          "type": "paragraph",
+          "text": "Gestión del traslado de muestras entre sucursales."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-transit.png",
+          "alt": "Pantalla En Tránsito"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados en Tabla"
+        },
+        {
+          "type": "badge",
+          "text": "EN PREPARACIÓN",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "La muestra está siendo trasladada hacia el área o sucursal de destino."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Cambiar Destino",
+              "Seleccionar una sucursal diferente en la columna 'Destino'."
+            ],
+            [
+              "Avanzar",
+              "Si no hay cambio de sucursal, pasa a estado <strong>Recibido</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Recibido"
+        },
+        {
+          "type": "paragraph",
+          "text": "Confirmación de llegada física al área técnica correspondiente."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-received.png",
+          "alt": "Pantalla Recibido"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados en Tabla"
+        },
+        {
+          "type": "badge",
+          "text": "ENTREGADO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "La muestra ha llegado físicamente al destino y se ha validado su recepción."
+        },
+
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Validar Recepción",
+              "Confirma que la muestra llegó correctamente y habilita la etapa de <strong>Procesando</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "etapa-procesando",
+      "title": "Procesando y Resultados",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Etapa donde se asocian las planillas de trabajo a los protocolos para la carga de valores analíticos."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-procesing.png",
+          "alt": "Pantalla Procesando"
+        },
+        {
+          "type": "badge",
+          "text": "EN PROCESO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "La muestra está lista para la carga de resultados o ya tiene planillas asociadas."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Disponibles"
+        },
+
+
+
+        {
+          "type": "subtitle",
+          "text": "Acciones Disponibles en Procesando"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Icono/Botón",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Cargar Resultados",
+              "<strong>+ Cargar resultados</strong>",
+              "Abre modal para adjuntar una planilla de trabajo existente a la muestra."
+            ],
+            [
+              "Crear Planilla",
+              "<strong>+ Nueva planilla</strong>",
+              "Permite generar una planilla desde cero seleccionando los análisis."
+            ],
+            [
+              "Rechazar/Descartar",
+              "<i class='pi pi-trash'></i>",
+              "Si la muestra no sirve (ej: hemólisis), se envía a <strong>Descartar</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-procesing-upload-results.png",
+          "alt": "Botón Cargar Resultados"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-new-spreadsheet.png",
+          "alt": "Botón Nueva Planilla"
+        }
+      ]
+    },
+    {
+      "id": "etapa-descarte",
+      "title": "A Descartar",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Gestión final del ciclo de vida de la muestra. Aquí llegan muestras procesadas o rechazadas."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-disposable.png",
+          "alt": "Pantalla A Descartar"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados en Tabla"
+        },
+        {
+          "type": "badge",
+          "text": "COMPLETADO",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "La muestra ha finalizado su ciclo de vida útil dentro del laboratorio."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Disponibles"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Resultado"
+          ],
+          "rows": [
+            [
+              "Confirmar Descarte",
+              "Elimina la muestra del listado visible y guarda el registro de trazabilidad (usuario, fecha, hora)."
+            ],
+            [
+              "Ver Detalles",
+              "Permite revisar el historial de por qué la muestra llegó a esta etapa."
+            ]
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-disposable-dispose.png",
+          "alt": "Modal de descarte"
+        }
+      ]
+    },
+    {
+      "id": "etapa-derivacion",
+      "title": "En Derivación",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Muestras enviadas a laboratorios externos. Las acciones locales están restringidas mientras la muestra está derivada."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-derivation.png",
+          "alt": "Pantalla Derivación"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados en Tabla"
+        },
+        {
+          "type": "badge",
+          "text": "EN DERIVACIÓN",
+          "color": "#008F8C"
+        },
+        {
+          "type": "paragraph",
+          "text": "La muestra se encuentra bajo la responsabilidad de un laboratorio externo."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Disponibles"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Marcar como Pérdida",
+              "Única acción disponible si la muestra se extravió. La marca como <strong>PÉRDIDA</strong> y cierra el flujo."
+            ]
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-derivation-loss.png",
+          "alt": "Opción pérdida"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "preanalítica",
+    "flujo",
+    "acciones",
+    "ingreso",
+    "procesamiento",
+    "descarte"
+  ]
+}

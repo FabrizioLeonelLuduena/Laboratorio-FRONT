@@ -1,0 +1,64 @@
+<div class="advanced-search">
+  <!-- Header -->
+  <div class="search-header">
+    <div class="header-content">
+      <i class="pi pi-search"></i>
+      <div class="header-text">
+        <h3>Advanced Search</h3>
+        <p>Search analyses by multiple criteria</p>
+      </div>
+    </div>
+    
+    @if (hasSearched()) {
+      <div class="results-badge">
+        <i class="pi pi-list"></i>
+        <span>{{ resultsCount() }} results found</span>
+      </div>
+    }
+  </div>
+
+  <p-divider />
+
+  <!-- Error Message -->
+  @if (errorMessage()) {
+    <p-message 
+      severity="error" 
+      [text]="errorMessage()"
+      styleClass="w-full mb-3"
+      [closable]="true"
+      (onClose)="errorMessage.set('')" />
+  }
+
+  <!-- Search Form -->
+  <div class="search-form" [attr.aria-busy]="searching()">
+    <app-generic-form
+      [fields]="formFields"
+      [initialValue]="initialValue"
+      [saving]="searching()"
+      [maxCols]="2"
+      [showHeader]="false"
+      [submitLabel]="searching() ? 'Searching...' : 'Search'"
+      [showCancel]="true"
+      [cancelLabel]="'Clear'"
+      (submitForm)="onSearch($event)"
+      (cancelForm)="onClear()"
+      [attr.aria-label]="'Formulario de búsqueda avanzada'">
+    </app-generic-form>
+  </div>
+
+  <!-- Info Message -->
+  <div class="info-message" role="region" aria-label="Consejos de búsqueda">
+    <i class="pi pi-info-circle" aria-hidden="true"></i>
+    <div class="message-content">
+      <strong>Search Tips:</strong>
+      <ul>
+        <li>Use at least one search criterion</li>
+        <li>Text fields support partial matches</li>
+        <li>Number fields require exact matches</li>
+        <li>Combine multiple criteria for refined results</li>
+        <li><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to search quickly</li>
+        <li><kbd>Esc</kbd> to clear the form</li>
+      </ul>
+    </div>
+  </div>
+</div>

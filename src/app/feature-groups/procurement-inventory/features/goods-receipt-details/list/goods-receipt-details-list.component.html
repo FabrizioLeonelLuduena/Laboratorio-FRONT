@@ -1,0 +1,66 @@
+<div class="goods-receipt-details-list-container">
+  <div class="header">
+    <h1>Detalles de Recepción de Mercadería</h1>
+    <p>Gestiona los detalles de las recepciones de mercadería del sistema</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-section">
+    <div class="filter-row">
+      <div class="filter-field">
+        <label for="goodsReceiptIdFilter">ID Recepción:</label>
+        <p-inputNumber
+          id="goodsReceiptIdFilter"
+          [(ngModel)]="filters.goodsReceiptId"
+          placeholder="ID de recepción"
+          (onInput)="onFilterChange()"
+          [showClear]="true">
+        </p-inputNumber>
+      </div>
+
+      <div class="filter-field">
+        <label for="supplyIdFilter">ID Insumo:</label>
+        <p-inputNumber
+          id="supplyIdFilter"
+          [(ngModel)]="filters.supplyId"
+          placeholder="ID de insumo"
+          (onInput)="onFilterChange()"
+          [showClear]="true">
+        </p-inputNumber>
+      </div>
+
+      <div class="filter-actions">
+        <p-button
+          label="Limpiar Filtros"
+          icon="pi pi-filter-slash"
+          (onClick)="clearFilters()"
+          severity="secondary">
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <app-advanced-table
+    [data]="goodsReceiptDetails"
+    [columns]="columns"
+    [config]="tableConfig"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [actionItems]="actions"
+    (lazyLoad)="onLazyLoad($event)"
+    (action)="onAction($event)"
+    (addClicked)="onAddClick()">
+  </app-advanced-table>
+
+  <!-- Modal de confirmación -->
+   @if(showConfirmModal) {
+  <app-confirmation-modal
+    icon="pi pi-exclamation-triangle"
+    title="Desactivar Detalle de Recepción"
+    message="¿Estás seguro de que deseas desactivar este detalle de recepción? Esta acción no se puede deshacer."
+    (confirmed)="onConfirmDeactivate()"
+    (dismissed)="onCancelDeactivate()">
+  </app-confirmation-modal>
+  }
+</div>

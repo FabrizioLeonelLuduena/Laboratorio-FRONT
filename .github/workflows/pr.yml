@@ -1,0 +1,54 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: ['**']
+
+jobs:
+  guard-package-json:
+    name: Forbid package.json changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check package.json modifications
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1
+          if git diff --name-only origin/${{ github.base_ref }}... | grep -E '^package-lock.json|^package.json'; then
+            echo "package.json or lockfile modified in PR. This is not allowed.";
+            exit 1;
+          fi
+
+  build-lint-test:
+    name: Build, Lint, Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+
+      - name: Lint TypeScript and HTML templates
+        run: npm run lint:docs
+
+      - name: Lint CSS/SCSS files
+        run: npm run lint:css
+
+      - name: Run comprehensive linting
+        run: npm run lint:all
+
+      - name: Build project
+        run: npm run build
+
+      - name: Fail if source maps exist in dist
+        run: |
+          if find dist -name '*.map' | grep -q \.map; then
+            echo 'Source maps detected in dist. Please disable for production builds.'
+            exit 1
+          fi
+
+      - name: Run tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless || true

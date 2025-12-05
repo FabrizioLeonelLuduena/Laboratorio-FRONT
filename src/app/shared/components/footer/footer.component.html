@@ -1,0 +1,51 @@
+<footer class="app-footer">
+  <!-- Layout para escritorio -->
+  <div class="footer-desktop">
+    <div class="footer-toolbar">
+      <div class="footer-brand">
+        <span class="brand-app">{{ appName }} · © {{ currentYear }}</span>
+        <span class="brand-divider">|</span>
+        <p-tag
+          value="V{{ version }}"
+          severity="info"
+          styleClass="brand-version"
+        ></p-tag>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="footer-links">
+        @for (link of links; track i; let i = $index) {
+          <a [routerLink]="link.route">{{ link.label }}</a>
+          @if (i < links.length - 1) {
+            <p-divider layout="vertical"></p-divider>
+          }
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout para móvil -->
+  <div class="footer-mobile">
+    <div class="footer-mobile-inner">
+      <div class="footer-brand-mobile">
+        <span class="brand-app">{{ appName }}</span>
+        <span>© {{ currentYear }}</span>
+        <p-tag
+          value="V{{ version }}"
+          severity="info"
+          styleClass="brand-version"
+        ></p-tag>
+      </div>
+
+      <div class="footer-links-mobile">
+        @for (link of links; track i; let i = $index) {
+          <a [routerLink]="link.route">{{ link.label }}</a>
+          @if (i < links.length - 1) {
+            <span class="divider">|</span>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</footer>

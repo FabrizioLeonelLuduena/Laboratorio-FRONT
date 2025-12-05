@@ -1,0 +1,22 @@
+<button
+  class="btn"
+  [ngClass]="type"
+  [ngStyle]="{
+    'background': bgColor,
+    'color': textColor,
+    'border': borderStyle
+  }"
+  [title]="tooltip"
+  [disabled]="disabled"
+  (click)="onClick($event)"
+>
+  @if (buttonIcon && iconPosition === 'left') {
+    <i [class]="buttonIcon" [style.color]="textColor"></i>
+  }
+  @if (buttonLabel) {
+    <span>{{ buttonLabel }}</span>
+  }
+  @if (buttonIcon && iconPosition === 'right') {
+    <i [class]="buttonIcon" [style.color]="textColor"></i>
+  }
+</button>

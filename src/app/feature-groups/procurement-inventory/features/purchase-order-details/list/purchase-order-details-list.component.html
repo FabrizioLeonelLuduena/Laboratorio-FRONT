@@ -1,0 +1,80 @@
+<div class="purchase-order-details-list-container">
+  <div class="header">
+    <h1>Detalles de Órdenes de Compra</h1>
+    <p>Gestiona los detalles de las órdenes de compra del sistema</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-section">
+    <div class="filter-row">
+      <div class="filter-field">
+        <label for="purchaseOrderIdFilter">ID Orden de Compra:</label>
+        <p-inputNumber
+          id="purchaseOrderIdFilter"
+          [(ngModel)]="filters.purchaseOrderId"
+          placeholder="ID de orden de compra"
+          (onInput)="onFilterChange()"
+          [showClear]="true">
+        </p-inputNumber>
+      </div>
+
+      <div class="filter-field">
+        <label for="supplyIdFilter">ID Insumo:</label>
+        <p-inputNumber
+          id="supplyIdFilter"
+          [(ngModel)]="filters.supplyId"
+          placeholder="ID de insumo"
+          (onInput)="onFilterChange()"
+          [showClear]="true">
+        </p-inputNumber>
+      </div>
+
+      <div class="filter-field">
+        <label for="hasPendingReceptionFilter">Pendiente de Recepción:</label>
+        <p-dropdown
+          id="hasPendingReceptionFilter"
+          [(ngModel)]="filters.hasPendingReception"
+          [options]="[
+            { label: 'Sí', value: true },
+            { label: 'No', value: false }
+          ]"
+          placeholder="Seleccionar"
+          (onChange)="onFilterChange()"
+          [showClear]="true">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-actions">
+        <p-button
+          label="Limpiar Filtros"
+          icon="pi pi-filter-slash"
+          (onClick)="clearFilters()"
+          severity="secondary">
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <app-advanced-table
+    [data]="purchaseOrderDetails"
+    [columns]="columns"
+    [config]="tableConfig"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [actionItems]="actions"
+    (lazyLoad)="onLazyLoad($event)"
+    (action)="onAction($event)"
+    (addClicked)="onAddClick()">
+  </app-advanced-table>
+
+  <!-- Modal de confirmación -->
+  <app-generic-confirmation-modal
+    *ngIf="showConfirmModal"
+    icon="pi pi-exclamation-triangle"
+    title="Desactivar Detalle de Orden de Compra"
+    message="¿Estás seguro de que deseas desactivar este detalle de orden de compra? Esta acción no se puede deshacer."
+    (confirmed)="onConfirmDeactivate()"
+    (dismissed)="onCancelDeactivate()">
+  </app-generic-confirmation-modal>
+</div>

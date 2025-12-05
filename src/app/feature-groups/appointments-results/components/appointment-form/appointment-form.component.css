@@ -1,0 +1,318 @@
+.appointment-form-modal {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.modal-content {
+  padding: 0.75rem;
+}
+
+.info-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  border-radius: 4px;
+}
+
+.info-block .icon {
+  font-size: 1.1rem;
+  color: #2196f3;
+}
+
+.info-block p {
+  margin: 0;
+  color: #1565c0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Alert Section */
+app-generic-alert {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Slots Section */
+.slots-section {
+  margin-top: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.slots-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.slots-title i {
+  color: #2196f3;
+}
+
+/* Loading State */
+.slots-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  gap: 0.75rem;
+}
+
+.slots-loading i {
+  font-size: 1.5rem;
+  color: #2196f3;
+}
+
+.slots-loading p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* No Slots */
+.no-slots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  gap: 0.5rem;
+  background-color: #fff3e0;
+  border-radius: 8px;
+  border-left: 4px solid #ff9800;
+}
+
+.no-slots i {
+  font-size: 1.5rem;
+  color: #ff9800;
+}
+
+.no-slots p {
+  margin: 0;
+  color: #e65100;
+  font-size: 0.9rem;
+}
+
+/* Slots Carousel */
+.slots-carousel {
+  padding: 0.5rem 0;
+}
+
+.slots-carousel ::ng-deep .p-carousel {
+  padding: 0;
+}
+
+.slots-carousel ::ng-deep .p-carousel-content {
+  display: flex;
+  align-items: center;
+}
+
+.slots-carousel ::ng-deep .p-carousel-items-container {
+  padding: 0.5rem 0;
+}
+
+.slots-carousel ::ng-deep .p-carousel-item {
+  padding: 0.5rem;
+}
+
+.slots-carousel ::ng-deep .p-carousel-prev,
+.slots-carousel ::ng-deep .p-carousel-next {
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgb(33 150 243 / 30%);
+}
+
+.slots-carousel ::ng-deep .p-carousel-prev:hover:not(:disabled),
+.slots-carousel ::ng-deep .p-carousel-next:hover:not(:disabled) {
+  background: #1976d2;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgb(33 150 243 / 50%);
+}
+
+.slots-carousel ::ng-deep .p-carousel-prev:disabled,
+.slots-carousel ::ng-deep .p-carousel-next:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.slots-carousel ::ng-deep .p-carousel-indicators {
+  display: none;
+}
+
+/* Slot Card */
+.slot-card {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  margin: 0.25rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.slot-card:hover {
+  border-color: #2196f3;
+  box-shadow: 0 4px 12px rgb(33 150 243 / 20%);
+  transform: translateY(-2px);
+}
+
+.slot-card.selected {
+  border-color: #4caf50;
+  background-color: #f1f8f4;
+  box-shadow: 0 4px 12px rgb(76 175 80 / 30%);
+}
+
+.slot-card-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.slot-card-header i {
+  font-size: 1.5rem;
+  color: #2196f3;
+}
+
+.slot-card.selected .slot-card-header i {
+  color: #4caf50;
+}
+
+.slot-card-body {
+  text-align: center;
+}
+
+.slot-date {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.slot-time {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.slot-availability {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #4caf50;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  background-color: #e8f5e9;
+  border-radius: 20px;
+}
+
+.slot-availability i {
+  font-size: 0.85rem;
+}
+
+.slot-card-footer {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid #4caf50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.slot-card-footer i {
+  font-size: 1rem;
+}
+
+/* Validation Message */
+.slot-validation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  margin-top: 0.75rem;
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+  border-radius: 4px;
+  color: #e65100;
+  font-size: 0.85rem;
+}
+
+.slot-validation i {
+  font-size: 1rem;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  border-radius: 4px;
+  color: #c62828;
+  font-size: 0.85rem;
+}
+
+.error-message i {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Action Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Responsive */
+@media (width <= 768px) {
+  .slots-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .slot-card {
+    min-width: 140px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions > * {
+    width: 100%;
+  }
+}

@@ -1,0 +1,118 @@
+name: Release Images
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Obtener versión desde rama release/*
+        run: |
+          VERSION=${GITHUB_HEAD_REF#"release/"}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+
+      - name: Crear tag
+        run: |
+          if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag v${VERSION} ya existe."
+          else
+            git tag v${VERSION}
+            git push origin v${VERSION}
+          fi
+
+      - name: Crear GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: 'Release v${{ env.VERSION }}'
+          body: |
+            🚀 Nueva versión liberada: v${{ env.VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase repo path for GHCR
+        run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
+      - name: Build Frontend
+        run: |
+          docker build -t ghcr.io/$REPO_LC/frontend:${VERSION} .
+
+      - name: Build Proxy
+        run: |
+          docker build -t ghcr.io/$REPO_LC/api-proxy:${VERSION} ./proxy-server
+
+      - name: Push Images
+        run: |
+          docker push ghcr.io/$REPO_LC/frontend:${VERSION}
+          docker push ghcr.io/$REPO_LC/api-proxy:${VERSION}
+
+      - name: Checkout main para backport
+        if: success()
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Crear rama backport y PR a develop
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          # Configurar git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Asegurarse de estar en main y crear rama backport desde main
+          git checkout main
+          git pull origin main
+          git checkout -b backport/v${{ env.VERSION }}
+
+          # Forzamos el push para sobrescribir ramas antiguas de backport si existen
+          git push --force origin backport/v${{ env.VERSION }}
+
+          # Crear PR usando GitHub CLI con token personal
+          gh pr create \
+            --base develop \
+            --head backport/v${{ env.VERSION }} \
+            --title "Backport v${{ env.VERSION }} to develop" \
+            --body "🚀 Backport automático de la versión v${{ env.VERSION }}
+
+          Este PR contiene todos los cambios de la rama release/${{ env.VERSION }} que fueron mergeados a main.
+
+          **Cambios incluidos:**
+          - Versión actualizada a v${{ env.VERSION }}
+          - Todas las funcionalidades y correcciones del release
+
+          **Proceso:**
+          - [x] Rama backport creada desde main
+          - [x] PR creado automáticamente por GitHub Actions
+          - [ ] Revisión y merge manual a develop
+
+          ---
+          Backport automático del release v${{ env.VERSION }}" \
+            || echo "⚠️ No se pudo crear el PR - posiblemente ya existe o no hay diferencias"

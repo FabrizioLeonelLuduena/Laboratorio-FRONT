@@ -1,0 +1,671 @@
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@import "primeicons/primeicons.css";
+
+:root {
+  /* Layout heights */
+  --navbar-height: 64px;
+  --footer-height: 52px;
+
+  /* Typography */
+  --font-size-large: 32px;
+  --font-size-medium: 18px;
+  --font-size-small: 14px;
+
+  /* Brand Colors */
+  --brand-primary: #008c8a;
+  --brand-primary-700: #008f8c;
+
+  /* hover/active accesible */
+  --brand-secondary: #00435d;
+  --brand-accent: #ff9800;
+
+  /* Estados */
+  --brand-warn: #d32f2f;
+  --brand-success: #5c9f3c;
+
+  /* Button colors */
+  --btn-secondary-color: #6c757d;
+  --btn-secondary-hover: #5a6268;
+  --btn-success-bg: #28a745;
+  --btn-success-hover: #218838;
+
+  /* Neutros */
+  --surface: #fff;
+  --surface-alt: #edeff4;
+  --background: #fdfefe;
+  --border-color: #d5e2e4;
+
+  /* Texto */
+  --on-primary: #fff;
+  --on-surface: #000;
+  --on-surface-muted: #757477;
+
+  /* Canvas y contraplano */
+  --canvas: #f4f7fa;
+  --card: #fff;
+  --card-subtle: #fbfcfe;
+
+  /* Gradientes */
+  --section-gradient: linear-gradient(
+    180deg,
+    var(--card) 0%,
+    var(--card-subtle) 100%
+  );
+
+  /* Toolbar accesible: base teal-700 con leve luz arriba */
+  --toolbar-gradient: linear-gradient(
+    180deg,
+    color-mix(in srgb, #00796b 92%, white) 0%,
+    #00796b 100%
+  );
+  --font-body: "Roboto", system-ui, -apple-system, "Segoe UI", arial, sans-serif;
+  --font-display: "Roboto", system-ui, -apple-system, "Segoe UI", arial,
+    sans-serif;
+  --brand-ig-stop-1: #f58529;
+  --brand-ig-stop-2: #feda77;
+  --brand-ig-stop-3: #dd2a7b;
+  --brand-ig-stop-4: #8134af;
+  --brand-ig-stop-5: #515bd4;
+  --brand-ig-gradient: linear-gradient(
+    45deg,
+    var(--brand-ig-stop-1),
+    var(--brand-ig-stop-2),
+    var(--brand-ig-stop-3),
+    var(--brand-ig-stop-4),
+    var(--brand-ig-stop-5)
+  );
+}
+
+/* Cards/paneles */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.card--section,
+.panel {
+  background: var(--section-gradient);
+}
+
+/* Utilidades opt-in */
+.ig-hero {
+  background: var(--brand-ig-gradient);
+  color: #fff;
+}
+
+.ig-badge {
+  border: 2px solid transparent;
+  background: #fff;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.ig-badge::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--brand-ig-gradient);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.p-popover-arrow,
+.p-popover::before,
+.p-popover::after {
+  display: none;
+  content: none;
+}
+
+.p-popover {
+  --p-popover-arrow-size: 0;
+  --p-popover-arrow-offset: 0;
+  --p-popover-arrow-left: 0;
+}
+
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Preferimos diseños aireados, bordes suaves y tipografía clara. */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.section {
+  margin: 16px;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+/* Utilitarias de layout reutilizables */
+.card-body-24 {
+  padding: 24px;
+}
+
+.max-w-960 {
+  max-width: 960px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Responsive forms */
+@media (width <=768px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+}
+
+.actions-end {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.stack-16 {
+  display: grid;
+  gap: 16px;
+}
+
+/* Fuentes utilitarias */
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Checkerboard para imágenes transparentes */
+.checker {
+  background-color: #f0f0f0;
+  background-image: linear-gradient(45deg, #e1e1e1 25%, transparent 25%),
+    linear-gradient(-45deg, #e1e1e1 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e1e1e1 75%),
+    linear-gradient(-45deg, transparent 75%, #e1e1e1 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+/* === minimal, accesible utilities === */
+.surface {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* === Botones temáticos (ligeros, accesibles) === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 120ms ease, transform 80ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--brand-primary-700);
+  color: var(--on-primary);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  filter: brightness(1.05);
+}
+
+.btn--secondary {
+  background: var(--brand-secondary);
+  color: var(--on-primary);
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  filter: brightness(1.05);
+}
+
+.btn--accent {
+  background: var(--brand-accent);
+  color: var(--on-primary);
+}
+
+.btn--accent:hover,
+.btn--accent:focus-visible {
+  filter: brightness(1.05);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--brand-secondary);
+  border-color: var(--brand-secondary);
+}
+
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  filter: brightness(0.95);
+}
+
+.heading {
+  margin: 0;
+  color: var(--on-surface);
+  font-weight: 600;
+}
+
+.subtle {
+  color: var(--on-surface-muted);
+  margin-top: 4px;
+}
+
+.stack-12 {
+  display: grid;
+  gap: 12px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.field-full {
+  width: 100%;
+}
+
+/* Secciones y encabezados V2 */
+.section-v2 {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-color);
+}
+
+/* KPI variants (suaves) */
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--brand-secondary);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.kpi--pendientes {
+  border-left-color: var(--brand-accent);
+}
+
+.kpi--procesando {
+  border-left-color: var(--brand-secondary);
+}
+
+.kpi--listos {
+  border-left-color: var(--brand-success);
+}
+
+.kpi--reprocesar {
+  border-left-color: var(--brand-warn);
+}
+
+.kpi .value {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+/* Tabla V2: sin elevación, zebra y cabecera sutil */
+.table {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  border-collapse: separate;
+}
+
+.table thead th {
+  background: var(--surface-alt);
+  color: var(--on-surface);
+  border-bottom: 1px solid var(--border-color);
+
+  /* Cabecera sticky para tablas operativas largas */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table tbody tr:nth-child(even) {
+  background: var(--card-subtle);
+}
+
+/* Tipografía operacional V2 (sin cambiar familias) */
+.title-24 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.title-20 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.text-14 {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--on-surface);
+}
+
+.muted {
+  color: var(--on-surface-muted);
+}
+
+/* Skip link accesible */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 16px;
+  background: var(--brand-secondary);
+  color: var(--on-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--on-primary);
+}
+
+/* Hit target operativos */
+.hit {
+  min-height: 40px;
+  padding-inline: 16px;
+}
+
+/* Visible focus ring for long-session accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--brand-secondary);
+  outline-offset: 2px;
+}
+
+/* Bloquea scroll global cuando el sidebar móvil está abierto */
+body.no-scroll {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* En móvil, oculta el footer cuando el sidebar está abierto */
+@media (width <= 959px) {
+  body.no-scroll app-footer,
+  body.no-scroll .app-footer {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* === CONTENEDOR GENERAL DEL TOOLTIP === */
+body .joyride-step__container {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  color: #333;
+  font-family: Inter, sans-serif;
+  max-width: 360px;
+  height: auto;
+  padding: 0;
+  overflow: hidden;
+  animation: fade-in 0.25s ease-in-out;
+}
+
+/* === CABECERA DEL TOOLTIP === */
+body .joyride-step__header {
+  background-color: #00bbb0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 12px 16px;
+  border-radius: 14px 14px 0 0;
+  text-align: center;
+}
+
+body .joyride-step__header .joyride-step__title {
+  color: #fff;
+}
+
+/* === CUERPO DEL TOOLTIP === */
+body .joyride-step__body {
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+  background: #fff;
+  color: #333;
+}
+
+/* === PIE DEL TOOLTIP (ÍNDICE Y BOTONES) === */
+body .joyride-step__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* === NÚMERO DE PASO (ej. 2/5) === */
+body .joyride-step__index {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* === BOTONES DEL TOUR === */
+body .joyride-button {
+  background-color: #00bbb0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-weight: 500;
+  font-family: Inter, sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  text-transform: none;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 15%);
+  min-width: 95px;
+}
+
+body .joyride-button:hover {
+  background-color: #009e95;
+  transform: translateY(-1px);
+}
+
+body .joyride-button[disabled] {
+  background-color: #a8dcd9;
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+body .joyride-prev-btn,
+body .joyride-next-btn,
+body .joyride-done-btn {
+  background-color: #00bbb0;
+  color: #fff;
+}
+
+body .joyride-step__close {
+  color: #fff;
+  font-size: 1.1rem;
+  top: 1.3rem;
+  right: 1rem;
+}
+
+body .joyride-step__close:hover {
+  color: #00bbb0;
+}
+
+body .joyride-step__arrow {
+  color: #fff;
+}
+
+body .joyride-step__title {
+  color: #fff;
+  font-weight: 600;
+}
+
+body .joyride-spotlight {
+  border-radius: 12px;
+}
+
+body .backdrop {
+  border-radius: 12px;
+}
+
+/* Clase alternativa para el backdrop de ngx-joyride */
+body ::ng-deep .joyride-spotlight {
+  border-radius: 12px;
+}
+
+/* === ANIMACIÓN === */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Global manual lightbox (overlay creado dinámicamente en document.body) */
+.manual-lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 75%);
+  z-index: 2147483647; /* máximo seguro para sobreponer todo */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Forzamos la imagen a ocupar más espacio (hasta 96% del viewport) */
+.manual-lightbox-img {
+  width: calc(88vw); /* reducido de 96vw a 88vw */
+  height: auto;
+  max-width: none;
+  max-height: calc(88vh); /* reducido de 96vh a 88vh */
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgb(2 6 23 / 60%);
+  transition: transform .18s ease, opacity .12s ease;
+  transform-origin: center center;
+}
+
+/* Clase que fuerza aún mayor ocupación del viewport (usar cuando hace falta) */
+.manual-lightbox-img--force-large {
+  width: calc(92vw); /* reducido de 98vw a 92vw */
+  max-height: calc(92vh); /* reducido de 98vh a 92vh */
+}
+
+/* Si preferís no escalar imágenes pequeñas, usar esta clase */
+.manual-lightbox-img--no-upscale {
+  width: auto;
+  max-width: calc(100vw - 80px);
+}
+
+/* En móviles reducimos ligeramente el tamaño para dejar margen */
+@media (width <= 768px) {
+  .manual-lightbox-img {
+    width: calc(86vw); /* reducido de 94vw a 86vw */
+    max-height: calc(80vh); /* reducido de 92vh a 80vh */
+  }
+}
+
+.manual-lightbox::after {
+  content: "✕";
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  font-size: 1.8rem;
+  color: #fff;
+  font-weight: 400;
+  pointer-events: none; /* el click igual va al overlay y cierra */
+  text-shadow: 0 2px 6px rgb(0 0 0 / 60%);
+}

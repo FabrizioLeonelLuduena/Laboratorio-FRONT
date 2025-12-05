@@ -1,0 +1,550 @@
+<!--
+  patients-card-detail.component.html
+  ====================================
+  Template for displaying patient details in read-only mode.
+
+  Structure:
+  1. Loading State - Spinner shown while fetching data
+  2. Error State - Error message with back button if load fails
+  3. Patient Detail Content (main view):
+     - Card Header: Patient name, Documento, and status tag
+     - Personal Information: Birth date, gender, sex at birth, active status, phone, email
+     - 2-Column Grid: Coverages and Addresses (each with primary + secondary items)
+     - Footer: Back and Edit action buttons
+
+  Features:
+  - Conditional rendering with @if blocks (Angular 17+)
+  - PrimeNG components (p-card, p-tag, p-divider, p-progressSpinner)
+  - Responsive grid layout (2 cols → 1 col)
+  - Primary items highlighted with colored backgrounds and tags
+  - Secondary items listed below in separate sections
+-->
+
+<div class="patient-detail-page">
+
+  <!-- ============================================ -->
+  <!-- LOADING STATE                                -->
+  <!-- ============================================ -->
+  @if (loading) {
+    <div class="loading-state">
+      <app-spinner
+      [label]="'Cargando datos del paciente...'"
+      [overlay]="false">
+    </app-spinner>
+    </div>
+  }
+
+  <!-- ============================================ -->
+  <!-- ERROR STATE                                  -->
+  <!-- ============================================ -->
+  @if (error && !loading) {
+    <div class="error-state">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+      <button
+        pButton
+        label=""
+        icon="pi pi-arrow-left"
+        class="p-button-raised"
+        (click)="goBack()">
+      </button>
+    </div>
+  }
+
+  <!-- ============================================ -->
+  <!-- PATIENT DETAIL CONTENT (Main View)          -->
+  <!-- ============================================ -->
+  @if (!loading && !error && patient) {
+    <div class="detail-content">
+
+      <!-- ==================== PATIENT CARD ==================== -->
+      <p-card class="patient-card">
+
+        <!-- === Card Header === -->
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <div class="header-content">
+              <i class="pi pi-user header-icon"></i>
+            <div class="header-info">
+              <h3 class="patient-name">{{ patient.lastName }} {{ patient.firstName }} </h3>
+              <span class="patient-dni">
+                Documento: {{ patient.dni }}
+                @if (patientAgeLabel) {
+                  <span class="patient-age"> Edad: {{ patientAgeLabel }}</span>
+                }
+              </span>
+            </div>
+            </div>
+
+            <div class="header-actions">
+              <app-generic-badge
+                [status]="mapPatientStatusToBadge(patient.status)"
+                [text]="statusLabel[patient.status] || patient.status">
+              </app-generic-badge>
+
+              <app-generic-button
+                type="custom"
+                icon="pi pi-times"
+                (click)="goBack()"
+                tooltip="Volver al listado"
+                tooltipPosition="left"
+                styleClass="p-button-rounded p-button-text close-button">
+              </app-generic-button>
+            </div>
+          </div>
+        </ng-template>
+
+
+        <!-- === Card Body === -->
+        <div class="card-body">
+
+          <!-- ==================== TABS NAVIGATION ==================== -->
+          <div class="tabs-navigation">
+            <button
+              id="general-tab"
+              class="tab-button"
+              [class.active]="activeTab === 'general'"
+              (click)="setActiveTab('general')">
+              Vista general
+            </button>
+            <button
+              id="analysis-tab"
+              class="tab-button"
+              [class.active]="activeTab === 'analysis'"
+              (click)="setActiveTab('analysis')">
+              Análisis
+            </button>
+          </div>
+
+          <!-- ==================== TAB CONTENT: VISTA GENERAL ==================== -->
+          @if (activeTab === 'general') {
+            <div class="tab-content">
+
+              <!-- ==================== PERSONAL INFORMATION ==================== -->
+              <section class="info-section">
+            <h4 class="section-title">
+              <i class="pi pi-id-card"></i>
+              Información personal
+            </h4>
+            <!-- Grid layout: 6 items including birth date, gender, sex, status, phone, email -->
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Fecha de nacimiento</label>
+                <p>{{ formatDate(patient.birthDate) }}</p>
+              </div>
+              <div class="info-item">
+                <label>Edad</label>
+                <p>{{ patientAgeLabel || '-' }}</p>
+              </div>
+              <div class="info-item">
+                <label>Género</label>
+                <p>{{ patient.gender ? (genderLabel[patient.gender] || patient.gender) : '-' }}</p>
+              </div>
+              <div class="info-item">
+                <label>Sexo al nacer</label>
+
+                @if (patient.sexAtBirth === 'MALE'){
+                  <p>{{ 'Masculino' }}</p>
+                }
+                @else if (patient.sexAtBirth === 'FEMALE') { <p>{{ 'Femenino' }}</p> }
+              </div>
+              <div class="info-item">
+                <label>Estado</label>
+                <p class="status-badge">
+                  <i class="pi"
+                     [ngClass]="patient.isActive ? 'pi-check-circle status-active' : 'pi-times-circle status-inactive'"></i>
+                  {{ (patient.isActive ? 'Activo' : 'Inactivo') | uppercase }}
+                </p>
+              </div>
+              <!-- New: Telephone -->
+              <div class="info-item">
+                <label>Teléfono</label>
+                @if (getPhoneContact(); as phone) {
+                  <p class="contact-value">
+                    <i class="pi pi-phone contact-icon-inline"></i>
+                    {{ phone.contactValue }}
+                  </p>
+                } @else {
+                  <p>-</p>
+                }
+              </div>
+              <!-- New: Email -->
+              <div class="info-item">
+                <label>Email</label>
+                @if (getEmailContact(); as email) {
+                  <p class="contact-value">
+                    <i class="pi pi-envelope contact-icon-inline"></i>
+                    {{ email.contactValue }}
+                  </p>
+                } @else {
+                  <p>-</p>
+                }
+              </div>
+            </div>
+          </section>
+          @if (hasGuardianInfo()) {
+            <p-divider></p-divider>
+
+            <section class="info-section guardian-section">
+              <h4 class="section-title">
+                <i class="pi pi-users"></i>
+                Información del tutor{{ patient!.guardians!.length > 1 ? 'es' : '' }}
+              </h4>
+
+              <!-- Iterate over ALL guardians -->
+              @for (guardian of patient!.guardians!; track guardian.document; let i = $index) {
+                <div class="guardian-card">
+                  @if (patient!.guardians!.length > 1) {
+                    <h5 class="guardian-number">Tutor {{ i + 1 }}</h5>
+                  }
+
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>Nombre completo</label>
+                      <p>{{ guardian.lastName }} {{ guardian.firstName }} </p>
+                    </div>
+                    <div class="info-item">
+                      <label>Documento</label>
+                      <p>{{ guardian.document }}</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Relación</label>
+                      <p>{{ guardian.bond }}</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Email</label>
+                      @if (guardian.email) {
+                        <p class="contact-value">
+                          <i class="pi pi-envelope contact-icon-inline"></i>
+                          {{ guardian.email }}
+                        </p>
+                      } @else {
+                        <p>-</p>
+                      }
+                    </div>
+                    <div class="info-item">
+                      <label>Teléfono</label>
+                      @if (guardian.phone) {
+                        <p class="contact-value">
+                          <i class="pi pi-phone contact-icon-inline"></i>
+                          {{ guardian.phone }}
+                        </p>
+                      } @else {
+                        <p>-</p>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Divider between guardians (except last) -->
+                @if (i < patient!.guardians!.length - 1) {
+                  <p-divider type="dashed"></p-divider>
+                }
+              }
+            </section>
+          }
+
+          <p-divider></p-divider>
+
+          <!-- ==================== 2-COLUMN GRID ==================== -->
+          <!-- Layout: Coverages | Addresses                          -->
+          <!-- Each column has: Title → Primary Item → Secondary Items -->
+          <div class="sections-grid">
+
+            <!-- === Headers Row === -->
+            <h4 class="section-title">
+              <i class="pi pi-shield"></i>
+              Coberturas médicas
+            </h4>
+            <h4 class="section-title">
+              <i class="pi pi-map-marker"></i>
+              Direcciones
+            </h4>
+
+            <!-- === Primary Items Row === -->
+            <!-- All primary items stretch to same height using CSS grid -->
+
+            <!-- Primary Coverage -->
+            @if (getPrimaryCoverage(); as coverage) {
+              <div class="primary-item coverage-primary">
+                <i class="pi pi-shield contact-icon"></i>
+                <div class="item-content">
+                  <span class="item-type">Cobertura principal</span>
+                  <span class="item-value">{{ coverage.insurerName }}</span>
+                  <span class="coverage-id">Plan: {{ coverage.planName }}</span>
+                  @if (coverage.memberNumber) {
+                    <span class="coverage-id">N° afiliado: {{ coverage.memberNumber }}</span>
+                  }
+                </div>
+                  <app-generic-badge status="verificado" text="PRINCIPAL"></app-generic-badge>
+              </div>
+            } @else {
+              <div class="primary-item-placeholder"></div>
+            }
+
+            <!-- Primary Address -->
+            @if (getPrimaryAddress(); as address) {
+              <div class="primary-item address-primary">
+                <i class="pi pi-map-marker contact-icon"></i>
+                <div class="item-content">
+                  <span class="item-type">Dirección principal</span>
+                  <p class="address-street">{{ formatAddress(address) }}</p>
+                  <div class="address-location">
+                    @if (address.neighborhood) {
+                      <span>{{ address.neighborhood }}, </span>
+                    }
+                    <span>{{ address.city }}, {{ address.province }}</span>
+                  </div>
+                  @if (address.zipCode) {
+                    <span class="address-zip">CP: {{ address.zipCode }}</span>
+                  }
+                </div>
+                  <app-generic-badge status="verificado" text="PRINCIPAL"></app-generic-badge>
+              </div>
+            } @else {
+              <div class="primary-item-placeholder"></div>
+            }
+
+            <!-- === Secondary Items Row === -->
+            <!-- All secondary sections start at same height -->
+
+            <!-- Other Coverages -->
+            <div class="secondary-items">
+              @if (getSecondaryCoverages().length > 0) {
+                <h5 class="subsection-title">Otras coberturas</h5>
+                <div class="items-list">
+                  @for (coverage of getSecondaryCoverages(); track coverage.planId) {
+                    <div class="list-item coverage-secondary">
+                      <i class="pi pi-shield"></i>
+                      <div class="item-content">
+                        <span class="item-label">{{ coverage.insurerName }}</span>
+                        <span class="item-text">Plan: {{ coverage.planName }}</span>
+                        @if (coverage.memberNumber) {
+                          <span class="item-text">N° afiliado: {{ coverage.memberNumber }}</span>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Other Addresses -->
+            <div class="secondary-items">
+              @if (getSecondaryAddresses().length > 0) {
+                <h5 class="subsection-title">Otras direcciones</h5>
+                <div class="items-list">
+                  @for (address of getSecondaryAddresses(); track address.street + address.streetNumber) {
+                    <div class="list-item address-item">
+                      <i class="pi pi-map-marker"></i>
+                      <div class="address-content">
+                        <p>{{ formatAddress(address) }}</p>
+                        <span class="address-sub">{{ address.city }}, {{ address.province }}</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+          </div> <!-- Fin del sections-grid -->
+
+            </div> <!-- Fin tab-content Vista General -->
+          }
+
+          <!-- ==================== TAB CONTENT: ANÁLISIS ==================== -->
+          @if (activeTab === 'analysis') {
+            <div class="tab-content analysis-tab">
+              <section class="info-section">
+                <app-generic-table
+                  [data]="atentionData"
+                  [columns]="atentionColumns"
+                  [filters]="atentionFilters"
+                  [pageable]="true"
+                  [rows]="10"
+                  [showCreateButton]="false"
+                  [showDownloadMenu]="false"
+                  [expandable]="true"
+                  [expandedRowTemplate]="atentionExpandedTpl"
+                  (filterChange)="onAtentionFilterChange($event)"
+                  [showActions]="false"
+                  [columnTemplates]="actionsColumnTemplateMap"
+                >
+                </app-generic-table>
+              </section>
+            </div> <!-- Fin tab-content Análisis -->
+          }
+
+          <!-- Expanded row template for Atenciones -->
+          <ng-template #atentionExpandedTpl let-row>
+            <div class="expanded-row-wrapper">
+
+              <!-- Two-column layout for Protocol and Payment details -->
+              <div class="details-split-container">
+
+                <!-- LEFT SIDE: Protocol Details -->
+                <div class="detail-section protocol-section">
+                  <div class="protocol-order-wrapper">
+                    <div class="detail-column">
+                      <div class="expanded-title">Detalle del Protocolo</div>
+                      <div class="detail-inline-group">
+                        <div class="detail-item-inline">
+                          <span class="detail-label">N° Protocolo</span>
+                          <span class="detail-value">{{ row.protocolId ?? '-' }}</span>
+                        </div>
+                        <div class="detail-item-inline">
+                          <span class="detail-label">Estado</span>
+                          <span class="detail-value">
+                            @if (row.protocolStatusBadgeText) {
+                              <app-generic-badge
+                                [status]="row.protocolStatusBadgeStyle || 'pendiente'"
+                                [text]="row.protocolStatusBadgeText">
+                              </app-generic-badge>
+                            } @else {
+                              -
+                            }
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="protocol-divider-vertical" aria-hidden="true"></div>
+
+                    <div class="detail-column medical-order-column">
+                      <div class="expanded-title">Detalle Orden Médica</div>
+                      <div class="detail-inline-group">
+                        <div class="detail-item-inline doctor-inline">
+                          <div class="detail-text">
+                            <span class="detail-label">Médico Solicitante</span>
+                            <span class="detail-value">{{ row.doctorName || '-' }}</span>
+                          </div>
+                          @if (row.hasAppointmentId) {
+                            <button
+                              pButton
+                              pRipple
+                              type="button"
+                              icon="pi pi-eye"
+                              label="Ver Orden Médica"
+                              class="p-button-sm p-button-outlined p-button-info"
+                              (click)="downloadPrescription(row.appointmentId)"
+                              pTooltip="Ver orden médica en nueva pestaña"
+                              tooltipPosition="top"
+                              aria-label="Ver orden médica">
+                            </button>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- RIGHT SIDE: Payment Details -->
+                <div class="detail-section payment-section">
+                  <div class="expanded-title">Detalle del pago</div>
+                  <div class="expanded-row-content">
+                    <!-- Row 1: Estado | Mensaje -->
+                    <div class="detail-item">
+                      <span class="detail-label">Estado</span>
+                      <span class="detail-value">
+                        @if (row.paymentStatusBadgeText) {
+                          <app-generic-badge
+                            [status]="row.paymentStatusBadgeStyle || 'pendiente'"
+                            [text]="row.paymentStatusBadgeText">
+                          </app-generic-badge>
+                        } @else {
+                          -
+                        }
+                      </span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Mensaje</span>
+                      <span class="detail-value">{{ getPaymentMessageLabel(row.paymentMessage) }}</span>
+                    </div>
+
+                    <!-- Row 2: Copago | IVA -->
+                    <div class="detail-item">
+                      <span class="detail-label">Copago</span>
+                      <span class="detail-value">{{ formatCurrency(row.paymentCopayment) }}</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">IVA</span>
+                      <span class="detail-value">{{ formatCurrency(row.paymentIva) }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                      <span class="detail-label">Fecha de pago</span>
+                      <span class="detail-value">{{ row.paymentDate || '-' }}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div> <!-- End details-split-container -->
+
+              <!-- Nested analyses table (full width below) -->
+              <div class="nested-analyses-table">
+                <div class="subsection-title">Análisis del protocolo</div>
+                <app-generic-table
+                  [data]="row.analysesRows || []"
+                  [columns]="protocolAnalysisColumns"
+                  [showCreateButton]="false"
+                  [showSearch]="false"
+                  [showFilters]="false"
+                  [showActions]="false"
+                  [showDownloadMenu]="false"
+                  [pageable]="false"
+                  [expandable]="false"
+                  [rows]="5"
+                  [columnTemplates]="analysisColumnTemplateMap">
+                </app-generic-table>
+              </div>
+            </div>
+          </ng-template>
+
+        </div> <!-- Fin del card-body -->
+      </p-card>
+
+    </div>
+  }
+
+  <!-- ==================== TEMPLATES (Must be outside @if for ViewChild) ==================== -->
+
+  <!-- Template for attention status badge -->
+  <ng-template #atentionStatusTpl let-row>
+    <app-generic-badge
+      [status]="row.statusBadgeStyle || 'pendiente'"
+      [text]="row.statusBadgeText || row.statusBadge">
+    </app-generic-badge>
+  </ng-template>
+
+  <ng-template #analysisStatusTpl let-row>
+    <app-generic-badge
+      [status]="row.subStatusBadgeStyle || 'pendiente'"
+      [text]="row.subStatusBadgeText || row.subStatusText">
+    </app-generic-badge>
+  </ng-template>
+
+  <!-- Template for download action column -->
+  <ng-template #downloadActionTpl let-row>
+    <div class="action-cell" style="text-align: center;">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-file-pdf"
+        [disabled]="!row.studyId"
+        (click)="row.studyId && downloadReportPdf(row.studyId)"
+        class="p-button-rounded p-button-text p-button-danger p-button-sm"
+        [pTooltip]="row.studyId ? 'Descargar PDF' : 'No hay estudio disponible'"
+        tooltipPosition="left"
+        [attr.aria-label]="row.studyId ? 'Descargar reporte PDF' : 'No hay estudio disponible'">
+      </button>
+    </div>
+  </ng-template>
+
+</div>
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig">
+</app-tutorial-overlay>
+
+

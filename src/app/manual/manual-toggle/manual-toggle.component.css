@@ -1,0 +1,63 @@
+.manual-toggle {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem 0 1.25rem; /* separación arriba y abajo */
+  background: #fff;
+
+  /* sombra ligera para dar relieve */
+  box-shadow: 0 6px 18px rgb(15 23 42 / 4%);
+}
+
+.manual-toggle__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem; /* más alto */
+  background: #fbfdff;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.25rem;
+  gap: .75rem;
+  padding-block: 1.7rem;
+}
+
+.manual-toggle__header:focus { outline: 3px solid rgb(0 139 139 / 12%); }
+
+/* Body: animación de apertura/cierre */
+
+.manual-toggle__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 360ms cubic-bezier(.2,.9,.2,1), opacity 240ms ease, transform 240ms ease;
+  opacity: 0;
+  transform-origin: top center;
+  transform: translateY(-6px) scaleY(.995);
+  background: #fff;
+}
+
+.manual-toggle__body.open {
+  max-height: none; /* suficientemente grande para contenido variable */
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+}
+
+.manual-toggle__inner {
+  padding: 1.25rem 1rem; /* más espacio vertical para mayor altura */
+  min-height: 140px; /* cuerpo mucho más alto */
+  box-sizing: border-box;
+}
+
+.manual-toggle__title { display:inline-block; }
+
+/* Icon styling ligeramente animado */
+
+.manual-toggle__header .pi {
+  transition: transform 240ms ease;
+}
+
+.manual-toggle__header.open .pi, .manual-toggle__header[aria-expanded="true"] .pi {
+  transform: rotate(90deg);
+}

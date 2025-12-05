@@ -1,0 +1,28 @@
+@for ( alert of alerts; track alert) {
+  <app-generic-alert
+  [type]="alert.type"
+  [text]="alert.text"
+  [title]="alert.title"
+  >
+  </app-generic-alert>
+}
+<section class="internal-user-register-container">
+
+  @if (isLoading) {
+    <div class="spinner-overlay">
+      <app-spinner [overlay]=true label="Validando credenciales..."></app-spinner>
+    </div>
+  }
+
+  <app-generic-form
+    [title]="'Registrar usuario'"
+    [fields]="fields"
+    [initialValue]="initialValue"
+    (submitForm)="onSubmit($event)"
+    submitType="save"
+    [showCancel]="true"
+    (cancelForm)="onCancel()"
+    [showHeader]="false">
+  </app-generic-form>
+
+</section>

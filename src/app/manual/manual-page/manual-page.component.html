@@ -1,0 +1,45 @@
+<div *ngIf="page() as p">
+
+  <div class="gap-3">
+    <div class="manual-back" routerLink="/manual">
+      <i class="pi pi-arrow-left"></i>
+      <span>Volver</span>
+    </div>
+
+    <h1 class="page-title">{{ p.title }}</h1>
+  </div>
+
+  <p class="page-intro" *ngIf="p.intro">{{ p.intro }}</p>
+
+  <section *ngFor="let sec of p.sections; let i = index" class="manual-section">
+
+    <!-- Título de la sección (si existe y NO es desplegable) -->
+    <h2 *ngIf="sec.title && p.id !== 'actions-appointments'" class="section-title">
+      {{ sec.title }}
+    </h2>
+
+    <!-- Bloques introductorios (siempre se muestran si existen) -->
+    <app-manual-blocks
+      *ngIf="sec.introBlocks"
+      [blocks]="sec.introBlocks">
+    </app-manual-blocks>
+
+    <!-- Sección desplegable solo para actions-appointments -->
+    <ng-container *ngIf="p.id === 'actions-appointments' && sec.title">
+      <app-manual-toggle
+        [title]="sec.title"
+        [open]="openIndex() === i"
+        (openChange)="onToggle(i, $event)">
+        <app-manual-blocks [blocks]="sec.blocks"></app-manual-blocks>
+      </app-manual-toggle>
+    </ng-container>
+
+    <!-- Bloques normales (para secciones sin título o páginas normales) -->
+    <app-manual-blocks
+      *ngIf="sec.blocks && p.id !== 'actions-appointments'"
+      [blocks]="sec.blocks">
+    </app-manual-blocks>
+
+  </section>
+
+</div>

@@ -1,0 +1,77 @@
+<app-generic-header-card
+  title="Firma del empleado"
+  (backPressed)="onBack()"
+  [showBackButton]="false">
+
+  @if (showSuccessAlert) {
+    <app-generic-alert
+      type="success"
+      message="Firma cargada exitosamente.">
+    </app-generic-alert>
+  }
+
+  @if (showAlert) {
+    <app-generic-alert
+      [type]="alertType"
+      [message]="alertMessage">
+    </app-generic-alert>
+  }
+
+  <div class="upload-container">
+    <div class="form-field">
+      <label class="form-label">Cargar firma</label>
+      <small class="help-text mb-2">Formatos aceptados: PNG, JPG, JPEG. Máx 5MB.</small>
+
+      <div class="actions-bar">
+
+        <div class="left-actions">
+          <p-fileupload
+            mode="basic"
+            name="demo"
+            chooseIcon="pi pi-upload"
+            accept="image/*"
+            maxFileSize="5000000"
+            [auto]="true"
+            [customUpload]="true"
+            (uploadHandler)="onBasicUploadAuto($event)"
+            chooseLabel="Subir"
+            styleClass="yellow-upload-btn">
+          </p-fileupload>
+        </div>
+
+        <div class="right-actions">
+
+          <app-generic-button
+            class="custom-red-btn"
+            type="cancel"
+            (pressed)="onCancelOrClear()"> Cancelar
+          </app-generic-button>
+
+          <app-generic-button
+            class="custom-orange-btn"
+            type="save"
+            [disabled]="!selectedFile"
+            (pressed)="onUpload()">
+            Guardar
+          </app-generic-button>
+        </div>
+
+      </div>
+
+      @if (selectedFile) {
+        <div class="selected-file-info">
+          <i class="pi pi-file mr-2"></i>
+          <span>Archivo listo para guardar: <strong>{{ selectedFile.name }}</strong></span>
+        </div>
+      }
+    </div>
+
+    @if (signaturePreviewUrl) {
+      <div class="signature-preview">
+        <h3 class="preview-title">Vista previa actual</h3>
+        <img [src]="signaturePreviewUrl" alt="Firma del empleado" />
+      </div>
+    }
+  </div>
+
+</app-generic-header-card>

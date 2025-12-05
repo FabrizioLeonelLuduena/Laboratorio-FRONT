@@ -1,0 +1,467 @@
+/* Container styles */
+.main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (width <= 1024px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .search-container,
+  .config-card {
+    width: 100%;
+  }
+}
+
+/* Typography - Headers */
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: var(--on-surface-muted);
+  margin: 4px 0 0;
+}
+
+/* Configuration Card */
+.config-card {
+  flex: 1;
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.config-header {
+  margin-bottom: 20px;
+}
+
+.config-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  margin: 0 0 4px;
+}
+
+.config-subtitle {
+  font-size: 13px;
+  color: var(--on-surface-muted);
+  margin: 0;
+}
+
+/* Layout sections */
+.search-container {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Search section */
+.search-section {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface);
+  margin-bottom: 8px;
+}
+
+/* Search box - usando el patrón estándar del proyecto */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0 14px;
+  min-height: 42px;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box i {
+  color: var(--brand-primary-700);
+  font-size: 16px;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--on-surface);
+  flex: 1;
+  font-size: 15px;
+}
+
+.search-box input::placeholder {
+  color: var(--on-surface-muted);
+  font-size: 14px;
+}
+
+.search-box:focus-within {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary) 15%, transparent);
+}
+
+.results-section.empty {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Protocol and patient info */
+.protocol-info {
+  font-size: 15px;
+  color: var(--on-surface);
+  padding: 12px 16px;
+  background: var(--surface-alt);
+  border-radius: 6px;
+  border-left: 3px solid var(--brand-primary);
+}
+
+.protocol-info strong {
+  font-weight: 600;
+  color: var(--brand-primary-700);
+}
+
+/* Checkbox styling - matching project standards */
+:host ::ng-deep .custom-checkbox {
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: #00796b;
+  display: block;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .custom-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Quantity input */
+:host ::ng-deep .quantity-input {
+  width: 80px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+:host ::ng-deep .quantity-input:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary) 15%, transparent);
+}
+
+:host ::ng-deep .quantity-input:disabled {
+  background: var(--surface-alt);
+  color: var(--on-surface-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Quantity input simple (without spinners) */
+.quantity-input-simple {
+  width: 60px;
+  height: 36px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quantity-input-simple:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary) 15%, transparent);
+}
+
+.quantity-input-simple:disabled {
+  background: var(--surface-alt);
+  color: var(--on-surface-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.quantity-input-simple::-webkit-inner-spin-button,
+.quantity-input-simple::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-input-simple[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Text utilities */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--on-surface-muted);
+  font-size: 14px;
+}
+
+.py-8 {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+/* Loading spinner */
+:host ::ng-deep .pi-spinner {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+/* Action buttons for table */
+.action-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn.edit {
+  background: var(--brand-primary);
+  color: white;
+}
+
+.action-btn.edit:hover {
+  background: var(--brand-primary-700);
+}
+
+.action-btn.delete {
+  background: var(--error);
+  color: white;
+}
+
+.action-btn.delete:hover {
+  background: var(--error-700, #c62828);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal content */
+.modal-content {
+  padding: 0;
+  overflow: visible;
+  position: relative;
+  min-height: fit-content;
+}
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: visible;
+  position: relative;
+  min-height: fit-content;
+}
+
+/* Form groups in modal should have proper spacing */
+.modal-content .form-group {
+  margin-bottom: 20px;
+  position: relative;
+  overflow: visible;
+}
+
+.modal-content .form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Form elements for modal */
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--error);
+}
+
+.form-select,
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--on-surface);
+  background: var(--card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-select:focus,
+.form-input:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary) 15%, transparent);
+}
+
+.form-select:disabled,
+.form-input:disabled {
+  background: var(--surface-alt);
+  color: var(--on-surface-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* Error text for form validation */
+.text-error {
+  color: var(--error);
+  font-size: 12px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Preserve line breaks in analysis names column */
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  white-space: pre-line;
+}
+
+/* Center align protocol number column (second column after checkbox) */
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(2),
+::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(2) {
+  text-align: center ;
+}
+
+/* Center align content inside the protocol number cells */
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(2) > span {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+/* Abbreviated analysis names styling */
+.analysis-name-abbreviated {
+  cursor: help;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  color: var(--on-surface);
+}
+
+/* Analysis chip in multiselect */
+.analysis-chip {
+  display: inline-block;
+  cursor: help;
+}
+
+/* Analysis option in multiselect dropdown */
+.analysis-option {
+  cursor: help;
+  padding: 4px 0;
+}
+
+/* Multiselect styling in modal - prevent layout breaking */
+:host ::ng-deep .p-multiselect {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+/* Ensure multiselect panel doesn't break modal layout */
+:host ::ng-deep .p-multiselect-panel {
+  position: absolute ;
+  z-index: 1100 ;
+  max-height: 300px ;
+  overflow-y: auto ;
+  margin-top: 4px;
+  pointer-events: auto ;
+}
+
+/* Prevent multiselect from closing when mouse leaves */
+:host ::ng-deep .p-multiselect-panel.p-component-overlay-visible {
+  pointer-events: auto ;
+}
+
+/* Keep panel open when hovering over it */
+:host ::ng-deep .p-multiselect-panel:hover {
+  pointer-events: auto ;
+}
+
+/* Hide multiselect clear icon (X) */
+:host ::ng-deep .p-multiselect-clear-icon {
+  display: none ;
+}
+
+/* Hide multiselect trigger (arrow) when class is applied */
+:host ::ng-deep .p-multiselect.multiselect-no-arrow .p-multiselect-trigger {
+  display: none ;
+}
+
+/* Adjust padding when arrow is hidden */
+:host ::ng-deep .p-multiselect.multiselect-no-arrow .p-multiselect-label {
+  padding-right: 0.75rem;
+}
+
+/* Ensure the multiselect label container doesn't expand beyond modal */
+:host ::ng-deep .p-multiselect-label-container {
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Hide the "select all" checkbox in multiselect panel header */
+:host ::ng-deep .p-multiselect-panel .p-multiselect-header > .p-checkbox-wrapper {
+  display: none ;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-header .p-checkbox-wrapper {
+  display: none ;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-header .p-checkbox {
+  display: none ;
+}

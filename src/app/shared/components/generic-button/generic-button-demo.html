@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo — GenericButtonComponent</title>
+  <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+  <style>
+    :root {
+      --brand-primary-700: #008f8c;
+      --brand-secondary: #00435d;
+      --brand-warn: #d32f2f;
+      --brand-accent: #ff0000; /* naranja */
+      --on-primary: #fff;
+      --on-surface: #00435d;
+      --card: #fefffe;
+    }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      background: #fdfefe;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 120ms ease, transform 80ms ease;
+      color: #fff;
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .save { background: var(--brand-primary-700); }
+    .accept { background: var(--brand-primary-700); }
+    .cancel { background: var(--brand-warn); }
+    .back,
+    .search {
+      background: var(--card);
+      color: var(--on-surface);
+      border: 1px solid #d5e2e4;
+    }
+    .advanced,
+    .search {
+      background: var(--card);
+      color: var(--on-surface);
+      border: 1px solid #d5e2e4;
+    }
+    .create { background: var(--brand-primary-700); }
+
+    /* === NUEVO tipo de botón: ALTERNATIVE === */
+    .alternative {
+      background: var(--brand-accent);
+      color: #000;
+      border: 1px solid color-mix(in srgb, var(--brand-accent) 80%, black);
+    }
+
+    .alternative:hover {
+      filter: brightness(1.1);
+    }
+
+    .alternative i {
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+<button class="save" title="Guardar (F4)">
+  <i class="pi pi-file"></i> Guardar
+</button>
+
+<button class="accept" title="Aceptar (F2)">
+  <i class="pi pi-check"></i> Aceptar
+</button>
+
+<button class="cancel" title="Cancelar (F1)">
+  <i class="pi pi-times"></i> Cancelar
+</button>
+
+<button class="back" title="Volver (Esc)">
+  <i class="pi pi-arrow-left"></i>
+</button>
+
+<button class="advanced" title="Avanzar (F7)">
+  <i class="pi pi-arrow-right"></i>
+</button>
+
+<button class="search" title="Buscar (F3)">
+  <i class="pi pi-search"></i> Buscar
+</button>
+
+<button class="create" title="Crear (F5)">
+  <i class="pi pi-plus"></i>
+</button>
+
+<button class="alternative" title="Vista previa (F9)">
+  <i class="pi pi-eye"></i> Alternativo
+</button>
+</body>
+</html>

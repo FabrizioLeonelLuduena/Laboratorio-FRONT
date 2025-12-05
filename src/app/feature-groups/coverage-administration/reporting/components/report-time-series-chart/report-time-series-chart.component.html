@@ -1,0 +1,9 @@
+<!-- Resumen de filtros activos -->
+<div class="flex flex-wrap gap-2 items-center mb-2">
+  <span class="text-xs opacity-70">Filtros:</span>
+  <p-chip *ngIf="appliedFilters.insurerName" label="Aseguradora: {{appliedFilters.insurerName}}"></p-chip>
+  <p-chip *ngIf="appliedFilters.dateStart"   label="Desde: {{appliedFilters.dateStart | date:'dd/MM/yyyy'}}"></p-chip>
+  <p-chip *ngIf="appliedFilters.dateEnd"     label="Hasta: {{appliedFilters.dateEnd   | date:'dd/MM/yyyy'}}"></p-chip>
+
+  <button class="ml-auto text-xs underline" (click)="clearFilters()">Limpiar filtros</button>
+</div>

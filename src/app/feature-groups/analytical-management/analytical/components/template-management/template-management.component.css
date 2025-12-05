@@ -1,0 +1,338 @@
+/* Container y Layout */
+.container {
+  max-width: 1200px;
+}
+
+.alert-container {
+  margin-bottom: 1.5rem;
+}
+
+/* Empty State */
+.empty-state-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  color: var(--surface-400);
+  margin-bottom: 1rem;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.modal-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgb(0 0 0 / 20%);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+  z-index: 1001;
+}
+
+.modal-container.large {
+  max-width: 800px;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background-color: var(--surface-100);
+  color: var(--text-color);
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 1.5rem;
+  overflow: visible;
+  flex: 1;
+  max-height: calc(90vh - 180px);
+}
+
+.modal-body > * {
+  overflow-y: auto;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+/* Form Body - scrollable area */
+.form-body {
+  padding-right: 0.5rem;
+}
+
+/* Form Fields */
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+
+.form-label.required::after {
+  content: " *";
+  color: var(--red-500);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--surface-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgb(var(--primary-color-rgb), 0.1);
+}
+
+.form-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.813rem;
+  color: var(--text-color-secondary);
+  margin-top: 0.5rem;
+}
+
+.form-hint i {
+  font-size: 0.75rem;
+}
+
+/* MultiSelect Override */
+.p-multiselect {
+  width: 100%;
+}
+
+.p-multiselect-panel {
+  z-index: 99999;
+  min-width: 100%;
+}
+
+.p-dialog {
+  overflow: visible;
+}
+
+.p-dialog-content {
+  overflow: visible;
+}
+
+/* Analysis Order List */
+.analysis-order-list {
+  border: 1px solid var(--surface-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  height: 11.5rem;
+  min-height: 11.5rem;
+  max-height: 11.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Empty state message inside the list */
+.analysis-order-list p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+.analysis-order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--surface-50);
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.analysis-order-item:hover {
+  background-color: var(--surface-100);
+}
+
+.analysis-order-item:last-child {
+  margin-bottom: 0;
+}
+
+.analysis-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.order-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.analysis-name {
+  font-size: 0.938rem;
+  color: var(--text-color);
+}
+
+.analysis-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* Icon Buttons */
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover:not(:disabled) {
+  background-color: var(--surface-200);
+  color: var(--text-color);
+}
+
+.btn-icon:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-icon.danger:hover:not(:disabled) {
+  background-color: var(--red-100);
+  color: var(--red-600);
+}
+
+.btn-icon i {
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (width <= 768px) {
+  .modal-container {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 1rem;
+  }
+
+  .analysis-order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .analysis-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Asegurar que el dropdown del multiselect esté por encima del modal cuando se usa appendTo="body" */
+:host .p-multiselect-panel {
+  z-index: 1100;
+}

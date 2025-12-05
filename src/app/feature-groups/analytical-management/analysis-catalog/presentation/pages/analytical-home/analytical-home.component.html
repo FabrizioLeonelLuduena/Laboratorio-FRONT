@@ -1,0 +1,332 @@
+<!-- Alertas -->
+@if (flash()) {
+  <div class="alert-container">
+    <app-generic-alert
+      [type]="flash()!.type"
+      [title]="flash()!.title || ''"
+      [text]="flash()!.text">
+    </app-generic-alert>
+  </div>
+}
+
+<!-- Selector de vista con tabs -->
+<div class="view-selector-container">
+  <div class="view-selector-header">
+    <p-tabs [(value)]="selectedView" (onChange)="onTabChange($event)">
+      <p-tablist>
+        @for (option of viewOptions; track option.value) {
+          <p-tab [value]="option.value">
+            <div class="view-option">
+              <i [class]="option.icon"></i>
+              <span>{{ option.label }}</span>
+            </div>
+          </p-tab>
+        }
+      </p-tablist>
+      <p-tabpanels>
+        @for (option of viewOptions; track option.value) {
+          <p-tabpanel [value]="option.value">
+            <!-- Content rendered below -->
+          </p-tabpanel>
+        }
+      </p-tabpanels>
+    </p-tabs>
+    
+    <!-- Advanced Search Button (only visible in analysis tab) -->
+    <!-- @if (selectedView() === 'analysis') {
+      <div class="toolbar-actions">
+        <p-button
+          label="Búsqueda Avanzada"
+          icon="pi pi-search"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="toggleAdvancedSearch()"
+          pTooltip="Buscar análisis con múltiples criterios"
+          tooltipPosition="bottom" />
+      </div>
+    } -->
+  </div>
+</div>
+
+<!-- Templates para columnas personalizadas -->
+<ng-template #nbuCodeTpl let-row>
+  @if (row.nbu?.nbuCode) {
+    <span class="nbu-badge">{{ row.nbu.nbuCode }}</span>
+  } @else {
+    <span class="text-muted">-</span>
+  }
+</ng-template>
+
+<ng-template #familyTpl let-row>
+  @if (row.familyName) {
+    <span class="family-tag">
+      <i class="pi pi-folder"></i>
+      {{ row.familyName }}
+    </span>
+  } @else {
+    <span class="text-muted">-</span>
+  }
+</ng-template>
+
+<ng-template #sampleTypeTpl let-row>
+  @if (row.sampleType?.name) {
+    <span class="sample-type-badge">
+      <i class="pi pi-flask"></i>
+      {{ row.sampleType.name }}
+    </span>
+  } @else {
+    <span class="text-muted">-</span>
+  }
+</ng-template>
+
+<!-- Contenido según la vista seleccionada -->
+@switch (selectedView()) {
+  @case ('analysis') {
+    <!-- Vista de Análisis -->
+    <div class="analytical-container">
+      <!-- Tabla de análisis -->
+      <div class="table-section">
+        <app-generic-table
+          [data]="analyses()"
+          [columns]="columns"
+          [loading]="loading()"
+          [dataKey]="'id'"
+          [pageable]="true"
+          [lazy]="true"
+          [totalRecords]="totalRecords()"
+          [rows]="pageSize()"
+          [rowsOptions]="[5, 10, 20, 50]"
+          [showSearch]="true"
+          [showActions]="true"
+          [getActions]="getRowActions"
+          [showCreateButton]="false"
+          [showDownloadMenu]="true"
+          (pageChange)="onPageChange($event)"
+          (sortChange)="onSortChange($event)"
+          (downloadExcel)="onAnalysisExport($event, { type: 'excel' })"
+          (downloadPdf)="onAnalysisExport($event, { type: 'pdf' })">
+
+          <!-- Template expandible -->
+          <ng-template let-row>
+            <div class="expanded-content">
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <label><i class="pi pi-tag"></i> Código Análisis</label>
+                  <span>{{ row.code ?? '-' }}</span>
+                </div>
+                
+                <div class="detail-item">
+                  <label><i class="pi pi-calculator"></i> UB (Análisis)</label>
+                  <span>{{ row.ub ?? '-' }}</span>
+                </div>
+                
+                <div class="detail-item">
+                  <label><i class="pi pi-database"></i> NBU</label>
+                  <span>{{ row.nbu?.determination ?? '-' }}</span>
+                </div>
+                
+                <div class="detail-item">
+                  <label><i class="pi pi-list"></i> Determinaciones</label>
+                  <span>{{ row.determinations?.length ?? 0 }} disponibles</span>
+                </div>
+                
+                <div class="detail-item">
+                  <label><i class="pi pi-calendar"></i> Creado</label>
+                  <span>{{ row.createdDatetime ? (row.createdDatetime | date: 'dd/MM/yyyy') : '-' }}</span>
+                </div>
+                
+                <div class="detail-item" *ngIf="row.lastUpdatedDatetime">
+                  <label><i class="pi pi-calendar-plus"></i> Última Actualización</label>
+                  <span>{{ row.lastUpdatedDatetime | date: 'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+              </div>
+              
+              <div class="detail-section" *ngIf="row.description">
+                <label><i class="pi pi-file-o"></i> Descripción</label>
+                <p>{{ row.description }}</p>
+              </div>
+
+              <div class="detail-actions">
+                <p class="action-hint">
+                  <i class="pi pi-info-circle"></i>
+                  Para más información, acceda a las secciones de NBU y Determinaciones desde los tabs superiores
+                </p>
+              </div>
+            </div>
+          </ng-template>
+        </app-generic-table>
+      </div>
+    </div>
+  }
+  
+  @case ('nbu') {
+    <!-- Vista de NBU -->
+    <app-nbu-home></app-nbu-home>
+  }
+  
+  @case ('determinations') {
+    <!-- Vista de Determinaciones -->
+    <app-determinations-home></app-determinations-home>
+  }
+}
+
+<!-- Details Dialog -->
+<app-generic-modal-form
+  [visible]="showDetailsDialog()"
+  title="Acto bioquímico"
+  [width]="'700px'"
+  (closed)="closeDetailsDialog()">
+  
+  <div *ngIf="selectedAnalysisForDetails()" class="dialog-content">
+    <!-- Personal Information Section -->
+    <section class="info-section">
+      <h4 class="section-title">
+        <i class="pi pi-info-circle"></i>
+        Información general
+      </h4>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Nombre del análisis</label>
+          <p>{{ selectedAnalysisForDetails()!.name }}</p>
+        </div>
+        
+        <div class="info-item">
+          <label>Código corto</label>
+          <p>{{ selectedAnalysisForDetails()!.shortCode ?? '-' }}</p>
+        </div>
+        
+        <div class="info-item">
+          <label>Código análisis</label>
+          <p>{{ selectedAnalysisForDetails()!.code ?? '-' }}</p>
+        </div>
+        
+        <div class="info-item">
+          <label>Unidad de base (UB)</label>
+          <p>{{ selectedAnalysisForDetails()!.ub ?? '-' }}</p>
+        </div>
+        
+        <div class="info-item">
+          <label>Familia</label>
+          <p>{{ selectedAnalysisForDetails()!.familyName ?? '-' }}</p>
+        </div>
+        
+        <div class="info-item">
+          <label>Código NBU</label>
+          <p class="nbu-code-value">{{ selectedAnalysisForDetails()!.nbu?.nbuCode ?? '-' }}</p>
+        </div>
+      </div>
+    </section>
+
+    <p-divider></p-divider>
+
+    <!-- NBU and Determinations Section -->
+    <section class="info-section">
+      <h4 class="section-title">
+        <i class="pi pi-database"></i>
+        NBU y determinaciones
+      </h4>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Determinación NBU</label>
+          <p>{{ selectedAnalysisForDetails()!.nbu?.determination ?? '-' }}</p>
+        </div>
+        
+        <div class="info-item">
+          <label>Tipo NBU</label>
+          <p>
+            @if (selectedAnalysisForDetails()!.nbu?.nbuType) {
+              <span class="type-badge-inline">{{ selectedAnalysisForDetails()!.nbu?.nbuType }}</span>
+            } @else {
+              <span>-</span>
+            }
+          </p>
+        </div>
+        
+        <div class="info-item">
+          <label>Cantidad de determinaciones</label>
+          <p class="count-badge">
+            <i class="pi pi-list"></i>
+            {{ selectedAnalysisForDetails()!.determinations?.length ?? 0 }} disponibles
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <p-divider></p-divider>
+
+    <!-- Description Section -->
+    <section class="info-section" *ngIf="selectedAnalysisForDetails()!.description">
+      <h4 class="section-title">
+        <i class="pi pi-file-o"></i>
+        Descripción
+      </h4>
+      <p class="description-text">{{ selectedAnalysisForDetails()!.description }}</p>
+    </section>
+
+    <!-- Metadata Section -->
+    <section class="info-section">
+      <h4 class="section-title">
+        <i class="pi pi-clock"></i>
+        Metadatos
+      </h4>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Fecha de creación</label>
+          <p>{{ selectedAnalysisForDetails()!.createdDatetime ? (selectedAnalysisForDetails()!.createdDatetime | date: 'dd/MM/yyyy HH:mm') : '-' }}</p>
+        </div>
+        
+        <div class="info-item" *ngIf="selectedAnalysisForDetails()!.lastUpdatedDatetime">
+          <label>Última actualización</label>
+          <p>{{ selectedAnalysisForDetails()!.lastUpdatedDatetime | date: 'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        
+        <div class="info-item" *ngIf="selectedAnalysisForDetails()!.createdUser">
+          <label>Creado por</label>
+          <p>{{ selectedAnalysisForDetails()!.createdUser }}</p>
+        </div>
+        
+        <div class="info-item" *ngIf="selectedAnalysisForDetails()!.lastUpdatedUser">
+          <label>Actualizado por</label>
+          <p>{{ selectedAnalysisForDetails()!.lastUpdatedUser }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <div class="dialog-footer">
+    <app-generic-button
+      type="cancel"
+      (pressed)="closeDetailsDialog()">
+    </app-generic-button>
+  </div>
+</app-generic-modal-form>
+
+<!-- Edit Analysis Dialog -->
+<app-generic-modal-form
+  [visible]="showEditDialog()"
+  title="Editar Análisis"
+  [width]="'55rem'"
+  (closed)="onEditCancelled()">
+  <app-analysis-edit-form
+    *ngIf="selectedAnalysisForEdit()"
+    [analysis]="selectedAnalysisForEdit()!"
+    (saved)="onAnalysisSaved($event)"
+    (cancelled)="onEditCancelled()">
+  </app-analysis-edit-form>
+</app-generic-modal-form>
+
+<!-- Advanced Search Dialog -->
+<app-generic-modal-form
+  [visible]="showAdvancedSearchDialog()"
+  title="Búsqueda Avanzada de Análisis"
+  [width]="'90vw'"
+  (closed)="closeAdvancedSearch()">
+  <app-analysis-search-container
+    (searchCompleted)="onSearchResultsReceived($event)"
+    (editAnalysis)="onSearchEditAnalysis($event)"
+    (viewDetails)="onSearchViewDetails($event)">
+  </app-analysis-search-container>
+</app-generic-modal-form>
+
+<!-- Overlay spinner while loading -->
+<app-spinner *ngIf="loading()" [label]="'Cargando análisis...'" [overlay]="true"></app-spinner>

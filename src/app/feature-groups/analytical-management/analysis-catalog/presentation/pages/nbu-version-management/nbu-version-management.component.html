@@ -1,0 +1,189 @@
+@if (loadingVersions() || savingVersion() || savingAssociations()) {
+  <app-spinner 
+    [overlay]="true" 
+    [label]="savingAssociations() ? ('NBU_VERSION_MANAGEMENT.SAVING_ASSOCIATIONS' | translate) : savingVersion() ? ('NBU_VERSION_MANAGEMENT.SAVING_VERSION' | translate) : ('NBU_VERSION_MANAGEMENT.LOADING_VERSIONS' | translate)" />
+}
+
+<div class="page-header">
+
+  <h2>{{ 'NBU_VERSION_MANAGEMENT.TITLE' | translate }}</h2>
+
+</div>
+
+<div class="status-followment-container">
+  <!-- Sidebar: versiones NBU -->
+  <aside class="search-column">
+    <app-nbu-version-list
+      [versions]="versions()"
+      [isLoading]="false"
+      [selectedVersion]="selectedVersion()"
+      (versionSelected)="onSelectVersion($event)"
+    ></app-nbu-version-list>
+  </aside>
+
+  <!-- Panel principal: formulario único y selector NBU -->
+  <section class="detail-column card">
+    <!-- Toolbar con modo actual -->
+    <div class="toolbar">
+      <div class="mode-indicator">
+        <span class="mode-badge" [class.edit-mode]="isEditMode()" [class.create-mode]="!isEditMode()">
+          <i [class]="isEditMode() ? 'pi pi-pencil' : 'pi pi-plus'"></i>
+          {{ isEditMode() ? ('NBU_VERSION_MANAGEMENT.EDIT_MODE' | translate) : ('NBU_VERSION_MANAGEMENT.CREATE_MODE' | translate) }}
+        </span>
+      </div>
+      <app-generic-button
+        type="create"
+        [disabled]="savingVersion() || savingAssociations()"
+        (pressed)="startCreate()">
+      </app-generic-button>
+    </div>
+
+    <!-- Información de versión base (solo en modo creación) -->
+    @if (!isEditMode()) {
+      <div class="base-version-section">
+        <div class="section-header">
+          <i class="pi pi-info-circle"></i>
+          <h3>{{ 'NBU_VERSION_MANAGEMENT.BASE_VERSION_OPTIONAL' | translate }}</h3>
+        </div>
+        <p class="section-hint">
+          {{ 'NBU_VERSION_MANAGEMENT.BASE_VERSION_HINT' | translate }}
+        </p>
+        <div class="base-select">
+          <label for="baseVersion">{{ 'NBU_VERSION_MANAGEMENT.BASE_VERSION' | translate }}</label>
+          <p-select
+            inputId="baseVersion"
+            [options]="versions()"
+            optionLabel="versionCode"
+            [ngModel]="baseVersion()"
+            (ngModelChange)="onBaseVersionSelect($event)"
+            [showClear]="true"
+            [placeholder]="'NBU_VERSION_MANAGEMENT.BASE_VERSION_SELECT' | translate"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+        @if (baseVersion() && showBaseVersionAlert()) {
+          <app-generic-alert
+            type="info"
+            [title]="'NBU_VERSION_MANAGEMENT.BASE_VERSION_SELECTED' | translate"
+            [text]="('NBU_VERSION_MANAGEMENT.BASE_VERSION_SELECTED_MESSAGE' | translate: {versionCode: baseVersion()!.versionCode, count: preSelectedNbuIds().length})"
+            [autoDismiss]="4000"
+            (dismissed)="showBaseVersionAlert.set(false)">
+          </app-generic-alert>
+        }
+      </div>
+    }
+
+    <!-- Información de versión actual (solo en modo edición) -->
+    @if (isEditMode() && selectedVersion()) {
+      <div class="current-version-section">
+        <div class="section-header">
+          <i class="pi pi-file-edit"></i>
+          <h3>{{ 'NBU_VERSION_MANAGEMENT.VERSION' | translate }}: {{ selectedVersion()!.versionCode }}</h3>
+        </div>
+        <div class="version-info-grid">
+          <div class="info-item">
+            <label>{{ 'NBU_VERSION_MANAGEMENT.PUBLICATION_YEAR' | translate }}</label>
+            <span>{{ selectedVersion()!.publicationYear ?? '—' }}</span>
+          </div>
+          <div class="info-item">
+            <label>{{ 'NBU_VERSION_MANAGEMENT.ASSOCIATED_NBUS' | translate }}</label>
+            <span class="nbu-count">{{ preSelectedNbuIds().length }}</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Información de versión -->
+    <div class="form-section">
+      <div class="section-header">
+        <i class="pi pi-file"></i>
+        <h3>{{ isEditMode() ? ('NBU_VERSION_MANAGEMENT.EDIT_VERSION_INFO' | translate) : ('NBU_VERSION_MANAGEMENT.NEW_VERSION_INFO' | translate) }}</h3>
+      </div>
+      <app-generic-form
+        #versionForm
+        [fields]="formFields"
+        [initialValue]="isEditMode() ? selectedVersion()! : formData()"
+        [saving]="savingVersion()"
+        [showSubmit]="false"
+        [showCancel]="false"
+        [showHeader]="false"
+        (submitForm)="isEditMode() ? onUpdateVersion($event) : onCreateVersion($event)"
+      ></app-generic-form>
+    </div>
+
+    <!-- Asociación de NBUs -->
+    @if (isEditMode() || baseVersion()) {
+      <div class="association-section">
+        <div class="section-header">
+          <i class="pi pi-link"></i>
+          <h3>{{ 'NBU_VERSION_MANAGEMENT.NBU_ASSOCIATION' | translate }}</h3>
+        </div>
+        <!-- Alerta de NBUs preseleccionados removida según solicitud del usuario -->
+        @if (showErrorAlert()) {
+          <app-generic-alert
+            type="error"
+            title="Errores en operaciones"
+            [text]="getErrorMessages()"
+            [autoDismiss]="5000"
+            (dismissed)="showErrorAlert.set(false)">
+          </app-generic-alert>
+        }
+        <div class="association-toolbar">
+          <app-generic-button
+            type="custom"
+            [text]="isEditMode() ? ('NBU_VERSION_MANAGEMENT.MANAGE_NBUS' | translate) : ('NBU_VERSION_MANAGEMENT.SELECT_NBUS' | translate)"
+            icon="pi pi-list"
+            color="--surface-0"
+            borderColor="--border-color"
+            customTextColor="--on-surface"
+            [disabled]="(!isEditMode() && !baseVersion()) || savingVersion() || savingAssociations()"
+            (pressed)="openAssociateModal()">
+          </app-generic-button>
+          <app-generic-button
+            type="save"
+            [disabled]="(!isEditMode() && !baseVersion()) || savingVersion() || savingAssociations() || (!isEditMode() && pendingNbuIds().length === 0 && preSelectedNbuIds().length === 0)"
+            (pressed)="onSaveVersionWithNbus()">
+          </app-generic-button>
+        </div>
+      </div>
+    }
+  </section>
+</div>
+
+<!-- Modal para asociar NBUs -->
+<app-generic-modal-form
+  [visible]="showAssociateModal()"
+  [title]="isEditMode() ? ('NBU_VERSION_MANAGEMENT.ASSOCIATE_NBUS_TO_VERSION' | translate) : ('NBU_VERSION_MANAGEMENT.SELECT_NBUS_FOR_NEW_VERSION' | translate)"
+  [width]="'85vw'"
+  [height]="'80vh'"
+  (closed)="closeAssociateModal()"
+>
+  @if (selectedVersion() || baseVersion()) {
+    <div class="modal-content-wrapper">
+      <app-nbu-version-nbu-selector
+        [versionId]="isEditMode() ? selectedVersion()!.id! : baseVersion()!.id!"
+        [preSelectedNbuIds]="preSelectedNbuIds()"
+        [nbuUbMap]="getNbuUbMapForVersion(isEditMode() ? selectedVersion()?.id : baseVersion()?.id)"
+        (nbusSelected)="onNbusSelected($event)"
+      ></app-nbu-version-nbu-selector>
+
+      <div class="modal-actions">
+        <app-generic-button
+          type="cancel"
+          [disabled]="savingAssociations() || savingVersion()"
+          (pressed)="closeAssociateModal()">
+        </app-generic-button>
+        <app-generic-button
+          type="custom"
+          [text]="'NBU_VERSION_MANAGEMENT.CHANGE' | translate"
+          icon="pi pi-check"
+          color="--surface-0"
+          borderColor="--border-color"
+          customTextColor="--on-surface"
+          [disabled]="savingAssociations() || savingVersion()"
+          (pressed)="onChangeFromModal()">
+        </app-generic-button>
+      </div>
+    </div>
+  }
+</app-generic-modal-form>

@@ -1,0 +1,61 @@
+<div class="search-results" role="region" aria-label="Resultados de búsqueda">
+  @if (results().length === 0) {
+    <!-- Empty State -->
+    <app-generic-alert type="info">
+      <div class="empty-state" role="status" aria-live="polite">
+        <i class="pi pi-inbox" aria-hidden="true"></i>
+        <h4>No Results Found</h4>
+        <p>Try adjusting your search criteria to find what you're looking for.</p>
+      </div>
+    </app-generic-alert>
+  } @else {
+    <!-- Results Header -->
+    <div class="results-header" role="status" aria-live="polite">
+      <div class="header-info">
+        <i class="pi pi-list" aria-hidden="true"></i>
+        <span class="results-count">
+          <strong>{{ results().length }}</strong> 
+          {{ results().length === 1 ? 'analysis found' : 'analyses found' }}
+        </span>
+      </div>
+    </div>
+
+    <p-divider />
+
+    <!-- Results Table -->
+    <app-advanced-table
+      [data]="flattenedResults()"
+      [columns]="tableColumns"
+      [config]="tableConfig"
+      [dataKey]="'id'"
+      [attr.aria-label]="'Tabla de resultados de búsqueda de análisis'">
+      
+      <!-- Custom actions template -->
+      <ng-template #actionsTemplate let-row="row">
+        <div class="action-buttons" role="group" [attr.aria-label]="'Acciones para ' + row.name">
+          <p-button
+            icon="pi pi-eye"
+            severity="secondary"
+            [text]="true"
+            [rounded]="true"
+            size="small"
+            [attr.aria-label]="'Ver detalles de ' + row.name"
+            pTooltip="View Details"
+            tooltipPosition="top"
+            (onClick)="onViewDetails(row)" />
+          
+          <p-button
+            icon="pi pi-pencil"
+            severity="primary"
+            [text]="true"
+            [rounded]="true"
+            size="small"
+            [attr.aria-label]="'Editar ' + row.name"
+            pTooltip="Edit Analysis"
+            tooltipPosition="top"
+            (onClick)="onEdit(row)" />
+        </div>
+      </ng-template>
+    </app-advanced-table>
+  }
+</div>

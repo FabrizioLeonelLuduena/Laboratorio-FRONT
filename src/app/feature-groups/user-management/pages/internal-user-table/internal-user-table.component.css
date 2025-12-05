@@ -1,0 +1,17 @@
+.active-chip {
+  background-color: var(--brand-success);
+  color: var(--on-primary);
+  font-weight: 500;
+}
+
+.inactive-chip {
+  background-color: var(--brand-warn);
+  color: var(--on-primary);
+  font-weight: 500;
+}
+
+.role-chip {
+  margin-right: 0.25rem;
+  background-color: #6B7280;
+  color: white;
+}

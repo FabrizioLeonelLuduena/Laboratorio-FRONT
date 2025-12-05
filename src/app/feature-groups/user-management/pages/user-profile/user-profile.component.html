@@ -1,0 +1,75 @@
+<div class="profile-container">
+  <!-- Header -->
+  <div class="profile-header">
+    <div class="header-content">
+      <div class="user-avatar">
+        <i class="pi pi-user"></i>
+      </div>
+      <div class="user-basic-info">
+        @if (currentUser(); as user) {
+          <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+          <p class="username">{{ '@' + user.username }}</p>
+          <div class="user-badges">
+            @if (user.isActive) {
+              <span class="badge badge-success">
+                <i class="pi pi-check-circle"></i> Activo
+              </span>
+            }
+            @if (user.isEmailVerified) {
+              <span class="badge badge-info">
+                <i class="pi pi-verified"></i> Email Verificado
+              </span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Layout -->
+  <div class="profile-content">
+    <!-- Sidebar Navigation -->
+    <aside class="profile-sidebar">
+      <nav class="profile-nav">
+        @for (section of menuSections; track section.id) {
+          <button
+            class="nav-item"
+            [class.active]="activeSection() === section.id"
+            (click)="changeSection(section.id)"
+          >
+            <i [class]="section.icon"></i>
+            <span>{{ section.label }}</span>
+          </button>
+        }
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="profile-main">
+      @if (currentUser(); as user) {
+        @switch (activeSection()) {
+          @case ('account-info') {
+            <app-account-info [user]="user" />
+          }
+          @case ('account-details') {
+            <app-account-details
+              [user]="user"
+              (userUpdated)="refreshUserData()"
+            />
+          }
+          @case ('work-info') {
+            <app-work-info [user]="user" />
+          }
+          @case ('security-center') {
+            <app-security-center [user]="user" />
+          }
+        }
+      } @else {
+        <div class="loading-state">
+          <i class="pi pi-spin pi-spinner"></i>
+          <p>Cargando información del usuario...</p>
+        </div>
+      }
+    </main>
+  </div>
+</div>

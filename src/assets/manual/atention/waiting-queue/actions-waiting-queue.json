@@ -1,0 +1,471 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Gestión de Atenciones",
+  "intro": "A continuación se detalla el flujo operativo para la admisión de pacientes.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrativo",
+      "Recepcionista"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note-atenciones",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrativo - Recepcionista"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "nueva-atencion-completa",
+      "title": "Nueva Atención (Proceso Completo)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Para iniciar una admisión, presione el botón <strong>(+)</strong> en la pantalla principal. Se abrirá la ventana modal 'Atención en Blanco' para identificar al paciente."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atencion-dni-paciente.png",
+          "alt": "Identificación del paciente"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ingrese el DNI y presione <strong>Aceptar</strong>. Si el paciente existe, el sistema cargará sus datos y avanzará al asistente de pasos."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 1: Datos Generales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atencion-datos-generales.jpg",
+          "alt": "Paso 1 Datos Generales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Documento</strong>",
+              "DNI del paciente (dato precargado)."
+            ],
+            [
+              "<strong>Médico solicitante</strong>",
+              "Profesional que prescribe la orden."
+            ],
+            [
+              "<strong>Cobertura</strong>",
+              "Obra social o prepaga seleccionada."
+            ],
+            [
+              "<strong>Nº de afiliado</strong>",
+              "Número de credencial del paciente."
+            ],
+            [
+              "<strong>Indicaciones</strong>",
+              "Espacio para transcribir diagnósticos."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Si el médico no existe, utilice el botón <strong>(+)</strong> para darlo de alta rápidamente."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atencion-alta-medico.png",
+          "alt": "Alta de médico"
+        },
+         {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Redirige al Paso 2: Selección de Análisis siempre que los datos sean correctos"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla sin guardar ningún cambio realizado."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 2: Selección de Análisis"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atencion-análisis.jpg",
+          "alt": "Paso 2 Selección de Análisis"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna / Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Buscador</strong>",
+              "Campo para ingresar código o nombre de la práctica a agregar."
+            ],
+            [
+              "<strong>Práctica</strong>",
+              "Nombre del estudio añadido a la lista."
+            ],
+            [
+              "<strong>Autorizado</strong>",
+              "Casilla de verificación. Tildar si se posee la autorización previa."
+            ],
+            [
+              "<strong>Urgente</strong>",
+              "Marca la orden completa con prioridad alta."
+            ],
+            [
+              "<strong>Acciones (:)</strong>",
+              "Permite eliminar un análisis cargado por error."
+            ]
+          ]
+        },
+          {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Redirige al Paso 3: Cobranza siempre que los datos sean correctos"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla sin guardar ningún cambio realizado."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 3: Cobranza"
+        },
+        {
+          "type": "paragraph",
+          "text": "En esta pantalla se gestionan los costos y pagos."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atencion-cobranza.png",
+          "alt": "Paso 3 Cobranza"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento de la Tabla",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Descripción</strong>",
+              "Nombre del análisis o ítem a cobrar."
+            ],
+            [
+              "<strong>Total</strong>",
+              "Valor bruto total de la práctica."
+            ],
+            [
+              "<strong>Cubierto</strong>",
+              "Monto absorbido por la Obra Social/Cobertura."
+            ],
+            [
+              "<strong>A pagar</strong>",
+              "Monto que debe abonar el paciente (Coseguro o Particular)."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Para registrar el pago, utilice el panel derecho:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>+ Agregar pago</strong>",
+              "Habilita la carga del dinero recibido."
+            ],
+            [
+              "<strong>Restante</strong>",
+              "Indicador de saldo pendiente. Debe estar en $0,00 para avanzar."
+            ],
+            [
+              "<strong>Validar</strong>",
+              "Botón obligatorio para confirmar la transacción financiera."
+            ]
+          ]
+        },
+          {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Redirige al Paso 4: Facturación siempre que los datos sean correctos"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla sin guardar ningún cambio realizado."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 4: Facturación"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/facturacion-step.jpg",
+          "alt": "Paso 4 Facturación"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Cliente</strong>",
+              "Titular a quien se emite la factura (Paciente o tercero)."
+            ],
+            [
+              "<strong>Empresa</strong>",
+              "Razón social emisora del comprobante."
+            ],
+            [
+              "<strong>Tipo Comprobante</strong>",
+              "Selección fiscal (Factura B, C, Ticket, etc.)."
+            ],
+            [
+              "<strong>Medios de pago</strong>",
+              "Resumen del método utilizado (Efectivo, Tarjeta, etc.)."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al presionar <strong>Procesar</strong>, podrá descargar el comprobante."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/resumen-factura1.jpeg",
+          "alt": "Confirmación de facturación"
+        },
+          {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Redirige al Paso 5: Finalizar siempre que los datos sean correctos"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla sin guardar ningún cambio realizado."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 5: Finalizar"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/resumen-step.jpg",
+          "alt": "Paso 5 Resumen Final"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Imprimir</strong>",
+              "Genera el ticket interno con indicaciones para el paciente."
+            ],
+            [
+              "<strong>Finalizar Atención</strong>",
+              "Cierra la admisión y envía al paciente a la siguiente etapa (Extracciones)."
+            ],
+            [
+               "<strong>anterior</strong>",
+              "Vuelve al Paso 4: Facturación pero solo se podra ver lo agregado, no se pordrá modificar."
+            ]
+          ]
+        }
+      ]
+    },
+  {
+    "id": "editar-atencion",
+    "title": "Cancelar Atención",
+    "open": false,
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Esta acción permite anular un turno en curso o en espera. Para realizarlo, siga estos pasos:<ul><li>Localice el turno en el listado.</li><li>Haga clic en el botón de opciones (<strong><i class='pi pi-ellipsis-v'></i></strong>).</li><li>Seleccione la opción <strong>Cancelar</strong> en el menú desplegable.</li><li>Confirme la acción si el sistema lo solicita.</li></ul>"
+      },
+      {
+        "type": "image",
+        "src": "assets/manual/atention/waiting-queue/atentions-waiting-queue.jpg",
+        "alt": "Menú de opciones para cancelar atención"
+      },
+      {
+        "type": "note",
+        "variant": "info",
+        "title": "✓ Nota importante",
+        "text": "Al cancelar, el turno desaparecerá de la lista de espera activa y no se podra volver a interactuar con este."
+      }
+
+    ]
+  },
+  {
+    "id": "configurar-box",
+    "title": "Configurar Box de Atención",
+    "open": false,
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Esta funcionalidad permite vincular su sesión de usuario con un puesto de trabajo físico o virtual (Box). Es un paso indispensable para poder llamar y gestionar pacientes."
+      },
+      {
+        "type": "paragraph",
+        "text": "<strong>Pasos para la configuración:</strong><ol><li>Acceda al menú de configuración de box.</li><li>Seleccione el número o nombre del box disponible en la lista desplegable.</li><li>Haga clic en <strong>Aceptar</strong> para confirmar.</li></ol>"
+      },
+      {
+        "type": "image",
+        "src": "assets/manual/atention/waiting-queue/atentions-waiting-box-configuration.jpg",
+        "alt": "Pantalla de selección y configuración de box"
+      },
+      {
+        "type": "note",
+        "variant": "warning",
+        "title": "✓ Asignación de Usuario",
+        "text": "<br>El sistema asignará la titularidad del box únicamente al usuario que <strong>confirme la selección</strong>. Si otro profesional intenta usar el mismo box, el sistema podría solicitar una nueva confirmación para cambiar el titular."
+      }
+    ]
+  },
+   {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Cola",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+         {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atentions-waiting-queue.jpg",
+          "alt": "Interfaz principal de cola de espera"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por un turno específico, el archivo solo contendrá los datos de esos turnos. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+],
+  "tags": [
+    "atenciones",
+    "admisión",
+    "facturación",
+    "cobranza",
+    "pasos",
+    "editar"
+  ]
+}

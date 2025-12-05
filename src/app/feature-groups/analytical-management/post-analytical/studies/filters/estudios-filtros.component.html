@@ -1,0 +1,77 @@
+<div class="filtros-container">
+  <!-- Header -->
+  <div class="filtros-header">
+    <i class="pi pi-filter"></i>
+    <h3>FILTROS</h3>
+  </div>
+
+  <!-- Filtros Grid -->
+  <div class="filtros-grid">
+    <!-- Buscar Texto -->
+    <div class="filtro-field">
+      <label for="buscarTexto" class="filtro-label">Buscar texto</label>
+      <span class="p-input-icon-left filtro-input-wrapper">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          id="buscarTexto"
+          type="text"
+          [(ngModel)]="filtros.buscarTexto"
+          (ngModelChange)="onFiltroChange()"
+          placeholder="Buscar por paciente o DNI..."
+          class="filtro-input"
+        />
+      </span>
+    </div>
+
+    <!-- Estado de Firma -->
+    <div class="filtro-field">
+      <label for="estadoFirma" class="filtro-label">Estado de Firma</label>
+      <span class="filtro-input-wrapper">
+        <p-select
+          id="estadoFirma"
+          [(ngModel)]="filtros.estadoFirma"
+          [options]="estadosOptions"
+          (onChange)="onFiltroChange()"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar estado de firma"
+          [style]="{'width': '100%'}"
+          class="filtro-input"
+        ></p-select>
+      </span>
+    </div>
+
+    <!-- Fecha Desde -->
+    <div class="filtro-field">
+      <label for="fechaDesde" class="filtro-label">Fecha Desde</label>
+      <span class="filtro-input-wrapper">
+        <p-datepicker
+          id="fechaDesde"
+          [(ngModel)]="filtros.fechaDesde"
+          (onSelect)="onFiltroChange()"
+          dateFormat="dd/mm/yy"
+          placeholder="Desde (dd/mm/aaaa)"
+          [showIcon]="true"
+          class="filtro-input"
+        ></p-datepicker>
+      </span>
+    </div>
+
+    <!-- Fecha Hasta -->
+    <div class="filtro-field">
+      <label for="fechaHasta" class="filtro-label">Fecha Hasta</label>
+      <span class="filtro-input-wrapper">
+        <p-datepicker
+          id="fechaHasta"
+          [(ngModel)]="filtros.fechaHasta"
+          (onSelect)="onFiltroChange()"
+          dateFormat="dd/mm/yy"
+          placeholder="Hasta (dd/mm/aaaa)"
+          [showIcon]="true"
+          class="filtro-input"
+        ></p-datepicker>
+      </span>
+    </div>
+  </div>
+</div>

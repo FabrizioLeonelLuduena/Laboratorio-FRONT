@@ -1,0 +1,514 @@
+/* === main container === */
+.list-card {
+  display: block;
+  width: 100%;
+  background: var(--card, #fff);
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 12px;
+}
+
+.patients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 4px 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+}
+
+
+/* === Wrapper table / scroll === */
+.patients-table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.patients-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.patients-table-wrapper::-webkit-scrollbar-track {
+  background: #f0f3f6;
+  border-radius: 8px;
+}
+
+.patients-table-wrapper::-webkit-scrollbar-thumb {
+  background: #b9c5cc;
+  border-radius: 8px;
+}
+
+
+/* === Desktop table === */
+.patients-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  min-width: 720px;
+}
+
+.patients-table thead tr:first-child th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.patients-table thead tr:first-child th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.patients-table thead {
+  background: var(--surface-alt, #edeff4);
+}
+
+.patients-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--on-surface, #00435d);
+  border-bottom: 1px solid var(--border-color, #d5e2e4);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+.patients-table tbody tr {
+  background: #fff;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.patients-table tbody tr:nth-child(even) {
+  background: var(--card-subtle, #fbfcfe);
+}
+
+.patients-table tbody tr:hover {
+  background: #eef7f7;
+  cursor: pointer;
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+
+.actions-col,
+.actions-cell {
+  text-align: center;
+  width: 140px;
+  white-space: nowrap;
+}
+
+.actions-cell button + button {
+  margin-left: 4px;
+}
+
+
+/* === Inline filters === */
+.inline-filter th {
+  padding: 4px 8px 12px;
+  border-bottom: 1px solid var(--border-color, #d5e2e4);
+  background: linear-gradient(#f7f9fa, #f0f3f6);
+}
+
+.filter-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 13px;
+  border: 1px solid #c2d2d8;
+  border-radius: 6px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filter-input:focus {
+  border-color: var(--brand-primary-700, #008f8c);
+  box-shadow: 0 0 0 2px rgb(0 143 140 / 20%);
+}
+
+.filter-input::placeholder {
+  color: #84949c;
+  font-size: 12px;
+}
+
+
+/* === Status badges === */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  background: #e2e8ec;
+  color: #21343c;
+  min-width: 90px;
+  justify-content: center;
+}
+
+.badge-verified {
+  background: #d4f5e3;
+  color: #0f5f36;
+  border: 1px solid #53c27e;
+}
+
+.badge-complete {
+  background: #e1ecff;
+  color: #144b84;
+  border: 1px solid #5b8dc4;
+}
+
+.badge-min {
+  background: #f7efd9;
+  color: #7a5a15;
+  border: 1px solid #d3b367;
+}
+
+.badge-deactivated {
+  background: #f5d8d6;
+  color: #7b1d14;
+  border: 1px solid #d97a72;
+}
+
+
+/* === Action buttons (Prime settings) === */
+.p-button.p-button-sm,
+.p-button.p-button-text.p-button-sm {
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1;
+  min-height: 30px;
+}
+
+.p-button-text.p-button-danger {
+  color: #b32020;
+}
+
+.p-button-text.p-button-danger:hover {
+  background: rgb(179 32 32 / 8%);
+}
+
+
+/* === empty state === */
+.empty-state {
+  padding: 32px 8px 40px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--on-surface-muted, #757477);
+}
+
+
+/* === Mobile view (cards) === */
+.mobile-list {
+  display: none;
+  margin-top: 12px;
+}
+
+.row-card {
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 10px;
+  padding: 12px 14px 10px;
+  background: #fff;
+  display: grid;
+  gap: 6px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+.row-card + .row-card {
+  margin-top: 10px;
+}
+
+.row-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.row-line .label {
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+}
+
+.row-line .value {
+  color: var(--on-surface-muted, #5b6670);
+}
+
+.actions-mobile {
+  margin-top: 4px;
+  justify-content: flex-end;
+}
+
+.actions-mobile button + button {
+  margin-left: 4px;
+}
+
+
+/* === responsive === */
+@media (width <= 880px) {
+  .patients-table-wrapper {
+    display: block;
+  }
+
+  .mobile-list {
+    display: block;
+  }
+
+  .patients-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
+
+
+/* === accessibility / focus visible === */
+.patients-table button:focus-visible,
+.mobile-list button:focus-visible {
+  outline: 2px solid var(--brand-secondary, #00435d);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+
+/* === States interaction rows === */
+.patients-table tbody tr:active {
+  background: #d9efef;
+}
+
+
+/* Double click hint (optional, remove if not used) */
+
+/* (cursor already unified above in .patients-table tbody tr) */
+
+
+/* === smooth animations === */
+.badge,
+.filter-input,
+.patients-table tbody tr {
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+
+/* === local utilities === */
+.text-center {
+  text-align: center;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+
+/* ========================================================= */
+
+/* === AGGREGATE TO UNIFY WITH INSURER (DO NOT DELETE) ==== */
+
+/* ========================================================= */
+
+/* Layout minimum for filter window (same as insurer) */
+.filters-pane {
+  min-width: 300px;
+}
+
+.filters-pane .group-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.filters-pane .group-content.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.filters-pane label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Badge unified (same as insurer) */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+/* Active/Inactive (reused 1:1) */
+.status-badge--active {
+  background: #ecfdf5; /* green-50 */
+  color: #065f46;      /* green-800 */
+  border-color: #a7f3d0; /* green-200 */
+}
+
+.status-badge--inactive {
+  background: #fef2f2; /* red-50 */
+  color: #991b1b;      /* red-800 */
+  border-color: #fecaca; /* red-200 */
+}
+
+/* variants for statuses MIN/COMPLETE/VERIFIED/DEACTIVATED */
+.status-badge--min {
+  background: #f7efd9;  /* soft yellow */
+  color: #7a5a15;
+  border-color: #d3b367;
+}
+
+.status-badge--complete {
+  background: #e1ecff;  /* soft blue */
+  color: #144b84;
+  border-color: #5b8dc4;
+}
+
+.status-badge--verified {
+  background: #d4f5e3;  /* soft green */
+  color: #0f5f36;
+  border-color: #53c27e;
+}
+
+.status-badge--deactivated {
+  background: #f5d8d6;  /* soft red */
+  color: #7b1d14;
+  border-color: #d97a72;
+}
+
+/* === Expanded row content === */
+.expanded-row-wrapper {
+  padding: 20px 24px;
+  background: var(--surface-50, #f8f9fa);
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+.expanded-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-color, #00435d);
+}
+
+.expanded-row-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 24px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-color-secondary, #6c757d);
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color, #212529);
+}
+
+.password-reset-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 8px 0 4px;
+}
+
+.password-reset-modal__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--brand-primary-50, #e6f3f8);
+  color: var(--brand-primary-600, #0a7ea4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.password-reset-modal__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+}
+
+.password-reset-modal__message {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-color, #374151);
+}
+
+.password-reset-modal__label {
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color, #1f2937);
+}
+
+.password-reset-modal__input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #c5d2dd;
+  font-size: 14px;
+}
+
+.password-reset-modal__input:focus {
+  outline: none;
+  border-color: var(--brand-primary-500, #0a7ea4);
+  box-shadow: 0 0 0 1px rgb(10 126 164 / 10%);
+}
+
+.password-reset-modal__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+@media (width <= 1200px) {
+  .expanded-row-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 768px) {
+  .expanded-row-content {
+    grid-template-columns: 1fr;
+  }
+
+  .expanded-row-wrapper {
+    padding: 16px;
+  }
+}

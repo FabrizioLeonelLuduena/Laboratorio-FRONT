@@ -1,0 +1,200 @@
+<!-- Confirmation Modal -->
+@if (showConfirmation) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+      <div class="text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+          <i class="pi pi-question text-blue-600 text-xl"></i>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Confirmar acción</h3>
+        <p class="text-sm text-gray-500 mb-6">
+          {{ confirmationMessage }}
+        </p>
+        <div class="flex justify-center gap-3">
+          <button
+            (click)="onCancelDelete()"
+            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+          >
+            Cancelar
+          </button>
+          <button
+            (click)="onConfirmDelete()"
+            class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+          >
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showAlert) {
+  <div class="alert-container">
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertMessage">
+    </app-generic-alert>
+  </div>
+}
+
+<!-- Formulario principal embebido -->
+<div class="flex flex-col" style="height: 100%; max-height: calc(75vh - 120px);">
+  @if (loading) {
+    <div class="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10 rounded-lg">
+      <app-spinner [overlay]="false" label="Cargando..."></app-spinner>
+    </div>
+  }
+
+  <!-- <div class="form-header text-center mb-6">
+    <h2 class="text-xl font-semibold text-gray-800">
+      {{ isEditMode ? 'Editar Planilla' : 'Nueva Planilla' }}
+    </h2>
+  </div> -->
+
+  <div class="form-body space-y-4 flex-1 overflow-y-auto">
+    <form #templateForm="ngForm">
+      <!-- Template Name -->
+      <div class="form-field">
+        <label for="templateName" class="form-label required">
+          Nombre de la plantilla
+        </label>
+        <input
+          id="templateName"
+          name="templateName"
+          type="text"
+          class="form-input"
+          [(ngModel)]="templateName"
+          placeholder="Ej: Hematología completa"
+          required
+          #nameInput="ngModel"
+        />
+        @if (nameInput.invalid && nameInput.touched) {
+          <small class="text-red-500 text-xs mt-1 block">
+            El nombre de la planilla es requerido
+          </small>
+        }
+      </div>
+
+      <!-- Analysis Selection -->
+      <div class="form-field">
+        <label for="analyses" class="form-label required">
+          Seleccionar análisis
+        </label>
+        <p-multiSelect
+          #analysisMultiSelect
+          id="analyses"
+          name="analyses"
+          [options]="availableAnalyses"
+          [(ngModel)]="selectedAnalyses"
+          optionValue="id"
+          placeholder="Buscar y seleccionar análisis..."
+          [filter]="true"
+          filterPlaceholder="Buscar análisis..."
+          [style]="{'width':'100%'}"
+          (onChange)="onAnalysisSelectionChange()"
+          [maxSelectedLabels]="0"
+          selectedItemsLabel="{0} análisis seleccionados"
+          appendTo="body"
+          [panelStyle]="{'max-height': '400px', 'min-width': '500px'}"
+          [scrollHeight]="'350px'"
+          display="comma"
+          [showToggleAll]="true"
+          [showClear]="true"
+          filterBy="searchField"
+          [virtualScroll]="true"
+          [virtualScrollItemSize]="43"
+          [loading]="loadingAnalyses()"
+          required>
+          <ng-template let-analysis pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <span class="font-semibold">{{ analysis.shortCode }}</span>
+              <span>-</span>
+              <span>{{ analysis.name }}</span>
+            </div>
+          </ng-template>
+          <ng-template let-value pTemplate="selectedItems">
+            @if (value && value.length > 0) {
+              <div class="flex align-items-center gap-1">
+              <span>{{ value.length }} análisis seleccionados</span>
+            </div>
+            }
+
+          </ng-template>
+        </p-multiSelect>
+        @if (selectedAnalyses.length === 0 && templateForm.submitted) {
+          <small class="text-red-500 text-xs mt-1 block">
+            Debe seleccionar al menos un análisis
+          </small>
+        }
+        <small class="form-hint">
+          <i class="pi pi-info-circle"></i>
+          Escriba para buscar análisis y seleccione los que desea incluir
+        </small>
+      </div>
+
+      <!-- Selected Analyses with Order -->
+      @if (selectedAnalysesDetails.length > 0) {
+        <div class="form-field">
+          <label class="form-label">Orden de análisis</label>
+          <p class="form-hint mb-3">
+            Use los botones para ordenar los análisis según aparecerán en la plantilla
+          </p>
+          <div class="analysis-order-list">
+            @for (analysis of selectedAnalysesDetails; track analysis.id; let i = $index) {
+              <div class="analysis-order-item">
+                <div class="analysis-info">
+                  <span class="order-badge">{{ i + 1 }}</span>
+                  <span class="analysis-name">{{ analysis.name }}</span>
+                </div>
+                <div class="analysis-actions">
+                  <button
+                    class="btn-icon"
+                    [disabled]="i === 0"
+                    (click)="moveAnalysisUp(i)"
+                    title="Mover arriba">
+                    <i class="pi pi-arrow-up"></i>
+                  </button>
+                  <button
+                    class="btn-icon"
+                    [disabled]="i === selectedAnalysesDetails.length - 1"
+                    (click)="moveAnalysisDown(i)"
+                    title="Mover abajo">
+                    <i class="pi pi-arrow-down"></i>
+                  </button>
+                  <button
+                    class="btn-icon danger"
+                    (click)="removeAnalysis(analysis.id)"
+                    title="Quitar">
+                    <i class="pi pi-times"></i>
+                  </button>
+                </div>
+              </div>
+            } @empty {
+              <p>No hay análisis seleccionados</p>
+            }
+          </div>
+        </div>
+      }
+    </form>
+  </div>
+
+  <!-- Footer with buttons - Always visible at bottom -->
+  <div class="form-footer mt-4 pt-4 border-t border-gray-200 flex justify-end gap-3 flex-shrink-0">
+    @if (isEditMode || isModal) {
+      <app-generic-button
+        text="Cancelar"
+        type="cancel"
+        [disabled]="loading"
+        (pressed)="isModal ? modalClosed.emit() : resetForm()">
+      </app-generic-button>
+    }
+    <app-generic-button
+      [text]="isEditMode ? 'Actualizar' : 'Crear'"
+      [type]="isEditMode ? 'save' : 'create'"
+      [disabled]="!isFormValid() || loading"
+      (pressed)="saveTemplate()">
+    </app-generic-button>
+  </div>
+</div>

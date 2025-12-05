@@ -1,0 +1,106 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(240 240 240 / 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  width: 320px;
+  padding: 24px;
+  text-align: center;
+  animation: fade-in 0.25s ease;
+}
+
+.modal__icon {
+  margin-bottom: 16px;
+}
+
+.modal__icon i {
+  font-size: 32px;
+  color: var(--brand-primary-700);
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--on-surface-muted);
+}
+
+.modal__close:hover {
+  color: var(--on-surface);
+}
+
+.modal__content {
+  margin: 16px 0;
+  text-align: left;
+}
+
+.modal__input-container {
+  margin-top: 16px;
+  text-align: left;
+}
+
+.modal__input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--on-surface-muted);
+  margin-bottom: 8px;
+}
+
+.modal__input,
+.modal__textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--on-surface);
+  background: var(--surface);
+  transition: border-color 0.2s ease;
+}
+
+.modal__input:focus,
+.modal__textarea:focus {
+  outline: none;
+  border-color: var(--brand-primary-700);
+}
+
+.modal__textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

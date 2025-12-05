@@ -1,0 +1,24 @@
+<div class="header-container">
+  <div class="header-info">
+    <h1 class="title-20 font-display">{{ worksheetName }}</h1>
+    <p class="text-14 text-gray-600">
+      {{ sampleCount }} muestra{{ sampleCount !== 1 ? 's' : '' }} para procesar
+    </p>
+  </div>
+
+  <div class="header-actions">
+    <app-generic-button
+      text="Cancelar"
+      type="cancel"
+      [disabled]="saving"
+      (pressed)="cancelWorksheet.emit()">
+    </app-generic-button>
+
+    <app-generic-button
+      text="Guardar resultados"
+      type="save"
+      [disabled]="saving"
+      (pressed)="saveWorksheet.emit()">
+    </app-generic-button>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+.view-goods-receipt-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}
+
+@media (width <= 768px) {
+  .view-goods-receipt-container {
+    padding: 1rem;
+  }
+}
+
+.loading-state,
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--on-surface-muted);
+}

@@ -1,0 +1,308 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Ubicaciones",
+  "intro": "En esta sección se describen los procedimientos para la administración de los espacios físicos y su jerarquía.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-ubicacion",
+      "title": "Crear Ubicación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite definir nuevos espacios de almacenamiento. El acceso se encuentra en las <strong>Acciones disponibles en la parte superior</strong> derecha, haciendo clic en el botón <strong>( + )</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-create.jpeg",
+          "alt": "Pantalla de creación de ubicación"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema abre la <strong>Pantalla</strong> de registro. Para completar la creación, se deben completar los siguientes campos:"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de la Ubicación"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Denominación única para identificar el espacio.",
+              "Sí"
+            ],
+            [
+              "Tipo de Ubicación",
+              "Define la naturaleza del espacio (Ej: Estantería, Heladera, Depósito).",
+              "Sí"
+            ],
+            [
+              "Dirección",
+              "Referencia física exacta dentro de la planta.",
+              "No"
+            ],
+            [
+              "Ubicación Padre",
+              "Define la jerarquía de la ubicación (dentro de qué espacio se encuentra).",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Crear ubicación</strong>",
+              "Confirma la operación y guarda el nuevo espacio."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Cierra la pantalla y vuelve al listado sin guardar."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Definir correctamente la <strong>Ubicación Padre</strong> es vital para mantener el orden jerárquico del inventario."
+        }
+      ]
+    },
+    {
+      "id": "editar-ubicacion",
+      "title": "Editar Ubicación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite modificar los datos de un espacio existente. Se accede desde el menú de acciones <strong>(⋮)</strong> en la fila correspondiente, seleccionando la opción <strong>Editar</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-edit.jpeg",
+          "alt": "Pantalla de edición de ubicación"
+        },
+        {
+          "type": "paragraph",
+          "text": "En la <strong>Pantalla</strong> de edición se pueden alterar los mismos campos que en la creación para reestructurar el almacén si fuera necesario."
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos Editables"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Denominación única para identificar el espacio.",
+              "Sí"
+            ],
+            [
+              "Tipo de Ubicación",
+              "Define la naturaleza del espacio.",
+              "Sí"
+            ],
+            [
+              "Dirección",
+              "Referencia física exacta.",
+              "No"
+            ],
+            [
+              "Ubicación Padre",
+              "Define la jerarquía de la ubicación.",
+              "No"
+            ]
+          ]
+        },
+         {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Guardar</strong>",
+              "Confirma la operación y guarda los nuevos cambios."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Cierra la pantalla y vuelve al listado sin guardar."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "desactivar-ubicacion",
+      "title": "Desactivar Ubicación (Cascada)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta acción inhabilita una ubicación para que no pueda recibir nuevo stock. Acceda desde el menú de acciones <strong>(⋮)</strong> y seleccione la opción <strong>Desactivar</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-desactivate.jpeg",
+          "alt": "Desactivar ubicación y advertencia"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Advertencia de Dependencias (Regla de Cascada):</strong> El sistema valida automáticamente si la ubicación que se intenta borrar contiene otras ubicaciones dentro (hijas)."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Si la ubicación tiene dependencias, aparecerá una ventana de <strong>alerta crítica</strong> con el mensaje: 'La ubicación [Nombre] tiene ubicaciones hijas asociadas'.",
+            "El sistema listará explícitamente qué sub-ubicaciones se verán afectadas (Ej: Si desactiva el 'Área de Cultivos', también se desactivará la 'Estantería C - Cultivos' que está dentro)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Advertencia",
+          "text": "<br>Para proceder con la baja masiva de la ubicación padre y todas sus hijas, debe hacer clic en <strong>Aceptar</strong>."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "reactivar-ubicacion",
+      "title": "Reactivar Ubicación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "✓ Requisito previo",
+          "text": "<br>Para visualizar una ubicación desactivada, primero debe ir a los <strong>Filtros</strong> y seleccionar el estado <strong>Inactivos</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-filters.jpeg",
+          "alt": "Filtros para buscar inactivos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Permite volver a habilitar un espacio que fue dado de baja previamente. Desde el menú de acciones, seleccione <strong>Reactivar</strong>."
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema solicitará confirmación en una <strong>Pantalla</strong> emergente antes de restaurar el estado a <strong>ACTIVO</strong>."
+        }
+      ]
+    },
+     {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Ubicaciones",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+       {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-table.jpeg",
+          "alt": "Descargar listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por una ubicación específica, el archivo solo contendrá los datos de lo que se filtró. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "ubicaciones",
+    "acciones",
+    "crear",
+    "editar",
+    "desactivar",
+    "cascada",
+    "jerarquía"
+  ]
+}

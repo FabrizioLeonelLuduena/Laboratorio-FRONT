@@ -1,0 +1,183 @@
+<!-- Background image or color behind the form -->
+@if (backgroundImage || backgroundColor) {
+  <div class="login-background" [ngStyle]="backgroundStyle"></div>
+}
+
+<!-- Principal container (original, unchanged) -->
+<div class="auth-container">
+    <div class="login-header-strip">
+      <div class="logo-container">
+        <img src="LCC-logo-horizontal.png" alt="Logo" class="login-logo" />
+      </div>
+      <h2 class="login-title">Sistema de gestión interno</h2>
+    </div>
+
+    <div class="card auth-card">
+    <!-- Dinamic header -->
+    @if (showInnerForm) {
+      <h3 class="form-title">{{ title }}</h3>
+      <p class="form-subtitle">{{ subtitle }}</p>
+    } @else {
+      <div class="compact-header">
+        @if (headerIcon) {
+          <i [ngClass]="headerIcon" class="compact-header-icon"></i>
+        } @else {
+          <h3 class="form-title">{{ title }}</h3>
+        }
+        <p class="form-subtitle">{{ subtitle }}</p>
+      </div>
+    }
+
+    <!-- Form -->
+    @if (showInnerForm) {
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <!-- If there are generic fields, show the generic form  -->
+        @if (fields && fields.length) {
+          <app-generic-form
+            [fields]="fields"
+            [initialValue]="initialValue"
+            [showHeader]="false"
+            [submitLabel]="submitLabel"
+            [showCancel]="genericShowCancel"
+            [showSubmit]="genericShowSubmit"
+            [submitIcon]="buttonIcon || ''"
+            [formValidators]="formValidators"
+            [submitType]="buttonType"
+            [formValidators]="formValidators"
+            (submitForm)="onGenericSubmit($event)">
+          </app-generic-form>
+        } @else {
+          <!-- User Field -->
+          <div class="form-group">
+            <label for="username">Usuario</label>
+            <input
+              id="username"
+              type="text"
+              formControlName="username"
+              placeholder="Ingresa tu usuario"
+              [class.error-input]="username?.invalid && username?.touched"
+              class="input-full"
+            />
+            @if (username?.invalid && username?.touched) {
+              <div class="error">
+                @if (username?.errors?.['required']) {
+                  <small>El usuario es obligatorio.</small>
+                }
+                @if (username?.errors?.['minlength']) {
+                  <small>El usuario debe tener al menos 3 caracteres.</small>
+                }
+                @if (username?.errors?.['maxlength']) {
+                  <small>No puede superar los 30 caracteres.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group password-group">
+            <label for="password">Contraseña</label>
+            <p-password
+              id="password"
+              formControlName="password"
+              placeholder="Ingresa tu contraseña"
+              [toggleMask]="true"
+              styleClass="w-full"
+              inputStyleClass="w-full"
+              [feedback]="false">
+            </p-password>
+            @if (password?.invalid && password?.touched) {
+              <div class="error">
+                @if (password?.errors?.['required']) {
+                  <small>La contraseña es obligatoria.</small>
+                }
+                @if (password?.errors?.['minlength']) {
+                  <small>Mínimo 8 caracteres.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Button -->
+          <div class="login-actions">
+            <app-generic-button
+              [text]="submitLabel"
+              [type]="buttonType"
+              [color]="buttonColor ? buttonColor : ''"
+              [icon]="buttonIcon || ''"
+              [disabled]="loginForm.invalid"
+              [ngStyle]="buttonStyle"
+              (click)="onSubmit()">
+            </app-generic-button>
+          </div>
+        }
+
+        <!-- Forgot link -->
+        @if (showForgotLink) {
+          <a [routerLink]="forgotLink" class="forgot-link">Recuperar contraseña</a>
+        }
+
+      </form>
+    } @else {
+      <!-- Alternative content projected -->
+      <div class="auth-form projected-content">
+        <div class="projected-inner">
+          <ng-content select="[recover-success]"></ng-content>
+        </div>
+
+        @if (showFooter) {
+          <div class="auth-footer">
+            <p class="footer-text">
+              © 2025 Laboratorio Castillo Chidiak. Todos los derechos reservados.
+            </p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Extra content projection for custom buttons or links -->
+    @if (showInnerForm) {
+      <div class="extra-content">
+        <ng-content select="[extra-actions]"></ng-content>
+      </div>
+    }
+
+    <!-- Footer  -->
+    @if (showFooter && showInnerForm) {
+      <div class="auth-footer">
+        <p class="footer-text">
+          © 2025 Laboratorio Castillo Chidiak. Todos los derechos reservados.
+        </p>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Information Box for TPI Demo (Right Side, absolute positioned) -->
+<aside class="info-box-wrapper">
+  <div class="info-box">
+    <h3 class="info-title">INFORMACIÓN</h3>
+    <div class="info-content">
+      <p class="info-main">
+        Utiliza el <strong>Inicio Rápido</strong> para ver solamente mi trabajo realizado en este TPI.
+      </p>
+      <p class="info-secondary">
+        Si sientes curiosidad por ver los demás módulos de los otros microservicios 
+        (No tienen datos mockeados porque pesaban mucho), logueate con el siguiente usuario:
+      </p>
+      
+      <div class="credentials-box">
+        <div class="credential-item">
+          <span class="credential-label">Usuario:</span>
+          <code class="credential-value">Admin</code>
+        </div>
+        <div class="credential-item">
+          <span class="credential-label">Contraseña:</span>
+          <code class="credential-value">Superadmin</code>
+        </div>
+        <div class="credential-note">
+          <small>Rol: ADMINISTRADOR (acceso completo a todos los módulos)</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,301 @@
+/* Usa las variables globales del sistema */
+:host {
+  display: block;
+}
+
+.firma-container {
+  background: var(--card, #fff);
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%), 0 1px 3px rgb(0 0 0 / 8%);
+  font-family: var(--font-body, 'Roboto', sans-serif);
+}
+
+/* Header */
+.firma-header {
+  border-bottom: 2px solid var(--border-color, #d5e2e4);
+  padding-bottom: 0.75rem;
+}
+
+.firma-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--brand-secondary, #00435d);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display, 'Roboto', sans-serif);
+}
+
+.firma-header h3 i {
+  color: var(--brand-primary, #00bbb8);
+  font-size: 1.125rem;
+}
+
+.firma-header p {
+  margin: 0.375rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--on-surface-muted, #757477);
+  font-weight: 400;
+}
+
+/* Mensajes */
+.firma-mensaje {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  align-items: flex-start;
+  font-size: 0.875rem;
+}
+
+.firma-mensaje i {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.0625rem;
+}
+
+.firma-mensaje p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.mensaje-info {
+  background: color-mix(in srgb, var(--brand-primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent);
+  color: var(--brand-secondary);
+}
+
+.mensaje-info i {
+  color: var(--brand-primary);
+}
+
+.mensaje-warning {
+  background: color-mix(in srgb, var(--brand-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 25%, transparent);
+  color: #8b3d1f;
+}
+
+.mensaje-warning i {
+  color: var(--brand-accent);
+}
+
+.mensaje-success {
+  background: color-mix(in srgb, var(--brand-success) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-success) 25%, transparent);
+  color: #1b5e20;
+}
+
+.mensaje-success i {
+  color: var(--brand-success);
+}
+
+/* Reglas */
+.firma-reglas {
+  background: var(--surface-alt, #edeff4);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #d5e2e4);
+}
+
+.reglas-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--brand-secondary, #00435d);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reglas-title i {
+  color: var(--brand-primary, #00bbb8);
+  font-size: 0.875rem;
+}
+
+.reglas-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.reglas-list li {
+  font-size: 0.8125rem;
+  color: var(--on-surface-muted, #757477);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.reglas-list li i {
+  color: var(--brand-primary, #00bbb8);
+  font-size: 0.875rem;
+  margin-top: 0.1875rem;
+  flex-shrink: 0;
+}
+
+.reglas-list li strong {
+  color: var(--on-surface, #00435d);
+  font-weight: 600;
+}
+
+/* Estado Actual */
+.estado-actual {
+  margin-bottom: 1rem;
+}
+
+.estado-actual > p {
+  margin: 0 0 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--on-surface-muted, #757477);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.estado-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.estado-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--on-surface, #00435d);
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.estado-item:last-child {
+  margin-bottom: 0;
+}
+
+.estado-item i {
+  font-size: 1rem;
+}
+
+.estado-item.success i {
+  color: var(--brand-success, #2e7d32);
+}
+
+.estado-item.warning i {
+  color: var(--brand-accent, #f97133);
+}
+
+.estado-item.danger i {
+  color: var(--brand-warn, #d32f2f);
+}
+
+/* Botones de Firma */
+.firma-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.firma-actions button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  letter-spacing: 0.01em;
+}
+
+.firma-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.firma-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  background: color-mix(in srgb, var(--brand-primary) 6%, transparent);
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 15%, transparent);
+  font-size: 0.8125rem;
+  color: var(--brand-secondary);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.firma-info i {
+  color: var(--brand-primary);
+  font-size: 0.875rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+/* Información adicional */
+.info-adicional {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color, #d5e2e4);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--on-surface-muted, #757477);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.info-adicional i {
+  font-size: 0.875rem;
+}
+
+::ng-deep .firma-actions .p-button.w-full {
+  width: 100%;
+}
+
+/* Ajustes para botones PrimeNG */
+::ng-deep .firma-actions .p-button {
+  font-family: var(--font-body, 'Roboto', sans-serif);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+::ng-deep .firma-actions .p-button.p-button-success {
+  background: var(--brand-success);
+  border-color: var(--brand-success);
+}
+
+::ng-deep .firma-actions .p-button.p-button-success:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--brand-success) 85%, black);
+  border-color: color-mix(in srgb, var(--brand-success) 85%, black);
+}
+
+::ng-deep .firma-actions .p-button.p-button-warning {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+
+::ng-deep .firma-actions .p-button.p-button-warning:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--brand-accent) 85%, black);
+  border-color: color-mix(in srgb, var(--brand-accent) 85%, black);
+}

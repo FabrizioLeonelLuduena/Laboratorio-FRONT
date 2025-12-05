@@ -1,0 +1,58 @@
+<section class="insurer-detail stack-24">
+  <!-- Alert genérico -->
+  @if (alert; as a) {
+    <app-generic-alert
+      [type]="a.type"
+      [text]="a.text">
+    </app-generic-alert>
+  }
+
+  <!-- Loading state: show generic spinner while insurer data is being loaded -->
+  @if (loading) {
+    <div class="insurer-detail__loading">
+      <app-spinner></app-spinner>
+    </div>
+  }
+
+  <!-- Main content: only render when not loading and insurer data is available -->
+  @if (!loading && insurer) {
+    <div>
+      <app-generic-header-card
+        [returnButton]="false"
+        [title]="insurer.name || 'Detalle de aseguradora'"
+      ></app-generic-header-card>
+
+      <p-tabView>
+        <!-- Tab: Información -->
+        <p-tabPanel header="Información">
+          <app-insurer-info [insurerId]="insurer.id"></app-insurer-info>
+        </p-tabPanel>
+
+        @if (insurer.insurerType !== 'SELF_PAY') {
+          <!-- Tab: Contactos -->
+          <p-tabPanel header="Contactos">
+            <app-insurer-contacts [insurerId]="insurer.id"></app-insurer-contacts>
+          </p-tabPanel>
+        }
+
+        <!-- Tab: Planes -->
+        <p-tabPanel header="Planes y convenios">
+          <app-insurer-plans [insurerId]="insurer.id" (plansChanged)="onPlansChanged()"></app-insurer-plans>
+        </p-tabPanel>
+
+        <p-tabPanel header="Convenios">
+          <app-insurer-history #historyRef [insurerId]="insurer.id"></app-insurer-history>
+        </p-tabPanel>
+
+      </p-tabView>
+
+      <!-- Botón Anterior al final -->
+      <div class="back-button-container">
+        <app-generic-button
+          type="back"
+          (click)="toReturn()">
+        </app-generic-button>
+      </div>
+    </div>
+  }
+</section>

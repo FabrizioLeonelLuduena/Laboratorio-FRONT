@@ -1,0 +1,64 @@
+<div class="nbu-selector">
+  <!-- Header -->
+  <div class="selector-header">
+    <div class="header-info">
+      <i class="pi pi-info-circle"></i>
+      <span>Seleccione los NBUs que desea asociar a esta versión</span>
+    </div>
+    
+    <div class="selection-summary">
+      <app-generic-badge
+        [status]="selectionCount() > 0 ? 'pendiente' : 'inactivo'"
+        [text]="selectionCount() + ' NBU' + (selectionCount() === 1 ? '' : 's') + ' seleccionado' + (selectionCount() === 1 ? '' : 's')" />
+    </div>
+  </div>
+
+  
+  <!-- Column templates para tabla genérica -->
+  <ng-template #selectionTpl let-row>
+    <p-checkbox
+      [ngModel]="isSelected(row.id)"
+      [binary]="true"
+      (onChange)="onSelectionChange(row.id, $event.checked)"
+    />
+  </ng-template>
+
+  <ng-template #stateTpl let-row>
+    @if (isPreSelected(row.id) && isSelected(row.id)) {
+      <app-generic-badge status="verificado" text="Preseleccionado" />
+    } @else if (isSelected(row.id)) {
+      <app-generic-badge status="pendiente" text="Seleccionado" />
+    } @else {
+      <app-generic-badge status="inactivo" text="Disponible" />
+    }
+  </ng-template>
+
+  <!-- Tabla genérica con paginado y búsqueda -->
+  <app-generic-table
+    [columns]="tableColumns"
+    [columnTemplates]="columnTemplates"
+    [data]="tableRows()"
+    [pageable]="true"
+    [rows]="20"
+    [rowsOptions]="[10,20,50]"
+    [showSearch]="true"
+    [showFilters]="false"
+    [showActions]="false"
+    [showDownloadMenu]="false"
+    [showCreateButton]="false"
+    [loading]="loading()"
+    (globalFilterChange)="onGlobalFilterChange($event)"
+  ></app-generic-table>
+
+  <!-- Footer Info -->
+  <div class="footer-info">
+    <div class="info-item">
+      <i class="pi pi-database"></i>
+      <span>Total disponibles: <strong>{{ availableNbus().length }}</strong></span>
+    </div>
+    <div class="info-item">
+      <i class="pi pi-check-circle"></i>
+      <span>Seleccionados: <strong>{{ selectionCount() }}</strong></span>
+    </div>
+  </div>
+</div>

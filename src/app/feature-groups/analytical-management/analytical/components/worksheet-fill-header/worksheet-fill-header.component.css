@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+
+.header-info {
+  flex: 1;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (width <= 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    flex-direction: column;
+  }
+}

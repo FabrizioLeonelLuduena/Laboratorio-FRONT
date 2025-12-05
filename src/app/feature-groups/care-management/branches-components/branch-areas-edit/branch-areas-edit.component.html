@@ -1,0 +1,27 @@
+<div class="branch-areas-edit">
+  <h2 class="title">Editar áreas y secciones</h2>
+  <p class="subtitle">Sucursal: {{ branchCode }} (ID {{ branchId }})</p>
+
+  <app-generic-alert *ngIf="alert" [type]="alert.type" [text]="alert.text"></app-generic-alert>
+
+  <div *ngIf="loading" class="loading">
+    <app-spinner label="Cargando áreas..."></app-spinner>
+  </div>
+
+  <div *ngIf="!loading">
+    <app-area-section-manager
+      [initialWorkspaces]="initialWorkspaces"
+      [showApplyButton]="false"
+      [disableAddAreas]="false"
+      [disableRemoveAreas]="false"
+      [disableCreateAreas]="false"
+      (blockedAction)="onBlockedAction($event)"
+      (selectionChange)="onSelectionChange($event)"
+    ></app-area-section-manager>
+
+    <div class="actions">
+      <app-generic-button type="cancel" (pressed)="onCancel()"></app-generic-button>
+      <app-generic-button type="save" [disabled]="saving" (pressed)="onSave()"></app-generic-button>
+    </div>
+  </div>
+</div>

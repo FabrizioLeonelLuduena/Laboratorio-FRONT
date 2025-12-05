@@ -1,0 +1,109 @@
+<div class="sample-type-selector-container">
+  <div class="selector-header">
+    <label for="sampleTypeSelector" class="selector-label">
+      <i class="pi pi-flask"></i>
+      Tipo de muestra
+    </label>
+    <div class="action-buttons">
+      <app-generic-button
+        type="custom"
+        text="Editar"
+        icon="pi pi-pencil"
+        color="--brand-primary-700"
+        customTextColor="--on-primary"
+        [disabled]="!selectedSampleTypeId()"
+        (pressed)="openEditModal()" />
+      <app-generic-button
+        type="create"
+        (pressed)="openAddModal()" />
+    </div>
+  </div>
+  
+  <p-select
+    id="sampleTypeSelector"
+    [options]="options()"
+    [(ngModel)]="selectedSampleTypeId"
+    [filter]="true"
+    filterBy="label"
+    [placeholder]="loading() ? 'Cargando tipos de muestra...' : 'Seleccionar tipo de muestra'"
+    [disabled]="disabled || loading()"
+    [showClear]="true"
+    optionLabel="label"
+    optionValue="value"
+    (onChange)="onSelectionChange($event)"
+    styleClass="w-full">
+    
+    <ng-template pTemplate="selectedItem" let-selectedOption>
+      @if (selectedOption) {
+        <div class="selected-sample-type">
+          <i class="pi pi-flask"></i>
+          <span>{{ selectedOption.label }}</span>
+        </div>
+      }
+    </ng-template>
+    
+    <ng-template pTemplate="item" let-option>
+      <div class="sample-type-option">
+        <i class="pi pi-flask"></i>
+        <span>{{ option.label }}</span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="empty">
+      <div class="empty-state">
+        <i class="pi pi-info-circle"></i>
+        <span>No hay tipos de muestra disponibles</span>
+      </div>
+    </ng-template>
+  </p-select>
+  
+  @if (loading()) {
+    <small class="loading-hint">
+      <i class="pi pi-spin pi-spinner"></i>
+      Cargando tipos de muestra disponibles...
+    </small>
+  }
+  
+  <small class="selector-hint">
+    <i class="pi pi-info-circle"></i>
+    Seleccione el tipo de muestra requerido para este análisis
+  </small>
+</div>
+
+<!-- List All Modal with SampleType Table -->
+<app-generic-modal-form
+  [visible]="showHelpModal()"
+  title="Gestionar Tipos de Muestra"
+  [width]="'900px'"
+  (closed)="closeHelpModal()">
+  <app-sample-type-home
+    [analyses]="allAnalyses()"
+    [readonly]="false" />
+</app-generic-modal-form>
+
+<!-- Edit Modal for Selected Sample Type -->
+<app-generic-modal-form
+  [visible]="showEditModal()"
+  [title]="'Editar Tipo de Muestra'"
+  [width]="'600px'"
+  (closed)="closeEditModal()">
+  <app-sample-type-edit-form
+    *ngIf="selectedSampleTypeForEdit()"
+    [sampleType]="selectedSampleTypeForEdit()!"
+    (save)="onSampleTypeSaved($event)"
+    (cancelled)="closeEditModal()">
+  </app-sample-type-edit-form>
+</app-generic-modal-form>
+
+<!-- Add New Modal -->
+<app-generic-modal-form
+  [visible]="showAddModal()"
+  [title]="'Agregar Nuevo Tipo de Muestra'"
+  [width]="'600px'"
+  (closed)="closeAddModal()">
+  <app-sample-type-edit-form
+    [sampleType]="null"
+    (save)="onSampleTypeSaved($event)"
+    (cancel)="closeAddModal()">
+  </app-sample-type-edit-form>
+</app-generic-modal-form>

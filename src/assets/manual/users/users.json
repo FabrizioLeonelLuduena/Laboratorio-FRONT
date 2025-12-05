@@ -1,0 +1,233 @@
+{
+  "id": "gestion-usuarios",
+  "moduleId": "usuarios",
+  "title": "Gestión de Usuarios",
+  "intro": "Esta pantalla permite crear, buscar, modificar y gestionar el estado de los usuarios registrados en el sistema.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Secretaría",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br>  Secretaria - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra una tabla con <strong>todos los usuarios registrados</strong> en el sistema."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/users/users-table.jpg",
+          "alt": "Tabla principal de gestión de usuarios"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite <strong>filtrar</strong> los usuarios escribiendo texto libre (busca por apellido, nombre, documento o email)."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Abre el panel desplegable con opciones de <strong>filtrado avanzado</strong>."
+            ],
+            [
+              "Crear nuevo usuario",
+              "<i class='pi pi-plus'></i>",
+              "Abre el formulario para <strong>registrar un nuevo usuario</strong> en el sistema."
+            ],
+            [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/users/users-filters.jpg",
+          "alt": "Panel de filtros de usuarios"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Estado:</strong> Permite ver usuarios Activos, Inactivos o Todos.",
+            "<strong>Tipo:</strong> Permite seleccionar la clase de usuario (Interno o Externo).",
+            "<strong>Roles:</strong> Permite seleccionar el rol específico del usuario (Ej: Administrador, Secretaría)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar</strong> para restablecer todos los filtros a su estado original."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "listado-usuarios",
+      "title": "Contenido de la Tabla de usuarios",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información detallada mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Documento",
+              "Número de <strong>documento de identidad</strong>.",
+              "33451234"
+            ],
+            [
+              "Apellido y Nombre",
+              "Datos personales del usuario. Permiten <strong>ordenamiento alfabético</strong>.",
+              "López, María"
+            ],
+            [
+              "Email",
+              "Dirección de <strong>correo electrónico</strong> registrado.",
+              "Lmaría@gmail.com"
+            ],
+            [
+              "Usuario",
+              "Nombre de usuario (login) para <strong>acceder al sistema</strong>.",
+              "MariaLopez"
+            ],
+            [
+              "Estado",
+              "Etiqueta visual que indica la <strong>situación actual</strong> del usuario.",
+              "ACTIVO"
+            ],
+            [
+              "Roles",
+              "Etiqueta que muestra el <strong>nivel de acceso</strong>.",
+              "ADMINISTRADOR"
+            ],
+            [
+              "Acciones",
+             " <strong>Menú desplegable</strong> que permite <strong>editar</strong> los datos, <strong>deshabilitar</strong>el usuarios o <strong>reestablecer la contraseña</strong>.",
+              ",⋮"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Las columnas Documento, Apellido, Nombre, Email, Usuario, Estado y Roles permiten ordenamiento ascendente o descendente.</strong>"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-y-tipos",
+      "title": "Estados y Tipos de Usuario",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Estados"
+        },
+        {
+          "type": "paragraph",
+          "text": "El estado define la disponibilidad de acceso del usuario al sistema."
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#d1e7dd"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario tiene acceso permitido al sistema. Se representa con una etiqueta <strong>Verde</strong>."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#f8d7da"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario ha sido deshabilitado y no puede iniciar sesión."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Tipos de Usuario"
+        },
+        {
+          "type": "badge",
+          "text": "INTERNO",
+          "color": "#B0D1FD"
+        },
+        {
+          "type": "paragraph",
+          "text": "Personal interno perteneciente a la planta del laboratorio."
+        },
+        {
+          "type": "badge",
+          "text": "EXTERNO",
+          "color": "#F5ECAE"
+        },
+        {
+          "type": "paragraph",
+          "text": "Personal externo al laboratorio (ej. usuarios del portal del paciente)."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "usuarios",
+    "gestión",
+    "filtros",
+    "roles",
+    "manual"
+  ]
+}

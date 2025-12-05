@@ -1,0 +1,208 @@
+{
+  "id": "gestion-atenciones",
+  "moduleId": "atention",
+  "title": "Gestión de Cola de espera",
+  "intro": "El módulo de Gestión de Atenciones es el punto de entrada principal para el flujo de trabajo del laboratorio. Aquí se realiza la recepción del paciente, la carga de la orden médica, la selección de análisis y la facturación, asegurando la integridad de los datos antes de pasar al área técnica.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrativo / Recepcionista",
+      "Bioquímico"
+    ]
+  },
+  "sections": [
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla Principal",
+      "open": true,
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrativo - Recepcionista"
+        },
+        {
+          "type": "divider"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra la Cola de Espera con los turnos activos en tiempo real, permitiendo gestionar tanto pacientes agendados como urgencias."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atentions-waiting-queue.jpg",
+          "alt": "Interfaz principal de cola de espera"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite filtrar los turnos en espera ingresando el <strong>código</strong> o <strong>documento</strong> del paciente."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega opciones para segmentar la lista por <strong>estado del turno</strong>."
+            ],
+            [
+              "Configurar Box",
+              "<i class='pi pi-cog'></i>",
+              "Permite asignar qué <strong>puesto de trabajo</strong> está utilizando el usuario actual."
+            ],
+            [
+              "Nueva Atención",
+              "<i class='pi pi-plus'></i>",
+              "Abre la ventana para iniciar el proceso de <strong>carga de un paciente</strong> (Atención en Blanco)."
+            ],
+              [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ],
+            [
+              "Acciones",
+              "<i class='pi pi-ellipsis-v'></i>",
+              "Abre las opciones para iniciar el proceso de atencion (Atender o cancelar)."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Para atender un turno de la lista, debe hacer clic en el menú de acciones <strong><i class='pi pi-ellipsis-v'></i></strong> de la fila correspondiente y seleccionar la opción de atender."
+        },
+        {
+            "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/waiting-queue/atentions-waiting-queue-filters.jpg",
+          "alt": "Filtros de cola de espera"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Todos:</strong> Permite visualizar los paciente con o sin turnos.",
+            "<strong>Con turno:</strong> Permite visualizar los paciente con  turnos.",
+            "<strong>Sin turno:</strong> Permite visualizar los paciente sin turnos."
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+  {
+  "id": "contenido-tabla-cola-espera",
+  "title": "Contenido de la Tabla de Turnos de Atención (Cola de Espera)",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "La tabla organiza la información de los <strong>turnos de atención en cola de espera</strong> mediante las siguientes columnas:"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Columna",
+        "Descripción",
+        "Ejemplo"
+      ],
+      "rows": [
+        [
+          "Código",
+          "El <strong>código</strong> asignado al turno.",
+          "ST-002"
+        ],
+        [
+          "Documento",
+          "El <strong>número de documento</strong> del paciente con el turno.",
+          "11111111"
+        ],
+        [
+          "Fecha",
+          "La <strong>fecha</strong> programada para el turno.",
+          "26/11/2025"
+        ],
+        [
+          "Hora",
+          "La <strong>hora</strong> programada para el turno.",
+          "12:42 a. m."
+        ],
+        [
+          "Turno",
+          "Indicador del <strong>de turno</strong>(NO/SI) "
+        ],
+        [
+          "Acciones",
+          "<strong>Menú desplegable</strong> con opciones para <strong>Atender</strong> o <strong>Cancelar</strong> el turno del paciente.",
+          "⋮"
+        ]
+      ]
+    },
+    {
+      "type":"divider"
+    }
+  ]
+},
+    {
+      "id": "estados-atencion",
+      "title": "Estados del turno",
+      "open": false,
+      "blocks":
+        [
+          {
+            "type": "paragraph",
+            "text": "Durante el proceso de carga, la atención puede presentar diferentes estados de validación:"
+          },
+          {
+            "type": "badge",
+            "text": "NO",
+            "color": "#F8E2E4"
+          },
+          {
+            "type": "paragraph",
+            "text": "El paciente ingreso a la sucursal sin un turno generado desde el portal del paciente"
+          },
+          {
+            "type": "badge",
+            "text": "SI",
+            "color": "#DEF0EE"
+          },
+          {
+            "type": "paragraph",
+            "text": "El paciente ingreso a la sucursal con un turno generado desde el portal del paciente"
+          }
+        ]
+
+    }
+  ],
+  "tags": [
+    "turnos",
+    "atención",
+    "recepción",
+    "pacientes",
+    "asistente"
+  ]
+}

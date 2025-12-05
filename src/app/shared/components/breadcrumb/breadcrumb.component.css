@@ -1,0 +1,37 @@
+:host ::ng-deep .p-breadcrumb {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0;
+}
+
+:host ::ng-deep .p-breadcrumb * {
+  color: #fff;
+}
+
+/* Hover on links of the breadcrumb */
+:host ::ng-deep .p-breadcrumb a:hover,
+:host ::ng-deep .p-breadcrumb a:hover * {
+  color: #e0e0e0;
+  text-decoration: underline;
+}
+
+/* Delete underline from the last element (active item) */
+:host ::ng-deep .p-breadcrumb li:last-child a:hover,
+:host ::ng-deep .p-breadcrumb li:last-child a:hover * {
+  text-decoration: none;
+  color: #fff;
+  cursor: default;
+}
+
+/* Disable click on the last element */
+:host ::ng-deep .p-breadcrumb li:last-child a {
+  pointer-events: none;
+  font-weight: 500;
+}
+
+/* Hide breadcrumb on mobile screens */
+@media (width <= 640px) {
+  :host {
+    display: none;
+  }
+}

@@ -1,0 +1,42 @@
+<div class="min-h-screen">
+  <div class="mx-auto pb-4 stack-24">
+    <div class="flex items-start justify-between p-6">
+      <div class="stack-12">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+          Bienvenido {{ displayName() }}
+        </h1>
+        <p class="text-gray-600">
+          {{ currentDate() | date: 'EEEE, d \'de\' MMMM \'de\' yyyy':'':'es-AR' }}
+        </p>
+      </div>
+      <div class="text-right">
+        <div class="text-3xl font-semibold text-teal-700">{{ currentTime() | date: 'HH:mm' }}</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (card of visibleActions(); track trackById($index, card)) {
+        <div
+          class="dashboard-card"
+          (click)="navigateTo(card.route)"
+        >
+          <div class="card-icon">
+            <i [class]="card.icon"></i>
+          </div>
+
+          <div class="card-content">
+            <div class="card-title">{{ card.label }}</div>
+            @if (card.description) {
+              <div class="card-description">{{ card.description }}</div>
+            }
+          </div>
+
+          <div class="card-arrow">
+            <i class="pi pi-arrow-right"></i>
+          </div>
+        </div>
+
+      }
+    </div>
+  </div>
+</div>

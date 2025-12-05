@@ -1,0 +1,13 @@
+/* Reduce vertical spacing in form */
+:host ::ng-deep .p-field {
+  margin-bottom: 0.75rem;
+}
+
+:host ::ng-deep .form-grid {
+  gap: 0.75rem;
+}
+
+:host ::ng-deep .field-container {
+  margin-bottom: 0.75rem;
+}
+

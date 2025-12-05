@@ -1,0 +1,242 @@
+<section class="pb-6">
+  @if (loading()) {
+    <app-spinner
+      [overlay]="true"
+      [label]="'Cargando liquidaciones...'" />
+  }
+
+  @if (alert) {
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  }
+
+  <!-- Custom template for status column as built-in badge -->
+  <ng-template #statusBadgeTpl let-row>
+    <app-generic-badge
+      [status]="badgeStatusFrom(row.status)"
+      [text]="row.status"
+    ></app-generic-badge>
+  </ng-template>
+
+  <app-generic-table
+    [data]="settlements"
+    [columns]="columns"
+    [pageable]="true"
+    [loading]="false"
+    [rows]="5"
+    [dataKey]="'id'"
+    [expandable]="true"
+    [getActions]="getActions.bind(this)"
+    [showCreateButton]="true"
+    [showSearch]="true"
+    [showActions]="true"
+    [showDownloadMenu]="true"
+    [filters]="tableFilters"
+    [columnTemplates]="columnTemplates"
+    [expandedRowTemplate]="expandedTpl"
+    (filterChange)="onTableFilterChange($event)"
+    (create)="onAddClicked()"
+    (downloadExcel)="onExportExcel()"
+    (downloadPdf)="onExportPdf()">
+  </app-generic-table>
+
+  <!-- Expanded row template: extra settlement details -->
+  <ng-template #expandedTpl let-row>
+    <div class="p-4 space-y-4">
+
+      <div>Aseguradora: <strong>{{ row.insurerName }}</strong></div>
+      <div>Observaciones: <strong>{{ row.observations || '—' }}</strong></div>
+
+      <div>
+        <span>Planes liquidados:</span>
+
+        @if (row.liquidatedPlans?.length) {
+
+          <!-- GRID RESPONSIVE: 1 col en mobile / 2 cols en md+ -->
+          <ul class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+            @for (plan of row.liquidatedPlans; track plan.name) {
+
+              <li class="grid grid-cols-12 items-center p-2">
+
+                <!-- Nombre -->
+                <span
+                  class="col-span-6 font-medium truncate max-w-[260px] whitespace-nowrap"
+                >
+                <strong>{{ plan.name }}</strong>
+              </span>
+
+                <!-- Prestaciones -->
+                <span
+                  class="col-span-3 text-sm text-center whitespace-nowrap"
+                >
+                <strong>{{ plan.providedServicesCount }}</strong> Prestaciones
+              </span>
+
+                <!-- Subtotal -->
+                <span
+                  class="col-span-3 font-bold text-right whitespace-nowrap"
+                >
+                {{ plan.subtotal | currency:'ARS':'symbol':'1.2-2':'es-AR' }}
+              </span>
+
+              </li>
+
+            }
+          </ul>
+
+        } @else {
+          <div class="text-gray-500">—</div>
+        }
+      </div>
+
+      <div>
+        Fecha informado:
+        <strong>{{ row.informedDate ? (row.informedDate | date:'dd/MM/yyyy') : '—' }}</strong>
+      </div>
+
+
+    </div>
+  </ng-template>
+
+
+</section>
+
+<!-- Modal generic -->
+
+<!-- confirmar -->
+<app-generic-modal-form
+  [visible]="showConfirmModal"
+  [title]="'Informar liquidación'"
+  [width]="'600px'"
+  [height]="'520px'"
+  (closed)="showConfirmModal = false">
+
+  <app-generic-form
+    [fields]="confirmFields"
+    [initialValue]="confirmInitialValue"
+    size="full"
+    [showHeader]="false"
+    [showCard]="false"
+    [showSubmit]="true"
+    [showCancel]="true"
+    [submitType]="'custom'"
+    [submitIcon]="'pi pi-check'"
+    submitLabel="Confirmar"
+    cancelLabel="Cancelar"
+    (submitForm)="onConfirmSubmit($event)"
+    (cancelForm)="showConfirmModal = false">
+  </app-generic-form>
+
+</app-generic-modal-form>
+
+
+  <!-- anular -->
+  <app-generic-modal-form
+    [visible]="showCancelModal"
+    [title]="'Anular liquidación'"
+    [width]="'600px'"
+    [height]="'370px'"
+    (closed)="showCancelModal = false">
+
+    <app-generic-form
+      [fields]="cancelFields"
+      [initialValue]="cancelInitialValue"
+      size="full"
+      [showHeader]="false"
+      [showCard]="false"
+      [showSubmit]="true"
+      [showCancel]="true"
+      [submitType]="'custom'"
+      [submitIcon]="'pi pi-check'"
+      submitLabel="Anular"
+      cancelLabel="Cancelar"
+      (submitForm)="onCancelSubmit($event)"
+      (cancelForm)="showCancelModal = false">
+    </app-generic-form>
+
+  </app-generic-modal-form>
+
+
+<!--  modal de cobrar -->
+<app-generic-modal-form
+  [visible]="showCobrarModal"
+  [title]="'Registrar pago'"
+  [width]="'880px'"
+  [height]="'auto'"
+  (closed)="onCobrarCancel()"
+>
+
+  <div class="modal-cobrar-container">
+    <div class="modal-cobrar-grid">
+
+      <!-- formulario cobrar-->
+      <div class="modal-cobrar-form">
+        <app-generic-form
+          [fields]="cobrarFields"
+          [initialValue]="cobrarInitialValue"
+          size="full"
+          class="modal-cobrar-root"
+          [showHeader]="false"
+          [showCard]="false"
+          [showSubmit]="true"
+          [showCancel]="true"
+          [submitType]="'custom'"
+          [submitIcon]="'pi pi-check-circle'"
+          submitLabel="Registrar pago"
+          cancelLabel="Cancelar"
+          (submitForm)="onCobrarSubmit($event)"
+          (cancelForm)="onCobrarCancel()"
+        ></app-generic-form>
+      </div>
+
+      <!-- resumen cobrar -->
+      <div class="modal-cobrar-summary">
+        <p-accordion>
+          <p-accordion-panel>
+
+            <ng-template pTemplate="header">
+              <div class="accordion-header-content">
+                <i class="pi pi-receipt"></i>
+                <span>Resumen del pago</span>
+              </div>
+            </ng-template>
+
+            <div class="summary-grid">
+              <div class="summary-item">
+                <div class="summary-label">Obra social</div>
+                <div class="summary-value">{{ cobrarSummaryValue.summaryInsurer }}</div>
+              </div>
+
+              <div class="summary-item">
+                <div class="summary-label">Período</div>
+                <div class="summary-value">{{ cobrarSummaryValue.summaryPeriod }}</div>
+              </div>
+
+              <div class="summary-item">
+                <div class="summary-label">Monto liquidado</div>
+                <div class="summary-value">{{ cobrarSummaryValue.summaryAmount }}</div>
+              </div>
+
+              <div class="summary-item">
+                <div class="summary-label">Servicios</div>
+                <div class="summary-value">{{ cobrarSummaryValue.summaryServices }}</div>
+              </div>
+            </div>
+
+          </p-accordion-panel>
+        </p-accordion>
+      </div>
+
+    </div>
+
+  </div>
+</app-generic-modal-form>
+
+
+@if (alert) {
+  <app-generic-alert
+    [type]="alert.type"
+    [text]="alert.text">
+  </app-generic-alert>
+}
+
+<app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>

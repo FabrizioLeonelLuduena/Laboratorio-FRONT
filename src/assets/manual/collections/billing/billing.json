@@ -1,0 +1,222 @@
+{
+  "id": "gestion-facturacion",
+  "moduleId": "facturacion",
+  "title": "Facturación",
+  "intro": "La pantalla de Facturación permite visualizar el historial de movimientos, filtrar por estados y gestionar los comprobantes generados por las atenciones y cobros del laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrativo",
+      "Caja",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrativo - Caja - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal-facturacion",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra un listado detallado de todos los movimientos facturables, permitiendo controlar el estado de emisión de cada comprobante."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/billing/facturation-table.jpg",
+          "alt": "Interfaz principal de facturación"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones generales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite buscar movimientos específicos por palabras clave."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega el menú de filtros para refinar el listado por tipo, estado o fechas."
+            ],
+            [
+              "Exportar",
+              "<i class='pi pi-download'></i>",
+              "Descarga el reporte actual de la tabla."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros Avanzados"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/billing/facturation-filters.jpg",
+          "alt": "Filtros de facturación"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Tipo de Movimiento:</strong> Permite seleccionar entre todas las transacciones o tipos específicos (ej. Pagos, Notas de Crédito).",
+            "<strong>Estado de Factura:</strong> Filtra según si el comprobante está Pendiente, Emitido o con Error.",
+            "<strong>Rango de Fechas:</strong> Define un periodo (Desde/Hasta) para ver los movimientos de un lapso de tiempo."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Limpieza",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar</strong> dentro del modal para restablecer la búsqueda."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-facturacion",
+      "title": "Contenido de la Tabla",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información financiera mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Indica la naturaleza del movimiento.",
+              "Pago"
+            ],
+            [
+              "Fecha",
+              "Día en que se generó el movimiento.",
+              "26/11/2025"
+            ],
+            [
+              "Concepto",
+              "Motivo o referencia del cobro.",
+              "Atención"
+            ],
+            [
+              "Importe",
+              "Monto monetario asociado.",
+              "$ 10.000,00"
+            ],
+            [
+              "Estado",
+              "Situación actual del comprobante fiscal.",
+              "PENDIENTE"
+            ],
+            [
+              "Número de factura",
+              "Código oficial del comprobante (si ya fue emitido).",
+              "0001-00001234 / N/A"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "acciones-fila",
+      "title": "Acciones y Estados",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Estados del Comprobante"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema visualiza el estado de la facturación mediante etiquetas de color:"
+        },
+        {
+          "type": "badge",
+          "text": "PENDIENTE",
+          "color": "#d1e7dd"
+        },
+        {
+          "type": "paragraph",
+          "text": "El movimiento ha sido registrado pero aún no se ha completado la emisión de la factura fiscal."
+        },
+        {
+          "type": "badge",
+          "text": "SIN FACTURAR",
+          "color": "#d1e7dd"
+        },
+        {
+          "type": "paragraph",
+          "text": "No se genero una factura."
+        },
+        {
+          "type": "subtitle",
+          "text": "Menú de Acciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el menú de tres puntos (⋮) al final de la fila, se habilitan las siguientes opciones:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Icono",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Reintentar factura",
+              "<i class='pi pi-refresh'></i>",
+              "Fuerza un nuevo intento de emisión si la factura quedó en estado pendiente o error."
+            ],
+            [
+              "Descargar PDF",
+              "<i class='pi pi-file-pdf'></i>",
+              "Descarga el comprobante o el detalle del movimiento en formato PDF."
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "facturación",
+    "cobros",
+    "caja",
+    "comprobantes"
+  ]
+}

@@ -1,0 +1,74 @@
+<section class="provided-wrapper">
+  <app-generic-header-card
+    title="Prestaciones"
+    (backPressed)="goBack()">
+  </app-generic-header-card>
+
+  <ng-template #selectTpl let-row>
+    <input type="checkbox" [checked]="row.selected" (change)="toggleSelect(row)" />
+  </ng-template>
+  <ng-template #amountCoveredTpl let-row>
+    <span [class.excluded-text]="row.excluded">{{ row.amountCovered }}</span>
+  </ng-template>
+  <ng-template #statusTpl let-row>
+    <app-generic-badge [status]="badgeStatus(row)" [text]="row.excluded ? 'Excluida' : row.status"></app-generic-badge>
+  </ng-template>
+
+  @if (data.length) {
+    <div class="actions-bar">
+      <span class="count">Seleccionadas: {{ selectedIds.size }}</span>
+      @if (excludedCount > 0) { <span class="count">Excluidas: {{ excludedCount }}</span> }
+      <app-generic-button type="alternative" [disabled]="selectedIds.size === 0" text="Excluir seleccionadas" (pressed)="excludeSelected()"></app-generic-button>
+      <app-generic-button type="back" [disabled]="selectedIds.size === 0" text="Limpiar selección" (pressed)="clearSelection()"></app-generic-button>
+    </div>
+  }
+  <app-generic-table
+    [data]="data"
+    [columns]="columns"
+    [pageable]="true"
+    [rows]="rows"
+    [rowsOptions]="[10]"
+    [loading]="loading"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [expandedRowTemplate]="analysisTpl"
+    [dataKey]="'id'"
+    [columnTemplates]="columnTemplates"
+    [showActions]="false"
+    [showCreateButton]="false"
+    [showSearch]="false"
+    [showFilters]="false"
+    [showDownloadMenu]="false"
+    (pageChange)="onPageChange($event)"
+  ></app-generic-table>
+
+  <!-- Expanded row template: analyses and amounts -->
+  <ng-template #analysisTpl let-row>
+    <div class="p-3">
+      <h3 class="title-16 mb-2">Análisis incluidos</h3>
+      @if (row?.analysisAmounts?.length) {
+        <ul class="list-disc ml-5 space-y-1">
+          @for (a of row.analysisAmounts; track a.analysisId) {
+            <li>
+              <div class="flex flex-wrap justify-between gap-2">
+                <span>{{ a.analysisName }}</span>
+                <span>
+                   Cubierto: {{ a.coveredAmount | currency:'ARS' }}
+                </span>
+              </div>
+            </li>
+          }
+        </ul>
+      } @else {
+        <span class="text-surface-600">Sin análisis disponibles</span>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #reincludeTpl let-row>
+    @if (row.excluded) {
+      <app-generic-button type="alternative" text="Reincluir" (pressed)="reinclude(row)"></app-generic-button>
+    }
+  </ng-template>
+
+</section>

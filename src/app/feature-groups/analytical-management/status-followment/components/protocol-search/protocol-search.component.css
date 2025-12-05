@@ -1,0 +1,142 @@
+/* Barra superior compacta - todo en una línea */
+.protocol-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* Título */
+.protocol-search-bar .section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #00435d;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Input de búsqueda */
+.search-input {
+  width: 180px;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Fechas en línea - con espacio suficiente para identificar */
+.date-field-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+/* Fechas apiladas - etiqueta arriba */
+.date-field-stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+
+.text-label {
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Calendarios más compactos
+   Aplicando estilos directamente a los componentes de PrimeNG
+   Sin usar ::ng-deep deprecado */
+.modern-calendar {
+  width: 140px;
+}
+
+.modern-calendar input {
+  padding: 0.45rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Dropdown de protocolos - desplegable compacto */
+.protocol-dropdown {
+  flex-shrink: 0;
+}
+
+.protocol-dropdown select,
+.protocol-select {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #8ad5d3;
+  background: #e0f7fa;
+  color: #006b68;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 180px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.protocol-dropdown select:hover,
+.protocol-select:hover {
+  border-color: #00bbb8;
+  background: #d0f3f5;
+}
+
+.protocol-dropdown select:focus,
+.protocol-select:focus {
+  outline: none;
+  border-color: #00bbb8;
+  box-shadow: 0 0 0 2px rgb(0 187 184 / 15%);
+}
+
+/* Protocolo único (sin dropdown) */
+.protocol-single {
+  flex-shrink: 0;
+}
+
+.protocol-text {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  background: #e0f7fa;
+  color: #006b68;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid #8ad5d3;
+}
+
+
+/* Botón Buscar - alineado a la derecha */
+.protocol-search-bar app-generic-button {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Responsive - si es necesario apilar en móviles */
+@media (width <= 1024px) {
+  .protocol-search-bar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .search-input {
+    width: 140px;
+  }
+
+  .protocol-dropdown {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,213 @@
+<div class="flex flex-col min-h-[calc(100vh-13rem)] overflow-x-hidden px-8 py-4 text-[#003b4a] bg-white">
+
+  <div class="w-full max-w-[1200px] mx-auto">
+    <div class="stack-24">
+      @if(showAlert) {
+      <app-generic-alert
+        [message]="alertMessage"
+        [type]="alertType"
+        (close)="showAlert = false"
+      >
+      </app-generic-alert>
+      }
+
+      <app-generic-form
+        [fields]="basicFields"
+        [size]="'full'"
+        [saving]="false"
+        [showHeader]="false"
+        [showSubmit]="false"
+        [showCancel]="false"
+        (submitForm)="onBasicDataSave($event)">
+      </app-generic-form>
+
+      <!-- Supplier Items Section -->
+      <div class="mt-6">
+        <p-panel header="Productos del proveedor" [toggleable]="true" [collapsed]="false">
+          <div class="supplier-items-grid-wrapper">
+            <!-- Grid header -->
+            <div class="grid-header">
+              <div class="grid-header-cell col-supply">Producto <span class="required-asterisk">*</span></div>
+              <div class="grid-header-cell col-packaging">Empaque</div>
+              <div class="grid-header-cell col-description">Descripción</div>
+              <div class="grid-header-cell col-price">Precio <span class="required-asterisk">*</span></div>
+              <div class="grid-header-cell col-actions">
+                <button
+                  type="button"
+                  class="grid-action-btn add-btn header-add-btn"
+                  (click)="addSupplierItem()"
+                  title="Agregar producto">
+                  <i class="pi pi-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Items rows -->
+            <div class="grid-body">
+              @for (item of supplierItems; track $index; let i = $index) {
+                <div class="grid-row">
+                  <!-- Supply -->
+                  <div class="grid-cell col-supply">
+                    <p-dropdown
+                      [(ngModel)]="item.supply_id"
+                      [options]="supplies"
+                      optionLabel="name"
+                      optionValue="id"
+                      placeholder="Seleccionar producto"
+                      [filter]="true"
+                      filterBy="name"
+                      [showClear]="false"
+                      styleClass="grid-dropdown"
+                      [attr.data-row]="i"
+                      [attr.data-col]="'supply_id'"
+                      (onFocus)="onItemCellFocus(i, 'supply_id')"
+                      appendTo="body">
+                    </p-dropdown>
+                  </div>
+
+                  <!-- Packaging -->
+                  <div class="grid-cell col-packaging">
+                    <p-dropdown
+                      [(ngModel)]="item.packaging_id"
+                      [options]="packagings"
+                      optionValue="id"
+                      placeholder="Seleccionar empaque"
+                      [filter]="true"
+                      [showClear]="false"
+                      styleClass="grid-dropdown"
+                      [attr.data-row]="i"
+                      [attr.data-col]="'packaging_id'"
+                      (onFocus)="onItemCellFocus(i, 'packaging_id')"
+                      appendTo="body">
+                      <ng-template pTemplate="item" let-option>
+                        <span>{{ getPackagingDisplay(option.id) }}</span>
+                      </ng-template>
+                      <ng-template pTemplate="selectedItem">
+                        <span>{{ getPackagingDisplay(item.packaging_id) }}</span>
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+
+                  <!-- Description -->
+                  <div class="grid-cell col-description">
+                    <input
+                      type="text"
+                      class="grid-input"
+                      [(ngModel)]="item.description"
+                      [attr.data-row]="i"
+                      [attr.data-col]="'description'"
+                      (focus)="onItemCellFocus(i, 'description')"
+                      (keydown)="onItemKeyDown($event, i, 'description')"
+                      placeholder="Descripción opcional" />
+                  </div>
+
+                  <!-- Price -->
+                  <div class="grid-cell col-price">
+                    <p-inputNumber
+                      [ngModel]="item.unit_price"
+                      (ngModelChange)="item.unit_price = $event"
+                      mode="currency"
+                      currency="ARS"
+                      locale="es-AR"
+                      [minFractionDigits]="2"
+                      [maxFractionDigits]="2"
+                      [min]="0"
+                      [step]="0.01"
+                      [inputStyle]="{ 'text-align': 'right', 'width': '100%' }"
+                      placeholder="$ 0,00">
+                    </p-inputNumber>
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="grid-cell col-actions">
+                    <button
+                      type="button"
+                      class="grid-action-btn delete-btn"
+                      (click)="deleteSupplierItem(i)"
+                      title="Eliminar">
+                      <i class="pi pi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Empty message -->
+            @if (supplierItems.length === 0) {
+              <div class="empty-grid-message">
+                <i class="pi pi-inbox"></i>
+                <p>No hay productos agregados</p>
+                <small>Haga clic en el botón + para agregar un producto</small>
+              </div>
+            }
+          </div>
+        </p-panel>
+      </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div>
+      <app-collapsable-form
+        [fields]="contactFields"
+        [title]="'Contacto ' + (contacts.length + 1)"
+        size="lg"
+        [defaultCollapsed]="false"
+        (save)="onContactSave($event)">
+      </app-collapsable-form>
+    </div>
+
+    <div>
+      <p-panel header="Contactos" [toggleable]="true" [collapsed]="false">
+        <p-table [value]="contacts" [tableStyle]="{ 'min-width': '100%' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nombre del contacto</th>
+              <th>Dato de contacto</th>
+              <th style="width:100px">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-contact let-i="rowIndex">
+            <tr>
+              <td>{{ contact.description || 'Sin descripción' }}</td>
+              <td>{{ contact.contactValue }}</td>
+              <td>
+                <button pButton type="button" class="p-button-text p-button-sm p-button-danger" icon="pi pi-trash" (click)="deleteContact(i)"></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="3" class="text-center p-4 text-muted">No se agregaron contactos aún.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-panel>
+    </div>
+  </div>
+
+      <div class="flex justify-between items-center pt-6">
+        <app-generic-button
+          type="back"
+          icon="pi pi-arrow-left"
+          (pressed)="onBack()">
+        </app-generic-button>
+
+        <div class="flex gap-3">
+          <app-generic-button
+            text="Cancelar"
+            type="cancel"
+            [disabled]="saving"
+            (pressed)="onFormCancel()">
+          </app-generic-button>
+
+          <app-generic-button
+            [text]="saving ? 'Guardando...' : 'Crear proveedor'"
+            type="create"
+            icon="pi pi-plus"
+            [disabled]="saving"
+            (pressed)="onSubmit()">
+          </app-generic-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

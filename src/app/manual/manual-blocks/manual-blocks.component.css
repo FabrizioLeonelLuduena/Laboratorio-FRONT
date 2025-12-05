@@ -1,0 +1,156 @@
+/* Margins */
+.mb-3 {
+  margin-bottom: 0.2rem;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  margin-top: 1.7rem;
+}
+
+.manual-divider {
+  border: 0;
+  border-top: 1px solid #0aa893; /* gris más suave */
+  margin: 1.5rem 0;
+  width: 100%;
+  opacity: 0.75;
+}
+
+
+/* ============================
+   IMÁGENES
+============================ */
+.manual-image {
+  margin: 1rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 8%);
+}
+
+.manual-image__img {
+  width: 100%;
+  display: block;
+  cursor: zoom-in;
+  transition: opacity .2s;
+}
+
+.manual-image__img:hover {
+  opacity: .85;
+}
+
+/* ============================
+   LIGHTBOX GLOBAL DEL MANUAL
+============================ */
+.manual-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 75%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.manual-lightbox-img {
+  width: auto;
+  height: 100%;
+  max-height: 80%;
+  max-width: 80%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.manual-lightbox::after {
+  content: "✕";
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  font-size: 1.8rem;
+  color: #f9fafb;
+  font-weight: 400;
+  pointer-events: none; /* el click igual va al overlay y cierra */
+  text-shadow: 0 2px 6px rgb(0 0 0 / 60%);
+}
+
+.manual-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+
+.manual-table th,
+
+.manual-table td {
+  border: 1px solid #b5b5b5;
+  padding: .5rem .75rem;
+}
+
+.manual-table thead {
+  background: #008c8a;
+  font-weight: 600;
+  color: #fff;
+}
+
+.title {
+  font-size: 1.75rem; /* 28px */
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--color-gray-900);
+}
+
+.note {
+  padding: 2.75rem 1rem;
+  margin: 1rem 0;
+}
+
+.note--info {
+  background: #e0f2fe;
+  border-left: 4px solid #0284c7;
+}
+
+.note--warning {
+  background: #fef9c3;
+  border-left: 4px solid #ca8a04;
+}
+
+.note--danger {
+  background: #fee2e2;
+  border-left: 4px solid #b91c1c;
+}
+
+.note--success {
+  background: #ddf8eb;
+  border-left: 4px solid #15803d;
+}
+
+/* ============================
+   LISTAS
+============================ */
+.manual-list {
+  margin: 0.25rem 0 .25rem 1.25rem;
+  padding-left: 1rem;
+}
+
+/* Iconos dentro de tablas del manual */
+.manual-table i.pi {
+  font-size: 1.1rem;
+  color: var(--brand-primary, #00bbb8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Badges: cada badge en su propia línea */
+.manual-badge-wrapper {
+  display: block; /* ocupa línea completa */
+  margin-top: 1rem;
+  margin-bottom: 0.5rem; /* separación entre badges */
+}
+
+.manual-badge-wrapper app-manual-badge {
+  display: inline-block; /* el propio badge conserva su inline-block para padding */
+}

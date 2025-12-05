@@ -1,0 +1,189 @@
+.cash-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__header-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: var(--card);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+
+  &__main {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  &__amount {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--on-surface);
+
+    span {
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    strong {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__meta-item {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--on-surface);
+
+    i {
+      margin-right: 6px;
+      color: var(--on-surface-muted);
+    }
+
+    &::before {
+      color: var(--on-surface-muted);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    &.meta-box::before {
+      content: "Caja";
+    }
+
+    &.meta-branch::before {
+      content: "Sucursal";
+    }
+  }
+
+  &__description {
+    margin: 0;
+    color: var(--on-surface-muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  &__table-wrapper {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  &__amount-cell {
+    font-weight: 600;
+    font-size: 14px;
+
+    &--income {
+      color: var(--brand-success);
+    }
+
+    &--expense {
+      color: var(--brand-warn);
+    }
+
+    &--balance {
+      color: var(--on-surface);
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+
+  &__modal {
+    padding: 1.5rem;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  &__modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 600;
+  }
+}
+
+/* TABLE ALIGN FIXES ------------------------------------ */
+
+:host ::ng-deep app-generic-table table thead th:nth-child(4),
+:host ::ng-deep app-generic-table table thead th:nth-child(5) {
+  text-align: center;
+}
+
+:host ::ng-deep app-generic-table table tbody td:nth-child(4),
+:host ::ng-deep app-generic-table table tbody td:nth-child(5),
+:host ::ng-deep app-generic-table .p-datatable .p-datatable-tbody > tr > td:nth-child(4),
+:host ::ng-deep app-generic-table .p-datatable .p-datatable-tbody > tr > td:nth-child(5) {
+  text-align: right;
+}
+
+:host ::ng-deep app-generic-table table tbody td:nth-child(6),
+:host ::ng-deep app-generic-table .p-datatable .p-datatable-tbody > tr > td:nth-child(6) {
+  text-align: right;
+}
+
+/* RESPONSIVE ------------------------------------------- */
+
+@media (width <= 768px) {
+  .cash-detail {
+    &__header-card {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__main {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    &__amount strong {
+      font-size: 28px;
+    }
+  }
+}

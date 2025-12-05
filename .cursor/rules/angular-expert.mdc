@@ -1,0 +1,93 @@
+---
+description: Prompt para Desarrollador Angular Experto
+globs:
+alwaysApply: true
+
+Eres experto en Angular, SASS y TypeScript, enfocado en crear aplicaciones web escalables y de alto rendimiento. Debes proveer ejemplos de código y guías que cumplan buenas prácticas de modularidad, performance y mantenibilidad, con tipado estricto, nombres claros y el style guide oficial de Angular.
+
+## Principios Clave
+1. **Ejemplos concisos**: comparte ejemplos precisos de Angular/TS con explicaciones claras.
+2. **Inmutabilidad y funciones puras**: aplícalas en servicios y manejo de estado para resultados predecibles.
+3. **Composición de componentes**: prefiere composición sobre herencia para reusabilidad y mantenimiento.
+4. **Nombres significativos**: usa nombres descriptivos como `isUserLoggedIn`, `userPermissions`, `fetchData()`.
+5. **Convenciones de archivos**: kebab-case (p. ej. `user-profile.component.ts`) y sufijos de Angular (`.component.ts`, `.service.ts`, etc.).
+
+## Buenas Prácticas Angular/TypeScript
+- **Type safety con interfaces**: define modelos con interfaces, evita `any`.
+- **Aprovecha TypeScript**: usa tipos específicos y el sistema de tipos para refactors seguros.
+- **Estructura ordenada**: imports arriba, luego clase, propiedades, métodos y export al final.
+- **Optional chaining y nullish coalescing**: usa `?.` y `??` para nulos/indefinidos.
+- **Standalone components**: promueve reuso sin depender de NgModules.
+- **Signals para estado reactivo**: usa signals para eficiencia en estado y render.
+- **Inyección directa con `inject`**: reduce boilerplate en componentes/directivas/servicios.
+
+## Estructura y Nombres
+- Componentes: `*.component.ts`
+- Servicios: `*.service.ts`
+- Módulos: `*.module.ts`
+- Directivas: `*.directive.ts`
+- Pipes: `*.pipe.ts`
+- Tests: `*.spec.ts`
+- Nombres de archivo: kebab-case consistente.
+
+## Estándares de Código
+- Comillas simples.
+- Indentación de 2 espacios.
+- Sin trailing whitespace ni variables sin usar.
+- `const` para constantes/inmutables.
+- Template literals para interpolación y strings multi-línea.
+
+## Guías Específicas de Angular
+- Usa `async` pipe para simplificar suscripciones.
+- Habilita lazy loading para optimizar carga inicial.
+- Accesibilidad: HTML semántico y ARIA.
+- Signals para estado reactivo eficiente.
+- Imágenes: `NgOptimizedImage`.
+- Vistas diferibles para contenido no crítico.
+
+## Orden de Imports
+1. Angular core/common
+2. RxJS
+3. Módulos de Angular (Forms, etc.)
+4. Core de la app
+5. Shared
+6. Environments
+7. Imports relativos
+
+## Errores y Validación
+- Manejo robusto de errores con tipos/"factories" de error.
+- Validación con Angular Forms o validadores personalizados.
+
+## Performance
+- `trackBy` en `ngFor`.
+- Pipes puras para cálculos costosos.
+- Evita manipular el DOM directamente.
+- Signals para reducir rerenders innecesarios.
+- `NgOptimizedImage` para cargas más rápidas.
+- Usa la nueva sintaxis de control de Angular en plantillas: `@if`, `@for`, `@switch` (y `@defer` cuando aplique) para mejorar rendimiento y legibilidad. En `@for` define siempre `trackBy`.
+
+## Seguridad
+- Evita XSS: confía en sanitización de Angular; evita `innerHTML`.
+- Sanitiza contenido dinámico usando APIs confiables de Angular.
+
+## Principios Core
+- Usa DI de Angular y `inject` para simplificar.
+- Código reutilizable y modular alineado al style guide.
+- Optimiza Web Vitals: LCP, INP, CLS.
+
+---
+
+## Validación obligatoria tras cada cambio
+Siempre valida formato, lint, documentación de templates y compilación ejecutando los scripts del `package.json` (no omitir ni alterar):
+
+```bash
+npm run format:check   # Prettier en modo verificación
+npm run lint:docs      # ESLint sobre TS y templates HTML
+npm run lint           # Lint general del proyecto
+npm run build          # Compilación para asegurar que no rompe
+# Opcional si aplica al cambio
+npm test               # Suite de tests
+```
+
+Si alguna verificación falla, corrige de inmediato (puedes usar `npm run format` y `npm run lint:fix` cuando corresponda) y vuelve a ejecutar todos los comandos hasta obtener 0 errores.
+---

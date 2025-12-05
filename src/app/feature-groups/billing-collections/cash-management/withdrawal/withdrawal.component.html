@@ -1,0 +1,166 @@
+<div class="cash-withdrawal">
+  <div class="v2-surface cash-withdrawal-container">
+    <header class="cash-header-compact">
+      <div class="cash-header-left">
+        <i class="pi pi-minus-circle" aria-hidden="true"></i>
+        <h1 class="v2-title-20">Registrar Extracción</h1>
+        <span class="v2-text-14 v2-muted"> Registre los egresos de dinero </span>
+      </div>
+    </header>
+
+    <div class="balance-top-section">
+      <div class="balance-compact-card">
+        <div class="balance-compact-header">
+          <div class="balance-compact-title">
+            <i class="pi pi-wallet"></i>
+            <span>Saldo Disponible</span>
+          </div>
+          <strong class="balance-compact-total">${{ availableBalance() | number:'1.2-2' }}</strong>
+        </div>
+        <div class="balance-compact-breakdown">
+          <div class="balance-compact-item">
+            <span class="v2-text-14 v2-muted">Efectivo</span>
+            <strong class="v2-text-14">${{ availableBalance() | number:'1.2-2' }}</strong>
+          </div>
+          <div class="balance-compact-item">
+            <span class="v2-text-14 v2-muted">Tarjetas</span>
+            <strong class="v2-text-14">$0.00</strong>
+          </div>
+          @if (shouldShowBalanceWarning()) {
+          <div class="balance-compact-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span class="v2-text-14">Saldo bajo - verifique el monto</span>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="withdrawalForm" class="cash-withdrawal-grid">
+
+      <div class="cash-col cash-col-form">
+
+        <div class="form-section">
+          <h3 class="form-section-title">Datos de la Extracción</h3>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="concept" class="form-label">Concepto de extracción</label>
+              <div class="dropdown-wrapper">
+                <p-dropdown id="concept" formControlName="concept" [options]="formConfig.concepts" optionLabel="name"
+                  optionValue="value" placeholder="Seleccione un concepto">
+                </p-dropdown>
+              </div>
+              @if (withdrawalForm.get('concept')?.invalid && withdrawalForm.get('concept')?.touched) {
+              <small class="form-error">El concepto es requerido</small>
+              }
+            </div>
+          </div>
+
+          <div class="form-row form-row-dual">
+            <div class="form-field">
+              <label for="amount" class="form-label">Monto de extracción</label>
+              <div class="input-wrapper">
+                <p-inputNumber  (onFocus)="selectAll($event)" id="amount" formControlName="amount" mode="currency" currency="ARS" locale="es-AR"
+                  [minFractionDigits]="2" [maxFractionDigits]="2" [min]="formConfig.minAmount" [step]="0.01"
+                  placeholder="0.00">
+                </p-inputNumber>
+              </div>
+              @if (withdrawalForm.get('amount')?.invalid && withdrawalForm.get('amount')?.touched) {
+              <small class="form-error">
+                @if (withdrawalForm.get('amount')?.errors?.['required']) {
+                El monto es requerido
+                } @else if (withdrawalForm.get('amount')?.errors?.['min']) {
+                El monto debe ser mayor a ${{ formConfig.minAmount }}
+                }
+              </small>
+              }
+            </div>
+
+            <div class="form-field">
+              <label for="paymentMethod" class="form-label">Método de pago</label>
+              <div class="dropdown-wrapper">
+                <p-dropdown id="paymentMethod" formControlName="paymentMethod" [options]="formConfig.paymentMethods"
+                  optionLabel="label" optionValue="value" placeholder="Seleccione método">
+                </p-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="receiptNumber" class="form-label">Número de comprobante</label>
+              <input pInputText id="receiptNumber" type="text" formControlName="receiptNumber" placeholder="Opcional"
+                class="input-text" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="beneficiary" class="form-label">Beneficiario</label>
+              <input pInputText id="beneficiary" type="text" formControlName="beneficiary" placeholder="Opcional"
+                class="input-text" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="observations" class="form-label">Observaciones</label>
+              <textarea pInputTextarea id="observations" formControlName="observations" rows="2" maxlength="250"
+                placeholder="Información adicional (opcional)" class="textarea-input"></textarea>
+              <small class="char-count">{{ observationsLength }}/250</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cash-col cash-col-summary">
+        <p-accordion [activeIndex]="0" class="operation-summary-panel">
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header-content">
+                <i class="pi pi-receipt"></i>
+                <span>Resumen de la Operación</span>
+              </div>
+            </ng-template>
+
+            <div class="summary-grid">
+              <div class="summary-item">
+                <span class="v2-text-14 v2-muted">Tipo</span>
+                <span class="chip-withdrawal">Extracción</span>
+              </div>
+
+              <div class="summary-item">
+                <span class="v2-text-14 v2-muted">Concepto</span>
+                <strong class="v2-text-14">{{ selectedConceptLabel }}</strong>
+              </div>
+
+              <div class="summary-item">
+                <span class="v2-text-14 v2-muted">Método</span>
+                <strong class="v2-text-14">{{ selectedPaymentMethodLabel }}</strong>
+              </div>
+
+              <div class="summary-item summary-item-highlighted">
+                <div class="summary-highlight-content">
+                  <span class="v2-text-14 v2-muted">Monto a Extraer</span>
+                  <strong class="amount-withdrawal-large">-${{ withdrawalAmount | number:'1.2-2' }}</strong>
+                </div>
+              </div>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+
+    </form>
+
+    <div class="cash-actions">
+      <p-button label="Registrar Extracción" icon="pi pi-check-circle" (onClick)="onSubmit()"
+        [disabled]="isSubmitting() || !withdrawalForm.valid" severity="success">
+      </p-button>
+      <p-button label="Cancelar" icon="pi pi-times" (onClick)="onCancel()" [disabled]="isSubmitting()"
+        severity="secondary" [outlined]="true">
+      </p-button>
+    </div>
+
+  </div>
+</div>

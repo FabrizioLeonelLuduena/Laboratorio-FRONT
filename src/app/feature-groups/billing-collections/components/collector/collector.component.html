@@ -1,0 +1,318 @@
+<div class="collector-container">
+  @if (alert()) {
+    <app-generic-alert [type]="alert()!.type" [title]="alert()!.title" [text]="alert()!.text">
+    </app-generic-alert>
+  }
+
+  <div class="collector-grid">
+
+    <p-card class="items-section">
+      <ng-template pTemplate="header">
+        <div class="section-header">
+          <div class="tittle">
+            <h3>Items de cobro</h3>
+          </div>
+          <div class="selectors-group">
+            <div class="iva-selector">
+              <label for="ivaSelect">IVA:</label>
+              <p-dropdown id="ivaSelect"
+                          [options]="ivaOptions"
+                          [ngModel]="selectedIVA()"
+                          (ngModelChange)="onIVAChange($event)"
+                          placeholder="Seleccione IVA"
+                          optionLabel="label"
+                          optionValue="value"
+                          appendTo="body"
+                          [scrollHeight]="'200px'"></p-dropdown>
+            </div>
+            <div class="coseguro-selector">
+              <label for="coseguroInput">Coseguro:</label>
+              <p-inputNumber id="coseguroInput"
+                             (onFocus)="selectAll($event)"
+                             [ngModel]="coinsuranceValue()"
+                             (ngModelChange)="coinsuranceValue.set($event); emitDataChange()"
+                             mode="currency"
+                             currency="ARS"
+                             [min]="minAmount"
+                             [max]="maxAmount"
+                             [maxlength]="18"
+                             (onInput)="onCoinsuranceInput($event)"
+                             (onBlur)="onCoinsuranceBlur()"
+                             (keydown)="onCoinsuranceKeyDown($event)"
+                             [style]="{'width':'220px'}"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <div *ngIf="isLoading()" class="loading-container">
+        <app-spinner label="Cargando análisis..."></app-spinner>
+      </div>
+
+      <div class="table-wrapper" *ngIf="!isLoading()">
+        <app-generic-table
+          [data]="items()"
+          [columns]="tableColumns()"
+          [showCreateButton]="false"
+          [showSearch]="false"
+          [showFilters]="false"
+          [showDownloadMenu]="false"
+          [showActions]="false"
+          [pageable]="false"
+          [loading]="false"
+          dataKey="description">
+        </app-generic-table>
+      </div>
+
+      <ng-template #checkboxTemplate let-row>
+        <div class="text-center">
+          <p-checkbox
+            [ngModel]="row.selected"
+            [binary]="true"
+            (ngModelChange)="onItemSelectionChange(items().indexOf(row), $event)"
+            [inputId]="'item-checkbox-' + items().indexOf(row)"
+          ></p-checkbox>
+        </div>
+      </ng-template>
+
+      <ng-template #totalAmountTemplate let-row>
+        <div class="text-right">
+          {{ row.totalAmount  | currency:'ARS':'symbol-narrow':'1.2-2' }}
+        </div>
+      </ng-template>
+
+      <ng-template #coveredAmountTemplate let-row>
+        <div class="text-right">
+          {{ row.coveredAmount  | currency:'ARS':'symbol-narrow':'1.2-2' }}
+        </div>
+      </ng-template>
+
+      <ng-template #patientAmountTemplate let-row>
+        <div class="text-right" [class.font-bold]="row.selected">
+          {{ row.patientAmount  | currency:'ARS':'symbol-narrow':'1.2-2' }}
+        </div>
+      </ng-template>
+    </p-card>
+
+    <div class="payments-section">
+      <app-generic-button
+        type="create"
+        text="Agregar pago"
+        [disabled]="isPaymentComplete()"
+        (pressed)="openPaymentModal()"
+        class="add-payment-btn">
+      </app-generic-button>
+
+      <p-card class="payments-card" *ngIf="paymentMethods().length > 0">
+        <ng-template pTemplate="header">
+          <div class="section-header">
+            <h3>Medios de pago</h3>
+          </div>
+        </ng-template>
+
+        <div class="table-wrapper-payments">
+          <app-generic-table
+            [data]="paymentMethods()"
+            [columns]="paymentTableColumns()"
+            [loading]="false"
+            [showCreateButton] = "false"
+            [showSearch]="false"
+            [showDownloadMenu] = "false"
+            [showActions] = "false"
+            dataKey="id">
+          </app-generic-table>
+        </div>
+      </p-card>
+
+      <ng-template #paymentMethodTemplate let-row>
+        <span class="payment-badge">{{ getPaymentMethodLabel(row.paymentMethod) }}</span>
+        <div class="payment-details" *ngIf="row.bank || row.number">
+          <small *ngIf="row.bank">{{ row.bank }}</small>
+          <small *ngIf="row.number"> • {{ row.number }}</small>
+        </div>
+      </ng-template>
+
+      <ng-template #paymentAmountTemplate let-row>
+        <div class="text-right">
+          <strong class="payment-amount">{{ row.amount | currency:'ARS':'symbol-narrow':'1.2-2' }}</strong>
+        </div>
+      </ng-template>
+
+      <ng-template #paymentActionsTemplate let-row>
+        <div class="text-center">
+          <button
+            type="button"
+            pButton
+            icon="pi pi-trash"
+            class="p-button-danger p-button-text p-button-sm"
+            (click)="removePaymentMethod(row.id)"
+            pTooltip="Eliminar"
+            tooltipPosition="top">
+          </button>
+        </div>
+      </ng-template>
+
+      <div class="empty-payments-placeholder" *ngIf="paymentMethods().length === 0">
+        <i class="pi pi-wallet"></i>
+        <p>No hay medios de pago agregados</p>
+        <small>Agregue al menos un medio de pago</small>
+      </div>
+    </div>
+
+    <p-card class="summary-section" [ngClass]="{ 'payment-complete': isPaymentComplete() }">
+      <ng-template pTemplate="header">
+        <div class="section-header">
+          <h3>Resumen</h3>
+        </div>
+      </ng-template>
+
+      <div class="summary-content">
+
+        <p-accordion [multiple]="true" [activeIndex]="[1]" class="info-accordion">
+
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-user"></i>
+                <div class="accordion-title">
+                  <span class="label">Paciente</span>
+                  <span class="value">{{ patientData()?.lastName + ', ' + patientData()?.firstName || 'No seleccionado' }}</span>
+                </div>
+              </div>
+            </ng-template>
+            <div class="accordion-content">
+              <div class="info-detail">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">{{ patientData()?.firstName || 'N/A' }}</span>
+              </div>
+              <div class="info-detail">
+                <span class="detail-label">DNI:</span>
+                <span class="detail-value">{{ patientData()?.dni || 'N/A' }}</span>
+              </div>
+              <div class="info-detail">
+                <span class="detail-label">Nacimiento:</span>
+                <span class="detail-value">{{ patientData()?.birthDate || 'N/A' }}</span>
+              </div>
+              <div class="info-detail">
+                <span class="detail-label">Contacto:</span>
+                <span class="detail-value">
+                  {{ patientData()?.contacts?.[0]?.contactValue || 'N/A' }}
+                </span>
+              </div>
+
+              <div class="info-detail">
+                <span class="detail-label">Obra social:</span>
+                <span class="detail-value">{{ coverageData()?.insurerName || 'N/A' }}</span>
+              </div>
+              <div class="info-detail">
+                <span class="detail-label">N° Afiliado:</span>
+                <span class="detail-value">{{ coverageData()?.memberNumber || 'N/A' }}</span>
+              </div>
+              <div class="info-detail">
+                <span class="detail-label">Plan:</span>
+                <span class="detail-value">{{ coverageData()?.planName || 'N/A' }}</span>
+              </div>
+
+            </div>
+          </p-accordionTab>
+
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-dollar"></i>
+                <div class="accordion-title">
+                  <span class="label">Totales</span>
+                  <span class="value total-value">{{ grandTotal() | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                </div>
+              </div>
+            </ng-template>
+            <div class="accordion-content">
+              <div class="info-detail">
+                <span class="detail-label">Subtotal (sin IVA):</span>
+                <span class="detail-value">{{ subtotalWithoutIVA() | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+
+              <div class="info-detail">
+                <span class="detail-label">Subtotal (con Coseguro):</span>
+                <span class="detail-value">
+                   {{ subtotalWithCoinsurance() | currency:'ARS':'symbol-narrow':'1.2-2' }}
+                </span>
+              </div>
+
+              <div class="info-detail">
+                <span class="detail-label">IVA:</span>
+                <span class="detail-value">{{ totalIVA() | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+
+              <div class="info-detail grand-total-detail">
+                <span class="detail-label">TOTAL A PAGAR:</span>
+                <span class="detail-value">{{ grandTotal() | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+
+              <p-divider></p-divider>
+
+              <div class="info-detail paid-detail">
+                <span class="detail-label">
+                  Total Pagado:
+                </span>
+                <span class="detail-value">{{ totalPaid() | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+
+              <div class="info-detail remaining-detail" [ngClass]="{ 'complete': isPaymentComplete() }">
+                <span class="detail-label">
+                  Restante:
+                </span>
+                <span class="detail-value">{{ remainingAmount() | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+            </div>
+          </p-accordionTab>
+
+        </p-accordion>
+
+        <div class="action-buttons">
+          <app-generic-button
+            type="cancel"
+            label="Cancelar Atención"
+            (pressed)="onCancelAttention()">
+          </app-generic-button>
+
+          <app-generic-button
+            type="custom"
+            [text]="isValidating() ? 'Validando...' : (validateForm() ? 'Validar' : 'Validar')"
+            [icon]="isValidating() ? 'pi pi-spin pi-spinner' : (validateForm() ? 'pi pi-check-circle' : 'pi pi-shield')"
+            [color]="validateForm() ? '--brand-ig-stop-1' : '--brand-warn'"
+            customTextColor="--on-primary"
+            [disabled]="!validateForm() || isValidating()"
+            (pressed)="onValidate()"
+            class="validation-btn">
+          </app-generic-button>
+        </div>
+
+
+        <div class="status-message" [ngClass]="{ 'success': validateForm(), 'warning': !validateForm() }">
+          <i class="pi" [ngClass]="validateForm() ? 'pi-check-circle' : 'pi-info-circle'"></i>
+          <span *ngIf="isLoading()">Cargando datos...</span>
+          <span *ngIf="!isLoading() && selectedIVA() === null">Seleccione un IVA</span>
+          <span *ngIf="!isLoading() && selectedIVA() !== null && selectedItemsCount() === 0">Seleccione al menos un
+            item</span>
+          <span
+            *ngIf="!isLoading() && selectedIVA() !== null && selectedItemsCount() > 0 && !isPaymentComplete()">Complete
+            el pago total</span>
+          <span
+            *ngIf="!isLoading() && selectedIVA() !== null && selectedItemsCount() > 0 && isPaymentComplete() && !validateForm()">Click
+            en Validar para continuar</span>
+          <span *ngIf="validateForm()">Listo para continuar al siguiente paso</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>
+
+<app-edit-payment-modal
+  [visible]="showPaymentModal()"
+  [payment]="paymentModalData().payment ?? undefined"
+  [totalAmount]="paymentModalData().totalAmount"
+  [remainingBalance]="paymentModalData().remainingBalance"
+  (closed)="onPaymentModalClosed()"
+  (saved)="onPaymentSaved($event)">
+</app-edit-payment-modal>

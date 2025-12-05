@@ -1,0 +1,143 @@
+<div class="container mx-auto p-6">
+
+  @if (showAlert) {
+    <div class="alert-container">
+      <app-generic-alert
+        [type]="alertType"
+        [title]="alertTitle"
+        [text]="alertMessage">
+      </app-generic-alert>
+    </div>
+  }
+
+  @if (loading) {
+    <!-- ========== Loading State ========== -->
+    <div class="flex justify-center items-center h-screen">
+      <app-spinner
+        [overlay]="false"
+        label="Cargando vista previa...">
+      </app-spinner>
+    </div>
+  } @else if (template) {
+    <!-- ========== Header with Actions ========== -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-4">
+        <button
+          (click)="navigateToList()"
+          class="back-button"
+          title="Volver al listado">
+          <i class="pi pi-arrow-left"></i>
+        </button>
+        <div>
+          <h1 class="title-20 font-display">Vista previa de la planilla</h1>
+          <p class="text-14 text-gray-600 mt-1">
+            Revisá los detalles de la planilla antes de realizar acciones
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <app-generic-button
+          text="Editar"
+          icon="pi pi-pencil"
+          type="alternative"
+          (click)="onEdit()">
+        </app-generic-button>
+
+        <app-generic-button
+          text="Descargar PDF"
+          icon="pi pi-file-pdf"
+          type="accept"
+          (click)="onDownloadPdf()">
+        </app-generic-button>
+
+        <app-generic-button
+          text="Cargar resultados"
+          icon="pi pi-upload"
+          type="create"
+          (click)="onFillWorksheet()">
+        </app-generic-button>
+      </div>
+    </div>
+
+    <!-- ========== Template Preview Card ========== -->
+    <div class="preview-card">
+      <!-- Template Header -->
+      <div class="template-header">
+        <div class="template-icon">
+          <i class="pi pi-file-edit"></i>
+        </div>
+        <div class="template-info">
+          <h2 class="template-name">{{ template.name }}</h2>
+          <div class="template-meta">
+            <span class="meta-item">
+              <i class="pi pi-hashtag"></i>
+<!--              Código: <strong>{{ template.analysisShortCode }}</strong>-->
+            </span>
+            <span class="meta-item">
+              <i class="pi pi-list"></i>
+<!--              Análisis: <strong>{{ template.analyses.length || 0 }}</strong>-->
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analyses Section -->
+      <div class="analyses-section">
+        <div class="section-header">
+          <i class="pi pi-flask"></i>
+          <h3>Análisis incluidos en la plantilla</h3>
+        </div>
+
+        @if (template.analyses && template.analyses.length > 0) {
+          <div class="analyses-grid">
+<!--            @for (analysis of template.analyses; track analysis.analysisShortCode) {-->
+<!--              <div class="analysis-card">-->
+<!--                <div class="analysis-order-badge">-->
+<!--                  {{ analysis.displayOrder }}-->
+<!--                </div>-->
+<!--                <div class="analysis-content">-->
+<!--                  <div class="analysis-name">{{ analysis.analysisName }}</div>-->
+<!--                  <div class="analysis-code">-->
+<!--                    <i class="pi pi-hashtag"></i>-->
+<!--                    Código: {{ analysis.analysisShortCode }}-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            }-->
+          </div>
+        } @else {
+          <div class="no-analyses-state">
+            <i class="pi pi-info-circle"></i>
+            <p>No hay análisis asociados a esta planilla.</p>
+          </div>
+        }
+      </div>
+
+      <!-- Info Footer -->
+      <div class="info-footer">
+        <div class="info-item">
+          <i class="pi pi-info-circle"></i>
+          <span>Esta planilla se puede utilizar para cargar resultados de análisis de forma estructurada.</span>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <!-- ========== Not Found State ========== -->
+    <div class="empty-state-container">
+      <div class="empty-state">
+        <i class="pi pi-exclamation-triangle empty-state-icon"></i>
+        <h3 class="heading mb-2">Planilla no encontrada</h3>
+        <p class="text-14 text-gray-600 mb-6">
+          No se ha podido encontrar la planilla solicitada
+        </p>
+        <app-generic-button
+          text="Volver al listado"
+          icon="pi pi-arrow-left"
+          type="back"
+          (click)="navigateToList()">
+        </app-generic-button>
+      </div>
+    </div>
+  }
+</div>

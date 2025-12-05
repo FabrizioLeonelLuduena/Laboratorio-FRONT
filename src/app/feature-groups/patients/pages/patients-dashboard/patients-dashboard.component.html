@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-[var(--surface-ground)]">
+  <div class="w-full mx-auto pb-4">
+
+    <!-- Alerts -->
+    @if (alertType) {
+      <section class="mb-4">
+        <app-generic-alert
+          [type]="alertType!"
+          [title]="alertTitle"
+          [text]="alertText"
+          (dismissed)="alertType = null">
+        </app-generic-alert>
+      </section>
+    }
+
+    <!-- Metrics Section -->
+    <section class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-2 lg:grid-cols-4">
+      @for (metric of metrics; track metric.label) {
+        <app-dashboard-metric-card [metric]="metric"></app-dashboard-metric-card>
+      }
+    </section>
+
+    <!-- Charts Section -->
+    <section class="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-2">
+      @for (card of chartCards; track $index) {
+        @defer {
+          <app-dashboard-chart-card
+            [title]="card.title"
+            [description]="card.description"
+            [helpText]="card.helpText"
+            [chartType]="card.chartType"
+            [data]="card.data"
+            [options]="card.options"
+            [footer]="card.footer">
+          </app-dashboard-chart-card>
+        } @loading {
+          <div class="border border-[var(--surface-border)] rounded-lg bg-[var(--surface-card)] p-4">
+            <p-skeleton height="24px" styleClass="mb-3"></p-skeleton>
+            <p-skeleton height="260px"></p-skeleton>
+          </div>
+        } @placeholder {
+          <div class="border border-[var(--surface-border)] rounded-lg bg-[var(--surface-card)] p-4">
+            <p-skeleton height="24px" styleClass="mb-3"></p-skeleton>
+            <p-skeleton height="260px"></p-skeleton>
+          </div>
+        }
+      }
+    </section>
+
+  </div>
+</div>

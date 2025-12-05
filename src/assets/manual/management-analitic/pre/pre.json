@@ -1,0 +1,161 @@
+{
+  "id": "gestion-preanalitica",
+  "moduleId": "preanalitica",
+  "title": "Gestión de Pre-Analítica",
+  "intro": "Esta pantalla permite visualizar, filtrar y gestionar las muestras según su estado dentro del flujo pre‑analítico. Incluye acciones críticas como rechazo, derivación, carga de resultados y descarte de material.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Bioquímico",
+      "Técnico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "pantalla-principal",
+      "title": "Pantalla Principal y Estados",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La pantalla principal se organiza en <strong>pestañas</strong> que representan las distintas etapas del ciclo de vida de la muestra. Por defecto, se visualiza el <strong>Ingreso de muestra</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-income.png",
+          "alt": "Pantalla principal: Ingreso de muestra"
+        },
+        {
+          "type": "paragraph",
+          "text": "A medida que la muestra avanza, se ubicará en las siguientes pestañas:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>A preparar:</strong> Muestras aceptadas listas para acondicionamiento.",
+            "<strong>En tránsito:</strong> Indica el traslado hacia el sector correspondiente.",
+            "<strong>Recibido:</strong> Confirmación de recepción en el área de destino.",
+            "<strong>Procesando:</strong> Etapa previa al análisis clínico.",
+            "<strong>En derivación:</strong> Muestras enviadas a laboratorios externos.",
+            "<strong>A descartar:</strong> Muestras no aptas o finalizadas."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Vistas de los estados"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ejemplos visuales de las pestañas de seguimiento:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-preparing.png",
+          "alt": "Pestaña A preparar"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-transit.png",
+          "alt": "Pestaña En tránsito"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-received.png",
+          "alt": "Pestaña Recibido"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-procesing.png",
+          "alt": "Pestaña Procesando"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-disposable.png",
+          "alt": "Pestaña A descartar"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-derivation.png",
+          "alt": "derivacion"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "herramientas-acciones",
+      "title": "Herramientas y Acciones",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Filtros y Búsqueda"
+        },
+        {
+          "type": "paragraph",
+          "text": "Utilice los íconos superiores para localizar muestras específicas por protocolo o paciente, o segmentar por sucursal y área."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-income-filter.png",
+          "alt": "Filtros de búsqueda"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "listado-muestras",
+      "title": "Detalle de Muestras",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla central desglosa la información clave (Fecha, Protocolo, Paciente). Al seleccionar una fila o el ícono de detalle, se visualiza la información completa."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/pre/pre-income-detail.png",
+          "alt": "Detalle de la muestra en tabla"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Fecha / Hora",
+              "Momento exacto del registro."
+            ],
+            [
+              "Protocolo",
+              "Número único de identificación."
+            ],
+            [
+              "Paciente",
+              "Nombre del paciente vinculado."
+            ],
+            [
+              "Procedencia / Destino",
+              "Origen y Área técnica asignada."
+            ],
+            [
+              "Estado",
+              "Etiqueta visual del estado actual."
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "preanalítica",
+    "muestras",
+    "derivación",
+    "flujo",
+    "laboratorio"
+  ]
+}

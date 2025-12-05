@@ -1,0 +1,132 @@
+.payment-stepper-container {
+  min-width: 600px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.payment-stepper-container .stepper-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.payment-stepper-container .step-title {
+  text-align: center;
+}
+
+.payment-stepper-container .step-title h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.payment-stepper-container .step-title .step-amount {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  margin: 0.5rem 0 0;
+}
+
+.payment-stepper-container .step-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.payment-stepper-container .step-body .waiting-icon {
+  font-size: 5rem;
+  color: var(--primary-color);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.payment-stepper-container .step-body .waiting-icon i {
+  display: block;
+}
+
+.payment-stepper-container .step-body .waiting-message {
+  font-size: 1.1rem;
+  color: var(--text-color-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+.payment-stepper-container .step-body.qr-step {
+  gap: 1.5rem;
+}
+
+.payment-stepper-container .step-body.qr-step .qr-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  width: 100%;
+}
+
+.payment-stepper-container .step-body.qr-step .qr-container .qr-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  border: 2px dashed var(--surface-border);
+  border-radius: 8px;
+  background-color: var(--surface-50);
+}
+
+.payment-stepper-container .step-body.qr-step .qr-container .qr-placeholder .qr-icon {
+  font-size: 8rem;
+  color: var(--text-color-secondary);
+}
+
+.payment-stepper-container .step-body.qr-step .qr-container .qr-placeholder .qr-message {
+  font-size: 1rem;
+  color: var(--text-color-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+.payment-stepper-container .step-body.qr-step .qr-info {
+  font-size: 0.95rem;
+  color: var(--text-color-secondary);
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}
+
+.payment-stepper-container .step-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+.payment-stepper-container .step-actions .continue-btn {
+  min-width: 150px;
+}
+
+/* Pulse animation for waiting icon */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* Custom stepper styles */
+::ng-deep .custom-steps .p-steps-item.p-highlight .p-steps-number {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+}

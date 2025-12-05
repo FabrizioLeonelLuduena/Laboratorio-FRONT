@@ -1,0 +1,114 @@
+<div class="invoice-preview-wrapper">
+  <div class="invoice-document">
+    <!-- Issue date (top right) -->
+    <div class="emission-date">
+      <strong>Fecha de emisión:</strong> {{ getFormattedDate() }}
+    </div>
+
+    <!-- Customer information and terms -->
+    <div class="client-info-box">
+      <div class="client-row">
+        <div class="client-field">
+          <strong>CUIT:</strong> {{ billing?.customerId || '20-08442162-7' }}
+        </div>
+        <div class="client-field client-name-field">
+          <strong>Razón social / Nombre:</strong> {{ getClientName() }}
+        </div>
+      </div>
+      <div class="client-row">
+        <div class="client-field">
+          <strong>Condición frente al IVA:</strong> {{ getInvoiceTypeLabel() }}
+        </div>
+        <div class="client-field">
+          <strong>Domicilio comercial:</strong> {{ billing?.customerAddress || 'S/D' }}
+        </div>
+      </div>
+      <div class="client-row">
+        <div class="client-field">
+          <strong>Condición de venta:</strong> Contado
+        </div>
+        <div class="client-field" *ngIf="billing?.observations">
+          <strong>Observaciones:</strong> {{ billing?.observations }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Items table -->
+    <div class="items-table">
+      <div class="items-header">
+        <div class="col-producto">Servicio</div>
+        <div class="col-cantidad">Cantidad</div>
+        <div class="col-unidad">Unidad</div>
+        <div class="col-precio">Precio unitario</div>
+        <div class="col-descuento">Desc. %</div>
+        <div class="col-subtotal">Subtotal</div>
+      </div>
+      <div class="items-body">
+        @for (item of items; track $index) {
+          <div class="item-row">
+            <div class="col-producto">{{ item.description || 'Sin descripción' }}</div>
+            <div class="col-cantidad">{{ item.quantity || 0 }}</div>
+            <div class="col-unidad">uni</div>
+            <div class="col-precio">$ {{ item.unitPrice?.toFixed(2) || '0,00' }}</div>
+            <div class="col-descuento">{{ item.discountPercentage?.toFixed(2) || '0,00' }}%</div>
+            <div class="col-subtotal">$ {{ ((item.quantity || 0) * (item.unitPrice || 0)).toFixed(2) }}</div>
+          </div>
+        }
+        @if (items.length === 0) {
+          <div class="item-row empty">
+            <div class="col-producto">No hay ítems cargados</div>
+            <div class="col-cantidad">-</div>
+            <div class="col-unidad">-</div>
+            <div class="col-precio">-</div>
+            <div class="col-descuento">-</div>
+            <div class="col-subtotal">-</div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Totals -->
+    <div class="total-box">
+      <div class="total-amount">
+        <strong>Importe total: $</strong> <span class="amount">{{ getGrandTotal().toFixed(2) }}</span>
+      </div>
+      <div class="total-words">
+        <strong>Importe total en letras:</strong> {{ getGrandTotal() | numberToWords }}
+      </div>
+      <div class="iva-info">
+        <div class="transparency-regime">Régimen de transparencia fiscal para consumidores finales (Ley 27.743)</div>
+        <div class="iva-contained">
+          <strong>IVA incluido: $</strong> {{ getTotalTax().toFixed(2) }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment methods -->
+    @if (paymentMethods.length > 0) {
+      <div class="payment-section">
+        <div class="payment-title">Medios de pago</div>
+        <div class="payment-table">
+          <div class="payment-header">
+            <div class="pm-col-method">Medio</div>
+            <div class="pm-col-details">Detalle</div>
+            <div class="pm-col-amount">Importe</div>
+          </div>
+          <div class="payment-body">
+            @for (payment of paymentMethods; track $index) {
+              <div class="payment-row">
+                <div class="pm-col-method">{{ getPaymentMethodLabel(payment.paymentMethod) }}</div>
+                <div class="pm-col-details">{{ payment.bank || payment.fundDestination || '-' }}</div>
+                <div class="pm-col-amount">$ {{ payment.amount?.toFixed(2) || '0,00' }}</div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Footer -->
+    <div class="invoice-footer">
+      Documento generado por Colppy.com
+    </div>
+  </div>
+</div>

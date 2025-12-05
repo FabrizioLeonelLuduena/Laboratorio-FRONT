@@ -1,0 +1,146 @@
+{
+  "id": "gestion-nbu",
+  "moduleId": "internal",
+  "title": "Gestión de Versiones de NBU",
+  "intro": "El Nomenclador Bioquímico Único (NBU) es el estándar nacional que clasifica los análisis. Este módulo permite mantener el historial y la vigencia de cada versión, impactando directamente en la facturación y validación.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>Pantalla principal</strong> presenta un diseño dividido en dos paneles para optimizar la gestión:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Panel Izquierdo (Listado):</strong> Índice con las versiones registradas. Permite navegar entre ellas.",
+            "<strong>Panel Derecho (Área de Trabajo):</strong> Muestra el formulario de configuración para visualizar detalles o dar de alta nuevas versiones."
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/nbu/nbu-create.jpg",
+          "alt": "Pantalla principal de gestión de versiones NBU"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Buscador",
+              "<i class='pi pi-search'></i>",
+              "Campo en el panel izquierdo para localizar rápidamente una versión por su <strong>nombre</strong> o <strong>año</strong>."
+            ],
+            [
+              "Crear versión",
+              "<i class='pi pi-plus'></i>",
+              "Botón principal para iniciar el asistente de <strong>alta de una nueva versión</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-version",
+      "title": "Crear nueva versión",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El asistente de <strong>alta de versión</strong> se compone de tres pasos secuenciales:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/nbu/nbu-create-combo.jpg",
+          "alt": "Combo de crear NBU"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Datos generales",
+            "Datos de la versión",
+            "Confirmación"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cada paso debe completarse antes de avanzar al siguiente. Al finalizar, la nueva versión estará disponible en el listado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "detalle-version",
+      "title": "Detalle de versión",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La sección de <strong>detalle de versión</strong> permite visualizar y editar la información de una versión específica:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/nbu/nbu-selection.jpg",
+          "alt": "Selección de NBU"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Información general",
+            "Parámetros de la versión",
+            "Historial de cambios"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Los cambios realizados se registran en el historial, garantizando un seguimiento completo de las modificaciones."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "nbu",
+    "nomenclador",
+    "versiones",
+    "facturación",
+    "configuración"
+  ]
+}

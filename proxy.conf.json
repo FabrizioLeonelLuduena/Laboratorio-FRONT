@@ -1,0 +1,38 @@
+{
+  "/api/v1/stock": {
+    "target": "http://localhost:8011",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/v1/coverages": {
+    "target": "http://localhost:8004",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/v1/pre-analytical": {
+    "target": "http://localhost:8008",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/v1/pre-analytical": "/api/v1"
+    }
+  },
+  "/api/v1/analytical": {
+    "target": "http://localhost:8009",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/v1/analytical": "/api/v1"
+    }
+  },
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

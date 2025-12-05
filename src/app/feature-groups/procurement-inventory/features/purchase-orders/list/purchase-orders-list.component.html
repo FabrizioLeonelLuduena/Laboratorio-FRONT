@@ -1,0 +1,141 @@
+<div>
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+  
+  <!-- Alertas -->
+  @if(showAlert) {
+  <app-generic-alert
+    [message]="alertMessage"
+    [type]="alertType"
+    (close)="showAlert = false"
+  >
+  </app-generic-alert>
+  }
+
+  <!-- Template para badge de estado -->
+  <ng-template #statusBadgeTemplate let-row>
+    <app-generic-badge
+      [status]="getBadgeToken(row.status)"
+      [text]="getStatusLabel(row.status)"
+    ></app-generic-badge>
+  </ng-template>
+
+  <!-- Template para filas expandidas: muestra detalles de la orden -->
+  <ng-template #purchaseOrdersDetailTemplate let-row>
+    <ng-container *ngIf="ensureDetailsLoaded(row.id)">
+      @if (loadingDetailsMap.get(row.id)) {
+        <div class="text-gray-600 italic">Cargando detalles...</div>
+      } @else if (getDetailsForOrder(row.id).length === 0) {
+        <div class="text-gray-600 italic">No hay líneas para esta orden.</div>
+      } @else {
+        <app-generic-table
+          [data]="getDetailsForOrder(row.id)"
+          [columns]="detailColumns"
+          [showFilters]="false"
+          [showCreateButton]="false"
+          [showActions]="false"
+          [showSearch]="false"
+          [showDownloadMenu]="false"
+          [pageable]="false"
+          [loading]="false"
+          [expandable]="false"
+        >
+        </app-generic-table>
+      }
+    </ng-container>
+  </ng-template>
+
+  <!-- Tabla de órdenes de compra con GenericTableComponent -->
+  <app-generic-table
+    [data]="purchaseOrders"
+    [columns]="columns"
+    [filters]="filters"
+    [getActions]="getActionsForPurchaseOrder.bind(this)"
+    [loading]="loading"
+    [expandable]="true"
+    [expandedRowTemplate]="purchaseOrdersDetailTemplate"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [rows]="10"
+    [rowsOptions]="[5, 10, 25]"
+    [pageable]="true"
+    (filterChange)="onFilterChange($event)"
+    (globalFilterChange)="onGlobalFilter($event)"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+    (downloadExcel)="onExport({ type: 'excel' })"
+    (downloadPdf)="onExport({ type: 'pdf' })"
+    (create)="createPurchaseOrder()"
+  >
+  </app-generic-table>
+
+  <!-- Modal de desactivación para OC: solo confirmación, sin motivo -->
+  @if(showDeactivationModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [icon]="'pi pi-exclamation-triangle'"
+      [title]="'Desactivar orden de compra'"
+      [message]="deactivationModalMessage"
+      [showContent]="false"
+      (confirmed)="confirmDeactivation()"
+      (dismissed)="closeDeactivationModal()"
+    >
+    </app-confirmation-modal>
+  </div>
+  }
+
+  <!-- Modal de reactivación -->
+  @if(showReactivationModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [title]="'Reactivar orden de compra'"
+      [message]="reactivationModalMessage"
+      (confirmed)="confirmReactivation()"
+      (dismissed)="closeReactivationModal()"
+    >
+    </app-confirmation-modal>
+  </div>
+  }
+
+  <!-- Modal de cancelación usando componente genérico -->
+  @if(showCancelConfirmModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [icon]="'pi pi-exclamation-triangle'"
+      [title]="'Cancelar orden de compra'"
+      [message]="cancelModalMessage"
+      [inputField]="{
+        label: 'Motivo de cancelación',
+        placeholder: 'Ingrese el motivo por el cual se cancela esta orden (ej: proveedor sin stock, cambio de proveedor, error en la orden...)',
+        required: true,
+        type: 'textarea'
+      }"
+      (confirmed)="confirmCancelOrder($event)"
+      (dismissed)="cancelCancelModal()"
+    >
+    </app-confirmation-modal>
+  </div>
+  }
+
+  <!-- Modal de confirmación para marcar como recibida -->
+  @if(showReceiveConfirmModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [icon]="'pi pi-check-circle'"
+      [title]="'Marcar orden como recibida'"
+      [message]="'¿Está seguro que desea marcar esta orden como recibida? Se abrirá el formulario de recepción de mercadería con los datos de esta orden.'"
+      [showContent]="false"
+      (confirmed)="confirmReceiveOrder()"
+      (dismissed)="cancelReceiveModal()"
+    >
+    </app-confirmation-modal>
+  </div>
+  }
+</div>

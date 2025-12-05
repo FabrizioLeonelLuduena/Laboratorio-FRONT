@@ -1,0 +1,63 @@
+/* Estilos generales del contenedor */
+.goods-receipts-list-container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+
+
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem;
+  color: #16a34a;
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+
+.header p {
+  margin: 0;
+  color: #6c757d;
+}
+
+/* Estilos para checkboxes */
+input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+input[type="checkbox"]:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+/* Alineación de números de cantidad en tabla de detalles expandidos */
+
+/* Selector para tablas anidadas dentro de filas expandidas */
+::ng-deep .goods-receipts-list-container td[colspan] app-generic-table tbody tr td:nth-child(2) {
+  text-align: right;
+  width: 140px;
+  max-width: 140px;
+  padding-right: 2rem;
+}
+
+/* Selector adicional para asegurar que se aplique en cualquier tabla anidada */
+::ng-deep .goods-receipts-list-container app-generic-table app-generic-table tbody tr td:nth-child(2) {
+  text-align: right;
+  width: 140px;
+  max-width: 140px;
+  padding-right: 2rem;
+}
+
+/* Ancho reducido para el encabezado de la columna de cantidad */
+::ng-deep .goods-receipts-list-container td[colspan] app-generic-table thead tr th:nth-child(2),
+::ng-deep .goods-receipts-list-container app-generic-table app-generic-table thead tr th:nth-child(2) {
+  width: 140px;
+  max-width: 140px;
+  padding-right: 2rem;
+  white-space: nowrap;
+}
+

@@ -1,0 +1,299 @@
+{
+  "id": "gestion-analisis",
+  "moduleId": "analisis",
+  "title": "Gestión de Análisis",
+  "intro": "La pantalla de Análisis permite al personal del laboratorio gestionar, consultar y mantener actualizada toda la lista de pruebas disponibles, asegurando que se utilice la información correcta y estandarizada al momento de solicitar, procesar y facturar los estudios a los pacientes.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Bioquímico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Bioquímico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal-analisis",
+      "title": "Pantalla principal: Análisis",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra una lista de todos los <strong>análisis disponibles</strong> en el laboratorio. Contiene tres apartados principales: <strong>Análisis</strong>, <strong>NBU</strong> y <strong>Determinaciones</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/principal-analisis.jpg",
+          "alt": "Interfaz principal de análisis"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para <strong>filtrar rápidamente</strong> los resultados de la tabla."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Permite descargar la lista de resultados en formato <strong>PDF/Excel</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-analisis",
+      "title": "Contenido de la Tabla de Análisis",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información de los <strong>análisis</strong> mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Código",
+              "Código interno del análisis (opcional)."
+            ],
+            [
+              "Nombre de análisis",
+              "Nombrado del tipo de análisis."
+            ],
+            [
+              "Código corto",
+              "Alias abreviado."
+            ],
+            [
+              "NBU",
+              "Código del Nomenclador Bioquímico Unificado, código oficial que identifica a cada análisis."
+            ],
+            [
+              "Familia",
+              "Grupo o categoría del nomenclador NBU al cual pertenece cada análisis."
+            ],
+            [
+              "Tipo de muestra",
+              "Tipo de material biológico que se necesita para realizar el análisis."
+            ],
+            [
+              "UB",
+              "Unidades Bioquímicas establecidas por el NBU."
+            ],
+            [
+              "Acciones (⋮)",
+              "Abre un menú contextual para <strong>Ver Detalles</strong> o <strong>Editar</strong> el registro."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal-nbu",
+      "title": "Pantalla principal: NBU",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La pantalla <strong>NBU</strong> permite consultar, buscar y administrar todos los códigos del <strong>Nomenclador Bioquímico Unificado (NBU)</strong> disponibles en el sistema."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/analisis-nbu.jpg",
+          "alt": "NBU"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para filtrar los resultados de la tabla."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Permite descargar la lista de resultados en formato PDF/Excel."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-nbu",
+      "title": "Contenido de la Tabla NBU",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información del <strong>NBU</strong> mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Código NBU",
+              "Código del nomenclador bioquímico unificado."
+            ],
+            [
+              "Tipo",
+              "Indica la clasificación del código dentro del NBU. Ej: PMO (Plan Médico Obligatorio)."
+            ],
+            [
+              "Denominación",
+              "Nombre oficial completo de la práctica según el NBU."
+            ],
+            [
+              "Características",
+              "Información adicional del NBU: requisitos especiales, aclaraciones, condiciones de facturación, limitaciones, notas técnicas."
+            ],
+            [
+              "Acciones (⋮)",
+              "Abre un menú contextual para Ver Detalles o Editar el registro."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal-determinaciones",
+      "title": "Pantalla principal: Determinaciones",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La pantalla de <strong>Determinaciones</strong> permite gestionar el catálogo de análisis que realiza el laboratorio. Desde esta sección, los usuarios pueden consultar, filtrar y administrar cada estudio disponible, junto con su información técnica asociada."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para filtrar los resultados de la tabla."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Permite descargar la lista de resultados en formato PDF/Excel."
+            ],
+            [
+              "Crear nueva determinación",
+              "<i class='pi pi-plus'></i>",
+              "Crear una nueva determinación."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-determinaciones",
+      "title": "Contenido de la Tabla de Determinaciones",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información de las <strong>determinaciones</strong> mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Nombre de la Determinación",
+              "Muestra el nombre del análisis o estudio."
+            ],
+            [
+              "Unidad de Medida",
+              "Indica la unidad en la que se expresará el resultado del estudio (mg/dL, %, UI/L, etc.). Puede aparecer como 'No especificado'."
+            ],
+            [
+              "Tiempo de Manejo",
+              "Representa el tiempo estimado que requiere el análisis para ser procesado (horas o días)."
+            ],
+            [
+              "Variación Tolerada (%)",
+              "Muestra el margen de variación aceptable para ese análisis, expresado en porcentaje."
+            ],
+            [
+              "Acciones (⋮)",
+              "Abre un menú contextual para Ver Detalles o Editar el registro."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "análisis",
+    "NBU",
+    "determinaciones",
+    "catálogo",
+    "laboratorio"
+  ]
+}

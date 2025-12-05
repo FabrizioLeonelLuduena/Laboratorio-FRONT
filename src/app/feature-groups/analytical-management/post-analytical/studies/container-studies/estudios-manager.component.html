@@ -1,0 +1,33 @@
+<div class="main-content">
+  @if (!showDetail) {
+    <div class="listado-view">
+      <app-studies-list
+        [studies]="studies"
+        (viewDetail)="viewDetail($event)"
+        (filterChange)="onFilterChange($event)"
+        (globalFilterChange)="onGlobalFilterChange($event)">
+      </app-studies-list>
+    </div>
+  }
+
+  @if (showDetail && selectedStudy) {
+    <div class="detalle-view">
+      <app-estudio-detalle
+        [estudio]="selectedStudy"
+        (volver)="backToList()">
+      </app-estudio-detalle>
+    </div>
+  }
+</div>
+
+@if (alert) {
+  <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+}
+
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando estudios...'" />
+}
+
+<app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>

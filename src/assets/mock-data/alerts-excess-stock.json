@@ -1,0 +1,59 @@
+{
+  "alerts": [
+    {
+      "supplyId": 2,
+      "supplyName": "Jeringas Descartables 10ml",
+      "locationId": 1,
+      "locationName": "Almacén Principal",
+      "currentStock": 2800,
+      "maximumStock": 1000,
+      "excess": 1800,
+      "excessPercentage": 180.0,
+      "severity": "CRITICAL"
+    },
+    {
+      "supplyId": 7,
+      "supplyName": "Barbijos Quirúrgicos Triple Capa",
+      "locationId": 6,
+      "locationName": "Farmacia Central",
+      "currentStock": 4500,
+      "maximumStock": 2000,
+      "excess": 2500,
+      "excessPercentage": 125.0,
+      "severity": "CRITICAL"
+    },
+    {
+      "supplyId": 5,
+      "supplyName": "Alcohol en Gel 500ml",
+      "locationId": 1,
+      "locationName": "Almacén Principal",
+      "currentStock": 1850,
+      "maximumStock": 600,
+      "excess": 1250,
+      "excessPercentage": 208.3,
+      "severity": "CRITICAL"
+    },
+    {
+      "supplyId": 1,
+      "supplyName": "Guantes de Nitrilo - Caja x100",
+      "locationId": 1,
+      "locationName": "Almacén Principal",
+      "currentStock": 3200,
+      "maximumStock": 500,
+      "excess": 2700,
+      "excessPercentage": 540.0,
+      "severity": "CRITICAL"
+    },
+    {
+      "supplyId": 3,
+      "supplyName": "Gasas Estériles 10x10cm",
+      "locationId": 6,
+      "locationName": "Farmacia Central",
+      "currentStock": 2100,
+      "maximumStock": 800,
+      "excess": 1300,
+      "excessPercentage": 162.5,
+      "severity": "CRITICAL"
+    }
+  ]
+}

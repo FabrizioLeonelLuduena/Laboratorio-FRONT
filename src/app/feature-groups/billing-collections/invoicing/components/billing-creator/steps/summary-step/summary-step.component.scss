@@ -1,0 +1,292 @@
+// Invoice Preview Wrapper - Estilo Colppy compacto
+.invoice-preview-wrapper {
+  width: 100%;
+  padding: 0.5rem;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+// Invoice Document (Paper-like)
+.invoice-document {
+  max-width: 900px;
+  width: 100%;
+  background: white;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  border: 1px solid #000;
+  padding: 0.75rem 1rem;
+  font-family: Arial, sans-serif;
+}
+
+// Issue date (top right)
+.emission-date {
+  text-align: right;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+// Customer information (boxed section)
+.client-info-box {
+  border: 1px solid #000;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.client-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.client-field {
+  flex: 1;
+
+  strong {
+    font-weight: 700;
+  }
+
+  &.client-name-field {
+    flex: 2;
+  }
+}
+
+// Tabla de Items (formato Colppy)
+.items-table {
+  border: 1px solid #000;
+  margin-bottom: 0.75rem;
+  font-size: 0.7rem;
+}
+
+.items-header {
+  display: grid;
+  grid-template-columns: 2.5fr 0.8fr 0.8fr 1fr 0.9fr 1fr;
+  background: #fff;
+  border-bottom: 1px solid #000;
+}
+
+.items-header > div {
+  padding: 0.35rem 0.5rem;
+  font-weight: 700;
+  border-right: 1px solid #000;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.col-producto,
+.col-cantidad,
+.col-unidad,
+.col-precio,
+.col-descuento,
+.col-subtotal {
+  display: flex;
+  align-items: center;
+}
+
+.col-cantidad,
+.col-precio,
+.col-descuento,
+.col-subtotal {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.items-body {
+  min-height: 40px;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 2.5fr 0.8fr 0.8fr 1fr 0.9fr 1fr;
+  border-bottom: 1px solid #e0e0e0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.empty {
+    > div {
+      color: #999;
+      font-style: italic;
+    }
+  }
+
+  > div {
+    padding: 0.4rem 0.5rem;
+    border-right: 1px solid #e0e0e0;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+// Caja de Total (formato Colppy)
+.total-box {
+  border: 1px solid #000;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.7rem;
+}
+
+.total-amount {
+  text-align: right;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+
+  strong {
+    font-weight: 700;
+  }
+
+  .amount {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+}
+
+.total-words {
+  margin-bottom: 0.4rem;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.iva-info {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.transparency-regime {
+  font-size: 0.65rem;
+  margin-bottom: 0.25rem;
+}
+
+.iva-contained {
+  font-size: 0.7rem;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+// Payment methods section
+.payment-section {
+  margin-bottom: 0.75rem;
+}
+
+.payment-title {
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.payment-table {
+  border: 1px solid #000;
+  font-size: 0.7rem;
+}
+
+.payment-header {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr;
+  background: #f5f5f5;
+  border-bottom: 1px solid #000;
+  font-weight: 700;
+}
+
+.payment-header > div {
+  padding: 0.35rem 0.5rem;
+  border-right: 1px solid #000;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.payment-body {
+  min-height: 30px;
+}
+
+.payment-row {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr;
+  border-bottom: 1px solid #e0e0e0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  > div {
+    padding: 0.4rem 0.5rem;
+    border-right: 1px solid #e0e0e0;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.pm-col-method,
+.pm-col-details {
+  display: flex;
+  align-items: center;
+}
+
+.pm-col-amount {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  font-weight: 600;
+}
+
+// Footer
+.invoice-footer {
+  text-align: right;
+  font-size: 0.65rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+// Responsive
+@media (width <= 768px) {
+  .invoice-document {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .items-header,
+  .item-row {
+    grid-template-columns: 1fr;
+  }
+
+  .items-header > div,
+  .item-row > div {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .payment-header,
+  .payment-row {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-header > div,
+  .payment-row > div {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+}

@@ -1,0 +1,45 @@
+:host {
+  display: inline-block;
+}
+
+:host ::ng-deep .p-overlaypanel {
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
+  overflow: hidden;
+  background: var(--card);
+  min-width: 160px;
+}
+
+.menu-container {
+  list-style: none;
+  margin: 0;
+  padding: 3px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: var(--on-surface);
+  border-left: 3px solid transparent;
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+
+.menu-item i {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+.menu-item:hover {
+  background: var(--brand-primary-soft);
+  color: var(--brand-primary-700);
+  border-left: 2px solid var(--brand-primary);
+}

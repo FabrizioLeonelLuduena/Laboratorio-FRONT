@@ -1,0 +1,16 @@
+<div class="overlay" *ngIf="visible">
+  <div class="modal" [ngStyle]="{ width: width, height: height }">
+
+    <button class="close" (click)="onClose()">
+      <i class="pi pi-times"></i>
+    </button>
+
+    <h2 class="modal-title">{{ title }}</h2>
+
+    <div class="divider"></div>
+
+    <div class="content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+
+.kpi-section {
+  margin-bottom: 2rem;
+}
+
+.top-section {
+  margin-bottom: 1.5rem;
+}

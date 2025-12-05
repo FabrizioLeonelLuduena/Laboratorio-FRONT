@@ -1,0 +1,300 @@
+<!-- 🔍 Toolbar (buscador / acciones superiores) -->
+@if(config().showGlobalFilter || config().exportCsv || config().showAddButton || config().showFilterButton || toolbarTitle()) {
+  <div class="toolbar">
+    <!-- Buscador global -->
+    @if(config().showGlobalFilter) {
+      <span class="toolbar-left">
+      <input
+        pInputText
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="searchValue"
+        (input)="onGlobalFilter($event)"
+        aria-label="Buscar en tabla"
+      />
+        @if(searchValue) {
+
+          <app-generic-button
+            type="custom"
+            color="--card"
+            text="Limpiar"
+            customTextColor="--brand-primary-700"
+            borderColor="--border-color"
+            (pressed)="clearFilters()"
+          ></app-generic-button>
+        }
+        <!-- Botón filtros a la derecha del buscador con indicador -->
+        @if(config().showFilterButton) {
+          <span class="filter-button-wrapper" [class.active]="filtersActive()">
+            <app-generic-button
+              type="custom"
+              color="--card"
+              icon="pi pi-filter"
+              customTextColor="--brand-primary-700"
+              borderColor="--border-color"
+              (pressed)="openFilterPanel($event)"
+            ></app-generic-button>
+            @if((filtersCount() ?? 0) > 0) {
+              <span class="indicator-badge" title="Filtros aplicados">{{ filtersCount() }}</span>
+            }
+            @if((filtersCount() ?? 0) === 0 && filtersActive()) {
+              <span class="indicator-dot" title="Filtros activos"></span>
+            }
+      </span>
+        }
+
+        @if(filters().length > 0) {
+          <app-filter
+            [filters]="filters()"
+            (filterChange)="onFilterChange($event)"
+          ></app-filter>
+        }
+    </span>
+    }
+
+    <!-- Título centrado entre filtros y acciones -->
+    @if(toolbarTitle()) {
+      <h3 class="toolbar-title title-20">{{ toolbarTitle() }}</h3>
+    }
+
+    <span class="flex-spacer"></span>
+
+    <!-- Exportar: abre popover de exportación -->
+    @if(config().exportCsv) {
+      <app-generic-button
+        type="custom"
+        icon="pi pi-download"
+        color="--card"
+        customTextColor="--brand-primary-700"
+        borderColor="--border-color"
+        (pressed)="openExportPanel($event)"
+      ></app-generic-button>
+    }
+
+    <!-- Botón agregar '+' opcional -->
+    @if(config().showAddButton) {
+      <app-generic-button
+        type="create"
+        (pressed)="onAddClick()"
+      ></app-generic-button>
+    }
+  </div>
+}
+<!-- 📊 Table -->
+<p-table
+  #dt
+  [value]="tableData"
+  [columns]="normalizedColumns"
+  [rows]="config().rows || 10"
+  [paginator]="config().paginator && !loading()"
+  [rowsPerPageOptions]="config().showRowsPerPageSelector ? (config().rowsPerPageOptions || [10,25,50]) : []"
+  [globalFilterFields]="globalFields"
+  [reorderableColumns]="config().reorderableColumns ?? true"
+  [scrollable]="config().scrollable || false"
+  [scrollHeight]="config().scrollHeight || 'flex'"
+  [rowHover]="!loading()"
+  [styleClass]="
+      (config().stickyFirstColumn ? 'adv-table-sticky-first ' : '') +
+      (!config().showPaginationControls ? 'adv-table--hide-pages ' : '') +
+      (!config().showRowsPerPageSelector ? 'adv-table--hide-rpp' : '')
+    "
+  [dataKey]="dataKey()"
+  [loading]="loading()"
+  [lazy]="config().lazy || false"
+  [totalRecords]="totalRecords()"
+  (onLazyLoad)="lazyLoad.emit($event)"
+  [expandedRowKeys]="expandedRows"
+  (onRowExpand)="onRowExpand($event)"
+  (onRowCollapse)="onRowCollapse($event)"
+>
+  <!-- 🏷️ Header -->
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      @if(config().expandable) {
+        <th class="adv-table__th--expand"></th>
+      }
+      @for(col of columns; track col.field) {
+        <th [pSortableColumn]="col.field">
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      }
+      @if(config().showActions) {
+        <th class="adv-table__th--actions">Acciones</th>
+      }
+    </tr>
+  </ng-template>
+
+  <!-- 📄 Body Rows -->
+  <ng-template pTemplate="body" let-row let-columns="columns" let-expanded="expanded">
+    <tr>
+      @if(isSkeleton(row)) {
+        <!-- 💀 Skeleton Loading State -->
+        @if(config().expandable) {
+          <td>
+            <p-skeleton width="2rem" height="2rem" styleClass="rounded-full"></p-skeleton>
+          </td>
+        }
+        @for(col of columns; track col.field) {
+          <td>
+            <p-skeleton width="100%" height="1.5rem"></p-skeleton>
+          </td>
+        }
+        @if(config().showActions) {
+          <td>
+            <p-skeleton width="2rem" height="2rem" styleClass="rounded-full"></p-skeleton>
+          </td>
+        }
+      } @else {
+        <!-- ✅ Real Data Row -->
+        @if(config().expandable) {
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="row"
+              class="p-button-text p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              [attr.aria-label]="expanded ? 'Contraer fila' : 'Expandir fila'"
+              [title]="expanded ? 'Contraer fila' : 'Expandir fila'"
+            >
+            </button>
+          </td>
+        }
+        @for(col of columns; track col.field) {
+          <td>
+            @if(col.template) {
+              <ng-container
+                [ngTemplateOutlet]="col.template"
+                [ngTemplateOutletContext]="{ $implicit: row }">
+              </ng-container>
+            }
+            @else {
+              {{ row[col.field] }}
+            }
+          </td>
+        }
+        @if(config().showActions) {
+          <td class="actions-cell">
+            <app-generic-button
+              type="custom"
+              icon="pi pi-ellipsis-v"
+              color="--card"
+              customTextColor="--brand-primary-700"
+              (pressed)="openActionsMenu($event, row)"
+            ></app-generic-button>
+          </td>
+        }
+      }
+    </tr>
+  </ng-template>
+
+  <!-- 🔽 Expanded Content -->
+  <ng-template pTemplate="rowexpansion" let-row>
+    <tr>
+      <td [attr.colspan]="colSpanTotal">
+        <div class="p-3">
+          @if(expandedTemplate()) {
+            <ng-container>
+              <ng-container [ngTemplateOutlet]="expandedTemplate()!" [ngTemplateOutletContext]="{ $implicit: row }"></ng-container>
+            </ng-container>
+          }
+          @else {
+            <div class="text-14">Sin contenido expandido.</div>
+          }
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <!-- 🚫 Empty Message -->
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="colSpanTotal" class="empty-state">
+        <div><i class="pi pi-info-circle"></i> {{ emptyMessage() }}</div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+
+<!-- Actions Dropdown Menu (outside table) -->
+<p-popover #op>
+  <div class="actions-popover-content">
+    @if(currentRowActions.length > 0) {
+      @for(action of currentRowActions; track action.type) {
+        <app-generic-button class="fill"
+          type="custom"
+          [text]="action.label"
+          [icon]="action.icon || ''"
+          color="--card"
+          customTextColor="--brand-primary-700"
+          [disabled]="isActionDisabled(action)"
+          (pressed)="executeAction(action.type)"
+        ></app-generic-button>
+      }
+    }
+    @else {
+      <app-generic-button class="fill"
+        type="custom"
+        text="Editar"
+        icon="pi pi-pencil"
+        color="--card"
+        customTextColor="--brand-primary-700"
+        [disabled]="false"
+        (pressed)="executeAction('editar')"
+      ></app-generic-button>
+      <app-generic-button class="fill"
+        type="custom"
+        text="Eliminar"
+        icon="pi pi-trash"
+        color="--card"
+        customTextColor="--brand-primary-700"
+        [disabled]="false"
+        (pressed)="executeAction('eliminar')"
+      ></app-generic-button>
+    }
+  </div>
+</p-popover>
+
+<!-- Filters Popover (outside table) -->
+<p-popover #fp (onShow)="onFilterShow()" (onHide)="onFilterHide()" [dismissable]="false">
+  <div class="filters-popover-content">
+    @if(filterTemplate()) {
+      <ng-container [ngTemplateOutlet]="filterTemplate()!" [ngTemplateOutletContext]="{ $implicit: filterApi }"></ng-container>
+    }
+    @else {
+      <div class="empty-filters">Sin filtros configurados.</div>
+    }
+  </div>
+</p-popover>
+
+<!-- Export Popover (outside table) -->
+<p-popover #xp [dismissable]="false">
+  <div class="export-popover-content">
+    @if(exportTemplate()) {
+      <ng-container [ngTemplateOutlet]="exportTemplate()!" [ngTemplateOutletContext]="{ $implicit: exportApi }"></ng-container>
+    }
+    @else {
+      <div class="export-options">
+        <app-generic-button class="fill"
+          type="custom"
+          text="Excel"
+          icon="pi pi-file-excel"
+          color="--card"
+          customTextColor="--brand-primary-700"
+          (pressed)="emitExportAction('excel'); closeExportPanel()"
+        ></app-generic-button>
+        <app-generic-button class="fill"
+          type="custom"
+          text="PDF"
+          icon="pi pi-file-pdf"
+          color="--card"
+          customTextColor="--brand-primary-700"
+          (pressed)="emitExportAction('pdf'); closeExportPanel()"
+        ></app-generic-button>
+      </div>
+    }
+  </div>
+</p-popover>

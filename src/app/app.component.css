@@ -1,0 +1,7 @@
+/* Positions the bell component in the layout (top right corner) */
+.app-bell-fixed {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1200;
+}

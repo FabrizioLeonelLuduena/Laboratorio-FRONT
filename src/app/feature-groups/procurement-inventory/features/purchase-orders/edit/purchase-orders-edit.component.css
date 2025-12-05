@@ -1,0 +1,82 @@
+/* ========== ESTILOS COMPARTIDOS DE GRILLA ========== */
+@import '../../../../../shared/styles/grid-styles.css';
+
+/* ========== ESTILOS ESPECÍFICOS DE PURCHASE ORDERS EDIT ========== */
+
+/* Wrapper de la grilla */
+.purchase-order-items-grid-wrapper {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* Override de columnas para 7 columnas específicas de purchase orders */
+.purchase-order-items-grid-wrapper .grid-header,
+.purchase-order-items-grid-wrapper .grid-row {
+  grid-template-columns: 2fr 120px 150px 100px 120px 120px 70px;
+}
+
+/* Ajustar la celda col-descripcion para que ocupe el espacio del 2fr */
+.purchase-order-items-grid-wrapper .grid-cell.col-descripcion {
+  max-width: none;
+  min-width: 0;
+}
+
+/* Sección de total */
+.total-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-top: 2px solid #e5e7eb;
+}
+
+.total-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.total-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #14b8a6;
+}
+
+/* Wrapper específico para input de precio con símbolo $ */
+.price-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.price-input {
+  padding-left: 1.5rem;
+  background-color: #f3f4f6;
+}
+
+/* Responsive */
+@media (width <= 1400px) {
+  .purchase-order-items-grid-wrapper .grid-header,
+  .purchase-order-items-grid-wrapper .grid-row {
+    grid-template-columns: 1.5fr 100px 130px 90px 110px 110px 70px;
+  }
+}
+
+@media (width <= 1200px) {
+  .purchase-order-items-grid-wrapper .grid-header,
+  .purchase-order-items-grid-wrapper .grid-row {
+    grid-template-columns: 1fr 90px 120px 80px 100px 100px 60px;
+    font-size: 0.8rem;
+  }
+}

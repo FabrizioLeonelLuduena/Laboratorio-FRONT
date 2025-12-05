@@ -1,0 +1,95 @@
+<div class="section-container">
+  <div class="section-header">
+    <h2>
+      <i class="pi pi-user"></i>
+      Información de la cuenta
+    </h2>
+    <p class="section-description">
+      Información básica de tu cuenta en el sistema de laboratorio
+    </p>
+  </div>
+
+  <div class="info-grid">
+    <!-- Username -->
+    <div class="info-item">
+      <label class="info-label">Nombre de Usuario</label>
+      <div class="info-value">{{ user.username }}</div>
+    </div>
+
+    <!-- Email -->
+    <div class="info-item">
+      <label class="info-label">Correo Electrónico</label>
+      <div class="info-value">
+        {{ user.email }}
+        @if (user.isEmailVerified) {
+          <i class="pi pi-verified verified-icon" title="Email verificado"></i>
+        } @else {
+          <i class="pi pi-exclamation-triangle warning-icon" title="Email no verificado"></i>
+        }
+      </div>
+    </div>
+
+    <!-- Document -->
+    <div class="info-item">
+      <label class="info-label">Documento</label>
+      <div class="info-value">{{ user.document }}</div>
+    </div>
+
+    <!-- Account Status -->
+    <div class="info-item">
+      <label class="info-label">Estado de la Cuenta</label>
+      <div class="info-value">
+        @if (user.isActive) {
+          <span class="status-badge status-active">
+            <i class="pi pi-check-circle"></i> Activa
+          </span>
+        } @else {
+          <span class="status-badge status-inactive">
+            <i class="pi pi-times-circle"></i> Inactiva
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- Account Type -->
+    <div class="info-item">
+      <label class="info-label">Tipo de Cuenta</label>
+      <div class="info-value">
+        @if (user.isExternal) {
+          <span class="type-badge type-external">
+            <i class="pi pi-cloud"></i> Usuario Externo
+          </span>
+        } @else {
+          <span class="type-badge type-internal">
+            <i class="pi pi-building"></i> Usuario Interno
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- Creation Date -->
+    <div class="info-item">
+      <label class="info-label">Fecha de Creación</label>
+      <div class="info-value">{{ formatDate(user.createdDatetime) }}</div>
+    </div>
+
+    <!-- Last Update -->
+    <div class="info-item">
+      <label class="info-label">Última Actualización</label>
+      <div class="info-value">{{ formatDate(user.lastUpdatedDatetime) }}</div>
+    </div>
+  </div>
+
+  <!-- Additional Info Section -->
+  <div class="info-section">
+    <h3>Información Adicional</h3>
+    <div class="alert alert-info">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>Nota:</strong> Esta información es administrada por el sistema.
+        Si necesitas modificar algún dato, dirígete a la sección "Detalles de la cuenta"
+        o contacta al administrador del sistema.
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,157 @@
+<div class="section-container">
+  <div class="section-header">
+    <h2>
+      <i class="pi pi-shield"></i>
+      Centro de seguridad
+    </h2>
+    <p class="section-description">
+      Administra la seguridad de tu cuenta y sesiones
+    </p>
+  </div>
+
+  <!-- Security Score -->
+  <div class="security-score-card">
+    <div class="score-header">
+      <i class="pi pi-shield"></i>
+      <h3>Nivel de Seguridad</h3>
+    </div>
+    <div class="score-content">
+      <div class="score-gauge">
+        <div class="score-circle" [class]="getSecurityLevel().class">
+          <span class="score-value">{{ getSecurityScore() }}%</span>
+        </div>
+        <div class="score-label">
+          Seguridad <strong>{{ getSecurityLevel().label }}</strong>
+        </div>
+      </div>
+      <div class="score-details">
+        <div class="security-item" [class.completed]="user.isEmailVerified">
+          <i [class]="user.isEmailVerified ? 'pi pi-check-circle' : 'pi pi-times-circle'"></i>
+          <span>Email verificado</span>
+        </div>
+        <div class="security-item" [class.completed]="!user.isFirstLogin">
+          <i [class]="!user.isFirstLogin ? 'pi pi-check-circle' : 'pi pi-times-circle'"></i>
+          <span>Contraseña personalizada</span>
+        </div>
+        <div class="security-item" [class.completed]="user.isActive">
+          <i [class]="user.isActive ? 'pi pi-check-circle' : 'pi pi-times-circle'"></i>
+          <span>Cuenta activa</span>
+        </div>
+        <div class="security-item" [class.completed]="user.roles && user.roles.length > 0">
+          <i [class]="user.roles && user.roles.length > 0 ? 'pi pi-check-circle' : 'pi pi-times-circle'"></i>
+          <span>Permisos configurados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Actions -->
+  <div class="security-actions-grid">
+    <!-- Change Password -->
+    <div class="action-card">
+      <div class="action-icon">
+        <i class="pi pi-key"></i>
+      </div>
+      <div class="action-content">
+        <h4>Cambiar Contraseña</h4>
+        <p>Actualiza tu contraseña para mantener tu cuenta segura</p>
+        <button class="btn btn-primary" (click)="changePassword()" [disabled]="passwordResetSending">
+          <i class="pi pi-lock"></i>
+          {{ passwordResetSending ? 'Enviando...' : 'Cambiar Contraseña' }}
+        </button>
+
+        @if (passwordResetFeedback) {
+          <div
+            class="inline-alert"
+            [class.inline-alert--error]="passwordResetFeedback.type === 'error'"
+            [class.inline-alert--success]="passwordResetFeedback.type === 'success'"
+          >
+            <i
+              class="pi"
+              [class]="passwordResetFeedback.type === 'error' ? 'pi-exclamation-triangle' : 'pi-check-circle'"
+            ></i>
+            <span>{{ passwordResetFeedback.message }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Session Info -->
+    <div class="action-card">
+      <div class="action-icon">
+        <i class="pi pi-clock"></i>
+      </div>
+      <div class="action-content">
+        <h4>Sesión Actual</h4>
+        @if (tokenExpiration()) {
+          <p><strong>Expira:</strong> {{ tokenExpiration() }}</p>
+        } @else {
+          <p>Información de sesión no disponible</p>
+        }
+        <button class="btn btn-danger" (click)="logout()">
+          <i class="pi pi-sign-out"></i>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Verification Status -->
+  @if (!user.isEmailVerified) {
+    <div class="alert alert-warning">
+      <i class="pi pi-exclamation-triangle"></i>
+      <div>
+        <strong>Email no verificado:</strong>
+        Tu correo electrónico aún no ha sido verificado.
+        Revisa tu bandeja de entrada para completar la verificación.
+      </div>
+    </div>
+  }
+
+  <!-- Security Recommendations -->
+  <div class="recommendations-section">
+    <h3>Recomendaciones de Seguridad</h3>
+    <div class="recommendations-list">
+      <div class="recommendation-item">
+        <i class="pi pi-check"></i>
+        <div>
+          <strong>Usa una contraseña fuerte:</strong>
+          Combina letras mayúsculas, minúsculas, números y símbolos.
+        </div>
+      </div>
+      <div class="recommendation-item">
+        <i class="pi pi-check"></i>
+        <div>
+          <strong>No compartas tu contraseña:</strong>
+          Nunca compartas tus credenciales con nadie, incluso si dicen ser del soporte técnico.
+        </div>
+      </div>
+      <div class="recommendation-item">
+        <i class="pi pi-check"></i>
+        <div>
+          <strong>Cierra sesión en equipos compartidos:</strong>
+          Siempre cierra tu sesión cuando uses computadoras del laboratorio.
+        </div>
+      </div>
+      <div class="recommendation-item">
+        <i class="pi pi-check"></i>
+        <div>
+          <strong>Actualiza tus datos:</strong>
+          Mantén tu información de contacto actualizada para recuperación de cuenta.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Section -->
+  <div class="help-section">
+    <div class="alert alert-info">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>¿Necesitas ayuda?</strong>
+        Si tienes problemas con tu cuenta o sospechas de actividad inusual,
+        contacta inmediatamente al administrador del sistema.
+      </div>
+    </div>
+  </div>
+</div>

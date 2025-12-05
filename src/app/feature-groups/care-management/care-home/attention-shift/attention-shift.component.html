@@ -1,0 +1,138 @@
+<div class="main-container">
+  @if (loading()) {
+    <app-spinner
+      [overlay]="true"
+      [label]="'Cargando turnos de atención...'" />
+  }
+
+  @if (alertVisible){
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertMessage"
+    ></app-generic-alert>
+  }
+
+  <div class="toolbar">
+
+    <div class="toolbar-left">
+      <h1 class="title">Turnos de atención</h1>
+    </div>
+
+    <div class="toolbar-right">
+      @if (selectedBox) {
+        <div class="current-box">
+          <i class="pi pi-box"></i>
+          <span>BOX {{ selectedBox }}</span>
+        </div>
+      }
+
+      <app-generic-button
+        type="custom"
+        [text]="'Configurar box'"
+        [icon]="'pi pi-cog'"
+        [color]="'primary'"
+        (pressed)="openBoxConfig()">
+      </app-generic-button>
+    </div>
+
+  </div>
+
+  <ng-template #dateTimeTemplate let-row>
+    {{ row.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+  </ng-template>
+
+  <ng-template #hasAppointmentTemplate let-row>
+    <app-generic-badge
+      [status]="row.hasAppointment ? 'activo' : 'inactivo'"
+      [text]="row.hasAppointment ? 'Sí' : 'No'"
+    ></app-generic-badge>
+  </ng-template>
+
+  <app-generic-table
+    [data]="queuePatients"
+    [columns]="columns"
+    [loading]="loading()"
+    [getActions]="getActionsForRow"
+    [columnTemplates]="columnTemplates"
+    [filters]="filters"
+    [rows]="10"
+    [rowsOptions]="[5, 10, 20]"
+    [showSearch]="true"
+    [showCreateButton]="true"
+    (filterChange)="onFilterChange($event)"
+    (create)="onCreateBlankAttention()"
+  ></app-generic-table>
+
+  <app-generic-modal-form
+    [visible]="showBlankAttentionDialog"
+    title="Atención en blanco"
+    [width]="'450px'"
+    (closed)="onCancelBlankAttention()">
+    <div class="dialog-content">
+      <label>Documento del paciente</label>
+      <p-inputNumber
+        inputId="patientDni"
+        [(ngModel)]="patientDniInput"
+        [useGrouping]="false"
+        minlength="7"
+        maxlength="8"
+        pattern="[0-9]{7,8}"
+      ></p-inputNumber>
+    </div>
+    <div class="dialog-actions">
+      <app-generic-button
+        type="cancel"
+        (pressed)="onCancelBlankAttention()"
+      ></app-generic-button>
+      <app-generic-button
+        type="accept"
+        (pressed)="onSubmitBlankAttention()"
+      ></app-generic-button>
+    </div>
+  </app-generic-modal-form>
+
+  <!-- Box Config Modal -->
+  <app-generic-modal-form
+    [visible]="showBoxConfigDialog"
+    title="Seleccione un box"
+    [width]="'450px'"
+    (closed)="onCancelBoxConfig()">
+
+    <div class="dialog-content">
+      <div class="config-section">
+        <div class="extractors-grid" #extractorsGrid>
+          @for (b of boxes; track b) {
+            <div
+              class="extractor-item"
+              [class.selected]="selectedBox === b"
+              (click)="selectBox(b)"
+            >
+              <span class="extractor-key">{{ b }}</span>
+              <div class="extractor-name">Box {{ b }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="dialog-actions">
+      <app-generic-button
+        type="cancel"
+        text="Cancelar"
+        (pressed)="onCancelBoxConfig()"
+      ></app-generic-button>
+
+      <app-generic-button
+        type="accept"
+        text="Aceptar"
+        (pressed)="onSubmitBoxConfig()"
+      ></app-generic-button>
+    </div>
+  </app-generic-modal-form>
+</div>
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

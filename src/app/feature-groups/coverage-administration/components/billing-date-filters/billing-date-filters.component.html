@@ -1,0 +1,37 @@
+<div class="billing-date-filters-container bg-[var(--surface-card)] border border-[var(--border-color)] rounded-lg p-4 mb-6">
+  <div class="flex flex-wrap gap-4">
+    <div class="flex flex-col gap-2 max-w-64">
+      <label for="dateFrom" class="text-sm font-medium text-[var(--text-color)]">
+        Desde
+      </label>
+      <p-datepicker
+        inputId="dateFrom"
+        [(ngModel)]="dateFrom"
+        (ngModelChange)="onDateFromChange($event)"
+        [maxDate]="maxDate"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        iconDisplay="input"
+        placeholder="Seleccione fecha desde"
+        styleClass="w-full"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2 max-w-64">
+      <label for="dateTo" class="text-sm font-medium text-[var(--text-color)]">
+        Hasta
+      </label>
+      <p-datepicker
+        inputId="dateTo"
+        [(ngModel)]="dateTo"
+        (ngModelChange)="onDateToChange($event)"
+        [maxDate]="maxDate"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        iconDisplay="input"
+        placeholder="Seleccione fecha hasta"
+        styleClass="w-full"
+      />
+    </div>
+  </div>
+</div>

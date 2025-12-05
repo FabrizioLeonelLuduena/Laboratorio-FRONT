@@ -1,0 +1,279 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Liquidaciones",
+  "intro": "A continuación se detallan las acciones que los usuarios pueden realizar en el módulo de Liquidaciones.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador",
+      "Facturación"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador - Facturación"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-liquidacion",
+      "title": "Crear Nueva Liquidación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón <i class='pi pi-plus'></i> (esquina superior derecha) desde la pantalla principal de <strong>Liquidaciones</strong>, se redirige a la pantalla <strong>'Nueva Liquidación'</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/liquidation/new-liquidation.jpeg",
+          "alt": "Pantalla de creación de liquidación"
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros de búsqueda de prestaciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "En la parte superior de la pantalla se encuentran los filtros para buscar las prestaciones que se desean incluir en la liquidación:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Seleccionar aseguradora:</strong> Desplegable para elegir la obra social o aseguradora (obligatorio).",
+            "<strong>Fecha desde:</strong> Fecha inicial del período de prestaciones a incluir.",
+            "<strong>Fecha hasta:</strong> Fecha final del período de prestaciones a incluir.",
+            "<strong>Tipo de liquidación:</strong> Desplegable para seleccionar si es liquidación Común o Especial."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Una vez configurados los filtros, debe hacer clic en el botón <strong><i class='pi pi-search'></i> Buscar prestaciones</strong> para visualizar los resultados."
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado inicial"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cuando se ingresa por primera vez a la pantalla de creación, se muestra el siguiente mensaje:"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>'Debe buscar prestaciones'</strong>"
+        },
+        {
+          "type": "paragraph",
+          "text": "Con la instrucción: <em>'Utilice los filtros superiores y presione \"Buscar prestaciones\" para visualizar los resultados.'</em>"
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Después de realizar la búsqueda, se mostrarán todas las prestaciones que cumplan con los criterios seleccionados, las cuales podrán ser agregadas al carrito para crear la liquidación."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Regresa a la pantalla principal de liquidaciones sin crear ninguna liquidación."
+            ],
+            [
+              "Carrito <i class='pi pi-shopping-cart'></i>",
+              "Una vez agregadas las prestaciones deseadas, permite revisar el carrito y confirmar la creación de la liquidación."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "confirmar-liquidacion",
+      "title": "Confirmar Liquidación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Confirmar</strong> desde el menú de acciones <strong>(⋮)</strong> de una liquidación en estado <strong>PENDIENTE</strong>, se cambia su estado a <strong>FACTURADA</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/liquidation/liquidation-pending-actions.jpg",
+          "alt": "Acción confirmar liquidación"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta acción indica que la liquidación ha sido procesada y está lista para la facturación correspondiente."
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Nota importante",
+          "text": "<br>Una vez confirmada una liquidación, <strong>no se puede revertir</strong> esta acción. Asegúrese de verificar todos los datos antes de confirmar."
+        }
+      ]
+    },
+    {
+      "id": "anular-liquidacion",
+      "title": "Anular Liquidación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Anular</strong> desde el menú de acciones <strong>(⋮)</strong>, se puede anular una liquidación."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/liquidation/liquidation-pending-actions.jpg",
+          "alt": "Acción anular liquidación"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta acción cambia el estado de la liquidación a <strong>ANULADA</strong> y la deja inactiva en el sistema."
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Advertencia",
+          "text": "<br>Anular una liquidación es una acción que debe realizarse con cuidado, ya que afecta el registro de prestaciones facturadas."
+        }
+      ]
+    },
+    {
+      "id": "cobrar-liquidacion",
+      "title": "Cobrar Liquidación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Cobrar</strong> desde el menú de acciones <strong>(⋮)</strong> de una liquidación en estado <strong>FACTURADA</strong>, se puede registrar el cobro de la liquidación."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/liquidation/liquidation-informed-actions.jpg",
+          "alt": "Acción cobrar liquidación"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta opción permite registrar que el pago de la liquidación ha sido recibido por parte de la obra social o aseguradora."
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Información",
+          "text": "<br>El registro del cobro permite mantener un control financiero adecuado de las liquidaciones facturadas y pendientes de pago."
+        }
+      ]
+    },
+    {
+      "id": "descargar-excel-liquidacion",
+      "title": "Descargar Excel de Liquidación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Todas las liquidaciones, independientemente de su estado, tienen disponible la opción <strong>Descargar Excel</strong> en el menú de acciones <strong>(⋮)</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/liquidation/Pantalla-principal-liquidaciones.jpeg",
+          "alt": "Descargar Excel de liquidación"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta función genera un archivo Excel con el detalle completo de la liquidación, incluyendo:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Listado de todas las prestaciones incluidas",
+            "Datos del paciente",
+            "Fecha de realización",
+            "Códigos de prestación",
+            "Montos individuales y totales",
+            "Información de la aseguradora"
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Uso recomendado",
+          "text": "<br>El archivo Excel es ideal para enviar a la obra social o aseguradora, realizar auditorías internas, o mantener un respaldo de la información de cada liquidación."
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado-general",
+      "title": "Descargar Listado General",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la tabla principal de liquidaciones. Esta función respeta los filtros aplicados previamente."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+        {
+          "type": "subtitle",
+          "text": "Formato de Descarga"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema genera un archivo que contiene el listado de todas las liquidaciones visibles en la tabla, con sus respectivos datos:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Aseguradora",
+            "Tipo de liquidación",
+            "Período",
+            "Cantidad de prestaciones",
+            "Total",
+            "Estado"
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos y la búsqueda realizada. Para descargar todas las liquidaciones, asegúrese de que no haya filtros aplicados."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "liquidaciones",
+    "facturación",
+    "obras sociales",
+    "creación",
+    "confirmación",
+    "anulación",
+    "cobro",
+    "exportación"
+  ]
+}

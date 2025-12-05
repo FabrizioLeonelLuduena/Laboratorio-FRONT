@@ -1,0 +1,331 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Gestión de Médicos",
+  "intro": "A continuación se detallan los procesos para el alta, modificación y administración de los profesionales médicos en el sistema.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Secretaría",
+      "Administrador"
+    ]
+  },
+  "sections": [
+     {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador - Secretaría"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+ {
+  "id": "alta-medico",
+  "title": "Crear Nuevo Médico",
+  "open": false,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "El proceso de registro inicia al hacer clic en el botón Nuevo médico <strong><i class='pi pi-plus'></i> </strong> ubicado en la esquina superior derecha de la pantalla principal de Médicos."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/internal/medics/medics-create.jpg",
+      "alt": "Pantalla de alta de médico"
+    },
+
+    {
+      "type": "subtitle",
+      "text": "Campos a completar"
+    },
+
+
+    {
+      "type": "table",
+      "columns": [
+        "Campo",
+        "Descripción",
+        "Obligatorio"
+      ],
+      "rows": [
+        [
+          "Apellido y Nombre",
+          "Datos <strong>filiatorios</strong> del profesional.",
+          "Sí"
+        ],
+        [
+          "Tipo de Matrícula",
+          "Jurisdicción correspondiente (ej. Nacional, Provincial, Especialista).",
+          "Sí"
+        ],
+        [
+          "Matrícula",
+          "Número <strong>único e identificatorio</strong> del profesional.",
+          "Sí"
+        ],
+        [
+          "Correo",
+          "Dirección de <strong>email de contacto</strong>.",
+          "No"
+        ],
+        [
+          "Género",
+          "Selector (Masculino / Femenino).",
+          "Sí"
+        ],
+        [
+          "Observaciones",
+          "Campo opcional para <strong>notas internas</strong>.",
+          "No"
+        ]
+      ]
+    },
+
+    {
+      "type": "note",
+      "variant": "warning",
+      "title": "✓ Nota importante",
+      "text": "<br>Si se intenta registrar una <strong>Matrícula ya existente</strong>, el sistema bloqueará la acción para evitar duplicaciones."
+    },
+
+
+    {
+      "type": "subtitle",
+      "text": "Acciones Finales"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Botón",
+        "Acción"
+      ],
+      "rows": [
+        [
+          "Guardar",
+          "<strong>Confirma el alta</strong> del profesional en la base de datos."
+        ],
+        [
+          "Cancelar",
+          "<strong>Descarta los cambios</strong> y vuelve al listado principal."
+        ]
+      ]
+    }
+  ]
+},
+
+    {
+      "id": "editar-medico",
+      "title": "Editar Médico",
+      "open": false,
+      "blocks": [
+           {
+          "type": "paragraph",
+          "text": "Esta función permite modificar, completar o actualizar los datos personales de un médico registrado. Para iniciar, busque al médico y, en la columna <strong>Acciones</strong>, seleccione la opción <strong>Editar</strong> <i class='pi pi-pencil'></i> del menú desplegable."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/medics/medics-edit.jpg",
+          "alt": "Edición de datos de médico"
+        },
+       {
+      "type": "subtitle",
+      "text": "Campos a modificar"
+    },
+
+
+    {
+      "type": "table",
+      "columns": [
+        "Campo",
+        "Descripción",
+        "Obligatorio"
+      ],
+      "rows": [
+        [
+          "Apellido y Nombre",
+          "Datos <strong>filiatorios</strong> del profesional.",
+          "Sí"
+        ],
+        [
+          "Tipo de Matrícula",
+          "Jurisdicción correspondiente (ej. Nacional, Provincial, Especialista).",
+          "Sí"
+        ],
+        [
+          "Matrícula",
+          "Número <strong>único e identificatorio</strong> del profesional.",
+          "Sí"
+        ],
+        [
+          "Correo",
+          "Dirección de <strong>email de contacto</strong>.",
+          "No"
+        ],
+        [
+          "Género",
+          "Selector (Masculino / Femenino).",
+          "Sí"
+        ],
+        [
+          "Observaciones",
+          "Campo opcional para <strong>notas internas</strong>.",
+          "No"
+        ]
+      ]
+    },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Nota importante",
+          "text": "<br>Modificar la matrícula de un médico puede afectar la trazabilidad de órdenes históricas si el sistema no realiza una actualización en cascada. Asegúrese de que el cambio sea estrictamente necesario."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "<strong>Actualiza la información</strong> del médico en el sistema."
+            ],
+            [
+              "Cancelar",
+              "Cierra la edición <strong>sin aplicar modificaciones</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+  {
+  "id": "desactivar-medico",
+  "title": "Desactivar Médico",
+  "open": false,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Al seleccionar la opción <strong>Desactivar</strong> desde el menú de acciones <strong>⋮</strong>, se abre una ventana de confirmación que permite <strong>inhabilitar</strong> al médico dentro del sistema."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/internal/medics/medics-deactivate.jpg",
+      "alt": "Desactivar médico"
+    },
+
+    {
+      "type": "subtitle",
+      "text": "Confirmación de Estado"
+    },
+    {
+      "type": "paragraph",
+      "text": "Al confirmar la acción, el sistema actualizará el estado del médico:"
+    },
+    {
+      "type": "badge",
+      "text": "INACTIVO",
+      "color": "#FCA5A5"
+    },
+
+    {
+      "type": "note",
+      "variant": "warning",
+      "title": "✓ Nota importante",
+      "text": "<br>Al desactivar al médico, dejará de aparecer en la selección de nuevas órdenes o cargas. Antes de continuar, asegúrese de estar completamente seguro de cambiar su estado."
+    },
+
+    {
+      "type": "divider"
+    },
+
+    {
+      "type": "subtitle",
+      "text": "Acciones Finales"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Botón",
+        "Función"
+      ],
+      "rows": [
+        [
+          "Aceptar",
+          "Confirma el cambio de estado y <strong>inhabilita</strong> al médico para nuevos ingresos."
+        ],
+        [
+          "Cancelar",
+          "Mantiene al médico en estado <strong>Activo</strong>."
+        ]
+      ]
+    }
+  ]
+},
+
+    {
+      "id": "descargar-listado-medicos",
+      "title": "Descargar Listado de Médicos",
+      "open": false,
+      "blocks": [
+       {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/medics/medics-download.jpg",
+          "alt": "Opciones de descarga"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos disponibles"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Excel",
+              "Genera una hoja de cálculo editable (<strong>.xlsx</strong>). Ideal para realizar reportes personalizados o auditorías de matrículas."
+            ],
+            [
+              "PDF",
+              "Genera un documento no editable (<strong>.pdf</strong>). Recomendado para impresión de cartillas o archivo digital estático."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota Importante",
+          "text": "<br>La descarga respetará los filtros de búsqueda que tenga aplicados en el momento (ej. si filtró por Apellido, el Excel solo contendrá esos resultados)."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "médicos",
+    "alta",
+    "matrícula",
+    "edición",
+    "desactivar",
+    "exportación",
+    "excel",
+    "pdf"
+  ]
+}

@@ -1,0 +1,10 @@
+@if (isHomeDashboard) {
+  <!-- Only show title without home icon on home-dashboard -->
+  <div class="breadcrumb-home-title">
+    <span>Laboratorio Castillo Chidiak</span>
+  </div>
+} @else {
+  <!-- Show full breadcrumb with home icon on other routes -->
+  <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+}
+

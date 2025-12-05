@@ -1,0 +1,105 @@
+<!-- Configuration List Container -->
+<div class="configuration-list-container">
+
+  <!-- Error Alert - Floating Top Right -->
+  @if (showError()) {
+    <div class="floating-alert-container">
+      <app-generic-alert
+        [type]="'error'"
+        [title]="errorTitle()"
+        [text]="errorMessage()">
+      </app-generic-alert>
+    </div>
+  }
+
+  <!-- Loading Spinner -->
+  @if (loading()) {
+    <div class="loading-container">
+      <app-spinner [label]="'Cargando configuraciones...'" [overlay]="false"></app-spinner>
+    </div>
+  }
+
+  <!-- Configurations Table - Siempre visible -->
+  @if (!loading()) {
+    <div class="table-section">
+
+      <!-- Templates para columnas personalizadas -->
+      <ng-template #timeTpl let-row>
+        <div class="time-range-stacked">
+          <div class="time-line">
+            <span>{{ row.startTime | appointmentTime }}</span>
+          </div>
+          <div class="time-line">
+            <span>{{ row.endTime | appointmentTime }}</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #typeTpl let-row>
+        <p-chip
+          [label]="row.isRecurringLabel"
+          [styleClass]="row.isRecurring ? 'p-chip-info' : 'p-chip-success'">
+        </p-chip>
+      </ng-template>
+
+      <ng-template #capacityTpl let-row>
+        <div class="capacity-info">
+          <i class="pi pi-users"></i>
+          <span>{{ row.appointmentsCount }} turnos</span>
+        </div>
+      </ng-template>
+
+      <ng-template #periodTpl let-row>
+        <div class="period-stacked">
+          <div class="period-line">{{ row.validFromDate | date:'dd/MM/yyyy' }}</div>
+          <div class="period-line">{{ row.validToDate | date:'dd/MM/yyyy' }}</div>
+        </div>
+      </ng-template>
+
+      <ng-template #statusTpl let-row>
+        <app-generic-badge
+          [status]="row.active ? 'activo' : 'inactivo'"
+          [text]="row.active ? 'Activo' : 'Inactivo'">
+        </app-generic-badge>
+      </ng-template>
+
+      <!-- Tabla Genérica con Filtros Integrados -->
+      <app-generic-table
+        [data]="displayRows()"
+        [columns]="tableColumns"
+        [filters]="branchFilters()"
+        (filterChange)="onFilterChange($event)"
+        [getActions]="getActions"
+        [rows]="10"
+        [rowsOptions]="[10, 25, 50]"
+        [pageable]="true"
+        [loading]="loading()"
+        (create)="onCreate()"
+        (downloadExcel)="onExportExcel()"
+        (downloadPdf)="onExportPdf()">
+      </app-generic-table>
+    </div>
+  }
+
+  <!-- Delete Confirmation Modal -->
+  @if (showDeleteModal()) {
+    <app-confirmation-modal
+      icon="pi pi-exclamation-triangle"
+      title="Confirmar Eliminación"
+      [message]="'¿Está seguro que desea eliminar esta configuración? Esta acción no se puede deshacer.'"
+      (confirmed)="onDeleteConfirmed()"
+      (dismissed)="onDeleteCancelled()">
+    </app-confirmation-modal>
+  }
+
+</div>
+
+@if (alert) {
+  <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+}
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

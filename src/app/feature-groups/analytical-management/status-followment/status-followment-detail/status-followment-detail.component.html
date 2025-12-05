@@ -1,0 +1,182 @@
+<!-- Loading -->
+@if (isLoading) {
+  <div class="loading-detail">
+    <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+  </div>
+}
+
+<!-- ================== DETALLE COMPLETO =================== -->
+@if (protocol && !isLoading) {
+
+  <!-- ======= ENCABEZADO GENERAL ======= -->
+  <div class="header-row">
+    <div class="header-left">
+      <app-generic-button
+        type="back"
+        text="Volver"
+        icon="pi pi-arrow-left"
+        (pressed)="goBack()">
+      </app-generic-button>
+      <h2 class="protocol-title">Protocolo #{{ protocol.id }} - {{ protocol.patientName }}</h2>
+    </div>
+
+    <div class="header-right">
+      <app-generic-badge
+        size="lg"
+        [status]="mapStatusToBadge(protocol.status)"
+        [text]="protocol.status | translateStatus">
+      </app-generic-badge>
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <span class="meta-label">Fecha de creación: </span>
+      <span class="meta-value">{{ protocol.createdAt | date:'dd/MM/yyyy' }}</span>
+    </div>
+
+    <div class="meta-item">
+      <span class="meta-label">Hora de creación: </span>
+      <span class="meta-value">{{ protocol.createdAt | date:'HH:mm' }}</span>
+    </div>
+
+    <div class="meta-item">
+      <span class="meta-label">Generado por: </span>
+      <span class="meta-value">{{ protocol.userCreator }}</span>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- ============================================
+       TABLA DE ANÁLISIS
+  ============================================ -->
+  <h3 class="section-title">Análisis</h3>
+
+  @if (analysisRows.length === 0 && analysisFilterTerm) {
+    <div class="no-analysis-message">
+      <i class="pi pi-info-circle"></i>
+      <span>No se encontraron análisis que coincidan con el filtro</span>
+    </div>
+  } @else {
+    <p-card>
+      <app-generic-table
+        [data]="analysisRows"
+        [columns]="columns"
+        [loading]="isLoading"
+        [columnTemplates]="columnTemplates"
+        [expandable]="true"
+        [expandedRowTemplate]="expandedRowTpl"
+        [dataKey]="'id'"
+        [showCreateButton]="false"
+        [showDownloadMenu]="false"
+        [showFilters]="false"
+        [showSearch]="true"
+        [showActions]="false"
+        [pageable]="false"
+        (globalFilterChange)="onGlobalFilterChange($event)">
+      </app-generic-table>
+    </p-card>
+  }
+
+}
+
+<!-- Status template for the analysis table -->
+<ng-template #statusTpl let-row>
+  <app-generic-badge
+    [status]="mapStatusToBadge(row.status)"
+    [text]="row.status | translateStatus">
+  </app-generic-badge>
+</ng-template>
+
+<!-- Expanded row template showing sample cards -->
+<ng-template #expandedRowTpl let-row>
+  <!-- <div class="expanded-analysis-row"> -->
+    <h4 class="subsection-title">Muestras Asociadas</h4>
+
+    @if (getSamplesForAnalysis(row.originalAnalysis).length === 0) {
+      <div class="no-samples-message">
+        <i class="pi pi-info-circle"></i>
+        <span>No hay muestras asociadas a este análisis</span>
+      </div>
+    } @else {
+      <p-carousel
+        [value]="getSamplesForAnalysis(row.originalAnalysis)"
+        [circular]="false"
+        [numVisible]="3"
+        [numScroll]="1"
+        [showIndicators]="false"
+        [responsiveOptions]="carouselResponsiveOptions"
+        styleClass="samples-carousel">
+        <ng-template let-sample pTemplate="item">
+        @defer {
+          <div class="sample-card-compact">
+            
+            <!-- Header clickeable -->
+            <div class="sample-card-compact-header" 
+                 (click)="toggleSampleCard(row.id, sample.sampleId)"
+                 [style.cursor]="'pointer'">
+              <i class="pi card-chevron"
+                 [ngClass]="isSampleCardExpanded(row.id, sample.sampleId) ? 'pi-chevron-up' : 'pi-chevron-down'">
+              </i>
+              <div class="sample-card-header-content">
+                <span class="sample-type-compact">{{ sample.type | translateSampleType }}</span>
+              </div>
+            </div>
+            
+            <!-- Body básico (siempre visible) -->
+            <div class="sample-card-compact-body">
+              <div class="sample-info-row">
+                <span class="info-label">Método:</span>
+                <span class="info-value">{{ sample.collectionMethod || 'Desconocido' }}</span>
+              </div>
+              @if (sample.statuses && sample.statuses.length > 0) {
+                <div class="sample-info-row">
+                  <span class="info-label">Estado:</span>
+                  <app-generic-badge
+                    size="sm"
+                    [status]="mapStatusToBadge(sample.statuses[sample.statuses.length - 1].status)"
+                    [text]="sample.statuses[sample.statuses.length - 1].status | translateStatus">
+                  </app-generic-badge>
+                </div>
+                <div class="sample-info-row">
+                  <span class="info-label">Actualizado:</span>
+                  <span class="info-value-small">{{ (sample.statuses[sample.statuses.length - 1].dateTime | date:'dd/MM/yyyy HH:mm') || 'Desconocido' }}</span>
+                </div>
+              }
+            </div>
+            
+            <!-- Timeline expandible (historial de estados) -->
+            @if (isSampleCardExpanded(row.id, sample.sampleId) && sample.statuses && sample.statuses.length > 0) {
+              <div class="sample-card-timeline">
+                <h5 class="timeline-title">Historial de Estados</h5>
+                @for (status of sample.statuses; track $index; let isLast = $last) {
+                  <div class="timeline-step-card" [class.last-step-card]="isLast">
+                    <div class="step-card-content">
+                      <app-generic-badge
+                        size="sm"
+                        [status]="mapStatusToBadge(status.status)"
+                        [text]="status.status | translateStatus">
+                      </app-generic-badge>
+                      <span class="step-card-time">{{ (status.dateTime | date:'dd/MM/yyyy HH:mm') || 'Desconocido' }}</span>
+                    </div>
+                    <div class="step-card-details">
+                      <span class="step-card-user">{{ status.user || 'Desconocido' }}</span>
+                      <span class="step-card-separator">•</span>
+                      <span class="step-card-section">{{ status.section || 'Desconocido' }}</span>
+                    </div>
+                    @if (status.reason && status.reason.trim() !== '') {
+                      <div class="step-card-reason">{{ status.reason }}</div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+            
+          </div>
+        }
+        </ng-template>
+      </p-carousel>
+    }
+  <!-- </div> -->
+</ng-template>

@@ -1,0 +1,147 @@
+.upload-container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--on-surface);
+  font-size: 1rem;
+}
+
+.help-text {
+  font-size: 0.75rem;
+  color: #6c757d;
+  display: block;
+}
+
+/* --- LAYOUT DE ACCIONES --- */
+.actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.left-actions {
+  display: flex;
+  align-items: center;
+}
+
+.right-actions {
+  display: flex;
+  gap: 0.5rem; /* Espacio entre Cancelar y Guardar */
+  align-items: center;
+}
+
+/* --- ESTILOS DE BOTONES --- */
+
+/* 1. FileUpload Amarillo (PrimeNG Override) */
+:host ::ng-deep .yellow-upload-btn .p-fileupload-choose {
+  background-color: #ffd700;
+  border-color: #ffd700;
+  color: #000;
+  font-weight: 600;
+}
+
+:host ::ng-deep .yellow-upload-btn .p-fileupload-choose:hover {
+  background-color: #e6c200;
+  border-color: #e6c200;
+}
+
+/* 2. Botón Cancelar Rojo (Generic Button Override) */
+
+/* Asumiendo que generic-button usa p-button internamente o clases estándar */
+:host ::ng-deep .custom-red-btn button,
+:host ::ng-deep .custom-red-btn .p-button {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+:host ::ng-deep .custom-red-btn button:hover,
+:host ::ng-deep .custom-red-btn .p-button:hover {
+  background-color: #bb2d3b;
+  border-color: #b02a37;
+}
+
+/* 3. Botón Guardar Naranja (Generic Button Override) */
+:host ::ng-deep .custom-orange-btn button,
+:host ::ng-deep .custom-orange-btn .p-button {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: #fff;
+}
+
+:host ::ng-deep .custom-orange-btn button:hover,
+:host ::ng-deep .custom-orange-btn .p-button:hover {
+  background-color: #e96b02;
+  border-color: #e96b02;
+}
+
+:host ::ng-deep .custom-orange-btn button:disabled,
+:host ::ng-deep .custom-orange-btn .p-button:disabled {
+  background-color: #fab986;
+  border-color: #fab986;
+  color: #fff;
+  opacity: 0.7;
+}
+
+/* --- EXTRAS --- */
+.selected-file-info {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  color: #495057;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.signature-preview {
+  margin-top: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 1.5rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+.preview-title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  text-align: left;
+}
+
+.signature-preview img {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+@media (width <= 500px) {
+  .actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .right-actions {
+    justify-content: flex-end;
+  }
+}

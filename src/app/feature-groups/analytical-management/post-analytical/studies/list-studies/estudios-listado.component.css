@@ -1,0 +1,188 @@
+:host {
+  display: block;
+}
+
+/* Hide generic table buttons */
+:host ::ng-deep app-generic-table app-generic-button[type="create"] {
+  display: none;
+}
+
+/* Table */
+::ng-deep .studies-table {
+  width: 100%;
+}
+
+::ng-deep .studies-table .p-datatable-wrapper {
+  border-radius: 0;
+}
+
+::ng-deep .studies-table .p-datatable-thead > tr > th {
+  background: #f9fafb;
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+::ng-deep .studies-table .p-datatable-tbody > tr {
+  background: white;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .studies-table .p-datatable-tbody > tr:hover {
+  background: #f9fafb;
+}
+
+::ng-deep .studies-table .p-datatable-tbody > tr > td {
+  padding: 1rem 1.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+  border: none;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.paciente-cell {
+  color: #2563eb;
+  font-weight: normal;
+}
+
+/* Badges de firma */
+.firma-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+
+.firma-no-firmada {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.firma-parcial {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.firma-total {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* Botón Ver Detalle */
+.btn-ver-detalle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #fb923c;
+  background: transparent;
+  border: 1px solid #fb923c;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ver-detalle:hover {
+  background: #fb923c;
+  color: white;
+}
+
+.btn-ver-detalle i {
+  font-size: 0.875rem;
+}
+
+/* Empty message */
+.empty-message {
+  text-align: center;
+  padding: 3rem;
+  color: #9ca3af;
+}
+
+.empty-message i {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.empty-message p {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Paginación */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.pagination-nav:hover:not(:disabled) {
+  color: #374151;
+}
+
+.pagination-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-nav i {
+  font-size: 0.75rem;
+}
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-number {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-number:hover {
+  background: #f3f4f6;
+}
+
+.pagination-number.active {
+  background: #14b8a6;
+  color: white;
+}

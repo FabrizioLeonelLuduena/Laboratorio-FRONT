@@ -1,0 +1,496 @@
+.attention-workflow {
+  padding-top: 0.5rem;
+  width: 100%;
+}
+
+:host ::ng-deep .p-stepper {
+  z-index: 0;
+}
+
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1rem;
+}
+
+.workflow-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%
+}
+
+.step-content {
+  animation: fade-in 0.3s ease-in;
+}
+
+.general-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  width: 100%;
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.form-inputs-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+:host ::ng-deep .form-inputs-wrapper .p-component {
+  width: 100%;
+}
+
+.doctor-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.doctor-selector-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.doctor-autocomplete-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.doctor-info-display {
+  padding: 0.75rem 1rem;
+  background: var(--surface-card);
+  border-radius: 6px;
+  border: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 250px;
+}
+
+.doctor-info-item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.doctor-info-label {
+  font-weight: 400;
+  color: var(--text-color-secondary);
+  font-size: 1rem;
+}
+
+.doctor-info-value {
+  color: var(--text-color);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.indications-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  flex: 1;
+}
+
+.indications-label {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.indications-textarea {
+  padding: 0.75rem;
+  border: 2px solid var(--brand-primary, #008c8a);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  background: var(--surface-card);
+  resize: vertical;
+  transition: border-color 0.2s;
+  min-height: 120px;
+  flex: 1;
+}
+
+.indications-textarea:focus {
+  outline: none;
+  border-color: var(--brand-primary, #008c8a);
+  box-shadow: 0 0 0 3px rgb(0 140 138 / 15%);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+  grid-column: 1 / -1;
+}
+
+.form-actions-left {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.form-actions-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Step 2 Container */
+.step-2-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Card Styles */
+.analysis-card,
+.notes-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  margin: 0;
+}
+
+.analysis-card:hover,
+.notes-card:hover {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary, #4a90e2) 100%);
+  color: white;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.card-header i {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.card-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.card-content {
+  padding: 1.25rem;
+}
+
+/* Analysis Card Specific */
+.analysis-card .card-header {
+  background: linear-gradient(135deg, #00897b 0%, #26a69a 100%);
+}
+
+/* Notes Card Specific */
+.notes-card .card-header {
+  background: linear-gradient(135deg, #5e72e4 0%, #825ee4 100%);
+}
+
+/* Billing Section */
+.billing-section {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.billing-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.billing-card:hover {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+}
+
+.billing-card .card-header {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+}
+
+.billing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.billing-description {
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 1rem;
+  background: var(--surface-ground);
+  border-radius: 8px;
+  border-left: 4px solid var(--brand-secondary);
+}
+
+.billing-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.billing-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  margin-top: 0;
+}
+
+.billing-actions-left {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.billing-actions-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Finish Section */
+.finish-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.finish-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.summary-card {
+  background: var(--surface-card);
+  border: 2px solid var(--brand-primary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item .label {
+  font-weight: 600;
+  color: var(--text-color-secondary);
+}
+
+.summary-item .value {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.print-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+.finish-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+/* Remove select arrow from PrimeNG selects */
+:host ::ng-deep .p-select .p-select-trigger .p-select-trigger-icon {
+  display: none;
+}
+
+:host ::ng-deep .p-select .p-select-trigger {
+  padding-right: 0.75rem;
+}
+
+
+
+/* Responsive */
+@media (width <= 768px) {
+  .attention-workflow {
+    padding: 1rem;
+  }
+
+  .workflow-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .step-2-container {
+    gap: 1.5rem;
+  }
+
+  .card-header {
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .finish-actions,
+  .billing-actions,
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .billing-actions-right,
+  .billing-actions-left,
+  .form-actions-right,
+  .form-actions-left {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .doctor-field-wrapper {
+    flex-direction: column;
+  }
+
+  .doctor-selector-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .doctor-autocomplete-container {
+    width: 100%;
+  }
+
+  .doctor-info-display {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .indications-field {
+    grid-area: indications;
+  }
+
+  :host ::ng-deep table th:nth-child(5),
+  :host ::ng-deep table td:nth-child(5) {
+    text-align: center ;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.required {
+  color: var(--red-500);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+

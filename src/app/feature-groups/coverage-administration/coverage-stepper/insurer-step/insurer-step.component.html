@@ -1,0 +1,13 @@
+<app-generic-form
+  [fields]="formFields"
+  [initialValue]="initialValue"
+  [title]="formTitle"
+  [showHeader]="false"
+  size="full"
+  [saving]="saving"
+  (cancelForm)="onCancel()"
+  (submitForm)="submitForm.emit()"
+  [showSubmit]="false"
+  [maxCols]="4"
+  [showCancel]="false">
+</app-generic-form>

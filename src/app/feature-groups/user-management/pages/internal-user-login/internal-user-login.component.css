@@ -1,0 +1,83 @@
+/* Centrar el login en pantalla */
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Asegura que el contenedor no desborde */
+.login-center-container {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.full-width-container {
+  width: 100%;
+}
+
+/* Error message overlay */
+.error-message-overlay {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  max-width: 500px;
+  width: 90%;
+}
+
+/* Quick access section for portfolio demo */
+.quick-access-section {
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.quick-access-btn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+.quick-access-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 87, 108, 0.4);
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+}
+
+.quick-access-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(245, 87, 108, 0.3);
+}
+
+.quick-access-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quick-access-btn i {
+  font-size: 1.1rem;
+}
+
+

@@ -1,0 +1,511 @@
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando empleados...'" />
+}
+
+<!-- Alerts -->
+@if (flash) {
+  <app-generic-alert
+    [type]="flash.type"
+    [title]="flash.title ?? ''"
+    [text]="flash.text"
+  ></app-generic-alert>
+}
+
+<!-- Toolbar -->
+<div class="toolbar"
+     joyrideStep="employeeStep1"
+     title="Gestión de empleados"
+     text="Bienvenido a la Gestión de empleados. Desde aquí podrás administrar el alta, baja y modificación de los empleados del sistema.">
+</div>
+
+<ng-template #statusTemplate let-row>
+  <app-generic-badge
+    [status]="row.status === 'ACTIVE' ? 'activo' : 'inactivo'"
+    [text]="row.status === 'ACTIVE' ? 'Activo' : 'Inactivo'">
+  </app-generic-badge>
+</ng-template>
+
+<!-- New template for actions column with p-menu -->
+<ng-template #actionsTemplate let-row let-rowIndex="rowIndex">
+  <div class="flex justify-content-center">
+    <button type="button"
+            pButton
+            icon="pi pi-ellipsis-v"
+            class="p-button-rounded p-button-text"
+            (click)="menu.toggle($event)"
+            #menuTrigger>
+    </button>
+    <p-menu #menu
+            [model]="getRowActions(row)"
+            [popup]="true">
+    </p-menu>
+  </div>
+</ng-template>
+
+<!-- Template expandible para fila -->
+<ng-template #expandedTpl let-row>
+  <div class="p-4 space-y-3 text-sm">
+    <div><strong>Salario neto:</strong> {{ row.netSalary || '—' }}</div>
+    <div><strong>Salario bruto:</strong> {{ row.grossSalary || '—' }}</div>
+
+    @if (row.isBiochemist) { <!-- Only for biochesmist -->
+      <div><strong>Matrícula:</strong> {{ row.registration || '-' }} </div>
+      @if (row.isExternal) {
+        <div><strong>Empleado externo:</strong> Sí</div>
+        <div>
+          <strong>Zona: </strong>
+          {{ row.zone | zoneName }}
+        </div>
+      }
+    }
+    <div><strong>Fecha de ingreso:</strong> {{ row.dateOfJoining | date:'dd/MM/yyyy':'':'es-AR' }}</div>
+    <div><strong>Fecha de nacimiento:</strong> {{ row.dateOfBirth | date:'dd/MM/yyyy':'':'es-AR' }}</div>
+
+  </div>
+</ng-template>
+
+<div class="employee-crud">
+
+  <!-- Form -->
+  @if (showForm) {
+    <div
+      class="flex flex-col overflow-x-hidden px-8 pt-6 pb-2 text-[#003b4a] bg-white"
+    >
+      <!-- HEADER -->
+
+      <div class="flex-1 flex justify-center">
+        <div
+          class="w-full bg-white "
+        >
+          <section class="employee-stepper">
+            <p-stepper [value]="activeStep + 1" [linear]="true">
+              <p-step-list>
+                @for (step of steps; track $index) {
+                  <p-step [value]="$index + 1" (click)="goTo($index)">{{ step.label }}</p-step>
+                }
+              </p-step-list>
+            </p-stepper>
+
+            <!-- Step 0: Personal data + User -->
+            @if (activeStep === 0) {
+              <div>
+                <div class="form-personal">
+                  <app-generic-form
+                    #basicGF
+                    class="basic-grid"
+                    [fields]="personalFields"
+                    [maxCols]="4"
+                    [showHeader]="true"
+                    [showCard]="false"
+                    title="Datos personales"
+                    [initialValue]="personalData"
+                    (submitForm)="onPersonalSave($event)"
+                    [showCancel]="false"
+                    [showSubmit]="false"
+                  ></app-generic-form>
+                </div>
+
+                @if (formMode === 'create' && !isExternal) {
+                  <app-generic-form
+                    #usernameGF
+                    class="basic-grid-large mt-4"
+                    [fields]="usernameFields"
+                    [maxCols]="1"
+                    [showHeader]="true"
+                    [showCard]="false"
+                    title="Nombre de Usuario"
+                    [showCancel]="false"
+                    [showSubmit]="false"
+                  ></app-generic-form>
+                }
+
+                <div class="actions">
+                  <app-generic-button text="Cancelar" type="cancel" (click)="onCancel()"></app-generic-button>
+                  <app-generic-button
+                    type="advance"
+                    icon="pi pi-arrow-right"
+                    [disabled]="isNextDisabled"
+                    (pressed)="nextStep()"
+                  ></app-generic-button>
+                </div>
+              </div>
+            }
+
+            <!-- Step 1: Employment data (Salary + Branch) -->
+            @if (activeStep === 1) {
+              <div class="step-card">
+                <div class="grid grid-cols-1 gap-6 items-start">
+                  <div class="form-personal">
+                    <app-generic-form
+                      #GFSalary
+                      class="basic-grid"
+                      [fields]="salaryFields"
+                      [maxCols]="2"
+                      [showHeader]="true"
+                      [showCard]="false"
+                      title="Datos del empleo"
+                      [initialValue]="salaryData"
+                      (submitForm)="onSalarySave($event)"
+                      [showCancel]="false"
+                      [showSubmit]="false"
+                    ></app-generic-form>
+                  </div>
+
+                  @if (formMode === 'create') {
+                    <div class="mt-4">
+                      <label class="block text-sm font-medium mb-2">Sucursal</label>
+                      <p-dropdown
+                        [options]="branchOptions"
+                        [(ngModel)]="selectedBranchId"
+                        placeholder="Seleccione una sucursal"
+                        [showClear]="true"
+                        [emptyMessage]="'No se encontraron resultados'"
+                        [emptyFilterMessage]="'No se encontraron resultados'"
+                        optionLabel="label"
+                        optionValue="value"
+                        styleClass="w-full md:w-1/2"
+                      ></p-dropdown>
+                    </div>
+                  }
+                </div>
+
+                <div class="actions mt-6">
+                  <app-generic-button type="back" (pressed)="prevStep()"></app-generic-button>
+                  <app-generic-button
+                    type="advance"
+                    icon="pi pi-arrow-right"
+                    [disabled]="isNextDisabled"
+                    (pressed)="nextStep()"
+                  ></app-generic-button>
+                </div>
+              </div>
+            }
+
+            <!-- Step 2: Contacts -->
+            @if (activeStep === 2) {
+              <div class="step-card">
+                <div class="grid grid-cols-1 xl:grid-cols-[1.2fr_minmax(0,1fr)] gap-6 items-start">
+                  <app-generic-form
+                    #contactForm
+                    class="w-full"
+                    [title]="'Añadir contacto'"
+                    [fields]="contactFields"
+                    [maxCols]="2"
+                    [showCard]="false"
+                    [showSubmit]="false"
+                    [showCancel]="false"
+                  ></app-generic-form>
+
+                  <p-panel
+                    [toggleable]="true"
+                    [collapsed]="false"
+                    header="Contactos"
+                    class="max-w-[1200px] mx-auto w-full rounded-xl title-20 font-display"
+                  >
+                    <div class="rounded-xl overflow-hidden mt-2">
+                      <p-table
+                        [value]="contacts"
+                        responsiveLayout="scroll"
+                        class="w-full text-14 font-body"
+                      >
+                        <ng-template pTemplate="header">
+                          <tr class="bg-[var(--surface-alt)] text-[var(--on-surface-muted)] text-14">
+                            <th class="py-2 px-3 font-medium text-left">Tipo</th>
+                            <th class="py-2 px-3 font-medium text-left">Valor</th>
+                            <th class="py-2 px-3 font-medium text-center" style="width: 100px">Acciones</th>
+                          </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-contact let-i="rowIndex">
+                          <tr class="hover:bg-[var(--card-subtle)] transition-colors">
+                            <td class="py-2 px-3 text-[var(--on-surface)] font-normal">{{ contact.contactType | contactsForEmployees }}</td>
+                            <td class="py-2 px-3 text-[var(--on-surface)] font-normal">{{ contact.contact }}</td>
+                            <td class="py-2 px-3 text-center">
+                              <button
+                                pButton
+                                icon="pi pi-trash"
+                                class="p-button-text p-button-danger p-0"
+                                (click)="deleteContact(i)"
+                              ></button>
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+
+                      @if (!contacts.length) {
+                        <p class="text-[#6c757d] text-sm text-center py-4 border-t border-[#e0e6ea] bg-[#fdfefe]">
+                          No se agregaron contactos aún.
+                        </p>
+                      }
+                    </div>
+                  </p-panel>
+                </div>
+
+                <div class="actions">
+                  <app-generic-button type="back" (pressed)="prevStep()"></app-generic-button>
+                  <div class="flex gap-2">
+                    <app-generic-button
+                      type="custom"
+                      text="Agregar"
+                      icon="pi pi-plus"
+                      color="--brand-primary-700"
+                      customTextColor="--on-primary"
+                      (pressed)="addContactFromForm()"
+                    ></app-generic-button>
+                    <app-generic-button
+                      type="advance"
+                      customTextColor="--on-primary"
+                      [disabled]="isNextDisabled"
+                      (pressed)="nextStep()"
+                    ></app-generic-button>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 3: Roles and additional data -->
+            @if (activeStep === 3) {
+              <div class="step-card">
+                <div class="grid grid-cols-1 xl:grid-cols-[1.2fr_minmax(0,1fr)] gap-6 items-start">
+                  @if (formMode === 'create') {
+                    <app-generic-form
+                      #roleForm
+                      class="w-full"
+                      [title]="'Añadir rol'"
+                      [fields]="roleFields"
+                      [maxCols]="1"
+                      [showSubmit]="false"
+                      [showCancel]="false"
+                    ></app-generic-form>
+
+                    <p-panel
+                      [toggleable]="true"
+                      [collapsed]="false"
+                      header="Roles"
+                      class="max-w-[1200px] mx-auto w-full bg-white rounded-xl title-20 font-display"
+                    >
+                      <div class="rounded-xl overflow-hidden mt-2 border border-[var(--border-color)]">
+                        <p-table
+                          [value]="roles"
+                          responsiveLayout="scroll"
+                          class="w-full text-14 font-body"
+                        >
+                          <ng-template pTemplate="header">
+                            <tr class="bg-[var(--surface-alt)] text-[var(--on-surface-muted)] text-14">
+                              <th class="py-2 px-3 font-medium text-left">Tipo</th>
+                              <th class="py-2 px-3 font-medium text-center" style="width: 100px">Acciones</th>
+                            </tr>
+                          </ng-template>
+
+                          <ng-template pTemplate="body" let-role let-i="rowIndex">
+                            <tr class="hover:bg-[var(--card-subtle)] transition-colors">
+                              <td class="py-2 px-3 text-[var(--on-surface)] font-normal">{{ role.description }}</td>
+                              <td class="py-2 px-3 text-center">
+                                <button
+                                  pButton
+                                  icon="pi pi-trash"
+                                  class="p-button-text p-button-danger p-0"
+                                  (click)="deleteRole(i)"
+                                ></button>
+                              </td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+
+                        @if (!roles.length) {
+                          <p class="text-[var(--on-surface-muted)] text-sm text-center py-4 border-t border-[#e0e6ea] bg-[#fdfefe]">
+                            No se agregaron roles aún.
+                          </p>
+                        }
+                      </div>
+                    </p-panel>
+                  }
+                </div>
+
+                @if (showDoctorFields) {
+                  <div class="mt-6 p-6 rounded-xl">
+                    <h3 class="text-lg font-semibold mb-4 text-[#003b4a]">Información adicional</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div class="flex flex-col gap-2">
+                        <label for="registration" class="text-sm font-medium text-[#003b4a]">
+                          Matrícula
+                        </label>
+                        <input
+                          id="registration"
+                          type="text"
+                          pInputText
+                          [(ngModel)]="registration"
+                          (ngModelChange)="onRegistrationChange($event)"
+                          placeholder="Ingrese la matrícula"
+                          class="w-full"
+                        />
+                      </div>
+
+                      <div class="flex items-center gap-3 mt-6">
+                        <p-checkbox
+                          [(ngModel)]="isExternal"
+                          [binary]="true"
+                          inputId="isExternal"
+                          (ngModelChange)="onIsExternalChange($event)"
+                        ></p-checkbox>
+                        <span class="text-sm font-medium text-[#003b4a] cursor-pointer" (click)="isExternal = !isExternal; onIsExternalChange(isExternal)">
+                          Es externo
+                        </span>
+                      </div>
+                    </div>
+
+                    @if (isExternal) {
+                      <div class="flex flex-col gap-2 mb-4">
+                        <label for="zone" class="text-sm font-medium text-[#003b4a]">
+                          Zona
+                        </label>
+                        <p-dropdown
+                          id="zone"
+                          [options]="zoneOptions"
+                          [(ngModel)]="zone"
+                          (ngModelChange)="onZoneChange($event)"
+                          placeholder="Seleccione una zona"
+                          [showClear]="true"
+                          [emptyMessage]="'No se encontraron resultados'"
+                          [emptyFilterMessage]="'No se encontraron resultados'"
+                          styleClass="w-full md:w-1/2"
+                        ></p-dropdown>
+                      </div>
+                    }
+
+                    @if (showSignatureUpload && formMode === 'create') {
+                      <div class="mt-4 p-4 border border-dashed border-[#cbd5e0] rounded-lg bg-white">
+                        <h4 class="text-md font-semibold mb-2 text-[#003b4a]">Firma del bioquímico</h4>
+                        <div class="flex flex-col gap-3">
+                          <input
+                            id="signature-file-inline"
+                            type="file"
+                            class="file-input"
+                            accept=".png,.jpg,.jpeg"
+                            (change)="onSignatureFileSelected($event)"
+                          />
+                          <small class="text-xs text-[#6c757d]">Formatos aceptados: PNG, JPG, JPEG. Máximo 5MB.</small>
+                          @if (selectedSignatureFile) {
+                            <p class="text-xs text-[#003b4a]">
+                              Archivo seleccionado: {{ selectedSignatureFile.name }}
+                            </p>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  @if (formMode === 'edit') {
+                    <div class="mt-10 mb-8 flex justify-center">
+                      <p class="text-center text-[var(--on-surface-muted)] text-sm md:text-base font-medium">
+                        Este paso es exclusivo de empleados bioquímicos.
+                      </p>
+                    </div>
+                  }
+                }
+
+                <div class="actions">
+                  <app-generic-button type="back" (pressed)="prevStep()"></app-generic-button>
+                  <div class="flex gap-2">
+                    @if (formMode === 'create') {
+                      <app-generic-button
+                        type="custom"
+                        text="Agregar rol"
+                        icon="pi pi-plus"
+                        color="--brand-primary-700"
+                        customTextColor="--on-primary"
+                        (pressed)="addRoleFromForm()"
+                      ></app-generic-button>
+                    }
+                    <app-generic-button text="Guardar" type="save" icon="pi pi-file" (click)="onSubmitEmployee()"></app-generic-button>
+                  </div>
+                </div>
+              </div>
+            }
+          </section>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Table with generic-table -->
+  @if (!showForm) {
+    <div class="table-section"
+         joyrideStep="employeeStep2"
+         title="Tabla de Empleados"
+         text="Esta tabla muestra todos los empleados. Puedes usar el buscador y los filtros para encontrar a alguien rápidamente.">
+      <div joyrideStep="employeeStep5" title="Acciones de Fila" text="La última columna de la tabla contiene las acciones que puedes realizar, como editar o desactivar un empleado.">
+        <app-generic-table
+          [data]="employees"
+          [columns]="tableColumns"
+          [filters]="tableFilters"
+          [dataKey]="'id'"
+          [rows]="5"
+          [rowsOptions]="[5, 10, 20]"
+          [pageable]="true"
+          [loading]="loading()"
+          [getActions]="getRowActions"
+          [columnTemplates]="columnTemplates"
+          [expandedRowTemplate]="expandedTpl"
+          (filterChange)="onFilterChange($event)"
+          (downloadExcel)="onExportExcel()"
+          (downloadPdf)="onExportPdf()"
+          (create)="onAdd()"
+          (pageChange)="onPageChange($event)"
+          [totalRecords]="totalRecords"
+          [lazy]="true"
+          (globalFilterChange)="onGlobalFilterChange($event)"
+          (sortChange)="onSortChange($event)"
+          [createButtonJoyrideConfig]="{ step: 'employeeStep3', title: 'Crear Empleado', text: 'Usa este botón para dar de alta un nuevo empleado en el sistema.' }"
+          [downloadMenuJoyrideConfig]="{ step: 'employeeStep4', title: 'Descargar Datos', text: 'Usa este menú para exportar la lista de empleados en formato Excel o PDF.' }">
+        </app-generic-table>
+      </div>
+    </div>
+  }
+
+  <!-- Confirmation Modal (shared) -->
+  @if (showConfirmModal) {
+    <div class="modal-overlay" (click)="cancelDelete()">
+      <div (click)="$event.stopPropagation()">
+        <app-confirmation-modal
+          icon="pi pi-exclamation-triangle"
+          [title]="confirmTitle"
+          [message]="confirmMessage"
+          (confirmed)="executeDelete()"
+          (dismissed)="cancelDelete()">
+        </app-confirmation-modal>
+      </div>
+    </div>
+  }
+
+  <!-- Signature Modal -->
+  @if (showSignatureModal && employeeForSignature) {
+    <div class="modal-overlay" (click)="closeSignatureModal()">
+      <div class="signature-modal-content" (click)="$event.stopPropagation()">
+        <div class="signature-modal-header">
+          <h2>Gestionar Firma - {{ employeeForSignature.name }} {{ employeeForSignature.lastName }}</h2>
+          <button
+            class="close-button"
+            (click)="closeSignatureModal()"
+            aria-label="Cerrar">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+        <app-upload-signature
+          [employeeId]="employeeForSignature.id"
+          (closeModal)="closeSignatureModal()">
+        </app-upload-signature>
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

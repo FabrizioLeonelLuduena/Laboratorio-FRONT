@@ -1,0 +1,447 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en turnos",
+  "intro": "A continuación se detallan las acciones que los usuarios pueden realizar en el módulo de Turnos.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Secretaría",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Secretaría - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "visualizar-turno",
+      "title": "Visualizar un Turno",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El proceso para visualizar un turno comienza al hacer clic en el botón de <strong>Filtros</strong> <i class='pi pi-filter'></i> en la pantalla principal."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/filters-appointments.jpg",
+          "alt": "Filtros de búsqueda"
+        },
+        {
+          "type": "paragraph",
+          "text": "Para ver los turnos de una sucursal, solo tenés que elegir la <strong>Sucursal</strong> en el filtro."
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema te va a mostrar todos los turnos cargados para esa sucursal, ordenados del <strong>más nuevo</strong> al <strong>más viejo</strong>."
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Los turnos se cargan únicamente por sucursal. Si no elegimos ninguna sucursal en los filtros, el sistema no mostrará ningún turno de manera predeterminada."
+        }
+      ]
+    },
+    {
+      "id": "creacion-configuracion",
+      "title": "Creación de una Nueva Configuración de Turno",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón <i class='pi pi-plus'></i> (esquina superior derecha) desde la pantalla de <strong>Configuración</strong>, se redirige a la pantalla <strong>'Crear'</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/create-appointments.jpg",
+          "alt": "Pantalla de creación de configuración"
+        },
+        {
+          "type": "subtitle",
+          "text": "Información de la Sucursal"
+        },
+        {
+          "type": "paragraph",
+          "text": "Selecciona dónde estarán disponibles los turnos."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Sucursal (Obligatorio):</strong> Seleccione en el desplegable la sede del laboratorio (ej. LCC Clínica Sanagec) a la que corresponde esta configuración."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración de Turnos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Define cuánto duran y cuántos pacientes se atienden."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Duración del turno (minutos):</strong> Ingrese el tiempo estimado que dura cada atención individual.",
+            "<strong>Cantidad de turnos:</strong> Indique cuántos turnos o cupos simultáneos se pueden agendar en un mismo bloque horario."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Período de validez:."
+        },
+        {
+          "type": "paragraph",
+          "text": "Establece el rango de fechas en que esta configuración será útil"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Fecha de inicio:</strong> Día desde el cual los turnos estarán visibles.",
+            "<strong>Fecha de fin:</strong> Día hasta el cual la configuración se mantendrá vigente."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración Adicional"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Horarios.</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Hora de inicio:</strong> Defina la hora exacta en la que comienza  la jornada de atención para estos turnos.",
+            "<strong>Hora de fin:</strong> Defina la hora exacta en la que termina la jornada de atención para estos turnos. "
+
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Dias de la semana.</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Se despliegan la lista de dias diponibles a seleccionar para atender"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Estado de la configuración:</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Configuración activa:</strong> El turno estará disponible inmediatamente para ser agendado.",
+            "<strong>Configuración desactivada:</strong> Se guarda la configuración pero no se generan turnos visibles para la agenda."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Presione el botón para alternar el estado entre <strong>Activado</strong> y <strong>Desactivado</strong>."
+        },
+
+        {
+          "type": "divider"
+
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Almacena y aplica la nueva configuración de turnos. Redirige a la pantalla de <strong>Configuración"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla sin guardar ningún cambio realizado."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>La correcta configuración de los parámetros (especialmente la duración y cantidad simultánea) es fundamental para evitar conflictos en la agenda del laboratorio."
+        }
+      ]
+    },
+    {
+      "id": "edicion-configuracion",
+      "title": "Edición de Configuración de Turno",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Editar</strong> desde el menú de acciones <strong>(⋮)</strong> de cualquier fila, se redirige a la pantalla <strong>'Editar'</strong>. El sistema <strong>precarga la información actual</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/edit-appointments.jpg",
+          "alt": "Edición de turnos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Información de sucursal"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Sucursal:</strong> Muestra la sede actual asignada a esta configuración. Puede desplegar el menú para cambiarla si fuera necesario."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración de turnos"
+        },
+        {
+          "type": "paragraph",
+          "text": "En este bloque se definen los parámetros de capacidad y tiempo:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Duración del turno (minutos):</strong> Modifique este valor si necesita aumentar o reducir el tiempo estimado de atención por paciente.",
+            "<strong>Cantidad de turnos:</strong> Ajuste este número para ampliar o reducir los cupos simultáneos disponibles en ese horario."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Período de validez"
+        },
+        {
+          "type": "paragraph",
+          "text": "Define el rango de fechas en el que la configuración será efectiva:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Fecha de inicio:</strong> Día a partir del cual los turnos serán visibles.",
+            "<strong>Fecha de fin:</strong> Día hasta el cual la configuración se mantendrá vigente."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración Adicional"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Horarios.</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Hora de inicio:</strong> Defina la hora exacta en la que comienza  la jornada de atención para estos turnos.",
+            "<strong>Hora de fin:</strong> Defina la hora exacta en la que termina la jornada de atención para estos turnos. "
+
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Dias de la semana.</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Se despliegan la lista de dias diponibles a seleccionar para atender"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Estado de la configuración:</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Configuración activa:</strong> El turno estará disponible inmediatamente para ser agendado.",
+            "<strong>Configuración desactivada:</strong> Se guarda la configuración pero no se generan turnos visibles para la agenda."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Presione el botón para alternar el estado entre <strong>Activado</strong> y <strong>Desactivado</strong>."
+        },
+        {
+          "type": "divider"
+
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Sobrescribe la información anterior y actualiza la disponibilidad inmediatamente. Redirige a la pantalla de <strong>Configuración"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla de edición descartando cualquier modificación."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Nota importante",
+          "text": "<br>Al editar una configuración activa, tenga en cuenta que los cambios impactarán en la generación de futuros turnos. Se recomienda verificar que no existan conflictos con turnos ya agendados antes de reducir horarios o cupos."
+        }
+      ]
+    },
+    {
+      "id": "eliminar-turno",
+      "title": "Eliminar Turno",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Eliminar</strong> desde el menú de acciones <strong>⋮</strong>, se abre una ventana de confirmación para <strong>eliminar</strong> la configuración del turno."
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación de seguridad"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema mostrará una ventana emergente de advertencia para evitar borrados accidentales."
+        },
+
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/confirmation-delete-appointments.jpg",
+          "alt": "Acciones finales"
+        },
+        {
+          "type": "divider"
+
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Cancelar",
+              "Cierra la ventana emergente y mantiene la configuración tal como estaba."
+            ],
+            [
+              "Aceptar",
+              "Elimina la configuración de turnos del sistema pasandolo a estado Inactivo"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Nota importante",
+          "text": "<br>Esta acción no se puede deshacer. Una vez que pulse en Aceptar, la configuración y su disponibilidad no podrá volver a ser habilitada. Asegúrese de estar eliminando el registro correcto antes de confirmar."
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Turnos",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/appointments-download.jpg",
+          "alt": "Descargar listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por una Sucursal específica, el archivo solo contendrá los turnos de esa sede. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+
+  ],
+  "tags": [
+    "turnos",
+    "configuración",
+    "agenda",
+    "creación",
+    "edición",
+    "eliminación",
+    "exportación"
+  ]
+}

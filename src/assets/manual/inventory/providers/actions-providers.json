@@ -1,0 +1,300 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones de Proveedores",
+  "intro": "Gestión de las acciones disponibles para la administración de proveedores e insumos.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-proveedor",
+      "title": "Creación de Proveedor",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón <strong>Crear</strong> <i class='pi pi-plus'></i>, se redirige a la pantalla de alta para registrar un nuevo proveedor."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/providers/providers-create.jpg",
+          "alt": "Pantalla de creación de proveedor"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Generales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Razón Social (Obligatorio)",
+              "Nombre <strong>legal o comercial</strong> de la empresa."
+            ],
+            [
+              "CUIT (Obligatorio)",
+              "<strong>Clave única</strong> de identificación tributaria."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Productos del Proveedor"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto (Obligatorio)",
+              "<strong>Nombre</strong> del insumo o artículo."
+            ],
+            [
+              "Empaque",
+              "Tipo de <strong>empaque o presentación</strong>."
+            ],
+            [
+              "Descripción",
+              "<strong>Detalles adicionales</strong> del producto."
+            ],
+            [
+              "Precio (Obligatorio)",
+              "<strong>Costo unitario</strong> del producto."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Contacto"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Tipo de Contacto (Obligatorio)",
+              "<strong>Categoría</strong> (ej. Ventas, Administración)."
+            ],
+            [
+              "Nombre del Contacto (Obligatorio)",
+              "Nombre de la <strong>persona de referencia</strong>."
+            ],
+            [
+              "Datos de Contacto (Obligatorio)",
+              "<strong>Email</strong> o <strong>número de teléfono</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "<strong>Almacena los cambios</strong> y vuelve a la lista."
+            ],
+            [
+              "Cancelar",
+              "<strong>Descarta los cambios</strong> y vuelve a la lista."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editar-proveedor",
+      "title": "Edición de Proveedor",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta acción permite modificar los datos de un proveedor existente."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/providers/providers-edit.jpg",
+          "alt": "Pantalla de edición de proveedor"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acceso"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Diríjase al <strong>Menú de acciones (⋮)</strong> en la fila del proveedor.",
+            "Seleccione la opción <strong>Editar</strong>.",
+            "El sistema redirige a la pantalla de edición con los datos precargados."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "<strong>Actualiza la información</strong> del proveedor."
+            ],
+            [
+              "Cancelar",
+              "Vuelve al listado <strong>sin guardar cambios</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desactivar-proveedor",
+      "title": "Desactivar Proveedor",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite inhabilitar a un proveedor para que no esté disponible en nuevas operaciones."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/providers/providers-deactivate.jpg",
+          "alt": "Confirmación de desactivación"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Acceso y Confirmación"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Diríjase al <strong>Menú de acciones (⋮)</strong> y seleccione <strong>Desactivar</strong>.",
+            "Se mostrará un menú emergente preguntando: <strong>'¿Desea desactivar al proveedor?'</strong>."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "<strong>Confirma la acción</strong> y cambia el estado a <strong>Inactivo</strong>."
+            ],
+            [
+              "Cancelar",
+              "Cierra el menú y <strong>mantiene al proveedor Activo</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Proveedores",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/providers/providers-table.jpg",
+          "alt": "Descargar listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por un proveedor específico, el archivo solo contendrá los datos de lo que se filtró. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "proveedores",
+    "stock",
+    "crear",
+    "editar",
+    "desactivar"
+  ]
+}

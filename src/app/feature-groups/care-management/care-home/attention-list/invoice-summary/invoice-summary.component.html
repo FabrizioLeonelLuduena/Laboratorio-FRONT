@@ -1,0 +1,194 @@
+@if (alertType) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText">
+  </app-generic-alert>
+}
+
+<div class="invoice-summary-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <app-spinner label="Cargando resumen de facturación..."></app-spinner>
+    </div>
+  } @else if (safeInvoiceData()) {
+    <p-card class="summary-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <div class="header-content">
+            <div class="header-text">
+              <h2>Facturación completada</h2>
+              <p class="subtitle">La facturación para esta atención ya fue procesada</p>
+            </div>
+          </div>
+          <div class="invoice-badge">
+            <app-generic-badge status="completo" [text]="safeInvoiceData().status || 'COMPLETADO'"></app-generic-badge>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="summary-content">
+        <!-- Invoice Information Accordion -->
+        <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2, 3]">
+
+          <!-- Invoice Details Section -->
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-info-circle"></i>
+                <span class="accordion-title">Información de facturación</span>
+              </div>
+            </ng-template>
+            <div class="info-section">
+              @if (safeInvoiceData().billingId) {
+                <div class="info-row">
+                  <span class="info-label">N° de factura:</span>
+                  <span class="info-value">#{{ safeInvoiceData().billingId }}</span>
+                </div>
+              }
+              @if (safeInvoiceData().invoiceNumber) {
+                <div class="info-row">
+                  <span class="info-label">Número de factura:</span>
+                  <span class="info-value">{{ safeInvoiceData().invoiceNumber }}</span>
+                </div>
+              }
+              @if (safeInvoiceData().cae) {
+                <div class="info-row">
+                  <span class="info-label">CAE:</span>
+                  <span class="info-value">{{ safeInvoiceData().cae }}</span>
+                </div>
+              }
+              <div class="info-row">
+                <span class="info-label">Fecha:</span>
+                <span class="info-value">{{ safeInvoiceData().date }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Estado:</span>
+                <span class="info-value status-badge">
+                  <app-generic-badge status="completo" [text]="safeInvoiceData().status || 'COMPLETADO'"></app-generic-badge>
+                </span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">IVA aplicado:</span>
+                <span class="info-value">{{ safeInvoiceData().ivaPercentage }}%</span>
+              </div>
+            </div>
+          </p-accordionTab>
+
+          <!-- Items Billed Section -->
+          @if (safeInvoiceData().items && safeInvoiceData().items.length > 0) {
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <div class="accordion-header">
+                  <i class="pi pi-list"></i>
+                  <span class="accordion-title">Items facturados</span>
+                </div>
+              </ng-template>
+              <div class="items-section">
+                @for (item of safeInvoiceData().items; track item.description) {
+                  <div class="item-row">
+                    <div class="item-details">
+                      <span class="item-description">{{ item.description }}</span>
+                      @if (item.selected !== undefined) {
+                        <app-generic-badge
+                          [status]="item.selected ? 'activo' : 'inactivo'"
+                          [text]="item.selected ? 'INCLUIDO' : 'NO INCLUIDO'">
+                        </app-generic-badge>
+                      }
+                    </div>
+                    <div class="item-amounts">
+                      @if (item.totalAmount !== undefined) {
+                        <div class="amount-detail">
+                          <span class="amount-label">Total:</span>
+                          <span class="amount-value">{{ item.totalAmount | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                        </div>
+                      }
+                      @if (item.coveredAmount !== undefined) {
+                        <div class="amount-detail">
+                          <span class="amount-label">Cobertura:</span>
+                          <span class="amount-value coverage">{{ item.coveredAmount | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                        </div>
+                      }
+                      @if (item.patientAmount !== undefined) {
+                        <div class="amount-detail">
+                          <span class="amount-label">Paciente:</span>
+                          <span class="amount-value patient">{{ item.patientAmount | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </p-accordionTab>
+          }
+
+          <!-- Payment Methods Section -->
+          @if (safeInvoiceData().paymentMethods && safeInvoiceData().paymentMethods.length > 0) {
+            <p-accordionTab>
+              <ng-template pTemplate="header">
+                <div class="accordion-header">
+                  <i class="pi pi-wallet"></i>
+                  <span class="accordion-title">Medios de pago utilizados</span>
+                </div>
+              </ng-template>
+              <div class="payment-methods-section">
+                @for (method of safeInvoiceData().paymentMethods; track method.id) {
+                  <div class="payment-method-row">
+                    <div class="method-info">
+                      <span class="method-name">{{ method.paymentMethod }}</span>
+                      @if (method.bank) {
+                        <span class="method-detail">{{ method.bank }}</span>
+                      }
+                      @if (method.number) {
+                        <span class="method-detail">{{ method.number }}</span>
+                      }
+                    </div>
+                    <span class="method-amount">{{ method.amount | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+                  </div>
+                }
+              </div>
+            </p-accordionTab>
+          }
+
+          <!-- Totals Section -->
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="accordion-header">
+                <i class="pi pi-dollar"></i>
+                <span class="accordion-title">Totales</span>
+              </div>
+            </ng-template>
+            <div class="totals-section">
+              <div class="total-row">
+                <span class="total-label">Subtotal:</span>
+                <span class="total-value">{{ safeInvoiceData().totals.subtotal | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+              <div class="total-row">
+                <span class="total-label">IVA ({{ safeInvoiceData().ivaPercentage }}%):</span>
+                <span class="total-value">{{ safeInvoiceData().totals.iva | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+              <p-divider></p-divider>
+              <div class="total-row grand-total">
+                <span class="total-label">Total Facturado:</span>
+                <span class="total-value">{{ safeInvoiceData().totals.total | currency:'ARS':'symbol-narrow':'1.2-2' }}</span>
+              </div>
+            </div>
+          </p-accordionTab>
+
+        </p-accordion>
+
+        <!-- Info Message -->
+        <app-generic-alert
+          type="warning"
+          title=""
+          text="La facturación ya fue procesada. No es posible modificar o generar una nueva factura para esta atención.">
+        </app-generic-alert>
+      </div>
+    </p-card>
+  } @else {
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>No se pudo cargar la información de facturación</p>
+    </div>
+  }
+</div>

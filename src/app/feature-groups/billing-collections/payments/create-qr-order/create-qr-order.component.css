@@ -1,0 +1,29 @@
+.qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  padding: 2rem;
+}
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.qr-image {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  border: 2px solid var( #00bbb8);
+  border-radius: 8px;
+  padding: 8px;
+  background: #fff;
+}
+
+.flex.gap-2 > button {
+  min-width: 140px;
+}
+

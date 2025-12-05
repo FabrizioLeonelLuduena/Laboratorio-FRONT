@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Volumen total compras",
+      "value": 4567890.50
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

@@ -1,0 +1,119 @@
+<div class="edit-form-container">
+  <!-- Alert -->
+  @if (showAlert) {
+    <app-generic-alert
+      [message]="alertMessage"
+      [type]="alertType"
+      (close)="showAlert = false">
+    </app-generic-alert>
+  }
+
+  <!-- Tabs for different sections -->
+  <p-tabs [(value)]="activeTab">
+    <p-tablist>
+      <p-tab value="basic">
+        <div class="tab-header">
+          <i class="pi pi-file-edit"></i>
+          <span>Información básica</span>
+        </div>
+      </p-tab>
+      <p-tab value="version">
+        <div class="tab-header">
+          <i class="pi pi-bookmark"></i>
+          <span>Versión y UB</span>
+        </div>
+      </p-tab>
+      <p-tab value="synonyms">
+        <div class="tab-header">
+          <i class="pi pi-tags"></i>
+          <span>Sinónimos</span>
+        </div>
+      </p-tab>
+      <p-tab value="abbreviations">
+        <div class="tab-header">
+          <i class="pi pi-bookmark"></i>
+          <span>Abreviaturas</span>
+        </div>
+      </p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <!-- Basic Information Tab -->
+      <p-tabpanel value="basic">
+        <div class="tab-content">
+          <app-generic-form
+            [fields]="formFields"
+            [initialValue]="initialValue"
+            [saving]="saving()"
+            [maxCols]="3"
+            [showHeader]="false"
+            [showSubmit]="!readOnly"
+            [showCancel]="true"
+            (submitForm)="onSubmit($event)"
+            (cancelForm)="onCancel()">
+          </app-generic-form>
+        </div>
+      </p-tabpanel>
+
+      <!-- Version & UB Tab -->
+      <p-tabpanel value="version">
+        <div class="tab-content">
+          <!-- Lista de versiones donde el NBU está asociado -->
+          @if (loadingVersions()) {
+            <div class="loading-message">Cargando versiones...</div>
+          } @else if (nbuVersionsWithUb().length > 0) {
+            <div class="associated-versions-section">
+              <h3 class="section-title">
+                <i class="pi pi-bookmark"></i>
+                Versiones donde este NBU está asociado
+              </h3>
+              
+              <div class="versions-list">
+                @for (versionWithUb of nbuVersionsWithUb(); track versionWithUb.version.id) {
+                  <div class="version-item">
+                    <div class="version-info">
+                      <span class="version-code">{{ versionWithUb.version.versionCode }}</span>
+                      <span class="version-year">({{ versionWithUb.version.publicationYear || 'N/D' }})</span>
+                    </div>
+                    <span class="ub-value">UB: {{ versionWithUb.ub | number }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+            
+            <p-divider />
+          } @else {
+            <div class="no-versions-message">
+              <i class="pi pi-info-circle"></i>
+              <span>Este NBU no está asociado a ninguna versión aún.</span>
+            </div>
+            
+            <p-divider />
+          }
+        </div>
+      </p-tabpanel>
+
+      <!-- Synonyms Tab -->
+      <p-tabpanel value="synonyms">
+        <div class="tab-content">
+          <app-nbu-synonyms-manager
+            [currentNbu]="nbu"
+            (synonymsAdded)="onSynonymsAdded($event)"
+            (synonymRemoved)="onSynonymRemoved($event)">
+          </app-nbu-synonyms-manager>
+        </div>
+      </p-tabpanel>
+
+      <!-- Abbreviations Tab -->
+      <p-tabpanel value="abbreviations">
+        <div class="tab-content">
+          <app-nbu-abbreviations-manager
+            [currentNbu]="nbu"
+            (abbreviationsAdded)="onAbbreviationsAdded($event)"
+            (abbreviationRemoved)="onAbbreviationRemoved($event)">
+          </app-nbu-abbreviations-manager>
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>

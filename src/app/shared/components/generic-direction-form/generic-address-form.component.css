@@ -1,0 +1,53 @@
+/* Disposición general del formulario de dirección (2 filas de 4 campos cada una) */
+.addr-form {
+  width: 100%;
+}
+
+.addr-grid-two-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.addr-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+/* Responsive: ajustar cantidad de columnas según el ancho */
+@media (width < 640px) {
+  .addr-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width >= 640px) and (width < 1024px) {
+  .addr-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Override: layout apilado (una debajo de otra) */
+.addr-grid-two-rows[data-layout='stacked'] .addr-row {
+  grid-template-columns: 1fr;
+}
+
+/* Campo y etiquetas */
+.addr-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.addr-field label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: var(--brand-secondary, #00435d);
+}
+
+/* Mensajes de error */
+.error {
+  color: #b91c1c; /* rojo-700 */
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}

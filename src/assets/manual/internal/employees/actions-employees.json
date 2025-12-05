@@ -1,0 +1,827 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones de Empleados",
+  "intro": "Detalle de las operaciones de alta, modificación y gestión de estado del personal del laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+        {
+
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador "
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "alta-empleado",
+      "title": "Crear nuevo empleado",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Si el empleado no existe en el sistema, inicie su registro haciendo clic en el ícono de <strong>Nuevo empleado</strong> <i class='pi pi-plus'></i> ubicado en la parte superior de la pantalla principal. Será redirigido a la pantalla de <strong>Nuevo empleado</strong> donde deberá completar distintos pasos."
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 1: Datos Personales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employees-create-data.jpeg",
+          "alt": "Paso 1: Datos Personales"
+        },
+        {
+          "type": "paragraph",
+          "text": "En esta etapa se registran los datos filiatorios y de acceso al sistema."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Apellido",
+              "Apellido del empleado.",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Nombre del empleado.",
+              "Sí"
+            ],
+            [
+              "Documento",
+              "Documento único de identificación.",
+              "Sí"
+            ],
+            [
+              "Fecha de nacimiento",
+              "Seleccionable mediante calendario expandible.",
+              "Sí"
+            ],
+            [
+              "Usuario",
+              "Identificador con el que iniciará sesión.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Cancelar",
+              "Vuelve a la pantalla principal de <stron>Empleados"
+            ],
+            [
+              "Siguiente",
+              "Avanza al Paso 2: Datos del Empleo"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>El sistema valida que el número de Documento y el Usuario no se repitan.<br> El nombre de usuario se genera automáticamente y, si ya existe, deberá ingresar uno nuevo. Además, los campos obligatorios deben completarse correctamente para continuar; mientras haya errores o datos faltantes, el formulario no permitirá avanzar."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 2: Datos del Empleo"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-employee-data.jpeg",
+          "alt": "Paso 2: Datos del empleo"
+        },
+        {
+          "type": "paragraph",
+          "text": "Defina la información laboral del empleado."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Salario bruto",
+              "Monto bruto correspondiente al puesto.",
+              "Sí"
+            ],
+            [
+              "Salario neto",
+              "Monto final percibido por el empleado.",
+              "Sí"
+            ],
+            [
+              "Sucursal",
+              "Desplegable con listado de sucursales disponibles.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 1: Datos personales."
+            ],
+            [
+              "Siguiente",
+              "Avanza al Paso 3: Contactos si toda la información es válida."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 3: Contactos"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employees-contacts.jpeg",
+          "alt": "Paso 3: Contactos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Se pueden registrar uno o varios medios de contacto del empleado."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Tipo de contacto",
+              "Desplegable con Teléfono, Email o Celular.",
+              "Sí"
+            ],
+            [
+              "Contacto",
+              "Dato del medio seleccionado.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 2: Datos del empleo."
+            ],
+            [
+              "Siguiente",
+              "Dirige al Paso 4: Roles y datos adicionales si los datos son correctos."
+            ],
+            [
+              "Agregar contacto",
+              "Permite sumar múltiples contactos."
+            ],
+            [
+              "<i class='pi pi-trash'></i>",
+              "Permite eliminar el contacto agregado"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 4: Roles y Datos Adicionales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-rol.jpeg",
+          "alt": "Paso 4: Roles y Datos Adicionales"
+        },
+        {
+          "type": "paragraph",
+          "text": "Etapa en la cual se asignan permisos y datos profesionales."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Permiso",
+              "Rol o permisos del usuario. Puede seleccionar más de uno.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Si el rol asignado es <strong>Bioquímico </strong>, el sistema desplegará automáticamente campos adicionales para completar:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Matrícula",
+              "Matrícula profesional (si corresponde).",
+              "No"
+            ],
+            [
+              "Es externo",
+              "Indica si el profesional trabaja fuera del laboratorio.",
+              "No"
+            ],
+            [
+              "Zona",
+              "Zona geográfica asignada.",
+              "No"
+            ],
+            [
+              "Firma del bioquímico",
+              "Carga de archivo de firma digital.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "✓ Nota importante",
+          "text": "<br>La firma digital debe estar en formato PNG, JPG o JPEG y no superar los 5 MB. Se recomienda fondo blanco o transparente y buena nitidez. Una vez seleccionada, podrá visualizarla y reemplazarla cuando lo necesite."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 3: Contactos."
+            ],
+            [
+              "Guardar",
+              "Guarda la información y redirige a <strong>Empleados</strong>."
+            ],
+            [
+              "Agregar rol",
+              "Permite sumar múltiples roles."
+            ],
+            [
+              "🗑️ Eliminar rol",
+              "Elimina un rol previamente agregado."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Importante",
+          "text": "<br>Si algún campo obligatorio está incompleto o tiene un formato incorrecto, el sistema mostrará un mensaje de error y no permitirá avanzar hasta corregirlo."
+        }
+      ]
+    },
+    {
+      "id": "editar-empleado",
+      "title": "Editar Empleado",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta función permite modificar, completar o actualizar los datos personales de un empleado registrado. Para iniciar, busque al empleado y, en la columna <strong>Acciones</strong>, seleccione la opción <strong>Editar</strong> <i class='pi pi-pencil'></i> del menú desplegable."
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 1: Datos Personales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-edit1.jpeg",
+          "alt": "Paso 1: Datos Personales"
+        },
+        {
+          "type": "paragraph",
+          "text": "En esta etapa se registran los datos filiatorios y de acceso al sistema."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Apellido",
+              "Apellido del empleado.",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Nombre del empleado.",
+              "Sí"
+            ],
+            [
+              "Documento",
+              "Documento único de identificación.",
+              "Sí"
+            ],
+            [
+              "Fecha de nacimiento",
+              "Seleccionable mediante calendario expandible.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Cancelar",
+              "Vuelve a la pantalla principal de <stron>Empleados sin modificar los datos"
+            ],
+            [
+              "Siguiente",
+              "Avanza al Paso 2: Datos del Empleo"
+            ]
+          ]
+        },
+         {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>El sistema valida que el número de Documento y el Usuario no se repitan.<br> El nombre de usuario se genera automáticamente y, si ya existe, deberá ingresar uno nuevo. Además, los campos obligatorios deben completarse correctamente para continuar; mientras haya errores o datos faltantes, el formulario no permitirá avanzar."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 2: Datos del empleo"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-edit2.jpeg",
+          "alt": "Paso 2: Datos del empleo"
+        },
+        {
+          "type": "paragraph",
+          "text": "Defina la información laboral del empleado."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Salario bruto",
+              "Monto bruto correspondiente al puesto.",
+              "Sí"
+            ],
+            [
+              "Salario neto",
+              "Monto final percibido por el empleado.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 1: Datos personales."
+            ],
+            [
+              "Siguiente",
+              "Avanza al Paso 3: Contactos si toda la información es válida."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 3: Contactos"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-edit3.jpeg",
+          "alt": "Paso 3: Contactos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Se pueden registrar uno o varios medios de contacto del empleado nuevos o eliminar alguno ya existente."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Tipo de contacto",
+              "Desplegable con Teléfono, Email o Celular.",
+              "Sí"
+            ],
+            [
+              "Contacto",
+              "Dato del medio seleccionado.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 2: Datos del empleo."
+            ],
+            [
+              "Siguiente",
+              "Dirige al Paso 4: Roles y datos adicionales si los datos son correctos."
+            ],
+            [
+              "Agregar contacto",
+              "Permite sumar múltiples contactos."
+            ],
+            [
+              "<i class='pi pi-trash'></i>",
+              "Permite eliminar el contacto agregado"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 4: Roles y Datos Adicionales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-edit4.jpeg",
+          "alt": "Paso 4: Roles y Datos Adicionales"
+        },
+        {
+          "type": "paragraph",
+          "text": "Solamente se podrá modificar o agregar la matrícula y elegir si el empleado es externo al laboratorio"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Matrícula",
+              "Matrícula profesional (si corresponde).",
+              "No"
+            ],
+            [
+              "Es externo",
+              "Indica si el profesional trabaja fuera del laboratorio.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 3: Contactos."
+            ],
+            [
+              "Guardar",
+              "Guarda la información y redirige a <strong>Empleados</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Antes de guardar las modificaciones del empleado, tenga en cuenta que, una vez confirmada la acción, <strong>no será posible deshacer los cambios realizados</strong>."
+        },
+         {
+          "type": "note",
+          "variant": "info",
+          "title": "Importante",
+          "text": "<br>Si algún campo obligatorio está incompleto o tiene un formato incorrecto, el sistema mostrará un mensaje de error y no permitirá avanzar hasta corregirlo."
+        }
+      ]
+    },
+    {
+      "id": "desactivar-empleado",
+      "title": "Desactivar Empleado",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Desactivar</strong> desde el menú de acciones <strong>⋮</strong> se abre una ventana de confirmación para <strong>desactivar</strong> el empleado del sistema."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employees-deactivate.jpg",
+          "alt": "Desactivar empleado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación de Estado"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción, el sistema cambiará el estado del usuario:"
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#FCA5A5"
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Al eliminar al empleado, su estado pasará a <strong>Inactivo</strong>. Antes de continuar, asegúrese de estar completamente seguro de desactivar al empleado del sistema."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "Confirma el cambio de estado y <strong>bloquea el acceso</strong>."
+            ],
+            [
+              "Cancelar",
+              "Mantiene al empleado en estado <strong>Activo</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gestion-firma-empleado",
+      "moduleId": "empleados",
+      "title": "Gestión de Firma del Empleado",
+      "intro": "Esta sección permite cargar, visualizar y actualizar la firma digital del empleado dentro del sistema.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Para gestionar la firma de un bioquímico, siga los siguientes pasos:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Paso",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "1",
+              "En la pantalla principal del módulo, localice al bioquímico deseado y, desde el submenú <strong>Acciones</strong>, seleccione <strong>Gestionar firma</strong>."
+            ],
+            [
+              "2",
+              "Se abrirá la ventana <strong>Gestionar Firma – [Nombre y Apellido del empleado]</strong>."
+            ],
+            [
+              "3",
+              "Para cargar o reemplazar la firma digital, presione el botón <strong>Aceptar</strong>."
+            ],
+            [
+              "4",
+              "Si selecciona <strong>Cancelar</strong>, el sistema cerrará la ventana y regresará a la pantalla principal."
+            ]
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-edit1.jpeg",
+          "alt": "Ventana de gestión de firma"
+        },
+        {
+          "type": "subtitle",
+          "text": "Carga del archivo"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Detalle",
+            "Información"
+          ],
+          "rows": [
+            [
+              "Formatos permitidos",
+              "PNG, JPG y JPEG."
+            ],
+            [
+              "Selección del archivo",
+              "El usuario puede elegir el archivo desde su computadora. Una vez seleccionado, el nombre del archivo aparecerá debajo de los botones <strong>Aceptar / Cancelar</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación y vista previa"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Resultado"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "El sistema actualiza la firma asociada al profesional."
+            ],
+            [
+              "Vista previa",
+              "Se muestra la imagen cargada en la parte inferior de la ventana."
+            ],
+            [
+              "Notificación",
+              "El sistema muestra un mensaje indicando que la firma fue cargada exitosamente."
+            ]
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-edit1.jpeg",
+          "alt": "Vista previa de firma cargada"
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Empleados",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-table-detail.jpeg",
+          "alt": "Descargar listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por un empleado en específico, el archivo solo contendrá los datos de los empleados encontrados. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "empleados",
+    "alta",
+    "roles",
+    "firma",
+    "editar",
+    "desactivar",
+    "exportar"
+  ]
+}

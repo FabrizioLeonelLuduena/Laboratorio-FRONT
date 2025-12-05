@@ -1,0 +1,748 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Movimientos de Stock",
+  "intro": "Gestión integral del inventario mediante el registro de ingresos, egresos, transferencias y ajustes manuales.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock",
+      "Administrador"
+    ]
+  },
+  "sections": [
+        {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "ingreso-stock",
+      "title": "Ingreso de Stock (Entrada)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta función permite registrar la entrada de mercadería proveniente de proveedores externos. Seleccione la pestaña <strong>Entrada</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-input-data.jpeg",
+          "alt": "Formulario de ingreso de stock"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos del Encabezado"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Proveedor",
+              "Seleccione la <strong>empresa proveedora</strong> que entrega los insumos."
+            ],
+            [
+              "Ubicación de destino",
+              "Indique el <strong>lugar físico o lógico</strong> donde se almacenará la mercadería."
+            ],
+            [
+              "Motivo",
+              "Razón del ingreso (Ej. <strong>Reposición</strong>, Compra extraordinaria)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle de Productos (Grilla)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Desplegable para seleccionar el <strong>insumo específico</strong> a ingresar."
+            ],
+            [
+              "Cantidad",
+              "Número de <strong>unidades físicas</strong> que ingresan al stock."
+            ],
+            [
+              "Lote",
+              "Código alfanumérico para la <strong>trazabilidad</strong> del lote de fabricación."
+            ],
+            [
+              "Vencimiento",
+              "Fecha límite para el uso del insumo (formato <strong>dd/mm/aaaa</strong>)."
+            ],
+            [
+              "Notas",
+              "Comentarios opcionales (Ej. 'Refrigerar')."
+            ],
+            [
+              "Acciones (+ / Papelera)",
+              "Botones para <strong>agregar una nueva fila</strong> o <strong>eliminar</strong> el ítem actual."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Crear movimiento",
+              "Confirma la operación, <strong>aumenta el stock</strong> en la ubicación seleccionada y guarda el registro."
+            ],
+            [
+              "Cancelar",
+              "Limpia el formulario y <strong>descarta</strong> el ingreso en curso."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Historial de Ingresos"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-input-table.jpeg",
+          "alt": "Tabla de historial de ingresos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Herramientas del Historial"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Buscar...",
+              "Campo de texto para <strong>filtrar movimientos</strong> por proveedor, fecha o tipo."
+            ],
+            [
+              "Descargar",
+              "Icono de flecha que permite <strong>exportar</strong> el listado visible."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de la Tabla Principal"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Clasificación del movimiento (<strong>Entrada</strong>)."
+            ],
+            [
+              "Fecha",
+              "Día y hora en que se registró el ingreso en el sistema."
+            ],
+            [
+              "Proveedor",
+              "Nombre de la empresa que suministró los insumos."
+            ],
+            [
+              "Ubicación de destino",
+              "Depósito o área donde se guardó la mercadería."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle Desplegable (Ítems)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Nombre comercial del insumo."
+            ],
+            [
+              "Cantidad",
+              "Total de unidades ingresadas."
+            ],
+            [
+              "Nro. lote",
+              "Identificador del lote asociado."
+            ],
+            [
+              "Vencimiento",
+              "Fecha de caducidad registrada."
+            ],
+            [
+              "Notas",
+              "Comentarios opcionales."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transferencia-stock",
+      "title": "Transferencia de Stock",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite mover insumos entre diferentes ubicaciones internas del laboratorio (Ej. de Depósito Central a Área de Extracciones)."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-transfer-data.jpeg",
+          "alt": "Formulario de transferencia"
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración del Movimiento"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Ubicación de origen",
+              "Lugar desde <strong>donde salen</strong> los insumos. Solo se listarán productos disponibles aquí."
+            ],
+            [
+              "Ubicación de destino",
+              "Lugar hacia <strong>donde se envían</strong> los insumos."
+            ],
+            [
+              "Motivo",
+              "Justificación del movimiento (Ej. <strong>Abastecimiento interno</strong>)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle de Productos (Grilla)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Insumo a transferir (debe tener stock en el origen)."
+            ],
+            [
+              "Cantidad",
+              "Unidades a mover. El sistema <strong>valida que no supere el stock disponible</strong>."
+            ],
+            [
+              "Lote",
+              "Selección del lote específico que se va a mover."
+            ],
+            [
+              "Vencimiento",
+              "Dato informativo del lote seleccionado."
+            ],
+            [
+              "Notas",
+              "Observaciones sobre el traslado."
+            ],
+            [
+              "Acciones (+ / Papelera)",
+              "Botones para <strong>agregar una nueva fila</strong> o <strong>eliminar</strong> el ítem actual."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Crear movimiento",
+              "Ejecuta la transferencia: <strong>resta stock</strong> en origen y <strong>suma</strong> en destino."
+            ],
+            [
+              "Cancelar",
+              "Descarta la operación."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "egreso-stock",
+      "title": "Egreso de Stock (Devolución)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Utilice esta pestaña para registrar salidas de mercadería que no son consumos habituales (ej. devoluciones). Dependiendo de la configuración, el sistema puede presentar dos escenarios."
+        },
+        {
+          "type": "subtitle",
+          "text": "Caso 1: Acceso Restringido (Vía Remitos)"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-egress-data-1.jpeg",
+          "alt": "Formulario de devolución "
+        },
+        {
+          "type": "paragraph",
+          "text": "Para asegurar la consistencia fiscal, el sistema puede bloquear la carga manual directa."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Indicador",
+            "Acción Requerida"
+          ],
+          "rows": [
+            [
+              "Mensaje de Restricción",
+              "Si visualiza el recuadro azul informativo, significa que <strong>no puede crear la devolución manualmente</strong> desde esta pantalla."
+            ],
+            [
+              "Solución",
+              "Debe dirigirse al apartado de <strong>Remitos</strong> para iniciar el proceso de devolución formalmente asociado a un documento."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Caso 2: Carga Manual (Directa)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Si el sistema habilita el formulario manual, podrá completar los datos directamente:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-egress-data-2.jpeg",
+          "alt": "Formulario de devolución manual"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Requeridos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Ubicación de origen",
+              "Área donde se encuentran los productos a devolver."
+            ],
+            [
+              "Tipo de Egreso",
+              "Clasificación de la salida (Ej. <strong>Devolución a proveedor</strong>)."
+            ],
+            [
+              "Proveedor",
+              "Destinatario de la devolución."
+            ],
+            [
+              "Motivo",
+              "Explicación detallada (Ej. <strong>Devolución de remito RN_0001</strong>)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle de Productos (Grilla)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Insumo que saldrá del inventario."
+            ],
+            [
+              "Cantidad",
+              "Unidades a devolver."
+            ],
+            [
+              "Lote",
+              "Especificación del lote afectado."
+            ],
+            [
+              "Notas",
+              "Razón específica por ítem (Ej. 'Producto dañado')."
+            ],
+            [
+              "Acciones (+ / Papelera)",
+              "Botones para <strong>agregar una nueva fila</strong> o <strong>eliminar</strong> el ítem actual."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Crear movimiento",
+              "Confirma la salida y <strong>descuenta el stock</strong> de la ubicación de origen."
+            ],
+            [
+              "Cancelar",
+              "Cancela la devolución."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Historial de Egresos"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-egress-table.jpeg",
+          "alt": "Tabla de historial de egresos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Herramientas del Historial"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Buscar...",
+              "Permite <strong>filtrar</strong> devoluciones por fecha, tipo o ubicación."
+            ],
+            [
+              "Descargar",
+              "<strong>Exporta</strong> la tabla de egresos visible."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de la Tabla Principal"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Clasificación general (<strong>Devolución</strong>)."
+            ],
+            [
+              "Fecha",
+              "Momento en que se procesó la salida."
+            ],
+            [
+              "Ubicación de origen",
+              "Lugar desde donde se retiraron los productos."
+            ],
+            [
+              "Tipo de egreso",
+              "Subcategoría de la salida."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle Desplegable (Ítems)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Nombre del insumo devuelto."
+            ],
+            [
+              "Cantidad",
+              "Unidades egresadas."
+            ],
+            [
+              "Nro. lote",
+              "Lote específico."
+            ],
+            [
+              "Vencimiento",
+              "Dato informativo del lote seleccionado."
+            ],
+            [
+              "Notas",
+              "Comentarios de auditoría (Ej. 'No cumple specs')."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ajuste-inventario",
+      "title": "Ajuste de Inventario",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Herramienta para correcciones manuales de stock (positivas o negativas) debidas a conteos físicos, mermas o roturas."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-settings-data.jpeg",
+          "alt": "Formulario de ajuste de inventario"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos del Ajuste"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Ubicación de destino",
+              "Lugar donde se aplicará el ajuste de stock."
+            ],
+            [
+              "Motivo",
+              "Causa del ajuste (Ej. <strong>Reposición</strong>, <strong>Ajuste por conteo</strong>, <strong>Mermas</strong>)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle de Productos (Grilla)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Insumo a ajustar."
+            ],
+            [
+              "Cantidad",
+              "Cantidad a sumar o restar (dependiendo del motivo y lógica del sistema)."
+            ],
+            [
+              "Lote",
+              "<strong>Crítico:</strong> Si es salida, debe coincidir con un lote existente. Si es entrada, se puede crear."
+            ],
+            [
+              "Notas",
+              "Justificación del ajuste (Ej. 'Rotura')."
+            ],
+            [
+              "Acciones (+ / Papelera)",
+              "Botones para <strong>agregar una nueva fila</strong> o <strong>eliminar</strong> el ítem actual."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Crear movimiento",
+              "Aplica el <strong>ajuste de inventario</strong> inmediatamente."
+            ],
+            [
+              "Cancelar",
+              "Descarta la operación."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Historial de Ajustes"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/movements-stock/movements-stock-settings-table.jpeg",
+          "alt": "Historial de ajustes realizados"
+        },
+        {
+          "type": "subtitle",
+          "text": "Herramientas del Historial"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Buscar...",
+              "Filtrado rápido de ajustes por motivo o ubicación."
+            ],
+            [
+              "Descargar",
+              "Exportación de los datos de ajustes."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de la Tabla Principal"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Siempre figura como <strong>Ajuste</strong>."
+            ],
+            [
+              "Fecha",
+              "Fecha de realización."
+            ],
+            [
+              "Ubicación de destino",
+              "Lugar afectado por el ajuste."
+            ],
+            [
+              "Motivo",
+              "Causa registrada (Ej. 'Ajuste por conteo')."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle Desplegable (Ítems)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "Insumo ajustado."
+            ],
+            [
+              "Cantidad",
+              "Unidades ajustadas."
+            ],
+            [
+              "Nro. lote",
+              "Lote involucrado."
+            ],
+            [
+              "Vencimiento",
+              "Dato informativo del lote seleccionado."
+            ],
+            [
+              "Notas",
+              "Observaciones específicas del ítem."
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "stock",
+    "movimientos",
+    "ingreso",
+    "egreso",
+    "transferencia",
+    "ajuste",
+    "inventario"
+  ]
+}

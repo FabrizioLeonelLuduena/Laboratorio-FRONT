@@ -1,0 +1,22 @@
+.manual-badge {
+  display: inline-block; /* permitir padding y background sin romper línea */
+  padding: 0.15em 0.5em; /* pequeño relleno tipo badge */
+  border-radius: 0.375rem; /* borde redondeado */
+  border: none;
+  font-size: inherit; /* mismo tamaño que el texto circundante */
+  line-height: 1; /* evitar salto vertical */
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.manual-badge__text {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.manual-badge__code {
+  font-size: inherit;
+  font-weight: inherit;
+  margin-left: 0.5rem; /* espacio entre palabra y código */
+  opacity: 0.9;
+}

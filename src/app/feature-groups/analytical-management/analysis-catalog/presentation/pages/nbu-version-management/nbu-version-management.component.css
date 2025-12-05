@@ -1,0 +1,225 @@
+/* Header - Estandarizado */
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 1.5rem; /* 24px - estándar del proyecto */
+  font-weight: 600;
+  color: var(--on-surface);
+  line-height: 1.2;
+}
+
+/* Layout aligned with status-followment */
+.status-followment-container {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  min-height: calc(100vh - 200px);
+  height: 100%;
+}
+
+.search-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 380px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  height: 100%;
+}
+
+.detail-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+  height: 100%;
+}
+
+.card {
+  background: var(--surface-0);
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mode-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.mode-badge.create-mode {
+  background: color-mix(in srgb, var(--brand-primary-700) 10%, var(--surface-0));
+  color: var(--brand-primary-700);
+  border: 1px solid var(--brand-primary-700);
+}
+
+.mode-badge.edit-mode {
+  background: color-mix(in srgb, #7c3aed 10%, var(--surface-0));
+  color: #7c3aed;
+  border: 1px solid #7c3aed;
+}
+
+.mode-badge i {
+  font-size: 0.875rem;
+}
+
+/* Secciones del formulario */
+.base-version-section,
+.current-version-section,
+.form-section,
+.association-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.base-version-section:last-child,
+.current-version-section:last-child,
+.form-section:last-child,
+.association-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-header i {
+  font-size: 1.125rem;
+  color: var(--brand-primary-700);
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.section-hint {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--on-surface-muted);
+  line-height: 1.5;
+}
+
+.base-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.version-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-item label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--on-surface-muted);
+}
+
+.info-item span {
+  font-size: 1rem;
+  color: var(--on-surface);
+}
+
+.nbu-count {
+  font-weight: 600;
+  color: var(--brand-primary-700);
+}
+
+.association-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.ub-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ub-input label {
+  font-weight: 500;
+  color: var(--text-color);
+  white-space: nowrap;
+}
+
+.ub-input input {
+  width: 120px;
+}
+
+.modal-content-wrapper {
+  padding: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+}
+
+.base-select label {
+  font-size: 0.875rem; /* 14px - estándar para labels */
+  font-weight: 600;
+  color: var(--on-surface-muted);
+  text-transform: none;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.5rem;
+}
+
+.association-toolbar label {
+  font-size: 0.875rem; /* 14px - estándar para labels */
+  font-weight: 600;
+  color: var(--on-surface-muted);
+  text-transform: none;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}

@@ -1,0 +1,59 @@
+<div class="protocol-search-bar">
+
+  <!-- Título -->
+  <h3 class="section-title">Búsqueda de Protocolos</h3>
+
+    <!-- Selector de protocolos con búsqueda -->
+  <!-- <div class="protocol-selector"> -->
+    <!-- @if (isLoading) {
+      <div class="loading-selector">
+        <p-progressSpinner strokeWidth="4" styleClass="spinner-sm"></p-progressSpinner>
+        <span>Cargando protocolos...</span>
+      </div>
+    } @else { -->
+      <label class="text-label">Seleccione un protocolo: </label>
+      <p-select
+        [options]="protocolOptions"
+        [(ngModel)]="selectedProtocolId"
+        (ngModelChange)="onProtocolIdChange($event)"
+        [filter]="true"
+        [filterPlaceholder]="'Buscar...'"
+        [showClear]="true"
+        [placeholder]="'Buscar por N° o nombre de paciente...'"
+        [emptyMessage]="'No se encontraron protocolos'"
+        [emptyFilterMessage]="'No se encontraron protocolos'"
+        [disabled]="isLoading"
+      >
+      </p-select>
+
+  <!-- </div> -->
+
+  <!-- Fecha desde -->
+  <div class="date-field-inline">
+    <label class="text-label">Desde:</label>
+    <p-calendar
+      [(ngModel)]="startDate"
+      (ngModelChange)="onDateChange()"
+      [showIcon]="true"
+      [maxDate]="maxStartDate"
+      dateFormat="dd/mm/yy"
+      inputId="start-calendar"
+      styleClass="modern-calendar"
+    ></p-calendar>
+  </div>
+
+  <!-- Fecha hasta -->
+  <div class="date-field-inline">
+    <label class="text-label">Hasta:</label>
+    <p-calendar
+      [(ngModel)]="endDate"
+      (ngModelChange)="onDateChange()"
+      [showIcon]="true"
+      [minDate]="minEndDate"
+      dateFormat="dd/mm/yy"
+      inputId="end-calendar"
+      styleClass="modern-calendar"
+    ></p-calendar>
+  </div>
+
+</div>

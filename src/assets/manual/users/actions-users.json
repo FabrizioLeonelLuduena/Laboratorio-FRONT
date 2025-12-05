@@ -1,0 +1,364 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones de Usuarios",
+  "intro": "A continuación se detallan las acciones que los usuarios pueden realizar en el módulo de Usuarios.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+        {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br>  Secretaria - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "proceso-registro",
+      "title": "Crear un nuevo Usuario",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón <i class='pi pi-plus'></i> (esquina superior derecha) desde la pantalla de <strong>Usuarios</strong>, se redirige a la pantalla <strong>'Registrar usuario'</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/users/create-users.jpg",
+          "alt": "Formulario de creación de usuario"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Apellido",
+              "Ingrese el <strong>apellido</strong> del usuario que se está registrando.",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Ingrese el <strong>nombre</strong> del usuario.",
+              "Sí"
+            ],
+            [
+              "Documento",
+              "Ingrese el número de <strong>documento de identidad (DNI)</strong> del usuario.",
+              "Sí"
+            ],
+            [
+              "Nombre de usuario",
+              "Defina el <strong>nombre único</strong> que se utilizará para <strong>iniciar sesión</strong> en el sistema.",
+              "Sí"
+            ],
+            [
+              "Email",
+              "Ingrese la <strong>dirección de correo electrónico</strong>. Se utilizará para <strong>notificaciones</strong> y <strong>recuperación de contraseña</strong>.",
+              "Sí"
+            ],
+            [
+              "Roles",
+              "Seleccione <strong>uno o más roles</strong> desde el menú desplegable (Ej: Administrador, Secretaria, Bioquímico).",
+              "Sí"
+            ],
+            [
+              "Sucursal",
+              "Seleccione del listado la <strong>sucursal</strong> a la que pertenecerá el usuario.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "<strong>Confirma el registro</strong> y crea el <strong>nuevo usuario</strong> en el sistema. Redirige a la pantalla de <strong>Usuarios"
+            ],
+            [
+              "Cancelar",
+              "Vuelve a la pantalla <strong>'Usuarios'</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Asegúrese de que el <strong>Email</strong> sea válido y accesible, ya que es el <strong>único medio</strong> para restablecer el acceso en caso de olvido de la clave."
+        }
+      ]
+    },
+    {
+      "id": "proceso-edicion",
+      "title": "Editar un usuario",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Editar</strong> desde el menú de acciones <strong>(⋮)</strong> de cualquier fila, se redirige a la pantalla <strong>'Editar usuario'</strong>. El sistema <strong>precarga la información actual</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/users/users-edit.jpg",
+          "alt": "Pantalla de edición de usuario"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos Editables"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción del cambio",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Apellido",
+              "Dato de <strong>identificación personal</strong> del usuario.",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Dato de <strong>identificación personal</strong> del usuario.",
+              "Sí"
+            ],
+            [
+              "Documento",
+              "Número único de <strong>identificación (DNI)</strong>.",
+              "Sí"
+            ],
+            [
+              "Nombre de usuario",
+              "<strong>Identificador único</strong> para el inicio de sesión en el sistema.",
+              "Sí"
+            ],
+            [
+              "Email",
+              "<strong>Correo electrónico</strong> de contacto y notificaciones.",
+              "Sí"
+            ],
+            [
+              "Roles",
+              "Menú desplegable para modificar los <strong>permisos de acceso</strong> (agregar o quitar roles).",
+              "Sí"
+            ],
+            [
+              "Sucursal",
+              "Menú desplegable para cambiar la <strong>ubicación de trabajo</strong> asignada al usuario.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "<strong>Sobrescribe</strong> la información anterior y <strong>actualiza el perfil</strong> del usuario. Redirige a la pantalla de <strong>Usuarios"
+            ],
+            [
+              "Cancelar",
+              "Vuelve a la pantalla <strong>'Usuarios'</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Nota importante",
+          "text": "<br>• Si modifica el <strong>Rol</strong> de un usuario, sus <strong>permisos de acceso</strong> cambiarán inmediatamente después de guardar. Asegúrese de asignar el nivel de acceso correcto. <br>• Si editas tu propia cuenta, deberás cerrar sesión e iniciar sesión nuevamente para que los cambios surtan efecto."
+
+
+        }
+      ]
+    },
+    {
+      "id": "proceso-cambio-estado",
+      "title": "Deshabilitar usuario",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Deshabilitar</strong> desde el menú de acciones <strong>⋮</strong>, se abre una ventana de confirmación para <strong>deshabilitar</strong> el acceso del usuario al sistema."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/users/users-deactivate.jpg",
+          "alt": "Modal de confirmación para desactivar usuario"
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Motivo:</strong> Campo obligatorio para ingresar la <strong>razón administrativa</strong> del cambio."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados de Usuarios"
+        },
+        {
+          "type": "paragraph",
+          "text": "Si se <strong>desactiva</strong> un usuario, su estado cambiará a:"
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "Si se <strong>activa</strong> un usuario, su estado cambiará a:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#027d46"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "<strong>Confirma</strong> el cambio de estado y <strong>aplica la modificación</strong>."
+            ],
+            [
+              "Cancelar",
+              "Cierra la ventana emergente y <strong>mantiene el estado actual</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "⚠ Nota importante",
+          "text":"<br> Los usuarios con estado INACTIVO no podrán iniciar sesión en el sistema hasta que sean reactivados."
+        }
+      ]
+    },
+    {
+      "id": "proceso-reseteo-contrasena",
+      "title": "Reestablecer contraseña",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Reestablecer Contraseña</strong> desde el menú de acciones <strong>(⋮)</strong>, se abre una ventana de confirmación."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/users/users-restore-password.jpg",
+          "alt": "Modal de confirmación para restablecer contraseña"
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación de envío"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema solicitará confirmación para enviar un <strong>correo de recuperación</strong> a la dirección registrada del usuario."
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Revise carpetas como Spam, No deseados, Promociones u otras pestañas de su correo.."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "<strong>Dispara el envío</strong> del correo de recuperación."
+            ],
+            [
+              "Cancelar",
+              "Cierra la ventana <strong>sin enviar ningún correo</strong>."
+            ]
+          ]
+        }
+
+      ]
+    }
+  ],
+  "tags": [
+    "usuarios",
+    "registro",
+    "edición",
+    "activar",
+    "desactivar",
+    "contraseña"
+  ]
+}

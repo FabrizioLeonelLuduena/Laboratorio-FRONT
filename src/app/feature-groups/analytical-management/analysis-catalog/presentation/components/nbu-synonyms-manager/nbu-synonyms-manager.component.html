@@ -1,0 +1,74 @@
+<div class="synonyms-manager">
+  <!-- Add Synonyms Section -->
+  <div class="add-section">
+    <div class="add-header">
+      <i class="pi pi-plus-circle"></i>
+      <span class="section-title">Agregar Sinónimos</span>
+    </div>
+
+    <div class="add-controls">
+      <div class="chips-wrapper">
+        <p-chips
+          [(ngModel)]="newSynonyms"
+          placeholder="Escriba un sinónimo y presione Enter"
+          [addOnBlur]="true"
+          [addOnTab]="true"
+          [allowDuplicate]="false"
+          separator=","
+          styleClass="w-full">
+        </p-chips>
+        <small class="hint">
+          <i class="pi pi-info-circle"></i>
+          Escriba un sinónimo y presione Enter, Tab o coma para agregar múltiples
+        </small>
+      </div>
+
+      <p-button
+        label="Agregar"
+        icon="pi pi-plus"
+        [disabled]="!hasNewSynonyms()"
+        (onClick)="onAdd()"
+        severity="success"
+        styleClass="add-button">
+      </p-button>
+    </div>
+  </div>
+
+  <p-divider />
+
+  <!-- Current Synonyms Section -->
+  <div class="current-section">
+    <div class="current-header">
+      <i class="pi pi-tags"></i>
+      <span class="section-title">Sinónimos Actuales</span>
+      <span class="count-badge">{{ currentSynonyms().length }}</span>
+    </div>
+
+    @if (currentSynonyms().length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-inbox"></i>
+        <p class="empty-message">No hay sinónimos definidos</p>
+        <p class="empty-hint">Use el campo de arriba para agregar sinónimos</p>
+      </div>
+    } @else {
+      <div class="synonyms-grid">
+        @for (synonym of currentSynonyms(); track synonym) {
+          <div class="synonym-item">
+            <i class="pi pi-tag"></i>
+            <span class="synonym-text">{{ synonym }}</span>
+            <button
+              pButton
+              icon="pi pi-times"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              size="small"
+              (click)="onRemove(synonym)"
+              class="remove-btn">
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

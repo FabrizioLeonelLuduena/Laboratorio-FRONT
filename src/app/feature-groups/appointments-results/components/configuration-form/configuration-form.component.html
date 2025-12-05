@@ -1,0 +1,281 @@
+<div class="flex flex-col gap-5">
+
+  <!-- Error Alert - Floating Top Right -->
+  @if (showError()) {
+    <div class="floating-alert-container">
+      <app-generic-alert
+        [type]="'error'"
+        [title]="errorTitle()"
+        [text]="errorMessage()">
+      </app-generic-alert>
+    </div>
+  }
+
+  <!-- Success Alert - Floating Top Right -->
+  @if (showSuccess()) {
+    <div class="floating-alert-container">
+      <app-generic-alert
+        [type]="'success'"
+        [title]="successTitle()"
+        [text]="successMessage()">
+      </app-generic-alert>
+    </div>
+  }
+
+  @defer (when !loading()) {
+    <div class="two-col-layout">
+      <!-- Left column: Generic Form -->
+      <div class="left-col">
+        <app-generic-form
+          #cfgGF
+          [showHeader]="false"
+          [fields]="fields"
+          [initialValue]="initialValue"
+          [formValidators]="gfDateRangeValidator"
+          [showCancel]="false"
+          [showSubmit]="false"
+          [size]="'full'"
+          [maxCols]="2"
+          (submitForm)="onGenericSubmit($event)">
+        </app-generic-form>
+      </div>
+
+      <!-- Right column: Manual form -->
+      <div class="right-col">
+        <p-divider align="left">
+          <span class="section-title">Configuración adicional</span>
+        </p-divider>
+
+        <!-- Horarios -->
+        <div class="field-item mb-16">
+          <label class="field-label">Horarios</label>
+
+          <div class="form-grid-2 custom-grid">
+            <!-- Hora de inicio -->
+            <div class="field-item">
+              <label class="field-label">
+                Hora de inicio <span class="req">*</span>
+              </label>
+              <div class="control-shell" [attr.data-invalid]="startTimeError() ? 'true' : null">
+                <input
+                  pInputText
+                  type="time"
+                  [(ngModel)]="startTimeExt"
+                  [ngModelOptions]="{standalone:true}"
+                  (change)="onStartTimePick()"
+                  class="w-full" />
+              </div>
+              @if (startTimeError()) {
+                <div class="field-foot">
+                  <span class="form-error-pill">{{ startTimeError() }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="field-item">
+              <label class="field-label">
+                Hora de fin <span class="req">*</span>
+              </label>
+              <div class="control-shell" [attr.data-invalid]="endTimeError() ? 'true' : null">
+                <input
+                  pInputText
+                  type="time"
+                  [(ngModel)]="endTimeExt"
+                  [ngModelOptions]="{standalone:true}"
+                  (change)="onEndTimePick()"
+                  class="w-full" />
+              </div>
+              @if (endTimeError()) {
+                <div class="field-foot">
+                  <span class="form-error-pill">{{ endTimeError() }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Días -->
+        <div class="field-item mb-16">
+          <label class="field-label">Días de la semana <span class="req">*</span></label>
+
+          <div class="field-foot mb-12">
+            <span class="form-hint">
+              <i class="pi pi-info-circle mr-4"></i>
+              Las configuraciones se repiten semanalmente en los días seleccionados
+            </span>
+          </div>
+
+          <div class="control-shell" [attr.data-invalid]="daysError() ? 'true' : null">
+            <p-multiSelect
+              [(ngModel)]="recurringDaysOfWeek"
+              [ngModelOptions]="{standalone:true}"
+              [options]="dayOptions"
+              optionLabel="label"
+              optionValue="value"
+              optionDisabled="disabled"
+              placeholder="Seleccione días de la semana"
+              selectedItemsLabel="{0} días seleccionados"
+              styleClass="w-full"
+              display="chip"
+              [filter]="false"
+              [showToggleAll]="false"
+              (onChange)="onDaysChange()">
+            </p-multiSelect>
+          </div>
+
+          @if (daysError()) {
+            <div class="field-foot">
+              <span class="form-error-pill">{{ daysError() }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Toggle -->
+        <div class="field-item">
+          <label class="field-label">
+            <i class="pi pi-toggle-on mr-8"></i>
+            Estado de la configuración
+          </label>
+
+          <div class="toggle-container">
+            <p-toggleButton
+              [ngModel]="active()"
+              [ngModelOptions]="{standalone:true}"
+              (onChange)="onActiveToggle($event)"
+              [onLabel]="'Configuración activa'"
+              [offLabel]="'Configuración inactiva'"
+              [onIcon]="'pi pi-check-circle'"
+              [offIcon]="'pi pi-times-circle'"
+              [disabled]="!isEditing() || saving() || togglingActive()">
+            </p-toggleButton>
+          </div>
+
+          <div class="field-foot">
+            <span class="form-hint">
+              {{ active()
+              ? 'Esta configuración estará disponible para agendar turnos'
+              : 'Esta configuración no estará disponible para agendar turnos' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-buttons">
+      <app-generic-button
+        type="cancel"
+        text="Cancelar"
+        [disabled]="saving()"
+        (pressed)="onCancel()">
+      </app-generic-button>
+
+      <app-generic-button
+        type="save"
+        [text]="saving() ? 'Guardando...' : (isEditing() ? 'Actualizar' : 'Crear') + ' configuración'"
+        [disabled]="saving() || !!startTimeError() || !!endTimeError() || !!daysError() || cfgGF.form.invalid"
+        (pressed)="cfgGF.onSubmit()">
+      </app-generic-button>
+    </div>
+  } @placeholder {
+    <!-- Skeleton loading -->
+    <div class="two-col-layout">
+      <!-- Left skeleton -->
+      <div class="left-col skeleton-container">
+        <!-- Divider skeleton -->
+        <div class="skeleton-divider"></div>
+
+        <!-- Field skeleton -->
+        <div class="skeleton-field">
+          <div class="skeleton-label"></div>
+          <div class="skeleton-input"></div>
+        </div>
+
+        <!-- Divider skeleton -->
+        <div class="skeleton-divider"></div>
+
+        <!-- Two fields in row -->
+        <div class="skeleton-row">
+          <div class="skeleton-field">
+            <div class="skeleton-label"></div>
+            <div class="skeleton-input"></div>
+          </div>
+          <div class="skeleton-field">
+            <div class="skeleton-label"></div>
+            <div class="skeleton-input"></div>
+          </div>
+        </div>
+
+        <!-- Divider skeleton -->
+        <div class="skeleton-divider"></div>
+
+        <!-- Checkbox field skeleton -->
+        <div class="skeleton-field">
+          <div class="skeleton-checkbox"></div>
+        </div>
+
+        <!-- Divider skeleton -->
+        <div class="skeleton-divider"></div>
+
+        <!-- Two date fields in row -->
+        <div class="skeleton-row">
+          <div class="skeleton-field">
+            <div class="skeleton-label"></div>
+            <div class="skeleton-input"></div>
+          </div>
+          <div class="skeleton-field">
+            <div class="skeleton-label"></div>
+            <div class="skeleton-input"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right skeleton -->
+      <div class="right-col skeleton-container">
+        <!-- Divider skeleton -->
+        <div class="skeleton-divider"></div>
+
+        <!-- Section -->
+        <div class="skeleton-field">
+          <div class="skeleton-label"></div>
+          <div class="skeleton-hint"></div>
+
+          <!-- Time inputs -->
+          <div class="skeleton-row">
+            <div class="skeleton-field">
+              <div class="skeleton-label-sm"></div>
+              <div class="skeleton-input"></div>
+            </div>
+            <div class="skeleton-field">
+              <div class="skeleton-label-sm"></div>
+              <div class="skeleton-input"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Days field -->
+        <div class="skeleton-field">
+          <div class="skeleton-label"></div>
+          <div class="skeleton-input"></div>
+        </div>
+
+        <!-- Toggle field -->
+        <div class="skeleton-field">
+          <div class="skeleton-label"></div>
+          <div class="skeleton-toggle"></div>
+          <div class="skeleton-hint"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skeleton buttons -->
+    <div class="action-buttons">
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button skeleton-button-primary"></div>
+    </div>
+  }
+
+  @if (alert) {
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  }
+</div>

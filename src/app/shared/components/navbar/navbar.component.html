@@ -1,0 +1,94 @@
+<header class="navbar-container">
+  <!-- Botón de menú (hamburguesa) -->
+  <button
+    class="btn btn--text navbar-toggle"
+    type="button"
+    (click)="onToggleSidebar()"
+    aria-label="Abrir menú lateral"
+  >
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <!-- Breadcrumb -->
+  <div class="navbar-breadcrumb">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <!-- Espaciador para empujar a la derecha -->
+  <div class="spacer"></div>
+
+  <!-- Botón de ayuda (opcional) -->
+  <div class="help-button">
+    <button
+      type="button"
+      class="btn btn--text navbar-help-btn"
+      (click)="openFaq()"
+      aria-label="Ayuda"
+      title="Ayuda"
+    >
+      <i class="pi pi-info-circle"></i>
+    </button>
+  </div>
+
+  <!-- Botón de Tutorial -->
+  @if (showTutorialButton) {
+    <div class="tutorial-button">
+      <button
+        type="button"
+        class="btn btn--text navbar-help-btn"
+        (click)="startCurrentTutorial()"
+        pTooltip="Iniciar Tutorial"
+        tooltipPosition="bottom"
+        aria-label="Iniciar Tutorial"
+      >
+        <i class="pi pi-question-circle"></i>
+      </button>
+    </div>
+  }
+
+  <button class="btn btn--text navbar-user-btn" (click)="notifPopover.toggle($event)" style="position: relative">
+    <i class="pi pi-bell"></i>
+    @if (unreadCount > 0) {
+      <span class="navbar-notif-badge" [attr.aria-label]="'No leídas: ' + unreadCount">
+        {{ unreadCount }}
+      </span>
+    }
+  </button>
+
+  <p-popover #notifPopover [style]="{ width: '420px'}" showCloseIcon="true" [dismissable]="true">
+    <app-notifications-bell (unreadCountChange)="unreadCount = $event"></app-notifications-bell>
+  </p-popover>
+
+  <!-- Menú de usuario -->
+  <div class="profile-button">
+    <button
+      type="button"
+      class="btn btn--text navbar-user-btn"
+      (click)="openUserMenu($event)"
+      aria-label="Menú de usuario"
+      title="Usuario"
+    >
+      <i class="pi pi-user"></i>
+    </button>
+
+    <p-menu
+      #userMenu
+      [popup]="true"
+      [model]="userMenuItems"
+      [baseZIndex]="1100"
+      appendTo="body"
+      styleClass="navbar-user-menu"
+    ></p-menu>
+  </div>
+</header>
+
+<!-- Modal de ayuda -->
+<app-generic-modal-form
+  *ngIf="helpModalVisible"
+  [visible]="helpModalVisible"
+  [title]="helpTitle"
+  [width]="'600px'"
+  (closed)="closeHelp()"
+>
+  <div class="help-modal-content" [innerHTML]="helpContent"></div>
+</app-generic-modal-form>

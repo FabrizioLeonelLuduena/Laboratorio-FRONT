@@ -1,0 +1,104 @@
+<div class="p-card bg-white rounded-lg border border-gray-200 shadow-sm">
+  <div class="flex flex-wrap items-center justify-between gap-4 px-6 py-4">
+
+    <!-- Avatar y nombre -->
+    <div class="flex items-center gap-4 min-w-[200px]">
+      <div
+        class="w-14 h-14 rounded-full flex items-center justify-center text-white flex-shrink-0 paciente-avatar"
+      >
+        <i class="pi pi-user text-xl"></i>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-900 paciente-nombre">
+          {{ estudio.patient.lastName }} {{ estudio.patient.firstName }}
+        </h3>
+        <div class="flex items-center gap-1 text-sm text-gray-600 mt-0.5">
+          <span>DNI: {{ estudio.patient.documentNumber }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protocolo y Fecha -->
+    <div class="flex items-center gap-8 flex-1 justify-center text-center">
+      <div class="flex items-center gap-2">
+        <div>
+          <p class="text-[0.65rem] text-gray-500 uppercase tracking-wide mb-0.5">Fecha</p>
+          <p class="text-base font-bold text-gray-900">
+            {{ estudio.createdDatetime | date: 'dd/MM/yyyy' }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-8 flex-1 justify-center text-center">
+      <div class="flex items-center gap-2">
+        <div>
+          <p class="text-[0.65rem] text-gray-500 uppercase tracking-wide mb-0.5">Protocolo</p>
+          <p class="text-base font-bold text-gray-900">
+            {{ estudio.protocolCode }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-8 flex-1 justify-center text-center">
+      <div class="text-right estado-firma-badge">
+        <p class="text-[0.65rem] text-gray-500 text-center uppercase tracking-wide mb-1">
+          Estado de Firma
+        </p>
+        <p-tag
+          [value]="getEstadoLabel(estudio.currentStatus)"
+          [severity]="getEstadoSeverityAsResult(estudio.currentStatus)"
+          styleClass="text-sm estado-badge"
+        >
+        </p-tag>
+      </div>
+    </div>
+
+    <!-- Estado y botones -->
+    <div class="flex items-center gap-6 justify-end min-w-[340px] flex-shrink-0">
+      <div
+        class="flex flex-col gap-2 text-right"
+        *ngIf="estudio.currentStatus !== 'CLOSED'"
+      >
+        <div class="flex items-center gap-2 text-brand-primary justify-items-start">
+          <span class="text-sm font-medium">Firma Electrónica</span>
+        </div>
+        <div class="flex gap-2">
+          <button
+            pButton
+            label="Firmar Parcial"
+            icon="pi pi-check"
+            [loading]="firmando"
+            [disabled]="!puedeFirmarParcial || firmando"
+            class="p-button-warning"
+            (click)="abrirModalConfirmacion()">
+          </button>
+
+          <!-- Botón Firma Total -->
+          <button
+            pButton
+            label="Firmar Total"
+            icon="pi pi-check-circle"
+            [loading]="firmando"
+            [disabled]="!puedeFirmarTotal || firmando"
+            class="p-button-success"
+            (click)="abrirModalConfirmacion()">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@if (showConfirmationModal) {
+  <app-confirmation-modal
+    class="modal-confirm"
+    icon="⚠"
+    title="Confirmacion de firma"
+    message="¿Estás seguro de que deseas firmar este registro?"
+    (confirmed)="onConfirmFirm()"
+    (dismissed)="onDismissModal()">
+  </app-confirmation-modal>
+}

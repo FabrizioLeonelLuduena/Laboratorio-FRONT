@@ -1,0 +1,290 @@
+:host {
+  display: block;
+
+  --cols-lg: 4;
+}
+
+.form-grid-2 [data-span="1"] { grid-column: span 1; }
+
+.form-grid-2 [data-span="2"],
+.form-grid-2 [data-span="3"],
+.form-grid-2 [data-span="4"] { grid-column: 1 / -1; }
+
+@media (width >= 640px) {
+  .form-grid-2 [data-span="1"] { grid-column: span 1; }
+
+  .form-grid-2 [data-span="2"],
+  .form-grid-2 [data-span="3"],
+  .form-grid-2 [data-span="4"] { grid-column: 1 / -1; }
+}
+
+@media (width >= 1024px) {
+  .form-grid-2 {
+    grid-template-columns: repeat(var(--cols-lg, 4), minmax(0, 1fr));
+  }
+
+  .form-grid-2 [data-span="1"] { grid-column: span 1; }
+  .form-grid-2 [data-span="2"] { grid-column: span 2; }
+  .form-grid-2 [data-span="3"] { grid-column: span 3; }
+  .form-grid-2 [data-span="4"] { grid-column: span var(--cols-lg, 4); }
+}
+
+.field-item {
+  min-width: 0;
+}
+
+.field-input {
+  min-width: 0;
+}
+
+.req {
+  color: var(--brand-warn);
+  margin-left: 4px;
+}
+
+label[data-invalid="true"] {
+  color: var(--brand-warn);
+}
+
+.field-foot {
+  min-height: 20px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.form-error-pill {
+  color: var(--brand-warn);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.form-hint {
+  color: var(--on-surface-muted);
+  font-size: var(--font-size-small);
+}
+
+.checkbox-shell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.checkbox-label {
+  cursor: pointer;
+}
+
+.control-shell {
+  background: var(--card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px;
+  transition: border-color 120ms ease;
+}
+
+.control-shell[data-invalid="true"] {
+  border-color: var(--brand-warn);
+}
+
+:host ::ng-deep .control-shell textarea.p-inputtextarea {
+  width: 100%;
+  height: auto;
+  line-height: 1.4;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+:host ::ng-deep p-datepicker,
+:host ::ng-deep .p-datepicker {
+  width: 100%;
+}
+
+:host ::ng-deep p-datepicker.is-invalid .p-inputtext,
+:host ::ng-deep .p-datepicker.is-invalid .p-inputtext {
+  border-color: var(--brand-warn);
+  box-shadow: inset 0 0 0 1px var(--brand-warn);
+}
+
+:host ::ng-deep .p-inputgroup.has-error {
+  box-shadow: 0 0 0 1px var(--brand-warn);
+  border-radius: 8px;
+}
+
+:host ::ng-deep .p-inputgroup.has-error > .p-inputgroup-addon {
+  color: var(--brand-warn);
+  border-color: var(--brand-warn);
+}
+
+:host ::ng-deep .p-inputgroup {
+  width: 100%;
+  align-items: stretch;
+}
+
+:host ::ng-deep .p-inputgroup > .p-inputgroup-addon {
+  flex: 0 0 auto;
+}
+
+:host ::ng-deep .p-inputgroup > input.p-inputtext,
+:host ::ng-deep .p-inputgroup > .p-select,
+:host ::ng-deep .p-inputgroup > .p-inputnumber,
+:host ::ng-deep .p-inputgroup > .p-chips,
+:host ::ng-deep .p-inputgroup > .p-multiselect{
+  flex: 1 1 0%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+
+:host ::ng-deep .p-inputgroup input.p-inputtext,
+:host ::ng-deep .p-inputgroup .p-inputnumber-input,
+:host ::ng-deep .p-inputgroup .p-chips .p-inputtext,
+:host ::ng-deep .p-inputgroup .p-multiselect{
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep p-select,
+:host ::ng-deep .p-select {
+  width: 100%;
+}
+
+:host ::ng-deep p-inputnumber,
+:host ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+:host ::ng-deep p-chips,
+:host ::ng-deep .p-chips {
+  width: 100%;
+}
+
+:host ::ng-deep p-multiselect,
+:host ::ng-deep .p-multiselect {
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  padding: 8px 12px;
+}
+
+.radio-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.array-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.array-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  line-height: 18px;
+  background: #f2f2f2;
+  color: #333;
+}
+
+.status-pill--warn {
+  background: #fff7e6;
+  color: #ad5f00;
+  border: 1px solid #ffd591;
+}
+
+.status-pill--error {
+  background: #fff1f0;
+  color: #a8071a;
+  border: 1px solid #ffa39e;
+}
+
+
+.flex-auto-min0 {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.date-ctrl {
+  display: block;
+}
+
+:host ::ng-deep p-divider,
+:host ::ng-deep .p-divider {
+  width: 100%;
+  margin: 8px 0 4px;
+}
+
+:host ::ng-deep .p-divider .p-divider-content {
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+:host ::ng-deep .btn--valid {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .btn--valid:hover:not(:disabled) {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+.password-toggle {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: var(--on-surface-muted);
+  transition: color 120ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.password-toggle:hover {
+  color: var(--brand-primary);
+}
+
+.password-toggle:focus {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.password-toggle i {
+  font-size: 16px;
+}
+
+:host ::ng-deep .gf-overlay {
+  z-index: 100
+}
+

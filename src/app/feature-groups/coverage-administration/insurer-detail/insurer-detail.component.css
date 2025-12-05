@@ -1,0 +1,29 @@
+/* insurer-info.component.css */
+
+.insurer-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 12px;
+}
+
+.insurer-detail .title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.insurer-detail .subtitle {
+  font-size: 1rem;
+  color: rgb(187 187 187);
+}
+
+.back-button-container {
+  margin-top: 1rem;
+}
+
+.insurer-detail__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}

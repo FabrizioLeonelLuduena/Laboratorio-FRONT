@@ -1,0 +1,35 @@
+<div class="studies-list-container">
+  <app-generic-table
+    [data]="_transformedStudies"
+    [columns]="columns"
+    [filters]="filters"
+    [getActions]="getActions"
+    [rows]="10"
+    [rowsOptions]="[5, 10, 25]"
+    [pageable]="true"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    (filterChange)="filterChange.emit($event)"
+    (globalFilterChange)="onGlobalFilterChange($event)"
+    (pageChange)="pageChange.emit($event)"
+    (downloadExcel)="onExport($event, { type: 'excel' })"
+    (downloadPdf)="onExport($event, { type: 'pdf' })">
+
+    <!-- Template for Estado Análisis column -->
+    <ng-template #analysisStatusTemplate let-row>
+      <p-tag
+        [value]="row.analysisStatusLabel"
+        [severity]="row.analysisStatusSeverity">
+      </p-tag>
+    </ng-template>
+
+    <!-- Template for Estado Firma column -->
+    <ng-template #signatureStatusTemplate let-row>
+      <p-tag
+        [value]="row.signatureStatusLabel"
+        [severity]="row.signatureStatusSeverity">
+      </p-tag>
+    </ng-template>
+  </app-generic-table>
+</div>

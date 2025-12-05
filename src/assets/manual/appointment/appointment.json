@@ -1,0 +1,219 @@
+{
+  "id": "gestion-turnos",
+  "moduleId": "turnos",
+  "title": "Gestión de Turnos",
+  "intro": "La pantalla de Turnos permite visualizar, configurar y administrar los horarios disponibles para la configuración de turnos en las diferentes sucursales del laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Secretaría",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Secretaria - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra una lista de todas las <strong>configuraciones de turnos existentes</strong> por una <strong>sucursal determinada</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/appointments-actions.jpg",
+          "alt": "Interfaz principal de turnos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para <strong>filtrar rápidamente</strong> los resultados."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega el modal de <strong>filtros</strong> para <strong>acotar la información</strong> mostrada en la tabla."
+            ],
+            [
+              "Descargar PDF",
+              "<i class='pi pi-download'></i>",
+              "Genera y descarga un documento <strong>PDF</strong> con la lista actual de turnos."
+            ],
+            [
+              "Crear Turno",
+              "<i class='pi pi-plus'></i>",
+              "Abre una <strong>nueva ventana/modal</strong> para crear un turno."
+            ],
+            [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/appointment/filters-appointments.jpg",
+          "alt": "Interfaz principal de turnos"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Sucursal:</strong> Permite seleccionar la sucursal cuyos turnos deseas visualizar."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar Filtros</strong> para restablecer todos los campos de la ventana a su estado predeterminado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-turnos",
+      "title": "Contenido de la Tabla de Turnos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información de las <strong>configuraciones de turnos</strong> mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Día",
+              "<strong>Días</strong> en que opera el turno.",
+              "Lunes, Martes"
+            ],
+            [
+              "Horario",
+              "<strong>Horario disponible</strong> para citas.",
+              "08:00 AM - 13:00 PM"
+            ],
+            [
+              "Capacidad",
+              "<strong>Cantidad de pacientes</strong> permitidos por turno.",
+              "30"
+            ],
+            [
+              "Duración (min)",
+              "<strong>Tiempo </strong> que <strong>durará</strong> cada turno en <strong>minutos</strong>.",
+              "30"
+            ],
+            [
+              "Periodo",
+              "<strong>Fechas</strong> de vigencia del turno.",
+              "01/11/2025 - 30/12/2025"
+            ],
+            [
+              "Estado",
+              "<strong>Estado actual</strong> del turno.",
+              "ACTIVO"
+            ],
+            [
+              "Acciones",
+              "<strong>Menú desplegable</strong> que permite <strong>editar</strong> y <strong>eliminar</strong> una configuración de turnos.",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-turno",
+      "title": "Estados del Turno",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Estados"
+        },
+        {
+          "type": "paragraph",
+          "text": "Los turnos pueden tener <strong>dos estados posibles</strong> dentro del sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#d1e7dd"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un turno pasa automáticamente al estado <strong>Activo</strong> desde el momento en que es <strong>creado</strong> en el sistema."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#f8d7da"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un turno puede pasar de <strong>Activo</strong> a <strong>Inactivo</strong> si es eliminado o su periodo finaliza."
+        },
+        {
+          "type": "list",
+          "items": [
+            "El <strong>turno</strong> es eliminado manualmente.",
+            "El <strong>periodo configurado</strong> ha finalizado (vencimiento de fecha)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota Importante",
+          "text": "<br><strong>¿Se puede pasar un turno de estado Inactivo a Activo?</strong><br><strong>No, no es posible reactivar</strong> un turno una vez que ha sido marcado como Inactivo."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "turnos",
+    "configuración",
+    "agenda",
+    "tutorial"
+  ]
+}

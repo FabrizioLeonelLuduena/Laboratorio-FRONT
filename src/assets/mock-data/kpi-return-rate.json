@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Tasa de devolución",
+      "value": 3.5
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

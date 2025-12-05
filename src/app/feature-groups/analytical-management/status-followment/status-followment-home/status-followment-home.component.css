@@ -1,0 +1,36 @@
+/* === Layout general ahora en columna === */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  padding-bottom: 2rem;
+}
+
+/* Tarjetas flotantes modernas */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+  width: 100%;
+}
+
+/* Sección superior (buscador) */
+.search-section {
+  position: sticky;
+  top: 1rem;
+  z-index: 5;
+}
+
+/* Sección inferior (detalle) */
+.detail-section {
+  min-height: 600px;
+}
+
+/* Responsive */
+@media (width <= 900px) {
+  .page-wrapper {
+    gap: 1.25rem;
+  }
+}

@@ -1,0 +1,16 @@
+<section class="card surface card-body-24 stack-16">
+  <header class="header stack-8">
+    <h2 class="title-24 font-display flex items-center gap-2">
+      <i class="material-icons">{{ config.icon }}</i>
+      {{ config.title }}
+    </h2>
+    <p class="subtle">{{ config.subtitle }}</p>
+  </header>
+
+  <app-generic-form
+    [fields]="fields"
+    [title]="config.title"
+    (submitForm)="onSubmit($event)"
+    (cancelForm)="onCancel()"
+  ></app-generic-form>
+</section>

@@ -1,0 +1,207 @@
+{
+  "id": "gestion-medicos",
+  "moduleId": "medicos",
+  "title": "Gestión de Médicos",
+  "intro": "Permite administrar el padrón de profesionales médicos que interactúan con el laboratorio, incluyendo su alta, consulta de estado y visualización de datos de contacto y matrícula.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador",
+      "Secretaría"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador - Secretaría"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla Principal",
+      "open": true,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> presenta el listado completo de médicos registrados en el sistema, permitiendo una <strong>visualización rápida</strong> de sus matrículas y estados."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/medics/medics-table.jpg",
+          "alt": "Pantalla principal de médicos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para <strong>localizar</strong> un médico específico por nombre o matrícula."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega las opciones para visualizar médicos según su <strong>estado</strong> (Activos/Inactivos)."
+            ],
+            [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Genera un <strong>reporte descargable</strong> del listado actual visible en la tabla."
+            ],
+            [
+              "Nuevo Médico",
+              "<i class='pi pi-plus'></i>",
+              "Dirige a la pantalla de <strong>Nuevo médico</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/medics/medics-filters.jpg",
+          "alt": "Filtros de médicos"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Estado:</strong> Permite buscar al médico por su estado (Inactivo/Activo/Todos)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar Filtros</strong> para restablecer todos los campos de la ventana a su estado predeterminado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-medicos",
+      "title": "Contenido de la Tabla de Médicos",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información de los profesionales mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Apellido y Nombre del profesional (<strong>ordenable alfabéticamente</strong>).",
+              "Dr. Rius Lucas"
+            ],
+            [
+              "Matrícula",
+              "<strong>Número de identificación</strong> profesional con su prefijo (MN/MP/ME).",
+              "MN-55555"
+            ],
+            [
+              "Correo Electrónico",
+              "<strong>Email de contacto</strong> registrado.",
+              "lucasrius@gmail.com"
+            ],
+            [
+              "Estado",
+              "Indica la <strong>disponibilidad</strong> del médico en el sistema.",
+              "Activo"
+            ],
+            [
+              "Acciones",
+              "<strong>Menú desplegable</strong> que permite <strong>editar</strong> datos y <strong>desactivar</strong> a un empleado",
+              "⋮"
+            ]
+          ]
+        },
+        {
+      "type": "divider"
+       }
+      ]
+    },
+
+    {
+      "id": "estado-medico",
+      "title": "Estados del Médico",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Los médicos pueden tener <strong>dos estados posibles</strong> dentro del sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un médico pasa automáticamente al estado <strong>Activo</strong> desde el momento en que es <strong>registrado</strong> en el sistema."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un médico puede pasar de <strong>Activo</strong> a <strong>Inactivo</strong> por los siguientes motivos:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "• El médico es dado de baja del sistema.",
+            "• Su actividad ha sido suspendida temporalmente."
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "medicos",
+    "profesionales",
+    "padrón",
+    "tutorial"
+  ]
+}

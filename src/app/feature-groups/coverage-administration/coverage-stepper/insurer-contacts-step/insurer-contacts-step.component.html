@@ -1,0 +1,30 @@
+<div class="contacts-step">
+  <div class="header">
+    <h3>Contactos</h3>
+    <app-generic-button
+      type="create"
+      text="Agregar contacto"
+      (pressed)="addContactForm()"
+      [disabled]="contactForms().length >= MAX_CONTACTS">
+    </app-generic-button>
+  </div>
+
+  <div class="forms-list">
+    @for (id of contactForms(); track id) {
+      <app-collapsable-form
+        [title]="'Nuevo Contacto'"
+        [fields]="getContactFields()"
+        size="lg"
+        [defaultCollapsed]="false"
+        (save)="saveContact()"
+        (cancelAction)="removeContactForm(id)">
+      </app-collapsable-form>
+    }
+  </div>
+
+  @if (contactForms().length >= MAX_CONTACTS) {
+    <p class="text-warning text-center mt-3">
+      Has alcanzado el máximo de {{ MAX_CONTACTS }} contactos.
+    </p>
+  }
+</div>

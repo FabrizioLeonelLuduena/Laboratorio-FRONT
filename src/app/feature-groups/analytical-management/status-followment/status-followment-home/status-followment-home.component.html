@@ -1,0 +1,19 @@
+<app-protocol-detail
+  [protocol]="selectedProtocol"
+  [protocols]="protocols"
+  [tableLoading]="loading()"
+  [totalRecords]="totalRecords"
+  [page]="page"
+  [size]="size"
+  (protocolSelected)="onProtocolSelected($event)"
+  (pageChange)="onPageChange($event)"
+  (sortChange)="onSortChange($event)"
+  (globalFilterChange)="onGlobalFilterChange($event)"
+  (dateFilterChange)="onDateFilterChange($event)">
+</app-protocol-detail>
+
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando...'" />
+}

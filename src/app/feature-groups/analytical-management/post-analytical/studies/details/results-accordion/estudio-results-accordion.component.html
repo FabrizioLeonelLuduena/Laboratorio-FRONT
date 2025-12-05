@@ -1,0 +1,94 @@
+<div class="results-accordion-container">
+
+  <p-accordion [multiple]="true" [activeIndex]="[]">
+    <p-accordionTab *ngFor="let result of results">
+      <ng-template pTemplate="header">
+        <div class="accordion-header-content">
+          <div class="accordion-header-info">
+            <i class="pi pi-flask"></i>
+            <span class="accordion-title">{{ result.resultTypeName }}</span>
+            <div class="header-buttons">
+              <!-- Botón Editar Determinaciones -->
+              <app-generic-button
+                *ngIf="!isStudyClosed()"
+                text="Editar"
+                icon="pi pi-pencil"
+                [type]="'custom'"
+                [color]="'var(--color-info)'"
+                (click)="$event.stopPropagation(); onEditDeterminations(result)">
+              </app-generic-button>
+
+              <!-- Botón Validar -->
+              <ng-container *ngIf="!isResultManuallyValidated(result) && !isStudyClosed()">
+                <app-generic-button
+                  text="Validar"
+                  icon="pi pi-check"
+                  [type]="'custom'"
+                  [color]="'var(--brand-primary)'"
+                  (click)="$event.stopPropagation(); onValidateAll(result)">
+                </app-generic-button>
+              </ng-container>
+            </div>
+          </div>
+          <div>
+            <span class="accordion-badge">{{ result.determinations.length }} DET</span>
+            <!-- Badge de estado de firma por análisis -->
+            <p-tag
+              [value]="getResultStatusLabel(result.currentStatus)"
+              [severity]="getResultStatusSeverity(result.currentStatus)"
+              [icon]="result.currentStatus === ResultStatus.SIGNED ? 'pi pi-check-circle' : ''"
+              styleClass="ml-2">
+            </p-tag>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="content">
+        <div class="determinaciones-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Unidad</th>
+                <th>Referencia</th>
+                <th class="detalle-determinaciones-validado">Validado manual</th>
+                <th class="detalle-determinaciones-validado">Validado Automático</th>
+                <th>Valor 1</th>
+                <th>Valor 2</th>
+                <th>Valor 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (det of result.determinations; track det) {
+                @if (det.displayValue && det.displayValue !== '') {
+                  <tr [class.fuera-rango]="!det.isValid">
+                    <td class="det-nombre">{{ det.name }}</td>
+                    <td class="det-valor" [class.valor-destacado]="!det.isValid">{{ det.displayValue }}</td>
+                    <td class="det-unidad">{{ det.unit }}</td>
+                    <td class="det-referencia">{{ det.referenceRange }}</td>
+                    <td class="detalle-determinaciones-validado">
+                      <p-tag
+                        [value]="det.manualValidationStatus === ValidationStatus.VALID ? 'VALIDADO' : (det.manualValidationStatus === ValidationStatus.REJECTED ? 'RECHAZADO' : 'NO VALIDADO')"
+                        [severity]="getValidationSeverity(det.manualValidationStatus)">
+                      </p-tag>
+                    </td>
+                    <td class="detalle-determinaciones-validado">
+                      <p-tag
+                        [value]="det.autoValidationStatus === ValidationStatus.VALID ? 'VALIDADO' : (det.autoValidationStatus === ValidationStatus.REJECTED ? 'RECHAZADO' : 'NO VALIDADO')"
+                        [severity]="getValidationSeverity(det.autoValidationStatus)">
+                      </p-tag>
+                    </td>
+                    @for (historical of det.historicalValues; track historical) {
+                      <td class="det-valor">{{ historical.value }}</td>
+                    }
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+</div>

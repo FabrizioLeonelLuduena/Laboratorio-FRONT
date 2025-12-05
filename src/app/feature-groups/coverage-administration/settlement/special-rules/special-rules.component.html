@@ -1,0 +1,98 @@
+<app-generic-modal-form
+  [visible]="visible"
+  [title]="'Reglas especiales de liquidación'"
+  [width]="'80%'"
+  [height]="'auto'"
+  class="responsive-modal"
+  (closed)="visibleChange.emit(false)"
+>
+
+  <!-- FORMULARIO -->
+  <app-generic-form
+    [fields]="formFields"
+    [showHeader]="false"
+    [showAsterisk]="true"
+    [showAddons]="true"
+    [showSubmit]="false"
+    [showCancel]="false"
+    [showCard]="false"
+  ></app-generic-form>
+
+  <!-- Checkboxs -->
+  <div class="flex items-center gap-2 mb-2">
+    <label class="text-12 text-black">Aplicar a todos los planes</label>
+    <p-checkbox
+      binary="true"
+      [(ngModel)]="applyAll"
+      name="applyAll">
+    </p-checkbox>
+  </div>
+
+  <!-- Checkboxs - Seleccion de planes-->
+  @if (!applyAll) {
+    <div class="grid grid-cols-2 gap-1 max-h-[50vh] overflow-y-auto border rounded-md p-2 mt-2 mb-4">
+      @for (plan of plans; track plan.id) {
+        <label class="flex items-center gap-2 text-black">
+          <p-checkbox
+            [(ngModel)]="selectedPlans"
+            [value]="plan.id"
+            name="selectedPlans">
+          </p-checkbox>
+          {{ plan.name }}
+        </label>
+      }
+    </div>
+  }
+
+  <!-- Boton cargar-->
+  <div class="flex justify-end mt-3">
+    <app-generic-button
+      type="custom"
+      color="--brand-primary-700"
+      customTextColor="--on-primary"
+      text="Cargar regla"
+      icon="pi pi-plus"
+      (click)="loadRule()"
+    ></app-generic-button>
+  </div>
+
+  <!-- TABLA -->
+  <section class="mt-2">
+    <app-generic-table
+      [data]="rulesTableRows"
+      [columns]="columns"
+      [pageable]="false"
+      [rows]="10"
+      [loading]="false"
+      [showCreateButton]="false"
+      [showSearch]="true"
+      [showDownloadMenu]="false"
+      [showActions]="true"
+      [getActions]="getActions"
+      dataKey="planId"
+    ></app-generic-table>
+  </section>
+
+  <!-- Botones-->
+  <div class="flex justify-end gap-2 mt-4">
+    <app-generic-button
+      type="cancel"
+      text="Cancelar"
+      (click)="visibleChange.emit(false)">
+    </app-generic-button>
+
+    <app-generic-button
+      type="save"
+      text="Guardar"
+      (click)="confirmModal()">
+    </app-generic-button>
+  </div>
+</app-generic-modal-form>
+
+<!-- Alerta -->
+@if (alert) {
+  <app-generic-alert
+    [type]="alert.type"
+    [text]="alert.text">
+  </app-generic-alert>
+}

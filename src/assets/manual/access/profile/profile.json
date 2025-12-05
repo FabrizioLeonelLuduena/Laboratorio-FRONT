@@ -1,0 +1,379 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Mi Perfil",
+  "intro": "Gestión de la información personal, laboral y de seguridad de tu cuenta de usuario.",
+
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Usuarios internos del laboratorio"
+        }
+
+      ]
+    },
+    {
+      "id": "informacion-cuenta",
+      "title": "Información de la Cuenta",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta sección ofrece una vista rápida de los datos básicos de tu registro en el sistema. Es la pantalla por defecto al ingresar al perfil."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/profile/profile-info.jpg",
+          "alt": "Vista general de información de la cuenta"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Básicos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Dato",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Nombre de Usuario</strong>",
+              "El identificador único con el que inicias sesión (ej. ADMIN)."
+            ],
+            [
+              "<strong>Correo Electrónico</strong>",
+              "Tu email registrado. Muestra un icono de verificado si ya fue validado."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Tipo de Cuenta"
+        },
+        {
+          "type": "paragraph",
+          "text": "Clasificación del usuario dentro del sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "USUARIO INTERNO",
+          "color": "#3b82f6"
+        },
+        {
+          "type": "paragraph",
+          "text": "Corresponde a los usuarios que son <strong>internos al laboratorio</strong> (personal)."
+        },
+        {
+          "type": "badge",
+          "text": "USUARIO EXTERNO",
+          "color": "#f59e0b"
+        },
+        {
+          "type": "paragraph",
+          "text": "Corresponde a usuarios <strong>externos al laboratorio</strong> (ej. acceso desde el portal del paciente)."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado de la Cuenta"
+        },
+        {
+          "type": "paragraph",
+          "text": "Indica la disponibilidad operativa de la cuenta:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVA",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario es un <strong>empleado actual</strong> del laboratorio y tiene acceso habilitado."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVA",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario <strong>ya no es empleado</strong> del laboratorio o su acceso ha sido revocado."
+        }
+      ]
+    },
+    {
+      "id": "detalles-cuenta",
+      "title": "Detalles de la Cuenta (Edición)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "En esta pestaña podrás actualizar tu información personal. Los campos marcados con asterisco (*) son obligatorios."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/profile/profile-details.jpg",
+          "alt": "Formulario de edición de detalles personales"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos Editables"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Nombre y Apellido</strong>",
+              "Tus datos filiatorios reales."
+            ],
+            [
+              "<strong>Nombre de Usuario</strong>",
+              "Puedes modificar tu alias de acceso (sujeto a disponibilidad)."
+            ],
+            [
+              "<strong>Correo Electrónico</strong>",
+              "Email de contacto y recuperación de cuenta."
+            ],
+            [
+              "<strong>Documento</strong>",
+              "Número de identificación personal (DNI)."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una vez realizados los cambios, asegúrate de guardarlos para que impacten en el sistema."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar Cambios",
+              "Actualiza tu perfil en toda la plataforma inmediatamente."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota importante",
+          "text": "<br>Verifique minuciosamente que la información ingresada sea correcta antes de confirmar. Tenga en cuenta que los cambios impactarán en todo el sistema y <strong>no podrán deshacerse</strong> una vez guardados."
+        }
+      ]
+    },
+    {
+      "id": "informacion-laboral",
+      "title": "Información Laboral",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Aquí se detallan tus asignaciones dentro del laboratorio, incluyendo roles y sucursal de trabajo."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/profile/profile-job-details.jpg",
+          "alt": "Detalles de roles y sucursal asignada"
+        },
+
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Roles Asignados","Muestra los <strong>permisos</strong> que tienes (ej. ADMINISTRADOR). "
+
+            ],
+            [
+              "Sucursal Asignada",
+              "Indica el <strong>nombre, dirección y horarios </strong>de la sede donde operas."
+            ]
+
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Información adicional"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Miembro desde","Muestra la  <strong>fecha</strong> en la cual se creó la cuenta"
+
+            ],
+            [
+              "Sucursal Asignada",
+              "Indica el <strong>nombre, dirección y horarios </strong>de la sede donde operas."
+            ],
+            [
+              "Tipo de cuenta",
+              "Puede ser <strong>interno/externo"
+            ],
+            [
+              "Estado laboral",
+              "Puede ser <strong>activo/inactivo"
+            ]
+
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Tipo de Empleado"
+        },
+        {
+          "type": "badge",
+          "text": "INTERNO",
+          "color": "#3b82f6"
+        },
+        {
+          "type": "paragraph",
+          "text": "Personal <strong>interno</strong> perteneciente a la planta del laboratorio."
+        },
+        {
+          "type": "badge",
+          "text": "EXTERNO",
+          "color": "#f59e0b"
+        },
+        {
+          "type": "paragraph",
+          "text": "Personal <strong>externo</strong> al laboratorio (ej. usuarios del portal del paciente)."
+        },
+        {
+          "type": "subtitle",
+          "text": "Estado Laboral"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario es un <strong>empleado actual</strong> del laboratorio."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "El usuario <strong>ya no es empleado</strong> del laboratorio."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Administración",
+          "text": "<br>La información laboral es administrada exclusivamente por <strong>Recursos Humanos</strong> o el <strong>Administrador</strong>. Si necesitas cambiar tu sucursal o roles, debes contactarlos directamente."
+        }
+      ]
+    },
+    {
+      "id": "centro-seguridad",
+      "title": "Centro de Seguridad",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Panel dedicado a la protección de tu cuenta, gestión de contraseñas y control de sesiones activas."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/profile/profile-security-1.jpg",
+          "alt": "Panel de nivel de seguridad y estado de cuenta"
+        },
+        {
+          "type": "subtitle",
+          "text": "Nivel de Seguridad"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema evalúa la seguridad de tu cuenta basándose en cuatro pilares:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Email verificado:</strong> Confirmación de tu correo electrónico.",
+            "<strong>Contraseña personalizada:</strong> Uso de una clave segura y propia.",
+            "<strong>Cuenta activa:</strong> Estado operativo del usuario.",
+            "<strong>Permisos configurados:</strong> Correcta asignación de roles."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+
+
+        {
+          "type": "table",
+          "columns": [
+            "Acción",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "<strong>Cambiar Contraseña</strong>",
+              "Permite actualizar tu clave de acceso. Se recomienda hacerlo periódicamente para mantener la cuenta segura."
+            ],
+            [
+              "<strong>Cerrar Sesión</strong>",
+              "Finaliza tu conexión actual inmediatamente. Útil si estás en un equipo compartido."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Recomendaciones",
+          "text": "<br>Usa una contraseña fuerte combinando mayúsculas, números y símbolos. Nunca compartas tus credenciales y recuerda cerrar sesión al usar computadoras compartidas del laboratorio."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "perfil",
+    "usuario",
+    "seguridad",
+    "contraseña",
+    "datos personales",
+    "roles"
+  ]
+}

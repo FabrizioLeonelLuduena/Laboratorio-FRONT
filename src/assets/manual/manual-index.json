@@ -1,0 +1,485 @@
+{
+  "version": "1.0",
+  "modules": [
+    {
+      "id": "autenticacion",
+      "label": "Acceso y Seguridad",
+      "icon": "pi pi-eye",
+      "homeCard": {
+        "title": "Acceso y Seguridad",
+        "description": "Gestión de pautas básicas para un acceso seguro y una correcta gestión de las cuentas de usuario.",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "login",
+          "label": "Inicio de sesión",
+          "icon": "pi pi-sign-in",
+          "path": "assets/manual/access/login/login.json"
+        },
+        {
+          "id": "password",
+          "label": "Recuperar contraseña",
+          "icon": "pi pi-key",
+          "path": "assets/manual/access/password/password.json"
+        },
+        {
+          "id": "screen",
+          "label": "Pantalla y acciones principales",
+          "icon": "pi pi-wrench",
+          "path": "assets/manual/access/screen/screen.json"
+        },
+        {
+          "id": "profile",
+          "label": "Perfil y ajustes",
+          "icon": "pi pi-user",
+          "path": "assets/manual/access/profile/profile.json"
+        },
+        {
+          "id": "configuration",
+          "label": "Configuraciones",
+          "icon": "pi pi-cog",
+          "path": "assets/manual/access/config/config.json"
+        },
+        {
+          "id": "unloading",
+          "label": "Cierre de sesión seguro",
+          "icon": "pi pi-lock",
+          "path": "assets/manual/access/unloading/unloading.json"
+        },
+        {
+          "id": "y",
+          "label": "Auditoría y trazabilidad",
+          "icon": "pi pi-clipboard",
+          "path": "assets/manual/access/audit/audit.json"
+        }
+      ]
+    },
+    {
+      "id": "users",
+      "label": "Gestión de Usuarios",
+      "icon": "pi pi-user",
+      "homeCard": {
+        "title": "Gestión de Usuarios",
+        "description": "Administración y control de usuarios",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "users",
+          "label": "Usuarios",
+          "icon": "pi pi-users",
+          "path": "assets/manual/users/users.json"
+        },
+        {
+          "id": "actions-users",
+          "label": "Acciones de Usuarios",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/users/actions-users.json"
+        }
+      ]
+    },
+    {
+      "id": "atention",
+      "label": "Gestión de Atenciones",
+      "icon": "pi pi-heart",
+      "homeCard": {
+        "title": "Gestión de Atenciones",
+        "description": "Administración y control de convenios y liquidaciones.",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "atentions",
+          "label": "Atenciones",
+          "icon": "pi pi-calendar",
+          "path": "assets/manual/atention/atentions/atentions.json"
+        },
+        {
+          "id": "actions-waiting-queue",
+          "label": "Acciones de Cola de espera",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/atention/waiting-queue/actions-waiting-queue.json"
+        },
+        {
+          "id": "extractions",
+          "label": "Extracciones",
+          "icon": "pi pi-heart-fill",
+          "path": "assets/manual/atention/extractions/extractions.json"
+        },
+        {
+          "id": "actions-extractions",
+          "label": "Acciones de Extracciones",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/atention/extractions/actions-extractions.json"
+        },
+        {
+          "id": "waiting-queue",
+          "label": "Cola de espera",
+          "icon": "pi pi-hourglass",
+          "path": "assets/manual/atention/waiting-queue/waiting-queue.json"
+        }
+      ]
+    },
+    {
+      "id": "analitica",
+      "label": "Gestión de Analítica",
+      "icon": "pi pi-chart-line",
+      "homeCard": {
+        "title": "Gestión de Analítica",
+        "description": "Supervisión del proceso analítico completo.",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "actions-Pre-analítica",
+          "label": "Pre-analítica",
+          "icon": "pi pi-list",
+          "path": "assets/manual/management-analitic/pre/actions-pre.json"
+        },
+        {
+          "id": "analitic",
+          "label": "Analítica",
+          "icon": "pi pi-cog",
+          "path": "assets/manual/management-analitic/analitic/analitic.json"
+        },
+          {
+          "id": "Post-analítica",
+          "label": "Post-analítica",
+          "icon": "pi pi-file",
+          "path": "assets/manual/management-analitic/post/post.json"
+        },
+        {
+          "id": "actions-Post-analítica",
+          "label": "Acciones de Post-analítica",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/management-analitic/post/actions-post.json"
+        },
+        {
+          "id": "labels",
+          "label": "Impresión de rótulos",
+          "icon": "pi pi-print",
+          "path": "assets/manual/management-analitic/labels/labels.json"
+        }
+
+      ]
+    },
+
+    {
+      "id": "facturacion",
+      "label": "Facturación y Cobros",
+      "icon": "pi pi-money-bill",
+      "homeCard": {
+        "title": "Facturación y Cobros",
+        "description": "Gestión completa de ingresos y operaciones de caja.",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "opening",
+          "label": "Apertura de Caja",
+          "icon": "pi pi-lock-open",
+          "path": "assets/manual/collections/opening/opening.json"
+        },
+        {
+          "id": "actions-opening",
+          "label": "Acciones de Apertura de Caja",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/collections/opening/actions-opening.json"
+        },
+        {
+          "id": "billing",
+          "label": "Facturación",
+          "icon": "pi pi-wallet",
+          "path": "assets/manual/collections/billing/billing.json"
+        },
+        {
+          "id": "liquidation",
+          "label": "Liquidación",
+          "icon": "pi pi-dollar",
+          "path": "assets/manual/collections/liquidation/liquidation.json"
+        },
+        {
+          "id": "actions-liquidation",
+          "label": "Acciones de Liquidación",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/collections/liquidation/actions-liquidation.json"
+        }
+
+
+      ]
+    },
+
+
+
+    {
+      "id": "turnos",
+      "label": "Gestión de Turnos",
+      "icon": "pi pi-calendar",
+      "homeCard": {
+        "title": "Turnos",
+        "description": "Gestión completa de turnos del laboratorio.",
+        "bullets": [
+
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "gestion-turnos",
+          "label": "Turnos",
+          "icon": "pi pi-calendar-minus",
+          "path": "assets/manual/appointment/appointment.json"
+        },
+          {
+            "id": "actions-appointments",
+            "label": "Acciones de turnos",
+            "icon": "pi pi-sitemap",
+            "path": "assets/manual/appointment/actions-appointments.json"
+          },
+        {
+          "id": "queue",
+          "label": "Tótem para turnos",
+          "icon": "pi pi-tablet",
+          "path": "assets/manual/queue/queue.json"
+        }
+      ]
+    },
+    {
+      "id": "management-patients",
+      "label": "Gestión de pacientes",
+      "icon": "pi pi-user",
+      "homeCard": {
+        "title": "Gestión de pacientes",
+        "description": "Administración y control de pacientes",
+        "bullets": [
+
+        ]
+      },
+      "sidebar":
+      [
+        {
+          "id": "patients",
+          "label": "Pacientes",
+          "icon": "pi pi-users",
+          "path": "assets/manual/management-patients/patients/patients.json"
+        },
+        {
+          "id": "actions-patients",
+          "label": "Acciones de Pacientes",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/management-patients/patients/actions-patients.json"
+        }
+
+
+      ]
+
+    },
+    {
+      "id": "interna",
+      "label": "Gestión Interna",
+      "icon": "pi pi-cog",
+      "homeCard": {
+        "title": "Gestión Interna",
+        "description": "Administración del personal médico, empleados y sucursales.",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+        {
+          "id": "medics",
+          "label": "Médicos",
+          "icon": "pi pi-id-card",
+          "path": "assets/manual/internal/medics/medics.json"
+        },
+        {
+          "id": "actions-medics",
+          "label": "Acciones de Médicos",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/internal/medics/actions-medics.json"
+        },
+        {
+          "id": "employees",
+          "label": "Empleados",
+          "icon": "pi pi-users",
+          "path": "assets/manual/internal/employees/employees.json"
+        },
+        {
+          "id": "actions-employees",
+          "label": "Acciones de Empleados",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/internal/employees/actions-employees.json"
+        },
+        {
+          "id": "branches",
+          "label": "Sucursales",
+          "icon": "pi pi-building",
+          "path": "assets/manual/internal/branches/branches.json"
+        },
+        {
+          "id": "actions-branches",
+          "label": "Acciones de Sucursales",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/internal/branches/actions-branches.json"
+        },
+
+        {
+          "id": "n",
+          "label": "Cobertura",
+          "icon": "pi pi-home",
+          "path": "assets/manual/internal/coverages/coverage.json"
+        },
+        {
+          "id": "actions-coverage",
+          "label": "Acciones de Cobertura",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/internal/coverages/actions-coverage.json"
+        },
+        {
+          "id": "analysis",
+          "label": "Análisis",
+          "icon": "pi pi-heart",
+          "path": "assets/manual/internal/analysis/analysis.json"
+        },
+        {
+          "id": "actions-analysis",
+          "label": "Acciones de Análisis",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/internal/analysis/actions-analysis.json"
+        },
+        {
+          "id": "nbu",
+          "label": "Versiones NBU",
+          "icon": "pi pi-tags",
+          "path": "assets/manual/internal/nbu/nbu.json"
+        },
+        {
+          "id": "actions-nbu",
+          "label": "Acciones de Versiones NBU",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/internal/nbu/actions-nbu.json"
+        }
+      ]
+    },
+    {
+      "id": "inventory",
+      "label": "Compras e Inventario",
+      "icon": "pi pi-box",
+      "homeCard": {
+        "title": "Compras e Inventario",
+        "description": "Control de stock, proveedores y movimientos de insumos.",
+        "bullets": [
+
+        ]
+      },
+      "sidebar": [
+
+        {
+          "id": "providers",
+          "label": "Proveedores",
+          "icon": "pi pi-users",
+          "path": "assets/manual/inventory/providers/providers.json"
+        },
+        {
+          "id": "actions-providers",
+          "label": "Acciones de Proveedores",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/inventory/providers/actions-providers.json"
+        },
+        {
+          "id": "locations",
+          "label": "Ubicaciones",
+          "icon": "pi pi-map",
+          "path": "assets/manual/inventory/locations/locations.json"
+        },
+        {
+          "id": "actions-locations",
+          "label": "Acciones de Ubicaciones",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/inventory/locations/actions-locations.json"
+        },
+        {
+          "id": "supplies",
+          "label": "Insumos",
+          "icon": "pi pi-box",
+          "path": "assets/manual/inventory/supplies/supplies.json"
+        },
+        {
+          "id": "actions-supplies",
+          "label": "Acciones de Insumos",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/inventory/supplies/actions-supplies.json"
+        },
+        {
+          "id": "movements-stock",
+          "label": "Movimientos de stock",
+          "icon": "pi pi-arrow-right-arrow-left",
+          "path": "assets/manual/inventory/movements-stock/movements-stock.json"
+        },
+
+        {
+          "id": "purchases",
+          "label": "Compras",
+          "icon": "pi pi-shopping-cart",
+          "path": "assets/manual/inventory/purchases/purchases.json"
+        },
+        {
+          "id": "actions-purchases",
+          "label": "Acciones de Compras",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/inventory/purchases/actions-purchases.json"
+        },
+        {
+          "id": "remits",
+          "label": "Remitos",
+          "icon": "pi pi-arrow-left",
+          "path": "assets/manual/inventory/remits/remitos.json"
+        },
+        {
+          "id": "actions-remits",
+          "label": "Acciones de Remitos",
+          "icon": "pi pi-sitemap",
+          "path": "assets/manual/inventory/remits/actions-remits.json"
+        }
+
+      ]
+    },
+    {
+      "id": "general",
+      "label": "General",
+      "icon": "pi pi-sitemap",
+      "homeCard": {
+        "title": "General",
+        "description": "Contenido general del sistema",
+        "bullets": [
+        ]
+      },
+      "sidebar": [
+
+        {
+          "id": "flujogeneral",
+          "label": "Flujo",
+          "icon": "pi pi-list",
+          "path": "assets/manual/general/flow.json"
+        },
+        {
+          "id": "glossary",
+          "label": "Glosario",
+          "icon": "pi pi-book",
+          "path": "assets/manual/general/glosary.json"
+        }
+      ]
+    }
+  ]
+}

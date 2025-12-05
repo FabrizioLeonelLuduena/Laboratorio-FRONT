@@ -1,0 +1,46 @@
+<section class="qr-container">
+  <p-card header="Pago con QR Mercado Pago" styleClass="card stack-16">
+    <div class="stack-12 center-content">
+      <ng-container *ngIf="!isLoading(); else loadingTpl">
+        <img
+          *ngIf="qrImageUrl()"
+          [src]="qrImageUrl()"
+          alt="Código QR Mercado Pago"
+          class="qr-image"
+        />
+
+        <p *ngIf="amount()">
+          Monto: <strong>${{ amount() | number:'1.2-2' }}</strong>
+        </p>
+
+        <p>Escaneá el QR con Mercado Pago o tu app bancaria para completar el pago.</p>
+        <div class="flex gap-2">
+          <button
+            pButton
+            label="Cancelar"
+            icon="pi pi-times"
+            severity="danger"
+            (click)="cancelOrder()"
+          ></button>
+
+          <button
+            pButton
+            label="Volver ahora"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            (click)="returnToPayments()"
+          ></button>
+        </div>
+
+        <p *ngIf="errorMessage()" class="text-danger mt-2">
+          {{ errorMessage() }}
+        </p>
+      </ng-container>
+
+      <ng-template #loadingTpl>
+        <p-progressSpinner styleClass="spin"></p-progressSpinner>
+        <p>Cargando QR...</p>
+      </ng-template>
+    </div>
+  </p-card>
+</section>

@@ -1,0 +1,191 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Órdenes de Compra",
+  "intro": "En esta sección se detallan los pasos para crear, modificar y gestionar el flujo de las compras.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-orden",
+      "title": "Crear Orden de Compra",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite registrar una nueva solicitud de insumos a un proveedor. El acceso se encuentra en las <strong>Acciones disponibles en la parte superior</strong> derecha, haciendo clic en el botón <strong>( + )</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/purchases/purchases-create.jpeg",
+          "alt": "Pantalla de creación de orden"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema abre la <strong>Pantalla</strong> de alta. El usuario debe completar los siguientes datos:"
+        },
+        {
+          "type": "subtitle",
+          "text": "Cabecera"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Proveedor *:</strong> Selección de la empresa (incluye CUIT).",
+            "<strong>Ubicación destino:</strong> Lugar físico donde se espera recibir la carga.",
+            "<strong>Notas:</strong> Aclaraciones pertinentes para la compra."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle de Productos (Grilla)"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Producto:</strong> Selección del insumo del catálogo.",
+            "<strong>Cantidad:</strong> Unidades a comprar.",
+            "<strong>Precio Unitario:</strong> Costo pactado.",
+            "<strong>Botón (+):</strong> Agrega el ítem a la lista y calcula automáticamente el subtotal y el total de la orden."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Crear orden de compra</strong>",
+              "Guarda la orden en estado PENDIENTE."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editar-orden",
+      "title": "Editar Orden",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite modificar una orden existente, generalmente si aún no ha sido recibida o cancelada. Se accede desde el menú de acciones <strong>(⋮)</strong>, seleccionando la opción <strong>Editar</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/purchases/purchases-edit.jpeg",
+          "alt": "Pantalla de edición de orden"
+        },
+        {
+          "type": "paragraph",
+          "text": "La funcionalidad recupera el formulario original en la <strong>Pantalla</strong>, permitiendo ajustar cantidades, precios o agregar/quitar productos de la lista."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "gestionar-estados",
+      "title": "Gestionar Estados (Ciclo de Vida)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El flujo de una orden de compra sigue una lógica estricta para asegurar el control administrativo."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/purchases/purchases-table.jpeg",
+          "alt": "Tabla de gestión de estados"
+        },
+        {
+          "type": "subtitle",
+          "text": "Marcar como Enviada"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cuando una orden está en estado <strong>PENDIENTE</strong>, el menú de acciones habilitará la opción <strong>Marcar como Enviada</strong>. Esto indica que el pedido ya fue solicitado al proveedor y se espera la entrega."
+        },
+        {
+          "type": "subtitle",
+          "text": "Marcar como Cancelada"
+        },
+        {
+          "type": "paragraph",
+          "text": "Si la operación se cae, se puede cancelar la orden. El sistema podría solicitar un motivo de cancelación que quedará registrado en las notas."
+        },
+        {
+          "type": "subtitle",
+          "text": "Marcar como Recibida (Automático)"
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>El estado <strong>RECIBIDA</strong> generalmente no se selecciona manualmente desde este menú. Este estado se alcanza automáticamente cuando se genera el Remito de Ingreso asociado a esta orden. Al confirmar la recepción física en la pantalla de Remitos, la Orden de Compra pasa a estado RECIBIDA y cierra el ciclo."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "ver-detalle",
+      "title": "Ver Detalle",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite consultar la información de la orden en modo lectura, sin riesgo de modificar datos. Se accede desde el menú de acciones <strong>(⋮)</strong>, opción <strong>Ver</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/purchases/purchases-view.jpeg",
+          "alt": "Vista de detalle de orden"
+        },
+        {
+          "type": "paragraph",
+          "text": "La <strong>Pantalla</strong> muestra todos los datos de cabecera, totales y el listado de productos de forma clara y bloqueada."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "compras",
+    "ordenes",
+    "crear",
+    "editar",
+    "estados",
+    "ciclo de vida"
+  ]
+}

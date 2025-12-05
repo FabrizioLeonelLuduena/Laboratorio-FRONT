@@ -1,0 +1,59 @@
+.version-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.version-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 500;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      color: var(--brand-primary-700);
+    }
+  }
+}
+
+.version-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .version-code {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .version-year {
+    color: var(--text-color-secondary);
+    font-size: 0.875rem;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color-secondary);
+  margin: 1rem 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  span {
+    padding: 0 1rem;
+    font-size: 0.875rem;
+  }
+}

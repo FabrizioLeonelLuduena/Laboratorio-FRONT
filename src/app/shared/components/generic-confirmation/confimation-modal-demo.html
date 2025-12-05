@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo — Modal de Confirmación (V6)</title>
+  <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+
+  <style>
+    :root {
+      --brand-primary-700: #008f8c;
+      --brand-warn: #d32f2f;
+      --on-primary: #fff;
+      --on-surface: #00435d;
+      --on-surface-muted: #757477;
+      --border-color: #d5e2e4;
+      --card: #fefffe;
+      --font-body: "Roboto", system-ui, -apple-system, "Segoe UI", arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fa;
+      font-family: var(--font-body);
+      color: var(--on-surface);
+      margin: 0;
+      padding: 60px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    /* === Overlay === */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(240, 240, 240, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fade-overlay 0.25s ease;
+    }
+
+    .modal {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+      width: 320px;
+      padding: 24px;
+      text-align: center;
+      animation: fade-in 0.25s ease;
+    }
+
+    .modal__icon {
+      font-size: 32px;
+      color: var(--brand-primary-700);
+      margin-bottom: 12px;
+    }
+
+    .modal__close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--on-surface-muted);
+    }
+
+    .modal__close:hover {
+      color: var(--on-surface);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 120ms ease, transform 80ms ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn--primary {
+      background: var(--brand-primary-700);
+      color: var(--on-primary);
+      border-color: var(--brand-primary-700);
+    }
+
+    .btn--danger {
+      background: var(--brand-warn);
+      color: #fefffe;
+      border: 1px solid var(--brand-warn);
+    }
+
+    .btn--primary:hover,
+    .btn--danger:hover {
+      filter: brightness(1.05);
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-overlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Modal génerico de confirmacion</h1>
+<p>Simula la versión final del modal con botones genéricos.</p>
+
+<div class="overlay">
+  <div class="modal">
+    <button class="modal__close">&times;</button>
+
+    <div class="modal__icon">
+      <i class="pi pi-exclamation-triangle"></i>
+    </div>
+
+    <h3 class="heading">Eliminar registro</h3>
+    <p class="text-14">¿Estás seguro de que deseas eliminar este elemento?</p>
+
+    <div class="modal-actions">
+      <button class="btn btn--danger">
+        <i class="pi pi-times"></i> Cancelar
+      </button>
+      <button class="btn btn--primary">
+        <i class="pi pi-check"></i> Aceptar
+      </button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

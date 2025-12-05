@@ -1,0 +1,82 @@
+{
+  "id": "unloading",
+  "moduleId": "autenticacion",
+  "title": "Cierre de sesión seguro",
+
+  "intro": "El cierre de sesión garantiza la protección de la información del laboratorio, evitando accesos no autorizados y preservando la integridad de los datos gestionados en el sistema.",
+
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Usuarios internos del laboratorio",
+      "Administradores",
+      "Secretaría"
+    ]
+  },
+
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br>Usuarios internos del laboratorio"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "cierre-manual",
+      "title": "Cierre de sesión manual",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cada usuario es responsable de cerrar su sesión al finalizar su jornada laboral. Esto impide accesos no autorizados y contribuye a la seguridad general del sistema."
+        },
+        {
+          "type": "paragraph",
+          "text": "Para cerrar sesión, diríjase a la esquina superior derecha y seleccione el ícono de Usuario. En el menú desplegable encontrará la opción Cerrar Sesión."
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Al presionar Cerrar Sesión, el sistema mostrará un mensaje de confirmación. Una vez confirmado, la sesión se cerrará de forma segura y será redirigido a la pantalla de inicio de sesión."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "bloqueo-automatico",
+      "title": "Bloqueo automático por inactividad",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema cuenta con un mecanismo de seguridad que bloquea automáticamente la sesión tras un periodo prolongado de inactividad."
+        },
+        {
+          "type": "paragraph",
+          "text":
+            "Para garantizar la seguridad de la información y prevenir accesos no autorizados, el sistema ha sido configurado para bloquear automáticamente la sesión después de 24 hs de inactividad. Cuando esto ocurra, se mostrará la pantalla de inicio de sesión y será necesario ingresar nuevamente las credenciales para continuar trabajando. Esta medida protege los datos sensibles del laboratorio y asegura que nadie pueda utilizar su sesión sin autorización.",
+          "align": "justified"
+
+
+        }
+      ]
+    }
+  ],
+
+  "tags": [
+    "cierre de sesión",
+    "seguridad",
+    "bloqueo automático",
+    "autenticación",
+    "manual"
+  ]
+}

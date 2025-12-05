@@ -1,0 +1,273 @@
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  z-index: 1000; /* above overlays and stepper */
+  display: flex;
+  align-items: center;
+  background-color: var(--brand-primary-700);
+  color: var(--on-primary);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
+  height: var(--navbar-height);
+  min-height: var(--navbar-height);
+}
+
+/* Breadcrumb en el navbar */
+.navbar-breadcrumb {
+  margin-left: 8px;
+  flex: 1;
+  max-width: calc(100% - 200px);
+}
+
+.app-name {
+  color: var(--surface);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 8px;
+  margin-right: 16px;
+  height: 100%;
+  align-items: center;
+}
+
+
+.desktop-nav .menu-item {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.desktop-nav a,
+.desktop-nav button[mat-button] {
+  color: var(--surface);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 12px;
+  height: 100%;
+  min-height: var(--navbar-height);
+  transition: background-color 0.3s;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.desktop-nav button[mat-button] {
+  line-height: var(--navbar-height);
+}
+
+.desktop-nav a:hover,
+.desktop-nav button[mat-button]:hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.desktop-nav a.active-link,
+.desktop-nav button.active-link {
+  background-color: rgb(255 255 255 / 20%);
+  border-bottom: 3px solid white;
+}
+
+/* Botón hamburguesa dentro del navbar */
+.navbar-toggle {
+  background: transparent;
+  border: none;
+  color: var(--on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar-toggle i {
+  font-size: 1.25rem;
+  color: var(--on-primary);
+  transition: color 0.2s ease;
+}
+
+/* Hover accesible sobre fondo primario */
+.navbar-toggle:hover,
+.navbar-toggle:focus-visible {
+  background-color: color-mix(in srgb, white 15%, var(--brand-primary-700));
+}
+
+.navbar-toggle:hover i {
+  color: color-mix(in srgb, white 90%, var(--brand-primary-700) 10%);
+}
+
+/* === BOTÓN DE AYUDA === */
+.navbar-help-btn {
+  background: transparent;
+  border: none;
+  color: var(--on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin-right: 8px;
+}
+
+.navbar-help-btn i {
+  font-size: 1.3rem;
+  color: var(--on-primary);
+  transition: color 0.2s ease;
+}
+
+/* Hover elegante sobre fondo principal */
+.navbar-help-btn:hover,
+.navbar-help-btn:focus-visible {
+  background-color: color-mix(in srgb, white 15%, var(--brand-primary-700));
+}
+
+.navbar-help-btn:hover i {
+  color: color-mix(in srgb, white 90%, var(--brand-primary-700) 10%);
+}
+
+/* === BOTÓN DE USUARIO (REUTILIZA ESTILO DE .btn) === */
+.navbar-user-btn {
+  background: transparent;
+  border: none;
+  color: var(--on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar-user-btn i {
+  font-size: 1.3rem;
+  color: var(--on-primary);
+  transition: color 0.2s ease;
+}
+
+/* Hover elegante sobre fondo principal */
+.navbar-user-btn:hover,
+.navbar-user-btn:focus-visible {
+  background-color: color-mix(in srgb, white 15%, var(--brand-primary-700));
+}
+
+.navbar-user-btn:hover i {
+  color: color-mix(in srgb, white 90%, var(--brand-primary-700) 10%);
+}
+
+/* === MENÚ EMERGENTE === */
+:host ::ng-deep .navbar-user-menu .p-menu {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  min-width: 180px;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
+}
+
+:host ::ng-deep .navbar-user-menu .p-menuitem-link {
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+:host ::ng-deep .navbar-user-menu .p-menuitem-link:hover {
+  background: var(--surface-alt);
+  color: var(--brand-primary-700);
+}
+
+:host ::ng-deep .navbar-user-menu .p-menuitem-icon {
+  color: var(--brand-primary);
+}
+
+/* === ESTILOS PARA CONTENIDO DEL MODAL DE AYUDA === */
+.help-modal-content {
+  text-align: left;
+  color: var(--on-surface);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 16px;
+}
+
+.help-modal-content h3 {
+  color: var(--brand-primary);
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.help-modal-content p {
+  margin-bottom: 12px;
+}
+
+.help-modal-content ul,
+.help-modal-content ol {
+  margin-left: 20px;
+  margin-bottom: 12px;
+}
+
+.help-modal-content li {
+  margin-bottom: 6px;
+}
+
+.help-modal-content code {
+  background-color: var(--surface-alt);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+
+
+/* Estilos responsivos */
+@media (width <= 599px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .app-name {
+    font-size: 1rem;
+  }
+}
+
+/* ===== Notificaciones: badge de no leídas ===== */
+.navbar-notif-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 999px;
+  min-width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 10px;
+  text-align: center;
+  padding: 0 4px;
+}
+

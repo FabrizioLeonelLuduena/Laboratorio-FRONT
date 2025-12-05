@@ -1,0 +1,23 @@
+<div class="page-container p-4">
+  <h2 class="title-18 font-display mb-4"></h2>
+
+  <app-generic-alert *ngIf="showAlert" [type]="alertType" [message]="alertMessage"></app-generic-alert>
+
+  <ng-container *ngIf="contact">
+    <app-generic-form
+      [fields]="contactFormFields"
+      [initialValue]="contact"
+      [title]="'Editar Contacto'"
+      (submitForm)="onFormSubmit($event)"
+      (cancelForm)="onFormCancel()"
+    ></app-generic-form>
+  </ng-container>
+
+  <ng-container *ngIf="!contact && supplierData">
+    <div class="text-14 text-muted">Contacto no encontrado.</div>
+  </ng-container>
+
+  <ng-container *ngIf="!supplierData">
+    <div class="text-14 text-muted">Cargando proveedor...</div>
+  </ng-container>
+</div>

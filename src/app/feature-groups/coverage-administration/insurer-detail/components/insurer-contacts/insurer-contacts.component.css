@@ -1,0 +1,120 @@
+/* === CONTENEDOR PRINCIPAL === */
+.insurer-contacts-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--surface, #f9fafb);
+  min-height: 100%;
+}
+
+/* === FORMULARIO INLINE === */
+.form-container {
+  position: relative;
+  z-index: 10; /* asegura que quede sobre cualquier otra capa */
+  background: var(--card, #fff);
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
+  transition: all 0.25s ease;
+}
+
+/* Encabezado opcional del formulario */
+.form-container h3 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--on-surface, #111827);
+}
+
+/* Campos individuales */
+.form-container .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+/* Etiquetas */
+.form-container label {
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+  color: var(--on-surface-muted, #374151);
+}
+
+/* Inputs, selects y textareas */
+.form-container input,
+.form-container select,
+.form-container textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: var(--on-surface, #111827);
+  background: var(--surface, #fff);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+  border-color: var(--brand-primary-700, #007b83);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-primary-700, #007b83) 30%, transparent);
+}
+
+/* Botones en el pie */
+.form-container .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.form-container button {
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.1s;
+}
+
+.form-container button:active {
+  transform: scale(0.98);
+}
+
+.form-container button.save {
+  background: var(--brand-primary-700, #007b83);
+  color: #fff;
+}
+
+.form-container button.save:hover {
+  background: color-mix(in srgb, var(--brand-primary-700, #007b83) 90%, #000 10%);
+}
+
+.form-container button.cancel {
+  background: var(--surface-alt, #f3f4f6);
+  color: var(--on-surface, #374151);
+}
+
+.form-container button.cancel:hover {
+  background: #e5e7eb;
+}
+
+@media (width <= 768px) {
+  .form-container {
+    padding: 1rem;
+  }
+
+  .form-container .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-container button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,114 @@
+<div class="billing-creator-container">
+  <!-- Generic Alert for notifications -->
+  <app-generic-alert
+    *ngIf="showAlert"
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText"
+    (close)="hideAlertMessage()"
+  ></app-generic-alert>
+
+  <!-- Confirm Dialog -->
+  <p-confirmDialog></p-confirmDialog>
+
+  <app-confirmation-modal
+    *ngIf="confirmationModalVisible"
+    [title]="confirmationModalTitle"
+    [message]="confirmationModalMessage"
+    [icon]="confirmationModalIcon"
+    (confirmed)="onConfirmationModalConfirmed()"
+    (dismissed)="closeConfirmationModal()"
+  ></app-confirmation-modal>
+
+  <!-- Single view with all sections -->
+  <div class="billing-creator-content">
+    <!-- Section 1: Invoice Data -->
+    <div class="section section-invoice-data">
+      <app-invoice-data-step
+        [billing]="billing()"
+        (dataChange)="onInvoiceDataChange($event)"
+        (validChange)="onInvoiceDataValidChange($event)"
+      ></app-invoice-data-step>
+    </div>
+
+    <!-- Section 2: Items (always visible) -->
+    <div class="section section-items">
+      <app-invoice-items-step
+        [items]="billing().items"
+        (itemsChange)="onItemsChange($event)"
+        (validChange)="onItemsValidChange($event)"
+        (paymentMethodsChange)="onPaymentMethodsChange($event)"
+      ></app-invoice-items-step>
+    </div>
+
+    <!-- TODO: Summary and totals - temporarily disabled, will be restored for printed invoice
+    <div class="section section-summary">
+      <app-summary-step
+        [billing]="billing()"
+        [items]="billing().items"
+        [paymentMethods]="billing().paymentMethods"
+      ></app-summary-step>
+    </div>
+    -->
+
+    <!-- Action Buttons -->
+    <div class="actions-footer">
+      <div class="footer-left">
+        @if (!canSubmit()) {
+
+        }
+      </div>
+
+      <div class="footer-right">
+        <app-generic-button
+          type="cancel"
+          [disabled]="isSubmitting()"
+          (pressed)="onCancel()"
+        ></app-generic-button>
+
+        <app-generic-button
+          type="alternative"
+          text="Crear factura"
+          icon="pi pi-check"
+          [disabled]="!canSubmit()"
+          (pressed)="onSubmit()"
+        ></app-generic-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview Modal with Summary Component -->
+  <p-dialog
+    [(visible)]="showPreviewModal"
+    [modal]="true"
+    header="Vista previa de factura"
+    [style]="{width: '90vw', maxWidth: '1200px'}"
+    [maximizable]="true"
+    [draggable]="false"
+    [resizable]="true"
+    (onHide)="closePreviewModal()">
+
+    <div class="preview-modal-content">
+      <app-summary-step
+        #summaryPreview
+        [billing]="billing()"
+        [items]="billing().items"
+        [paymentMethods]="billing().paymentMethods">
+      </app-summary-step>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <app-generic-button
+        type="custom"
+        text="Descargar PDF"
+        icon="pi pi-file-pdf"
+        (pressed)="onDownloadPdf()"
+      ></app-generic-button>
+      <app-generic-button
+        type="cancel"
+        (pressed)="closePreviewModal()"
+      ></app-generic-button>
+    </ng-template>
+  </p-dialog>
+</div>
+

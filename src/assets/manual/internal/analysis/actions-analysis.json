@@ -1,0 +1,692 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Análisis",
+  "intro": "A continuación se detallan las acciones que los usuarios pueden realizar en el módulo de Gestión de Análisis, incluyendo la visualización de detalles, edición y creación de Análisis, NBU y Determinaciones.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Bioquímico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Bioquímico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "ver-detalles-analisis",
+      "title": "Ver Detalles de Análisis",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Información general (Acto Bioquímico)"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/detalles-analisis.jpg",
+          "alt": "Detalles del análisis"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Nombre del análisis:</strong> Título completo del procedimiento.",
+            "<strong>Código corto:</strong> Identificador numérico simplificado.",
+            "<strong>Código análisis:</strong> Código interno del análisis.",
+            "<strong>Unidad de base (UB):</strong> Valor base utilizado en el cálculo de costos.",
+            "<strong>Familia:</strong> Categoría de clasificación del análisis.",
+            "<strong>Código NBU:</strong> Código estandarizado del Nomenclador Bioquímico Único."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "NBU y determinaciones"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Determinación NBU:</strong> Nombre del procedimiento según el Nomenclador Bioquímico Único.",
+            "<strong>Tipo NBU:</strong> Clasificación del procedimiento dentro de una categoría estándar.",
+            "<strong>Cantidad de determinaciones:</strong> Número de pruebas o análisis individuales disponibles."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Metadatos"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Fecha de creación:</strong> Muestra la fecha y hora exactas en que el registro fue creado.",
+            "<strong>Última actualización:</strong> Muestra la fecha y hora de la última modificación.",
+            "<strong>Creado por:</strong> Identificador del usuario que generó el registro.",
+            "<strong>Actualizado por:</strong> Identificador del último usuario que modificó el registro."
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "editar-analisis",
+      "title": "Editar Análisis",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Editar</strong> desde el menú de acciones <strong>(⋮)</strong> de cualquier fila, se abre un modal dividido en tres secciones: <strong>Información básica</strong>, <strong>Asociaciones</strong> y <strong>Determinaciones</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-analisis-1.jpg",
+          "alt": "Editar análisis - Información básica"
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 1: Información básica"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta sección permite modificar los datos principales del análisis:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Nombre del análisis * (Obligatorio):</strong> Campo de texto para el título completo del procedimiento.",
+            "<strong>Código del análisis (Opcional):</strong> Campo de texto para un identificador interno.",
+            "<strong>Código corto:</strong> Campo de texto o numérico para un identificador numérico simplificado.",
+            "<strong>Nombre de familia:</strong> Campo de texto para la categoría de clasificación a la que pertenece el análisis.",
+            "<strong>UB (unidad bioquímica):</strong> Campo numérico para el valor base utilizado en el cálculo de costos.",
+            "<strong>Descripción (Opcional):</strong> Campo de texto multilínea para agregar detalles adicionales sobre el análisis."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 2: Asociaciones"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-analisis-2.jpg",
+          "alt": "Editar análisis - Asociaciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>NBU (Nomenclador Bioquímico Único)</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Campo NBU:</strong> Menú desplegable para seleccionar o mostrar el código y nombre estandarizado del análisis."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Tipo de muestra</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Campo de Muestra:</strong> Menú desplegable para seleccionar el material biológico requerido para el análisis.",
+            "<strong>Editar:</strong> Botón para modificar la lista de tipos de muestra disponibles.",
+            "<strong>+:</strong> Botón para añadir un nuevo tipo de muestra."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Configuración de hoja</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Campo de Hoja:</strong> Menú desplegable para seleccionar una plantilla o formato de impresión para los resultados del análisis.",
+            "<strong>Editar:</strong> Botón para modificar la lista de configuraciones de hoja disponibles.",
+            "<strong>+:</strong> Botón para añadir una nueva configuración de hoja."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Nota importante",
+          "text": "<br>Los cambios en las asociaciones se guardarán cuando hagas clic en el botón <strong>'Guardar'</strong> en la pestaña de información básica."
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 3: Determinaciones"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-analisis-3.jpg",
+          "alt": "Editar análisis - Determinaciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Agregar Determinaciones</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>+ Agregar Determinaciones:</strong> Título de la sección que inicia el proceso de asociación.",
+            "<strong>Selector de Búsqueda:</strong> Campo de entrada con menú desplegable para buscar y seleccionar las determinaciones deseadas.",
+            "<strong>Acción:</strong> Botón <strong>+ Agregar</strong> para confirmar la adición de las determinaciones seleccionadas.",
+            "<strong>Lista Desplegable:</strong> Muestra las opciones disponibles para seleccionar, cada una con un checkbox y su nombre."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "El círculo verde con el número junto a la lista indica la cantidad de ítems seleccionados o disponibles."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Guarda la modificación y regresa a la lista de análisis."
+            ],
+            [
+              "Cancelar",
+              "Descarta los cambios y vuelve a la lista."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ver-detalles-nbu",
+      "title": "Ver Detalles de NBU",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Información básica (Análisis Bioquímico)"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/detalles-nbu.jpg",
+          "alt": "Detalles del NBU"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Código:</strong> Código identificador general (ej. 660001). Incluye un botón Editar.",
+            "<strong>Código NBU:</strong> Muestra el código estandarizado.",
+            "<strong>Tipo NBU:</strong> Muestra la clasificación estándar (ej. PMO).",
+            "<strong>Determinación:</strong> Muestra el nombre del procedimiento (ej. ACTO BIOQUÍMICO)."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Indicadores"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Urgencia:</strong> Indica que el análisis tiene alta prioridad o requiere tiempo reducido.",
+            "<strong>Por Referencia:</strong> Clasifica el análisis como uno que debe ser procesado o derivado a otro laboratorio.",
+            "<strong>Infrecuente:</strong> Sugiere que el análisis no se realiza habitualmente o tiene baja tasa de solicitud."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Abreviaturas"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestra la abreviatura para identificar el NBU dentro del laboratorio."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "editar-nbu",
+      "title": "Editar NBU",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Editar</strong> desde el menú de acciones de un NBU, se abre un modal dividido en cuatro secciones: <strong>Información básica</strong>, <strong>Versión y UB</strong>, <strong>Sinónimos</strong> y <strong>Abreviaturas</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-nbu-1.jpg",
+          "alt": "Editar NBU - Información básica"
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 1: Información básica"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Campos de Clasificación Básica</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Código NBU * (Obligatorio):</strong> Campo de texto para el identificador único del Nomenclador Bioquímico Único.",
+            "<strong>Tipo NBU:</strong> Campo de texto o de solo lectura para la clasificación general del tipo de código.",
+            "<strong>Determinación:</strong> Campo de texto para la descripción detallada del procedimiento."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Campo de Interpretación</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Interpretación estándar específica (Opcional):</strong> Campo de texto multilínea para ingresar notas o un resultado predefinido que se incluirá en el informe."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Indicadores de Manejo (Checkboxes)</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Es urgencia:</strong> Clasifica el análisis para un manejo prioritario.",
+            "<strong>Es por referencia:</strong> Indica que el análisis debe ser derivado o remitido a otro centro.",
+            "<strong>Es infrecuente:</strong> Marca el análisis como uno que rara vez se realiza."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 2: Versión y UB"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-nbu-2.jpg",
+          "alt": "Editar NBU - Versión y UB"
+        },
+        {
+          "type": "paragraph",
+          "text": "La pantalla muestra:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Versión actual:</strong> Edición vigente del nomenclador.",
+            "<strong>Unidad Bioquímica (UB):</strong> Valor de la unidad bioquímica establecida."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 3: Sinónimos"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-nbu-3.jpg",
+          "alt": "Editar NBU - Sinónimos"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Add Synonyms (Añadir Sinónimos)</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Campo de Entrada:</strong> Campo de texto para escribir el sinónimo.",
+            "<strong>Acción:</strong> Botón <strong>+ Add</strong> (Añadir).",
+            "<strong>Current Synonyms (Sinónimos Actuales):</strong> Sección que muestra la lista de sinónimos ya asociados con un contador."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Sección 4: Abreviaturas"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/edicion-nbu-4.jpg",
+          "alt": "Editar NBU - Abreviaturas"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Add Abbreviations (Añadir Abreviaturas)</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Campo de Entrada:</strong> Campo de texto para escribir la abreviatura.",
+            "<strong>Acción:</strong> Botón <strong>+ Add</strong> (Añadir) en color verde.",
+            "<strong>Current Abbreviations (Abreviaturas Actuales):</strong> Sección que muestra la lista de abreviaturas ya asociadas con su respectivo contador."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "Los cambios se guardan al presionar el botón <strong>Guardar</strong> en cualquiera de las pestañas."
+        }
+      ]
+    },
+    {
+      "id": "ver-detalles-determinacion",
+      "title": "Ver Detalles de Determinación",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Propiedades principales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/detaller-determinaciones-1.jpg",
+          "alt": "Detalles de la determinación"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Nombre de la determinación:</strong> Nombre del análisis clínico o estudio que realiza el laboratorio.",
+            "<strong>Unidad de medida:</strong> Indica en qué unidad se expresará el resultado del análisis (mg/dL, %, UI/L, etc.).",
+            "<strong>Método analítico:</strong> Describe la técnica o tecnología utilizada para realizar el análisis.",
+            "<strong>Variación tolerada:</strong> Define el margen de variación aceptable para los resultados, generalmente expresado en porcentaje.",
+            "<strong>Tiempo de manejo:</strong> Indica el tiempo estimado necesario para procesar el estudio, ya sea en horas o días."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración: Pre-analítica"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta tarjeta agrupa los indicadores relacionados con la preparación y las instrucciones previas a la toma de muestra:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Número:</strong> Identifica el orden o secuencia asignado a esa etapa dentro del proceso del análisis.",
+            "<strong>Indicaciones previas:</strong> Incluye las instrucciones que deben cumplirse antes de la toma de muestra (Ej: ayuno).",
+            "<strong>Observaciones:</strong> Espacio para agregar información adicional relevante."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración: Analítica"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta tarjeta contiene los indicadores relativos al procesamiento de la muestra en el laboratorio:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Número:</strong> Identificador o secuencia interna de la etapa analítica.",
+            "<strong>Método analítico:</strong> Especifica la técnica o tecnología utilizada para realizar el análisis.",
+            "<strong>Tipo:</strong> Define la naturaleza del resultado que producirá el análisis: Quantitative (resultado numérico), Qualitative (presencia/ausencia), Semi-quantitative (valores aproximados)."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración: Post-analítica"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta tarjeta se enfoca en los indicadores de interpretación y presentación de los resultados:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Número:</strong> Número identificador de esta etapa dentro de la configuración del análisis.",
+            "<strong>Valores de referencia:</strong> Rangos considerados normales o esperados para cada análisis, utilizados para interpretar los resultados."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración de resultados"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Imprimible:</strong> Define si el resultado debe ser incluido en el informe final impreso.",
+            "<strong>Orden de impresión:</strong> Establece la posición de este análisis dentro del grupo en el informe impreso.",
+            "<strong>Grupo de impresión:</strong> Identificador del grupo al que pertenece este análisis en el informe.",
+            "<strong>Orden de carga:</strong> Establece el orden en que se espera ingresar los resultados en el sistema.",
+            "<strong>Requiere valor de carga:</strong> Indica que el análisis debe tener un resultado explícito ingresado por un usuario.",
+            "<strong>Requiere aprobación:</strong> Define si el resultado debe ser revisado y validado antes de ser reportado.",
+            "<strong>Puede auto-aprobarse:</strong> Indica si el resultado puede pasar al estado de 'aprobado' automáticamente."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Metadatos"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Creado:</strong> Registra el momento en que se creó el registro por primera vez (fecha y responsable).",
+            "<strong>Última actualización:</strong> Registra la última vez que el contenido del registro fue modificado (fecha y responsable).",
+            "<strong>Versión:</strong> Indica el número de versión actual del registro."
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "editar-determinacion",
+      "title": "Editar Determinación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Editar</strong> desde el menú de acciones de una determinación, se abre un formulario para modificar su configuración."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-determinacion-1.jpg",
+          "alt": "Editar determinación - Configuración básica"
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración básica"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Campos de Identificación y Tolerancia</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Nombre de la determinación:</strong> Nombre del análisis clínico que se está configurando.",
+            "<strong>Variación porcentual tolerada (%):</strong> Indica el margen de variación aceptable para los resultados de ese análisis."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Campos de Tiempo de Manipulación</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Tiempo de manipulación:</strong> Valor numérico que representa la duración estimada del procesamiento del análisis.",
+            "<strong>Unidad de tiempo:</strong> Define en qué unidad se expresa el tiempo de manipulación."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Campos Pre-analíticos (Instrucciones)</strong>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Indicaciones previas:</strong> Instrucciones que deben cumplirse antes de la toma de muestra.",
+            "<strong>Observaciones pre-analíticas:</strong> Información adicional o consideraciones especiales relevantes antes de procesar el análisis."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Configuración de Flujo de Trabajo y Aprobación"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-determinacion-2.jpg",
+          "alt": "Editar determinación - Flujo de trabajo"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Orden de carga de resultado:</strong> Campo de texto para especificar el orden en que se carga el resultado.",
+            "<strong>¿Requiere valor de carga?:</strong> El resultado debe ser ingresado manualmente por el personal del laboratorio.",
+            "<strong>¿Requiere aprobación?:</strong> El resultado debe ser revisado y validado manualmente por un usuario autorizado.",
+            "<strong>¿Puede auto-aprobar?:</strong> El sistema aprueba automáticamente el resultado, sin intervención humana."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalles finales"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/analysis/editar-determinacion-3.jpg",
+          "alt": "Editar determinación - Detalles finales"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Número de determinación:</strong> Identificador único de la determinación.",
+            "<strong>Fecha de creación:</strong> Fecha y hora en que se creó el registro.",
+            "<strong>Fecha de última actualización:</strong> Fecha y hora de la última modificación."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Nota",
+          "text": "<br>Este formulario permite editar información básica de la determinación. Las configuraciones de fase, etiquetas y otras configuraciones avanzadas se gestionan a través de interfaces dedicadas."
+        }
+      ]
+    },
+    {
+      "id": "crear-determinacion",
+      "title": "Crear Nueva Determinación",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón <i class='pi pi-plus'></i> <strong>Crear nueva determinación</strong> desde la pantalla principal de Determinaciones, se abre un formulario para crear una nueva determinación."
+        },
+        {
+          "type": "paragraph",
+          "text": "El formulario de creación contiene los mismos campos que el formulario de edición:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "Nombre de la determinación (obligatorio)",
+            "Variación porcentual tolerada",
+            "Tiempo de manipulación y unidad de tiempo",
+            "Indicaciones previas y observaciones pre-analíticas",
+            "Configuración de flujo de trabajo (requiere valor de carga, requiere aprobación, puede auto-aprobar)",
+            "Orden de carga de resultado"
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Una vez creada la determinación, se le asignará automáticamente un número de determinación único y se registrará la fecha de creación."
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado-analisis",
+      "title": "Descargar Listado",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en cualquiera de las tres tablas (Análisis, NBU, Determinaciones) para reportes o impresión. Esta función respeta los filtros aplicados previamente."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha de cada pantalla."
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por criterios específicos, el archivo solo contendrá los registros que cumplan con esos criterios. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "análisis",
+    "NBU",
+    "determinaciones",
+    "edición",
+    "creación",
+    "exportación",
+    "acciones"
+  ]
+}

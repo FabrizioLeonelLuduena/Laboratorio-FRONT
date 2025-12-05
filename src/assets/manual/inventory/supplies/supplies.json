@@ -1,0 +1,188 @@
+{
+  "id": "gestion-insumos",
+  "moduleId": "stock",
+  "title": "Gestión de Insumos",
+  "intro": "La pantalla de Insumos es el módulo central para asegurar la trazabilidad del inventario. Permite registrar, actualizar, visualizar y controlar el estado de todos los insumos del laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock"
+    ]
+  },
+  "sections": [
+       {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>Pantalla principal</strong> presenta una grilla que lista los insumos ordenados alfabéticamente, permitiendo tener un panorama rápido de la disponibilidad de materiales."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-table.jpeg",
+          "alt": "Tabla de insumos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite localizar insumos rápidamente ingresando su <strong>nombre</strong> en el campo de texto."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega un menú para <strong>segmentar la lista</strong> por estado o categoría."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Exporta la lista actual de resultados visible en la tabla a formato <strong>Excel</strong>."
+            ],
+            [
+              "Crear",
+              "<i class='pi pi-plus'></i>",
+              "Botón principal para acceder a la <strong>Pantalla</strong> de alta de un nuevo insumo."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al seleccionar el ícono de embudo, se despliegan opciones para acotar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-filters.jpeg",
+          "alt": "Filtros de insumos"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Estado:</strong> Permite alternar la visualización entre insumos Activos e Inactivos.",
+            "<strong>Categoría:</strong> Permite seleccionar grupos específicos como Medios de Cultivo, Reactivos, Material Descartable, etc."
+          ]
+        },
+          {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar</strong> para restablecer todos los filtros a su estado original."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-insumos",
+      "title": "Contenido de la Tabla de Datos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La información de los insumos se organiza en las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "<strong>Denominación</strong> del insumo.",
+              "Alcohol etílico"
+            ],
+            [
+              "Categoría",
+              "<strong>Clasificación</strong> del insumo según su tipo.",
+              "Reactivos"
+            ],
+            [
+              "Empaque",
+              "<strong>Unidad de presentación</strong> y medida.",
+              "Caja x 12"
+            ],
+            [
+              "Acciones",
+              "Menú desplegable ( <i class='pi pi-ellipsis-v'></i> ) para gestionar la fila: <strong>Editar</strong>, <strong>Ver Umbrales</strong> o <strong>Desactivar/Reactivar</strong>.",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-insumo",
+      "title": "Estados del Insumo",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La columna de Estado utiliza indicadores visuales para mostrar la disponibilidad del insumo:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "El insumo está <strong>disponible</strong> para su uso en movimientos de stock."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "El insumo ha sido <strong>deshabilitado</strong> y no aparecerá en las selecciones habituales."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "✓ <strong>Nota importante</strong> <br> A diferencia de otros módulos, aquí es posible <strong>Reactivar</strong> un insumo inactivo desde el menú de acciones."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "insumos",
+    "stock",
+    "inventario",
+    "trazabilidad"
+  ]
+}

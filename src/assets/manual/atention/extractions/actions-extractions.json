@@ -1,0 +1,254 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Extracciones",
+  "intro": "En esta pantalla se gestiona el flujo de trabajo de la sala de extracciones, desde el llamado del paciente hasta la confirmación de la toma de muestra.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Extraccionista",
+      "Técnico de Laboratorio"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note-extracciones",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Técnico de extracción - Bioquímico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "configurar-box",
+      "title": "Configurar Box",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Antes de llamar pacientes, es necesario indicar en qué puesto de trabajo se encuentra. Haga clic en el botón <strong>Configurar box</strong> en la parte derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/extractions/box-configuration.jpg",
+          "alt": "Configuración de box"
+        },
+        {
+          "type": "paragraph",
+          "text": "En la <strong>Pantalla</strong> emergente, seleccione el número de Box y su usuario. Presione <strong>Aceptar</strong> para habilitar su estación."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "✓ Opción Limpiar",
+          "text": "<br>Si desea cerrar el box o desloguearse del puesto, utilice el botón <strong>Limpiar box</strong>."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "iniciar-extraccion",
+      "title": "Llamar Paciente (Extraer)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "En el panel izquierdo <strong>En espera</strong>, ubique al siguiente paciente y presione el botón verde <strong>Extraer</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/extractions/extraccion-cola.jpg",
+          "alt": "Cola de espera de extracciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Se abrirá una <strong>Pantalla</strong> de validación. Verifique los datos del protocolo, la cantidad de análisis y tubos requeridos, y lea las indicaciones si las hubiera."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/extractions/extract-extraccion.jpg",
+          "alt": "Confirmar extracción"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Básicos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Protocolo",
+              "Número de identificación del <strong>protocolo</strong> o la orden de laboratorio.",
+              "Sí (Generalmente autogenerado/requerido)"
+            ],
+            [
+              "Documento",
+              "El <strong>número de identificación</strong> del paciente.",
+              "Sí (Pre-cargado desde el turno)"
+            ],
+            [
+              "Apellido y Nombre",
+              "El <strong>nombre completo</strong> del paciente.",
+              "Sí (Pre-cargado desde el turno)"
+            ],
+            [
+              "Cant. Análisis",
+              "La <strong>cantidad total de análisis</strong> solicitados en este protocolo.",
+              "Sí (Pre-cargado)"
+            ],
+            [
+              "Cant. Tubos",
+              "La <strong>cantidad total de tubos</strong> necesarios para realizar los análisis solicitados.",
+              "Sí (Pre-cargado)"
+            ],
+            [
+              "Indicaciones",
+              "<strong>Notas o indicaciones adicionales</strong> relevantes para el procedimiento de extracción.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Guarda los cambios y llama al paciente para realizar la extracción"
+            ],
+            [
+              "Cancelar",
+              "Cierra la pantalla sin guardar ningún cambio realizado."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Acción",
+          "text": "<br>Al presionar <strong>Confirmar</strong>, el paciente pasa al panel derecho <strong>En extracción</strong> y el sistema registra que el Box está ocupado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "finalizar-extraccion",
+      "title": "Finalizar Extracción",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Una vez realizada la toma de muestra, diríjase al panel derecho y presione el botón <strong>Finalizar</strong> en la fila correspondiente."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/extractions/cerrar-extraccion.jpg",
+          "alt": "Cierre de extracción"
+        },
+
+          {
+            "type": "subtitle",
+            "text": "Datos Básicos"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Campo",
+              "Descripción",
+              "Obligatorio"
+            ],
+            "rows": [
+              [
+                "Protocolo",
+                "Número de identificación del <strong>protocolo</strong> de laboratorio.",
+                "Sí (Campo de solo lectura)"
+              ],
+              [
+                "Documento",
+                "El <strong>número de identificación</strong> del paciente.",
+                "Sí (Campo de solo lectura)"
+              ],
+              [
+                "Apellido y Nombre",
+                "El <strong>nombre completo</strong> del paciente.",
+                "Sí (Campo de solo lectura)"
+              ],
+              [
+                "Cant. Análisis",
+                "La <strong>cantidad total de análisis</strong> solicitados.",
+                "Sí (Campo de solo lectura)"
+              ],
+              [
+                "Cant. Tubos",
+                "La <strong>cantidad total de tubos</strong> recolectados.",
+                "Sí (Campo de solo lectura)"
+              ],
+              [
+                "Indicaciones",
+                "<strong>Indicaciones previas</strong> relevantes del protocolo (generalmente de solo lectura).",
+                "Sí (Campo de solo lectura)"
+              ],
+              [
+                "Observaciones",
+                "Campo para ingresar <strong>observaciones finales</strong> sobre el proceso de extracción realizado.",
+                "No"
+              ]
+            ]
+          },
+          {
+            "type": "subtitle",
+            "text": "Acciones Finales"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Botón",
+              "Función"
+            ],
+            "rows": [
+              [
+                "<strong>Finalizar Extracción</strong> (Naranja)",
+                "Confirma la toma de muestra exitosa. Las muestras pasan a la etapa pre-analítica."
+              ],
+              [
+                "<strong>Liberar</strong> (Azul)",
+                "Libera el box y devuelve al paciente a la cola de espera (útil si hubo un error al llamar)."
+              ],
+              [
+                "<strong>Cancelar</strong> (Rojo)",
+                "Cierra la ventana y mantiene al paciente en el box."
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "tags": [
+      "extracciones",
+      "box",
+      "toma de muestra",
+      "paciente",
+      "laboratorio"
+    ]
+  }

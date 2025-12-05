@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Promedio días",
+      "value": 2.3
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

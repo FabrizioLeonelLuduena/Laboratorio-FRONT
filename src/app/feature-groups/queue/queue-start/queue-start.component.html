@@ -1,0 +1,27 @@
+<div class="queue-start-container">
+  <div class="queue-start-content">
+    <h1 class="queue-title">Bienvenido</h1>
+    <p class="queue-subtitle">A continuación seleccione la opción que corresponda</p>
+
+    <div class="button-group">
+      <app-generic-button
+        type="create"
+        text="Con Turno"
+        icon="pi pi-calendar-plus"
+        [color]="'--brand-primary-700'"
+        [customTextColor]="'--on-primary'"
+        (pressed)="onWithAppointment()">
+      </app-generic-button>
+
+      <app-generic-button
+        type="alternative"
+        text="Sin Turno"
+        icon="pi pi-user-plus"
+        [color]="'--brand-accent'"
+        [customTextColor]="'--on-surface'"
+        (pressed)="onWithoutAppointment()">
+      </app-generic-button>
+    </div>
+  </div>
+</div>
+

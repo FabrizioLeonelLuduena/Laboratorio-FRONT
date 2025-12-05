@@ -1,0 +1,345 @@
+<!-- Floating Alert Top Right -->
+@if (alert) {
+  <div class="floating-alert-container">
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  </div>
+}
+
+<section class="create-branch-stepper">
+  <!-- Stepper Header: estilo por defecto de PrimeNG con números -->
+  <p-stepper [value]="activeStep + 1" [linear]="true">
+    <p-step-list>
+      @for (step of steps; track $index) {
+        <p-step [value]="$index + 1" (click)="goTo($index)">{{ step.label }}</p-step>
+      }
+    </p-step-list>
+  </p-stepper>
+
+  <!-- Step 0: Sucursal y Dirección -->
+  @if (activeStep === 0) {
+    <div class="step-content">
+      <app-generic-form #branchForm
+                        [title]="'Datos de la sucursal'"
+                        [fields]="step0Fields"
+                        [showSubmit]="false"
+                        [showCancel]="false"
+      ></app-generic-form>
+
+      <div class="actions">
+        <app-generic-button
+          type="cancel"
+          (pressed)="onCancel()"
+        ></app-generic-button>
+        <app-generic-button
+          type="advance"
+          icon="pi pi-arrow-right"
+          [disabled]="isNextDisabled"
+          (pressed)="nextStep()"
+        ></app-generic-button>
+      </div>
+    </div>
+  }
+
+  <!-- Step 2: Horarios -->
+  @if (activeStep === 1) {
+    <div class="step-content">
+      <div class="form-section">
+        <div class="section-header">
+          <h3 class="section-title">Agregar horario</h3>
+          <app-generic-button
+            type="create"
+            (pressed)="addSchedule()"
+          ></app-generic-button>
+        </div>
+        <app-generic-form #scheduleForm
+                          [title]="''"
+                          [fields]="scheduleItemFields"
+                          [showSubmit]="false"
+                          [showCancel]="false"
+        ></app-generic-form>
+      </div>
+
+      @if (schedulesList.length) {
+        <div class="data-table schedule-table">
+          <div class="table-head">
+            <div>Tipo</div>
+            <div>Días</div>
+            <div>Horario</div>
+            <div class="actions-col">Acciones</div>
+          </div>
+          <div class="table-body">
+            @for (s of schedulesList; track $index) {
+              <div class="table-row">
+                <div>{{ getScheduleTypeLabel(s.scheduleType) }}</div>
+                <div>{{ getTranslatedDay(s.dayFrom) }} &rarr; {{ getTranslatedDay(s.dayTo) }}</div>
+                <div>{{ s.scheduleFromTime }} - {{ s.scheduleToTime }}</div>
+                <div class="row-actions">
+                  <button type="button" class="btn-icon-delete" (click)="removeScheduleAt($index)" title="Eliminar">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="actions">
+        <app-generic-button
+          type="back"
+          (pressed)="goTo(0)"
+        ></app-generic-button>
+        <app-generic-button
+          type="advance"
+          icon="pi pi-arrow-right"
+          [disabled]="isNextDisabled"
+          (pressed)="nextStep()"
+        ></app-generic-button>
+      </div>
+    </div>
+  }
+
+  <!-- Step 3: Contactos -->
+  @if (activeStep === 2) {
+    <div class="step-content">
+      <div class="form-section">
+        <div class="section-header">
+          <h3 class="section-title">Agregar contacto</h3>
+          <app-generic-button
+            type="create"
+            (pressed)="addContact()"
+          ></app-generic-button>
+        </div>
+        <app-generic-form #contactForm
+                          [title]="''"
+                          [fields]="contactItemFields"
+                          [showSubmit]="false"
+                          [showCancel]="false"
+        ></app-generic-form>
+      </div>
+
+      @if (contactsList.length) {
+        <div class="data-table contact-table">
+          <div class="table-head">
+            <div>Tipo</div>
+            <div>Contacto</div>
+            <div class="actions-col">Acciones</div>
+          </div>
+          <div class="table-body">
+            @for (c of contactsList; track $index) {
+              <div class="table-row">
+                <div>{{ getContactTypeLabel(c.contactType) }}</div>
+                <div>{{ c.contact }}</div>
+                <div class="row-actions">
+                  <button type="button" class="btn-icon-delete" (click)="removeContactAt($index)" title="Eliminar">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="actions">
+        <app-generic-button
+          type="back"
+          (pressed)="goTo(1)"
+        ></app-generic-button>
+        <app-generic-button
+          type="advance"
+          icon="pi pi-arrow-right"
+          [disabled]="isNextDisabled"
+          (pressed)="nextStep()"
+        ></app-generic-button>
+      </div>
+    </div>
+  }
+
+  <!-- Step 4: Áreas y Secciones (Refactorizado) -->
+  @if (activeStep === 3) {
+    <div class="step-content">
+      <h3 class="step-title">Áreas y secciones</h3>
+
+      <!-- Componente reutilizable de gestión de áreas -->
+      <app-area-section-manager
+        #areaSectionManager
+        (selectionChange)="onAreaSectionChange($event)"
+        [initialWorkspaces]="areaSectionDraft?.workspaces || []"
+        [initialNewAreas]="areaSectionDraft?.newAreas || []"
+      ></app-area-section-manager>
+
+      <div class="actions">
+        <app-generic-button
+          type="back"
+          (pressed)="goTo(2)"
+        ></app-generic-button>
+        <app-generic-button
+          type="advance"
+          text="Siguiente"
+          customTextColor="--on-primary"
+          [disabled]="isNextDisabled"
+          (pressed)="nextStep()"
+        ></app-generic-button>
+      </div>
+    </div>
+  }
+  <!-- Step 5: Confirmar (con resumen mejorado de áreas) -->
+  @if (activeStep === 4) {
+    <div class="step-content">
+      <h3 class="step-title">Confirmar</h3>
+      <p class="step-subtitle">Revisa los datos antes de guardar</p>
+
+      <div class="summary-sections">
+        <!-- Sucursal -->
+        <div class="summary-section">
+          <h4 class="summary-section-title"><i class="pi pi-building"></i> Datos de sucursal</h4>
+          <div class="summary-row"><span class="label">Código</span><span class="value">{{ branchData?.code || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Descripción</span><span class="value">{{ branchData?.description || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Responsable</span><span class="value">{{ getResponsibleName(branchData?.responsibleId) || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Cantidad de boxes</span><span class="value">{{ branchData?.boxCount ?? '-' }}</span></div>
+          <div class="summary-row"><span class="label">Cantidad de cajas</span><span class="value">{{ branchData?.registerCount ?? '-' }}</span></div>
+        </div>
+
+        <!-- Dirección -->
+        <div class="summary-section">
+          <h4 class="summary-section-title"><i class="pi pi-map-marker"></i> Dirección</h4>
+          <div class="summary-row"><span class="label">Calle</span><span class="value">{{ addressData?.streetName || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Número</span><span class="value">{{ addressData?.streetNumber || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Código postal</span><span class="value">{{ addressData?.postalCode || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Provincia</span><span class="value">{{ getOptionLabel(provinces, addressData?.provinceId) || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Ciudad</span><span class="value">{{ getOptionLabel(cities, addressData?.cityId) || '-' }}</span></div>
+          <div class="summary-row"><span class="label">Barrio</span><span class="value">{{ getOptionLabel(neighborhoods, addressData?.neighborhoodId) || '-' }}</span></div>
+        </div>
+
+        <!-- Horarios -->
+        <div class="summary-section">
+          <h4 class="summary-section-title"><i class="pi pi-clock"></i> Horarios</h4>
+          @if (schedulesList.length) {
+            <div class="summary-table">
+              <div class="table-head">
+                <div>Tipo</div>
+                <div>Días</div>
+                <div>Horario</div>
+              </div>
+              <div class="table-body">
+                @for (s of schedulesList; track $index) {
+                  <div class="table-row">
+                    <div>{{ getScheduleTypeLabel(s.scheduleType) }}</div>
+                    <div>{{ getTranslatedDay(s.dayFrom) }} &rarr; {{ getTranslatedDay(s.dayTo) }}</div>
+                    <div>{{ s.scheduleFromTime }} - {{ s.scheduleToTime }}</div>
+                  </div>
+                }
+              </div>
+            </div>
+          } @else {
+            <p class="muted">-</p>
+          }
+        </div>
+
+        <!-- Contactos -->
+        <div class="summary-section">
+          <h4 class="summary-section-title"><i class="pi pi-phone"></i> Contactos</h4>
+          @if (contactsList.length) {
+            <div class="summary-table">
+              <div class="table-head">
+                <div>Tipo</div>
+                <div>Contacto</div>
+              </div>
+              <div class="table-body">
+                @for (c of contactsList; track $index) {
+                  <div class="table-row">
+                    <div>{{ getContactTypeLabel(c.contactType) }}</div>
+                    <div>{{ c.contact }}</div>
+                  </div>
+                }
+              </div>
+            </div>
+          } @else {
+            <p class="muted">-</p>
+          }
+        </div>
+
+        <!-- Áreas y Secciones (Mejorado) -->
+        <div class="summary-section summary-section-full">
+          <h4 class="summary-section-title"><i class="pi pi-sitemap"></i> Áreas y secciones</h4>
+
+          @if (areaSectionData) {
+            <!-- Áreas existentes -->
+            @if (areaSectionData.workspaces.length) {
+              <div class="summary-subsection">
+                <h5 class="subsection-title">Áreas existentes</h5>
+                <div class="areas-summary-grid">
+                  @for (workspace of areaSectionData.workspaces; track workspace.areaId) {
+                    <div class="area-summary-card">
+                      <div class="area-summary-header">
+                        <i class="pi pi-sitemap"></i>
+                        <span>{{ workspace.areaName }}</span>
+                      </div>
+                      <div class="area-summary-sections">
+                        @if (workspace.sectionIds.length) {
+                          @for (sectionId of workspace.sectionIds; track sectionId) {
+                            <span class="section-badge">
+                            {{ getSectionName(workspace.areaId, sectionId) }}
+                          </span>
+                          }
+                        } @else {
+                          <span class="no-secciones">Sin secciones</span>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Nuevas Áreas a Crear -->
+            @if (areaSectionData.newAreas.length) {
+              <div class="summary-subsection">
+                <h5 class="subsection-title">
+                  <i class="pi pi-plus-circle"></i>
+                  Nuevas áreas a crear
+                </h5>
+                <div class="areas-summary-grid">
+                  @for (newArea of areaSectionData.newAreas; track $index) {
+                    <div class="area-summary-card new-area">
+                      <div class="area-summary-header">
+                        <i class="pi pi-tag"></i>
+                        <div>
+                          <span>{{ newArea.name }}</span>
+                          <small>{{ getAreaTypeLabel(newArea.type) }}</small>
+                        </div>
+                      </div>
+                      <div class="area-summary-sections">
+                        @if (newArea.sections.length) {
+                          @for (section of newArea.sections; track $index) {
+                            <span class="section-badge new">{{ section.name }}</span>
+                          }
+                        } @else {
+                          <span class="no-secciones">Sin secciones</span>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          } @else {
+            <p class="muted">No se configuraron áreas</p>
+          }
+        </div>
+      </div>
+
+      <div class="actions">
+        <app-generic-button
+          type="back"
+          (pressed)="goTo(3)"
+        ></app-generic-button>
+        <app-generic-button
+          type="save"
+          (pressed)="onSubmitFinal()"
+        ></app-generic-button>
+      </div>
+    </div>
+  }
+</section>

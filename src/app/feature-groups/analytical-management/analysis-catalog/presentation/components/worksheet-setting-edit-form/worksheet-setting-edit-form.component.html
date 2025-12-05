@@ -1,0 +1,21 @@
+<div class="worksheet-setting-edit-form-container">
+  <!-- Alert Component -->
+  @if (showAlert()) {
+    <app-generic-alert
+      [type]="alertType()"
+      [title]="alertTitle()"
+      [text]="alertText()"
+    />
+  }
+
+  <!-- Form -->
+  <app-generic-form
+    [fields]="formFields()"
+    [initialValue]="initialValue"
+    [saving]="saving()"
+    [maxCols]="1"
+    [showHeader]="false"
+    (submitForm)="onSubmit($event)"
+    (cancelForm)="onCancel()"
+  />
+</div>

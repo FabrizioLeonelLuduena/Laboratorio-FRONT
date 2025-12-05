@@ -1,0 +1,109 @@
+@if (showAlert) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText">
+  </app-generic-alert>
+}
+
+<div class="stepper-layout">
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="stepper-content">
+    <p-stepper [value]="currentStep" [linear]="true">
+      <p-step-list>
+        <p-step [value]="1" (click)="currentStep=1">Aseguradora</p-step>
+        <p-step [value]="2" (click)="currentStep=2">Planes y convenios</p-step>
+        <p-step [value]="3" (click)="currentStep=3">Resumen</p-step>
+      </p-step-list>
+    </p-stepper>
+
+    <!-- Panels: siempre montados pero ocultos vía [hidden] para preservar estado -->
+    <div class="stepper-panels">
+      <div class="step-panel" [hidden]="currentStep !== 1">
+        <app-insurer-step
+          (validChange)="stepValidations[0] = $event"
+          (submitForm)="nextStep()"
+          #insurerStep></app-insurer-step>
+
+        <!-- Botones en pantalla -->
+        <div class="step-actions">
+          <div class="step-actions-left">
+            <app-generic-button
+              text="Cancelar"
+              type="cancel"
+              (pressed)="onCancel()">
+            </app-generic-button>
+          </div>
+          <div class="step-actions-right">
+            <app-generic-button
+              text="Siguiente"
+              type="advance"
+              [disabled]="!stepValidations[0]"
+              (pressed)="nextStep()">
+            </app-generic-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-panel" [hidden]="currentStep !== 2">
+        <app-plans-step (validChange)="stepValidations[1] = $event" #plansStep></app-plans-step>
+
+        <!-- Botones en pantalla -->
+        <div class="step-actions">
+          <div class="step-actions-left">
+            <app-generic-button
+              text="Anterior"
+              type="back"
+              (pressed)="previousStep()">
+            </app-generic-button>
+          </div>
+          <div class="step-actions-right">
+            <app-generic-button
+              text="Siguiente"
+              type="advance"
+              [disabled]="!stepValidations[1]"
+              (pressed)="nextStep()">
+            </app-generic-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-panel" [hidden]="currentStep !== 3">
+        @if (currentStep === 3 && insurerData && plansData) {
+          <app-summary-step [insurerData]="insurerData.insurer" [contactsData]="insurerData.contacts" [plansData]="plansData" #summaryStep></app-summary-step>
+
+        <!-- Botones en pantalla -->
+        <div class="step-actions">
+          <div class="step-actions-left">
+            <app-generic-button
+              text="Anterior"
+              type="back"
+              (pressed)="previousStep()">
+            </app-generic-button>
+          </div>
+          <div class="step-actions-right">
+            <app-generic-button
+              text="Guardar"
+              type="save"
+              [disabled]="!stepValidations[2]"
+              (pressed)="openConfirmModal()">
+            </app-generic-button>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal genérico de confirmación -->
+  @if (showConfirmModal) {
+    <app-confirmation-modal
+      icon="pi pi-check-circle"
+      title="Confirmar guardado"
+      message="¿Estás seguro de que querés guardar toda la información cargada?"
+      (confirmed)="onSubmit()"
+      (dismissed)="onCancelSave()">
+    </app-confirmation-modal>
+  }
+
+</div>

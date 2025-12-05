@@ -1,0 +1,39 @@
+<div
+  [class.spinner-overlay]="overlay"
+  [class.spinner-inline]="!overlay"
+  role="status"
+  aria-live="polite"
+  aria-busy="true"
+>
+  <div class="spinner-container" [class.with-panel]="overlay">
+    <!-- Using SVG for clean rounded ends like PrimeNG -->
+    <svg class="spinner" viewBox="0 0 50 50">
+      <circle
+        class="spinner-circle"
+        cx="25"
+        cy="25"
+        r="20"
+        fill="none"
+        stroke="url(#spinnerGradient)"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-dasharray="90, 150"
+      />
+      <defs>
+        <linearGradient
+          id="spinnerGradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" style="stop-color: var(--brand-primary)" />
+          <stop offset="100%" style="stop-color: var(--brand-secondary)" />
+        </linearGradient>
+      </defs>
+    </svg>
+    @if (label) {
+    <span class="spinner-label">{{ label }}</span>
+    }
+  </div>
+</div>

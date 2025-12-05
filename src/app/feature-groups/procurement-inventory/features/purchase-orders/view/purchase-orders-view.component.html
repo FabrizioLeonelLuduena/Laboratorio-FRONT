@@ -1,0 +1,123 @@
+<!-- Alerta -->
+<app-generic-alert
+  *ngIf="showAlert"
+  [message]="alertMessage"
+  [type]="alertType">
+</app-generic-alert>
+
+<!-- Formulario genérico (usa el mismo componente que suppliers) -->
+<div *ngIf="!loading && purchaseOrderData" class="purchase-order-view-form">
+  <div [class.edit-mode]="isEditMode">
+    <app-generic-form
+      [fields]="formFields"
+      [title]="''"
+      [showCard]="false"
+      [showHeader]="false"
+      [initialValue]="purchaseOrderData"
+      [size]="'full'"
+      [saving]="saving"
+      [showSubmit]="isEditMode"
+      [showCancel]="isEditMode"
+      [submitLabel]="'Guardar cambios'"
+      [submitType]="isEditMode ? 'save' : 'accept'"
+      (submitForm)="onFormSubmit($event)"
+      (cancelForm)="onFormCancel()">
+    </app-generic-form>
+  </div>
+
+
+  <!-- Panel de Detalles de la Orden (expandible) -->
+  <div class="mt-6">
+    <p-panel
+      header=" "
+      [toggleable]="true"
+      [collapsed]="!showDetailsPanel"
+      [transitionOptions]="'400ms'">
+
+      <!-- Tabla de detalles -->
+      <p-table
+        [value]="purchaseOrderDetails"
+        [tableStyle]="{ 'min-width': '100%' }"
+        styleClass="p-datatable-sm p-datatable-striped"
+        [paginator]="purchaseOrderDetails.length > 10"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} líneas">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Suministro</th>
+            <th>Unidad de medida</th>
+            <th>Empaque</th>
+            <th class="text-right" pSortableColumn="quantity">
+              Cantidad
+              <p-sortIcon field="quantity"></p-sortIcon>
+            </th>
+            <th class="text-right" pSortableColumn="unit_price">
+              Precio unitario
+              <p-sortIcon field="unit_price"></p-sortIcon>
+            </th>
+            <th class="text-right" pSortableColumn="subtotal">
+              Subtotal
+              <p-sortIcon field="subtotal"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-detail>
+          <tr>
+            <td>
+              <div class="font-medium">{{ detail.supply_name || detail.supply?.name || 'N/D' }}</div>
+            </td>
+            <td>{{ detail.uom_name || detail.unitOfMeasure?.name || detail.unitOfMeasure?.abbreviation || '-' }}</td>
+            <td>{{ detail.packaging_description || detail.packaging?.description || (detail.packaging?.unitsPerPackage ? (detail.unitOfMeasure?.abbreviation || 'Unidad') + ' X ' + detail.packaging.unitsPerPackage : '-') }}</td>
+            <td class="!text-right font-medium">{{ detail.quantity | number:'1.0-2' }}</td>
+            <td class="!text-right">{{ detail.unit_price | currency:'ARS':'symbol-narrow':'1.2-2':'es-AR' }}</td>
+            <td class="text-right font-medium" style="color: #000;">
+              {{ (detail.subtotal || (detail.quantity * detail.unit_price)) | currency:'ARS':'symbol-narrow':'1.2-2':'es-AR' }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center p-4">
+              <div class="text-muted">
+                <i class="pi pi-inbox mr-2" style="font-size: 2rem"></i>
+                <p class="mt-2">No hay líneas de detalle para esta orden de compra.</p>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+          <tr *ngIf="purchaseOrderDetails.length > 0">
+            <td colspan="5" class="text-right font-bold py-3 purchase-order-total-label">Total de la orden:</td>
+            <td class="text-right font-bold py-3" style="color: #00bbb0;">
+              {{ orderTotal | currency:'ARS':'symbol-narrow':'1.2-2':'es-AR' }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </p-panel>
+  </div>
+
+  <!-- Botón de volver -->
+  <div class="mt-6 flex justify-start">
+    <app-generic-button
+      type="back"
+      icon="pi pi-arrow-left"
+      text=""
+      (pressed)="onBack()">
+    </app-generic-button>
+  </div>
+</div>
+
+<!-- Mensaje de carga -->
+<div *ngIf="loading" class="flex items-center justify-center py-8">
+  <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+  <p class="text-gray-500 ml-3">Cargando datos de la orden de compra...</p>
+</div>
+

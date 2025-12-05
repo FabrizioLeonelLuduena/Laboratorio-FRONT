@@ -1,0 +1,34 @@
+
+  <!-- ================== TABLA DE PROTOCOLOS =================== -->
+  <p-card>
+    <div class="protocols-table">
+      <app-generic-table
+        [data]="protocolRows"
+        [columns]="columns"
+        [loading]="tableLoading"
+        [columnTemplates]="columnTemplates"
+        [filters]="filters"
+        [rows]="size"
+        [rowsOptions]="[10, 25, 50]"
+        [lazy]="true"
+        [totalRecords]="totalRecords"
+        [showCreateButton]="false"
+        [showDownloadMenu]="false"
+        [showFilters]="true"
+        [showActions]="true"
+        [getActions]="getActions"
+        (pageChange)="onPageChange($event)"
+        (sortChange)="onSortChange($event)"
+        (globalFilterChange)="onGlobalFilterChange($event)"
+        (filterChange)="onFilterChange($event)">
+      </app-generic-table>
+    </div>
+  </p-card>
+
+<!-- Status template for the protocol table -->
+<ng-template #statusTpl let-row>
+  <app-generic-badge
+    [status]="mapStatusToBadge(row.status)"
+    [text]="row.status | translateStatus">
+  </app-generic-badge>
+</ng-template>

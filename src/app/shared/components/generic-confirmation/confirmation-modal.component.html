@@ -1,0 +1,52 @@
+<div class="overlay">
+  <div class="modal">
+    <button class="modal__close" (click)="onClose()">&times;</button>
+
+    <div class="modal__icon" *ngIf="icon">
+      <i [class]="icon"></i>
+    </div>
+
+    <h3 class="heading">{{ title }}</h3>
+    <p class="text-14">{{ message }}</p>
+
+    <!-- Projected content (e.g., textarea for deactivation reason) - Only shown if showContent is true -->
+    <div class="modal__content" *ngIf="showContent">
+      <ng-content></ng-content>
+    </div>
+    @if (inputField) {
+      <div class="modal__input-container">
+        <label class="modal__input-label">{{ inputField.label }}</label>
+        @if (inputField.type === 'textarea') {
+          <textarea
+            class="modal__input modal__textarea"
+            [(ngModel)]="inputValue"
+            [placeholder]="inputField.placeholder"
+            rows="4"
+          ></textarea>
+        } @else {
+          <input
+            type="text"
+            class="modal__input"
+            [(ngModel)]="inputValue"
+            [placeholder]="inputField.placeholder"
+          />
+        }
+      </div>
+    }
+
+    <div class="modal-actions">
+      <app-generic-button
+        type="cancel"
+        text="Cancelar"
+        (pressed)="onClose()">
+      </app-generic-button>
+
+      <app-generic-button
+        type="accept"
+        text="Aceptar"
+        [disabled]="isAcceptDisabled()"
+        (pressed)="onAccept()">
+      </app-generic-button>
+    </div>
+  </div>
+</div>

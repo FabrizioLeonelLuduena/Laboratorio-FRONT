@@ -1,0 +1,207 @@
+/* Base typography for the component */
+:host {
+  font-family: var(--font-body, system-ui, sans-serif);
+  color: var(--on-surface, #111827);
+}
+
+/* Header with surface-alt and accessible border */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background: var(--surface-alt, #f3f4f6);
+  color: var(--on-surface, #111827);
+  border-color: var(--border-color, #d5e2e4);
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Body cells and soft borders */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--border-color, #d5e2e4);
+  color: var(--on-surface, #111827);
+  text-align: left;
+}
+
+/* Subtle zebra rows */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) > td {
+  background: var(--card-subtle, #fbfcfe);
+}
+
+/* Accessible hover */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover > td {
+  background: color-mix(in srgb, var(--card-subtle, #fbfcfe) 70%, #fff 30%);
+}
+
+/* Keep table header sticky when scrollable */
+:host ::ng-deep .p-datatable-scrollable .p-datatable-thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* First column sticky when config.stickyFirstColumn is enabled */
+:host ::ng-deep .adv-table-sticky-first .p-datatable-thead > tr > th:first-child,
+:host ::ng-deep .adv-table-sticky-first .p-datatable-tbody > tr > td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--card, #fff);
+}
+
+/* Empty state visual */
+.empty-state {
+  text-align: center;
+  padding: 24px;
+  color: var(--on-surface-muted, #6b7280);
+}
+
+.empty-state .pi {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-title {
+  margin: 0;
+  color: var(--on-surface);
+}
+
+.flex-spacer {
+  flex: 1;
+}
+
+@media (width <= 768px) {
+  .toolbar {
+    gap: 0.5rem;
+  }
+}
+
+/* Toolbar left (input, limpiar, filtros) */
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Filter button wrapper with indicator */
+.filter-button-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.filter-button-wrapper .indicator-badge {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  min-width: 10px;
+  height: 12px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background: var(--brand-accent, #f97133);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px var(--card, #fff);
+}
+
+.filter-button-wrapper .indicator-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--brand-primary-700, #008f8c);
+  box-shadow: 0 0 0 2px var(--card, #fff);
+}
+
+/* Optional: change icon color when active */
+.filter-button-wrapper.active :where(button, .p-button) i.pi {
+  color: var(--brand-primary-700, #008f8c);
+}
+
+/* Special column widths */
+.adv-table__th--expand {
+  width: 3rem;
+}
+
+.adv-table__th--actions {
+  width: 6.5rem;
+}
+
+.actions-popover-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.action-button {
+  justify-content: flex-start;
+}
+
+/* Contenedor del popover de filtros */
+.filters-popover-content {
+  min-width: 320px;
+  max-width: 480px;
+  padding: 0.75rem 1rem;
+  display: block;
+}
+
+/* Popover de exportación: similar a actions */
+.export-popover-content {
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+}
+
+.export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.empty-filters {
+  color: var(--on-surface-muted, #6b7280);
+  font-size: 0.95rem;
+}
+
+/* Flags de paginación independientes */
+:host ::ng-deep .adv-table--hide-pages .p-paginator .p-paginator-first,
+:host ::ng-deep .adv-table--hide-pages .p-paginator .p-paginator-prev,
+:host ::ng-deep .adv-table--hide-pages .p-paginator .p-paginator-pages,
+:host ::ng-deep .adv-table--hide-pages .p-paginator .p-paginator-next,
+:host ::ng-deep .adv-table--hide-pages .p-paginator .p-paginator-last {
+  display: none ;
+}
+
+:host ::ng-deep .adv-table--hide-rpp .p-paginator .p-paginator-rpp-options {
+  display: none ;
+}
+
+/* Borde y esquinas cuadradas para botones en toolbar, menú de acciones y toggler */
+:host ::ng-deep .toolbar .p-button  {
+  border: 1px solid var(--border-color, #d5e2e4) ;
+  border-radius: 5px ;
+}
+
+/* Refuerzo de z-index para paneles de select (fallback) */
+:host ::ng-deep .p-select-panel {
+  z-index: 12000 ;
+}
+
+.actions-popover-content app-generic-button,
+.export-options app-generic-button {
+  width: 100%;
+}

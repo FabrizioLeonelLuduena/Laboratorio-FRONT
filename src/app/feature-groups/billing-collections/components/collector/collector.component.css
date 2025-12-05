@@ -1,0 +1,864 @@
+
+
+.collector-container {
+  width: 100%;
+  padding: 0;
+}
+
+
+
+.collector-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media (width <= 1400px) {
+  .collector-grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+}
+
+@media (width <= 1200px) {
+  .collector-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .collector-grid .payments-section {
+    grid-column: span 2;
+  }
+}
+
+@media (width <= 992px) {
+  .collector-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collector-grid .payments-section {
+    grid-column: span 1;
+  }
+}
+
+
+
+.items-section ::ng-deep .p-card-header {
+  padding: 0.375rem 0.625rem;
+  background-color: var(--surface-50);
+  border-bottom: 2px solid var(--surface-200);
+}
+
+.items-section ::ng-deep .p-card-body {
+  padding: 0;
+}
+
+.items-section ::ng-deep .p-card-content {
+  padding: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.tittle {
+  margin-right: auto;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.section-header small {
+  font-size: 0.7rem;
+  color: var(--text-color-secondary);
+  font-weight: 600;
+}
+
+.section-header .status-icon {
+  font-size: 1.25rem;
+}
+
+.section-header .status-icon.complete {
+  color: var(--green-500);
+}
+
+.section-header .status-icon.pending {
+  color: var(--orange-500);
+}
+
+
+.selectors-group {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.section-header .iva-selector,
+.section-header .coseguro-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.section-header .iva-selector ::ng-deep .p-dropdown {
+  width: 100px;
+}
+
+.section-header label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  margin: 0;
+}
+
+
+.table-wrapper ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--surface-100);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.375rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--surface-300);
+}
+
+.table-wrapper ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+}
+
+.table-wrapper ::ng-deep .p-datatable .p-datatable-tbody > tr.item-disabled {
+  opacity: 0.4;
+  background-color: var(--surface-50);
+}
+
+.table-wrapper ::ng-deep .p-datatable .p-datatable-tbody > tr.item-disabled td {
+  text-decoration: line-through;
+  color: var(--text-color-secondary);
+}
+
+.table-wrapper ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.375rem;
+  font-size: 0.875rem;
+}
+
+.table-wrapper ::ng-deep .p-datatable .p-datatable-tbody > tr:hover:not(.item-disabled) {
+  background-color: var(--primary-50);
+}
+
+.table-wrapper ::ng-deep .p-datatable .text-center {
+  text-align: center;
+}
+
+.table-wrapper ::ng-deep .p-datatable .text-right {
+  text-align: right;
+}
+
+.table-wrapper ::ng-deep .p-datatable .font-bold {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* Advanced table customization */
+.table-wrapper ::ng-deep app-advanced-table .p-datatable {
+  font-size: 0.875rem;
+}
+
+.table-wrapper ::ng-deep app-generic-table .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--surface-100);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.375rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--surface-300);
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.375rem;
+  font-size: 0.875rem;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: var(--surface-0);
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: var(--surface-50);
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--primary-50) ;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable th:first-child,
+.table-wrapper ::ng-deep app-advanced-table .p-datatable td:first-child {
+  width: 3rem;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .p-datatable th:nth-child(3),
+.table-wrapper ::ng-deep app-advanced-table .p-datatable th:nth-child(4),
+.table-wrapper ::ng-deep app-advanced-table .p-datatable th:nth-child(5),
+.table-wrapper ::ng-deep app-advanced-table .p-datatable td:nth-child(3),
+.table-wrapper ::ng-deep app-advanced-table .p-datatable td:nth-child(4),
+.table-wrapper ::ng-deep app-advanced-table .p-datatable td:nth-child(5) {
+  width: 10rem;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .text-center {
+  text-align: center;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .text-right {
+  text-align: right;
+}
+
+.table-wrapper ::ng-deep app-advanced-table .font-bold {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.table-wrapper .empty-state {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color-secondary);
+}
+
+.table-wrapper .empty-state i {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.table-wrapper .empty-state p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* ========================================
+   PAYMENTS SECTION (Column 3)
+   ======================================== */
+
+.payments-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  height: fit-content;
+}
+
+.add-payment-btn {
+  width: 100%;
+}
+
+.add-payment-btn ::ng-deep .btn {
+  width: 100%;
+  padding: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.payments-card ::ng-deep .p-card-header {
+  padding: 0.375rem 0.625rem;
+  background-color: var(--surface-50);
+  border-bottom: 2px solid var(--surface-200);
+}
+
+.payments-card ::ng-deep .p-card-body {
+  padding: 0;
+}
+
+.payments-card ::ng-deep .p-card-content {
+  padding: 0;
+}
+
+.payments-card .section-header h3 {
+  font-size: 1rem;
+}
+
+/* Advanced table customization for payments */
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable {
+  font-size: 0.875rem;
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--surface-100);
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.375rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--surface-300);
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-thead > tr > th:last-child {
+  width: 3rem;
+  text-align: center;
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.375rem;
+  font-size: 0.875rem;
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: var(--surface-0);
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: var(--surface-50);
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--primary-50) ;
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .text-center {
+  text-align: center;
+}
+
+.payments-card .table-wrapper-payments ::ng-deep app-advanced-table .text-right {
+  text-align: right;
+}
+
+.payment-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--green-100);
+  color: var(--green-800);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.payment-details {
+  margin-top: 0.25rem;
+  color: var(--text-color-secondary);
+  font-size: 0.7rem;
+}
+
+.payment-amount {
+  font-size: 0.875rem;
+  color: var(--green-600);
+  font-weight: 700;
+}
+
+.empty-payments-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0.5rem;
+  background-color: var(--surface-100);
+  border: 2px dashed var(--surface-300);
+  border-radius: 8px;
+  color: var(--text-color-secondary);
+  text-align: center;
+  gap: 0.25rem;
+}
+
+.empty-payments-placeholder i {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.empty-payments-placeholder p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.empty-payments-placeholder small {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.empty-state-small {
+  padding: 1.5rem;
+  color: var(--text-color-secondary);
+}
+
+.empty-state-small i {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.empty-state-small p {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+}
+
+
+.summary-section {
+  border: 2px solid var(--surface-300);
+  transition: all 0.3s ease;
+  max-height: fit-content;
+}
+
+.summary-section.payment-complete {
+  border-color: var(--brand-primary-700);
+  background: linear-gradient(135deg, #e6f7f7 0%, var(--surface-0) 100%);
+  box-shadow: 0 4px 16px rgb(0 143 140 / 15%);
+}
+
+.summary-section ::ng-deep .p-card-header {
+  padding: 0.375rem 0.625rem;
+  background-color: var(--surface-50);
+  border-bottom: 2px solid var(--surface-200);
+}
+
+.summary-section ::ng-deep .p-card-body {
+  padding: 0.5rem;
+}
+
+.summary-section ::ng-deep .p-card-content {
+  padding: 0;
+}
+
+.summary-section .section-header h3 {
+  font-size: 0.875rem;
+}
+
+.summary-section .section-header .status-icon {
+  font-size: 1.25rem;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-row .label {
+  text-align: left;
+}
+
+.total-row .value {
+  margin-left: auto;
+  text-align: right;
+}
+
+
+
+/* ========================================
+   Accordion for Patient/Coverage/Totals
+   ======================================== */
+
+.info-accordion {
+  margin-bottom: 0.25rem;
+}
+
+.info-accordion ::ng-deep .p-accordion-header .p-accordion-header-link {
+  padding: 0.375rem 0.5rem;
+  background-color: var(--surface-50);
+  border: 1px solid var(--surface-200);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.info-accordion ::ng-deep .p-accordion-header .p-accordion-header-link:hover {
+  background-color: var(--primary-50);
+  border-color: var(--primary-200);
+}
+
+.info-accordion ::ng-deep .p-accordion-header .p-accordion-header-link:focus {
+  box-shadow: 0 0 0 0.2rem var(--primary-100);
+}
+
+.info-accordion ::ng-deep .p-accordion-header.p-highlight .p-accordion-header-link {
+  background-color: var(--primary-50);
+  border-color: var(--primary-300);
+}
+
+.info-accordion ::ng-deep .p-accordion-content {
+  padding: 0.5rem;
+  background-color: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.info-accordion ::ng-deep .p-accordion-tab {
+  margin-bottom: 0.25rem;
+}
+
+.info-accordion ::ng-deep .p-accordion-tab:last-child {
+  margin-bottom: 0;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.accordion-header > i {
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.accordion-header .accordion-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+}
+
+.accordion-header .accordion-title .label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  letter-spacing: 0.3px;
+}
+
+.accordion-header .accordion-title .value {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.accordion-header .accordion-title .value.total-value {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.accordion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--surface-100);
+}
+
+.info-detail:last-child {
+  border-bottom: none;
+}
+
+.info-detail .detail-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-color-secondary);
+}
+
+.info-detail .detail-label i {
+  margin-right: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.info-detail .detail-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Highlight coseguro */
+.info-detail.highlight-detail {
+  background-color: var(--yellow-50);
+  border-left: 3px solid var(--yellow-500);
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  margin: 0.25rem -0.75rem;
+  border-radius: 4px;
+  border-bottom: none;
+}
+
+/* Grand total styling */
+.info-detail.grand-total-detail {
+  background-color: var(--primary-50);
+  border-left: 4px solid var(--primary-color);
+  padding: 0.375rem;
+  margin: 0.25rem -0.5rem;
+  border-radius: 4px;
+  border-bottom: none;
+}
+
+.info-detail.grand-total-detail .detail-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.info-detail.grand-total-detail .detail-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Paid amount styling */
+.info-detail.paid-detail .detail-label {
+  color: var(--green-700);
+}
+
+.info-detail.paid-detail .detail-value {
+  color: var(--green-600);
+  font-weight: 700;
+}
+
+/* Remaining amount styling */
+.info-detail.remaining-detail .detail-label {
+  color: var(--orange-700);
+}
+
+.info-detail.remaining-detail .detail-value {
+  color: var(--red-600);
+  font-weight: 700;
+}
+
+.info-detail.remaining-detail.complete .detail-label {
+  color: var(--green-700);
+}
+
+.info-detail.remaining-detail.complete .detail-value {
+  color: var(--green-600);
+}
+
+/* ========================================
+   Validation Button & Status
+   ======================================== */
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.validation-btn {
+  flex: 1;
+}
+
+.validation-btn ::ng-deep .btn {
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.validation-btn ::ng-deep .btn:not(:disabled)[style*="--brand-primary-700"] {
+  animation: pulse-success 2s infinite;
+}
+
+.validation-btn ::ng-deep .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes pulse-success {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgb(34 197 94 / 40%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgb(34 197 94 / 0%);
+  }
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-message.warning {
+  background-color: var(--orange-50);
+  color: var(--orange-700);
+  border: 1px solid var(--orange-200);
+}
+
+.status-message.warning i {
+  color: var(--orange-600);
+}
+
+.status-message.success {
+  background-color: var(--green-50);
+  color: var(--green-700);
+  border: 1px solid var(--green-200);
+}
+
+.status-message.success i {
+  color: var(--green-600);
+}
+
+.status-message i {
+  font-size: 1rem;
+}
+
+/* ========================================
+   Payment Modal
+   ======================================== */
+
+.payment-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.payment-modal-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.payment-modal-form .form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+
+.payment-modal-form .form-input {
+  width: 100%;
+}
+
+.payment-modal-form .field-help {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary);
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* ========================================
+   PrimeNG Overrides
+   ======================================== */
+
+::ng-deep .p-card {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .p-divider {
+  margin: 0.375rem 0;
+}
+
+::ng-deep .p-divider.p-divider-horizontal::before {
+  border-top-color: var(--surface-300);
+}
+
+::ng-deep .p-checkbox .p-checkbox-box {
+  border: 2px solid var(--surface-400);
+}
+
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+::ng-deep .p-inputnumber-input {
+  text-align: right;
+}
+
+::ng-deep .p-tooltip {
+  font-size: 0.75rem;
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+  padding: 1.25rem;
+  background-color: var(--surface-50);
+  border-bottom: 2px solid var(--surface-200);
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  padding: 1.5rem 1.25rem;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1rem 1.25rem;
+  background-color: var(--surface-50);
+  border-top: 1px solid var(--surface-200);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+
+@media (width <= 1200px) {
+  .collector-grid {
+    gap: 1rem;
+  }
+
+  .left-section {
+    gap: 1rem;
+  }
+}
+
+@media (width <= 992px) {
+  .summary-section ::ng-deep .p-card-body {
+    padding: 1rem;
+  }
+}
+
+@media (width <= 768px) {
+  .collector-container {
+    padding: 0.5rem;
+  }
+
+  .items-section ::ng-deep .p-card-body,
+  .payments-card ::ng-deep .p-card-body,
+  .summary-section ::ng-deep .p-card-body {
+    padding: 0.875rem;
+  }
+
+  .table-wrapper ::ng-deep .p-datatable {
+    font-size: 0.8125rem;
+  }
+
+  .table-wrapper ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    padding: 0.625rem 0.375rem;
+  }
+
+  .table-wrapper ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.625rem 0.375rem;
+  }
+}
+
+/* ========================================
+   LOADING SPINNER
+   ======================================== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  min-height: 400px;
+}
+
+.loading-container .loading-text {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+  font-weight: 500;
+}

@@ -1,0 +1,51 @@
+{
+  "data": [
+    {
+      "label": "Guantes de Nitrilo - Caja x100",
+      "value": 234567.80
+    },
+    {
+      "label": "Jeringas Descartables 10ml",
+      "value": 198765.40
+    },
+    {
+      "label": "Gasas Estériles 10x10cm",
+      "value": 156789.20
+    },
+    {
+      "label": "Solución Salina 0.9% 500ml",
+      "value": 145678.90
+    },
+    {
+      "label": "Alcohol en Gel 500ml",
+      "value": 123456.70
+    },
+    {
+      "label": "Catéter Intravenoso Nº 22",
+      "value": 109876.50
+    },
+    {
+      "label": "Barbijos Quirúrgicos Triple Capa",
+      "value": 98765.40
+    },
+    {
+      "label": "Tubos de Ensayo con EDTA",
+      "value": 87654.30
+    },
+    {
+      "label": "Apósitos Adhesivos Estériles",
+      "value": 76543.20
+    },
+    {
+      "label": "Vendas Elásticas 10cm",
+      "value": 65432.10
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

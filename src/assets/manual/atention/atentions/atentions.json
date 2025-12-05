@@ -1,0 +1,213 @@
+{
+  "id": "gestion-atenciones",
+  "moduleId": "atention",
+  "title": "Gestión de Atenciones (Turnos)",
+  "intro": "El módulo de Gestión de Atenciones es el punto de entrada principal para el flujo de trabajo del laboratorio. Aquí se realiza la recepción del paciente, la carga de la orden médica, la selección de análisis y la facturación, asegurando la integridad de los datos antes de pasar al área técnica.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrativo / Recepcionista",
+      "Bioquímico"
+    ]
+  },
+  "sections": [
+    {
+
+      "id": "interfaz-principal",
+      "title": "Pantalla Principal",
+      "open": true,
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrativo - Recepcionista"
+        },
+        {
+          "type": "divider"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra la Cola de Espera con los turnos activos en tiempo real, permitiendo gestionar tanto pacientes agendados como urgencias."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/atentions/atentionts-table.jpg",
+          "alt": "Interfaz principal de cola de espera"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite filtrar los turnos en espera ingresando el <strong>documento</strong> del paciente."
+            ],
+            [
+              "Descargar atenciones",
+              "<i class='pi pi-download'></i>",
+              "Abre la ventana para iniciar el proceso de <strong>carga de un paciente</strong> (Atención en Blanco)."
+            ],
+              [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>En esta pestaña se ven unicamente los turnos existentes para poder atenderlos debe apretar en el icono de <strong><i class='pi pi-eye-v'></i></strong> y sera redirigido a la pestaña de cola de espera."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-atenciones",
+      "title": "Contenido de la tabla de Turnos",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Las columnas de la cola de espera presentan la siguiente información:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nro. Atencion",
+              "Identificador único del turno generado.",
+              "ST-002"
+            ],
+            [
+              "Documento",
+              "Número de <strong>documento</strong> del paciente en espera.",
+              "12345678"
+            ],
+            [
+              "Estado",
+              "Estado en el que se encuentra el turno",
+              "Finalizada"
+            ],
+            [
+              "Tiempo espera",
+              "Tiempo que esta esperando el paciente hasta ser atendido",
+              "1h."
+            ],
+            [
+              "Hora ingreso",
+              "Indica la hora en la que ingreso el paciente",
+              "08:30"
+            ],
+            [
+              "Urgente",
+              "Indica si el turno tiene prioridad sobre otros",
+              "Si"
+            ],
+            [
+              "Ver detalles",
+              "Boton para abrir el panel de detalles de la atencion seleccionada",
+              "<i class='pi pi-eye'></i> ️"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-atencion",
+      "title": "Estados de la Atención",
+      "open": false,
+      "blocks":
+        [
+          {
+            "type": "paragraph",
+            "text": "Durante el proceso de carga, la atención puede presentar diferentes estados de validación:"
+          },
+          {
+            "type": "badge",
+            "text": "Registrando datos generales",
+            "color": "#008C8A"
+          },
+          {
+            "type": "paragraph",
+            "text": "Instancia inicial del asistente. Se está ingresando la identidad del paciente, el médico solicitante y la cobertura."
+          },
+          {
+            "type": "badge",
+            "text": "En extracción",
+            "color": "#008C8A"
+          },
+          {
+            "type": "paragraph",
+            "text": "Se están cargando los análisis solicitados en la orden médica o el paciente se encuentra en proceso de toma de muestra."
+          },
+          {
+            "type": "badge",
+            "text": "En proceso de cobro",
+            "color": "#008C8A"
+          },
+          {
+            "type": "paragraph",
+            "text": "Etapa de gestión de caja. El sistema está calculando coseguros, validando autorizaciones o registrando el pago."
+          },
+          {
+            "type": "badge",
+            "text": "En proceso de facturación",
+            "color": "#008C8A"
+          },
+          {
+            "type": "paragraph",
+            "text": "Los pagos ya fueron registrados y se está pendiente de la emisión del comprobante fiscal (factura) para cerrar la atención."
+          },
+          {
+            "type": "badge",
+            "text": "Finalizada",
+            "color": "#008C8A"
+          },
+          {
+            "type": "paragraph",
+            "text": "El circuito administrativo se completó exitosamente. Los datos y la orden han sido transferidos al área técnica del laboratorio."
+          },
+          {
+            "type": "badge",
+            "text": "Cancelada",
+            "color": "#008C8A"
+          },
+          {
+            "type": "paragraph",
+            "text": "El turno ha sido anulado manualmente por el usuario o el sistema y no continuará en el flujo de trabajo."
+          }
+        ]
+
+    }
+  ],
+  "tags": [
+    "turnos",
+    "atención",
+    "recepción",
+    "pacientes",
+    "asistente"
+  ]
+}

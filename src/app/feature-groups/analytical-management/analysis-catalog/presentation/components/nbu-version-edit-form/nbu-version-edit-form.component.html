@@ -1,0 +1,92 @@
+<app-generic-modal-form
+  [visible]="visible()"
+  [title]="modalTitle()"
+  [width]="'1000px'"
+  [height]="'auto'"
+  (closed)="handleClose()">
+  
+  <div class="version-form-container">
+    <!-- Version Selector (only for new versions) -->
+    @if (!nbuVersion()) {
+      <div class="version-selector">
+        <label for="versionSelect">
+          <i class="pi pi-list"></i>
+          Seleccionar versión base para pre-cargar NBUs
+        </label>
+        <p-select
+          inputId="versionSelect"
+          [options]="availableVersions()"
+          [ngModel]="selectedVersion()"
+          (ngModelChange)="onVersionSelect($event)"
+          optionLabel="versionCode"
+          placeholder="Seleccione una versión..."
+          [showClear]="true"
+          [disabled]="loading()"
+          styleClass="w-full">
+          
+          <ng-template pTemplate="selectedItem" let-version>
+            @if (version) {
+              <div class="version-item">
+                <span class="version-code">{{ version.versionCode }}</span>
+                <span class="version-year">({{ version.publicationYear }})</span>
+              </div>
+            }
+          </ng-template>
+
+          <ng-template pTemplate="item" let-version>
+            <div class="version-item">
+              <span class="version-code">{{ version.versionCode }}</span>
+              <span class="version-year">({{ version.publicationYear }})</span>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+
+      <div class="divider">
+        <span>O crear nueva versión</span>
+      </div>
+    }
+
+    <!-- Form -->
+    <app-generic-form
+      [fields]="formFields"
+      [initialValue]="formData()"
+      [saving]="saving()"
+      (submitForm)="onSubmit($event)"
+      (cancelForm)="handleClose()">
+    </app-generic-form>
+
+    <!-- NBU Association Section (only when editing existing version) -->
+    @if (nbuVersion() || !nbuVersion()) {
+      <p-divider />
+      
+      <div class="nbu-association-section">
+        <h3 class="section-title">
+          <i class="pi pi-link"></i>
+          NBUs asociados a esta versión
+        </h3>
+        
+        <p-message 
+          severity="info" 
+          [text]="baseVersion() ? 'Se preseleccionaron NBUs desde la versión base ' + baseVersion()!.versionCode + '. Ajuste la selección y guarde las asociaciones.' : 'Seleccione los NBUs que desea asociar o desasociar de esta versión.'"
+          styleClass="w-full mb-3">
+        </p-message>
+
+        <app-nbu-version-nbu-selector
+          [versionId]="selectedVersion()!.id!"
+          [preSelectedNbuIds]="preSelectedNbuIds()"
+          (nbusSelected)="onNbusSelected($event)">
+        </app-nbu-version-nbu-selector>
+
+        <div class="association-actions">
+          <app-generic-button
+            type="save"
+            text="Guardar asociaciones"
+            [disabled]="savingAssociations()"
+            (pressed)="onSaveAssociations()">
+          </app-generic-button>
+        </div>
+      </div>
+    }
+  </div>
+</app-generic-modal-form>

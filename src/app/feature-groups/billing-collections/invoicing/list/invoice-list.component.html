@@ -1,0 +1,57 @@
+<section class="invoice-list">
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+
+  @if (alert) {
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  }
+
+  @if (loading()) {
+    <app-spinner
+      [overlay]="true"
+      [label]="'Cargando facturas...'" />
+  }
+
+  <ng-template #amountTemplate let-row>
+    <div style="text-align: right;">
+      <span>{{ row.amount | currency:'ARS':'symbol-narrow' }}</span>
+    </div>
+  </ng-template>
+
+  <ng-template #invoiceNumberTemplate let-row>
+    <div style="text-align: right;">
+      <span>{{ row.invoiceNumber || 'N/A' }}</span>
+    </div>
+  </ng-template>
+
+  <ng-template #invoiceStatusTemplate let-row>
+    @if (row.invoiceStatus === 'Sin facturar') {
+      <app-generic-badge status="inactivo" text="SIN FACTURAR"></app-generic-badge>
+    } @else if (row.invoiceStatus === 'Pendiente') {
+      <app-generic-badge status="pendiente" text="PENDIENTE"></app-generic-badge>
+    } @else if (row.invoiceStatus === 'Facturada') {
+      <app-generic-badge status="completo" text="FACTURADO"></app-generic-badge>
+    }
+  </ng-template>
+
+  <app-generic-table
+    [data]="filteredInvoiceables()"
+    [columns]="columns"
+    [filters]="filters"
+    [lazy]="true"
+    [loading]="loading()"
+    [totalRecords]="totalRecords"
+    [rows]="pageSize"
+    [pageable]="true"
+    [getActions]="getActions"
+    [showCreateButton]="false"
+    [showSearch]="true"
+    [showFilters]="true"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+    (filterChange)="onFilterChange($event)"
+    (downloadExcel)="onExport($event, { type: 'excel' })"
+    (downloadPdf)="onExport($event, { type: 'pdf' })"
+    (globalFilterChange)="onGlobalSearchChange($event)"
+  >
+  </app-generic-table>
+</section>

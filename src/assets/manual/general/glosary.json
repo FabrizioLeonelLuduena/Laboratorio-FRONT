@@ -1,0 +1,843 @@
+{
+  "id": "Glosario",
+  "moduleId": "collections",
+  "title": "Glosario",
+  "sections": [
+    {
+      "id": "roles-note"
+    },
+    {
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La siguiente tabla organiza los términos, sus definiciones y el submódulo asociado, utilizados en el manual o sistema, agrupados por sección temática."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Sección",
+            "Término",
+            "Definición",
+            "Submódulo"
+          ],
+          "rows": [
+            [
+              "Glosario General",
+              "Cobertura",
+              "<strong>Entidad que financia total o parcialmente</strong> la atención del paciente (obra social, prepaga o particular).",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Código NBU",
+              "<strong>Identificador estandarizado oficial</strong> de prácticas bioquímicas.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Documento",
+              "<strong>Número de identificación del paciente (DNI)</strong>.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Estado (Activo/Inactivo)",
+              "<strong>Condición que indica si un registro está habilitado</strong> para ser utilizado (usuarios, empleados, médicos, aseguradoras, ubicaciones, insumos, etc.).",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Estado Urgente",
+              "<strong>Atributo que indica prioridad</strong> en una atención, extracción o procesamiento.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Exportar",
+              "<strong>Acción para descargar datos</strong> en Excel/PDF.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Firma electrónica / digital",
+              "<strong>Autorización legal del profesional</strong> sobre resultados o documentos.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Indicaciones",
+              "<strong>Notas o instrucciones relevantes</strong> según el proceso.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Interpretación estándar",
+              "<strong>Texto predefinido</strong> que acompaña resultados o informes.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "KPIs",
+              "<strong>Indicadores utilizados en dashboards</strong> para medir rendimiento.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Lote",
+              "<strong>Identificador de fabricación</strong> usado para trazabilidad de insumos.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Medios de Pago",
+              "<strong>Formas de pago aceptadas</strong> (efectivo, tarjeta, transferencia, QR).",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Modal",
+              "<strong>Ventana emergente</strong> utilizada para confirmar o ejecutar acciones.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Observaciones",
+              "<strong>Comentarios generales o aclaraciones internas</strong>.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Plan",
+              "<strong>Plan o categoría</strong> dentro de una obra social o prepaga.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Sinónimos del análisis",
+              "<strong>Nombres alternativos</strong> de un mismo análisis.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Subestado",
+              "<strong>Nivel de detalle</strong> dentro del estado general de un proceso.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Trazabilidad",
+              "<strong>Registro histórico de acciones</strong> sobre un elemento.",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Tipo de Comprobante",
+              "<strong>Clasificación legal del documento fiscal</strong> (Factura A/B/C, ticket).",
+              "-"
+            ],
+            [
+              "Glosario General",
+              "Unidad Bioquímica (UB)",
+              "<strong>Valor asignado</strong> según el NBU.",
+              "-"
+            ],
+            [
+              "Facturación y cobros",
+              "Apertura de Caja",
+              "<strong>Registro inicial del día</strong> con operador, monto inicial y sede.",
+              "Apertura de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Caja Abierta",
+              "<strong>Estado que permite registrar movimientos</strong>.",
+              "Apertura de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Caja Cerrada",
+              "<strong>Estado que bloquea movimientos</strong> hasta nueva apertura.",
+              "Apertura de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Cerrar Caja",
+              "<strong>Acción que cierra la jornada</strong> y genera el resumen final.",
+              "Cierre de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Concepto de Depósito / Extracción",
+              "<strong>Motivo de la operación registrada</strong>.",
+              "Panel de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Concepto de Factura",
+              "<strong>Motivo principal</strong> por el cual se emite la factura.",
+              "Facturación"
+            ],
+            [
+              "Facturación y cobros",
+              "Coseguro",
+              "<strong>Monto que paga el paciente</strong> según su plan.",
+              "Facturación"
+            ],
+            [
+              "Facturación y cobros",
+              "Diferencia (Cierre de Caja)",
+              "<strong>Variación entre saldo físico y saldo del sistema</strong>.",
+              "Cierre de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Estado de Facturación",
+              "<strong>Indica en qué etapa se encuentra una factura</strong> dentro del proceso de emisión.",
+              "Facturación"
+            ],
+            [
+              "Facturación y cobros",
+              "Estado de Liquidación",
+              "<strong>Indica el avance del proceso</strong> de liquidación ante la cobertura.",
+              "Liquidaciones"
+            ],
+            [
+              "Facturación y cobros",
+              "Liquidación",
+              "<strong>Documento que agrupa prestaciones</strong> para cobrar a una cobertura.",
+              "Liquidaciones"
+            ],
+            [
+              "Facturación y cobros",
+              "Movimientos de Caja",
+              "<strong>Registro de todas las operaciones económicas</strong> del día.",
+              "Apertura / Panel / Cierre"
+            ],
+            [
+              "Facturación y cobros",
+              "Panel de Caja",
+              "<strong>Pantalla para visualizar y registrar movimientos</strong>.",
+              "Panel de Caja"
+            ],
+            [
+              "Facturación y cobros",
+              "Período de Liquidación",
+              "<strong>Intervalo de fechas</strong> cubierto por la liquidación.",
+              "Liquidaciones"
+            ],
+            [
+              "Facturación y cobros",
+              "Tipo de Liquidación",
+              "<strong>Clasificación que determina cómo se agrupan</strong> y procesan las prestaciones (común, especial).",
+              "Liquidaciones"
+            ],
+            [
+              "Coberturas",
+              "Aseguradora",
+              "<strong>Entidad que cubre prestaciones</strong> de salud.",
+              "Administración"
+            ],
+            [
+              "Coberturas",
+              "Atajos de teclado",
+              "<strong>Combinaciones rápidas</strong> para acciones de la extensión.",
+              "Extensión"
+            ],
+            [
+              "Coberturas",
+              "Backup JSON (Exportar/Importar configuración)",
+              "<strong>Función para guardar o restaurar</strong> la configuración de la extensión.",
+              "Extensión"
+            ],
+            [
+              "Coberturas",
+              "Composición por tipo",
+              "<strong>Distribución de facturación o liquidación</strong> según tipo de cobertura.",
+              "Dashboard / Reportes"
+            ],
+            [
+              "Coberturas",
+              "Copagos",
+              "<strong>Montos adicionales</strong> abonados por el paciente.",
+              "Administración"
+            ],
+            [
+              "Coberturas",
+              "CUIT",
+              "<strong>Identificador fiscal</strong> de aseguradoras.",
+              "Administración"
+            ],
+            [
+              "Coberturas",
+              "Dashboards",
+              "<strong>Panel visual de indicadores y gráficos</strong>.",
+              "Dashboard"
+            ],
+            [
+              "Coberturas",
+              "Débitos",
+              "<strong>Descuentos aplicados</strong> por la cobertura.",
+              "Reportes"
+            ],
+            [
+              "Coberturas",
+              "Destino (Mapeo)",
+              "<strong>Página donde se pegan los datos</strong>.",
+              "Extensión"
+            ],
+            [
+              "Coberturas",
+              "Liquidado",
+              "<strong>Monto efectivamente cobrado</strong> luego del procesamiento.",
+              "Dashboard / Reportes"
+            ],
+            [
+              "Coberturas",
+              "Mapeo",
+              "<strong>Configuración de campos</strong> origen → destino.",
+              "Extensión"
+            ],
+            [
+              "Coberturas",
+              "Origen (Mapeo)",
+              "<strong>Página desde donde se copian los datos</strong>.",
+              "Extensión"
+            ],
+            [
+              "Coberturas",
+              "Payer",
+              "<strong>Nombre común para aseguradoras pagadoras</strong>.",
+              "Dashboard"
+            ],
+            [
+              "Coberturas",
+              "Portapapeles interno",
+              "<strong>Memoria temporal</strong> donde la extensión guarda datos brevemente.",
+              "Extensión"
+            ],
+            [
+              "Coberturas",
+              "URL de autorización",
+              "<strong>Enlace para gestionar autorizaciones online</strong>.",
+              "Administración"
+            ],
+            [
+              "Coberturas",
+              "Variación mensual",
+              "<strong>Cambio porcentual</strong> entre un mes y el siguiente.",
+              "Dashboard / Reportes"
+            ],
+            [
+              "Gestión de atenciones",
+              "Análisis Solicitados",
+              "<strong>Prácticas cargadas</strong> para la atención.",
+              "Atenciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Autorizado",
+              "<strong>Práctica aprobada</strong> por la cobertura.",
+              "Atenciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Box",
+              "<strong>Área física de extracción</strong>.",
+              "Extracciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Cant. análisis",
+              "<strong>Número total de prácticas solicitadas</strong>.",
+              "Extracciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Cant. tubos",
+              "<strong>Cantidad de tubos necesarios</strong> según análisis.",
+              "Extracciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Código de Atención",
+              "<strong>Identificador de la atención</strong>.",
+              "Atenciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Facturación desde atención",
+              "<strong>Emisión del comprobante fiscal</strong> desde la atención.",
+              "Atenciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Liberar Box",
+              "<strong>Desasignar box sin finalizar</strong>.",
+              "Extracciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Médico solicitante",
+              "<strong>Profesional que solicita el estudio</strong>.",
+              "Atenciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Nº de Extracción",
+              "<strong>Código único asignado</strong> a la extracción.",
+              "Extracciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Protocolo",
+              "<strong>Identificador vinculado</strong> a la extracción.",
+              "Extracciones"
+            ],
+            [
+              "Gestión de atenciones",
+              "Ticket LCC",
+              "<strong>Comprobante entregado al paciente</strong>.",
+              "Atenciones"
+            ],
+            [
+              "Turnos",
+              "Cola de Atención",
+              "<strong>Orden de atención</strong> por llegada o turno asignado.",
+              "Tótem"
+            ],
+            [
+              "Turnos",
+              "Configuración de turno",
+              "<strong>Reglas de horarios, capacidad y vigencia</strong>.",
+              "Configuración"
+            ],
+            [
+              "Turnos",
+              "DNI Validado",
+              "<strong>Verificación de identidad</strong> del paciente.",
+              "Tótem"
+            ],
+            [
+              "Turnos",
+              "Período de validez",
+              "<strong>Vigencia de una configuración</strong> de turnos.",
+              "Configuración"
+            ],
+            [
+              "Turnos",
+              "Registro en cola",
+              "<strong>Inscripción del paciente</strong> con o sin turno.",
+              "Tótem"
+            ],
+            [
+              "Turnos",
+              "Selección de sucursal",
+              "<strong>Define en qué sede se configurarán turnos</strong>.",
+              "Configuración"
+            ],
+            [
+              "Turnos",
+              "Turno recurrente",
+              "<strong>Configuración semanal</strong> que se repite automáticamente.",
+              "Configuración"
+            ],
+            [
+              "Turnos",
+              "Validación de turno",
+              "<strong>Verifica que el turno exista</strong> y esté vigente.",
+              "Tótem"
+            ],
+            [
+              "Adquisición e inventario",
+              "Categoría del insumo",
+              "<strong>Tipo o clase del insumo</strong>.",
+              "Insumos"
+            ],
+            [
+              "Adquisición e inventario",
+              "Empaque",
+              "<strong>Tipo de presentación</strong> del insumo.",
+              "Insumos / Proveedores"
+            ],
+            [
+              "Adquisición e inventario",
+              "Estado del registro",
+              "<strong>Indica si un insumo/proveedor/ubicación está habilitado</strong> para operar dentro del sistema.",
+              "Insumos / Proveedores / Ubicaciones"
+            ],
+            [
+              "Adquisición e inventario",
+              "Tipo de ubicación",
+              "<strong>Clasificación de la ubicación</strong> (depósito, sector, refrigeración).",
+              "Ubicaciones"
+            ],
+            [
+              "Adquisición e inventario",
+              "Umbrales",
+              "<strong>Límites mínimos/máximos</strong> definidos para el stock.",
+              "Insumos"
+            ],
+            [
+              "Movimiento de stock",
+              "Ajuste de inventario",
+              "<strong>Corrección manual de stock</strong>.",
+              "Ajuste"
+            ],
+            [
+              "Movimiento de stock",
+              "Cantidad transferida/egresada",
+              "<strong>Unidades involucradas</strong> en el movimiento.",
+              "Movimientos"
+            ],
+            [
+              "Movimiento de stock",
+              "Devolución parcial",
+              "<strong>Parte del remito devuelta</strong>.",
+              "Remitos"
+            ],
+            [
+              "Movimiento de stock",
+              "Egreso de stock",
+              "<strong>Salida de productos</strong>.",
+              "Egreso"
+            ],
+            [
+              "Movimiento de stock",
+              "Estado del remito",
+              "<strong>Indica la situación operativa del remito</strong> (pendiente, recibido, devuelto…).",
+              "Remitos"
+            ],
+            [
+              "Movimiento de stock",
+              "Historial de movimientos",
+              "<strong>Registro cronológico de operaciones</strong>.",
+              "Movimiento"
+            ],
+            [
+              "Movimiento de stock",
+              "Motivo de movimiento",
+              "<strong>Razón que justifica</strong> el movimiento.",
+              "Movimiento"
+            ],
+            [
+              "Movimiento de stock",
+              "Movimiento de stock",
+              "<strong>Ingreso/egreso/transferencia/ajuste</strong>.",
+              "Movimiento"
+            ],
+            [
+              "Movimiento de stock",
+              "OC Confeccionada",
+              "<strong>Orden completa pero no enviada</strong>.",
+              "Compras"
+            ],
+            [
+              "Movimiento de stock",
+              "Orden de compra",
+              "<strong>Solicitud formal de insumos</strong>.",
+              "Compras"
+            ],
+            [
+              "Movimiento de stock",
+              "Producto solicitado",
+              "<strong>Artículo pedido al proveedor</strong>.",
+              "Compras / Remitos"
+            ],
+            [
+              "Movimiento de stock",
+              "Remito interno/externo",
+              "<strong>Documento de transferencia o recepción</strong>.",
+              "Remitos"
+            ],
+            [
+              "Movimiento de stock",
+              "Subtotal",
+              "<strong>Precio unitario × cantidad</strong>.",
+              "Compras"
+            ],
+            [
+              "Movimiento de stock",
+              "Tasa de devoluciones",
+              "<strong>Porcentaje de devoluciones</strong> sobre el total.",
+              "Reportes"
+            ],
+            [
+              "Movimiento de stock",
+              "Tiempo de entrega",
+              "<strong>Días entre emisión de OC y recepción</strong>.",
+              "Reportes"
+            ],
+            [
+              "Movimiento de stock",
+              "Transferencia de stock",
+              "<strong>Movimiento entre ubicaciones</strong>.",
+              "Transferencia"
+            ],
+            [
+              "Movimiento de stock",
+              "Ubicación de origen/destino",
+              "<strong>Lugar desde/hacia donde se mueve el producto</strong>.",
+              "Movimientos"
+            ],
+            [
+              "Gestión interna",
+              "Acto bioquímico",
+              "<strong>Conjunto de acciones</strong> de un análisis.",
+              "Análisis"
+            ],
+            [
+              "Gestión interna",
+              "Área / Sección",
+              "<strong>Sector del laboratorio</strong>.",
+              "Sucursales"
+            ],
+            [
+              "Gestión interna",
+              "Baja lógica",
+              "<strong>Desactivación sin eliminar</strong> el registro.",
+              "Empleados / Médicos"
+            ],
+            [
+              "Gestión interna",
+              "Código corto",
+              "<strong>Abreviatura interna</strong> del análisis.",
+              "Análisis"
+            ],
+            [
+              "Gestión interna",
+              "Datos filiatorios",
+              "<strong>Datos personales básicos</strong>.",
+              "Empleados"
+            ],
+            [
+              "Gestión interna",
+              "Matrícula profesional",
+              "<strong>Número oficial del profesional</strong>.",
+              "Médicos"
+            ],
+            [
+              "Gestión interna",
+              "Responsable de sucursal",
+              "<strong>Encargado operativo de la sede</strong>.",
+              "Sucursales"
+            ],
+            [
+              "Gestión interna",
+              "Tipo de matrícula",
+              "<strong>Clasificación del registro profesional</strong>.",
+              "Médicos"
+            ],
+            [
+              "Gestión interna",
+              "Versión del nomenclador",
+              "<strong>Edición vigente del NBU</strong>.",
+              "NBU / Análisis"
+            ],
+            [
+              "Gestión de pacientes",
+              "Alta de paciente",
+              "<strong>Registro completo inicial</strong> del paciente.",
+              "Alta"
+            ],
+            [
+              "Gestión de pacientes",
+              "Cobertura principal",
+              "<strong>Se usa por defecto</strong> en atenciones y facturación.",
+              "Alta / Edición"
+            ],
+            [
+              "Gestión de pacientes",
+              "Coberturas secundarias",
+              "<strong>Coberturas adicionales</strong> del paciente.",
+              "Edición"
+            ],
+            [
+              "Gestión de pacientes",
+              "Completo (estado)",
+              "<strong>Perfil con todos los datos obligatorios cargados</strong>.",
+              "Estados"
+            ],
+            [
+              "Gestión de pacientes",
+              "Estado del paciente",
+              "<strong>Indica el nivel de completitud del perfil</strong> (mínimo / completo / verificado).",
+              "Todos"
+            ],
+            [
+              "Gestión de pacientes",
+              "Historial de atenciones",
+              "<strong>Listado de atenciones</strong> del paciente.",
+              "Ver"
+            ],
+            [
+              "Gestión de pacientes",
+              "Número de afiliado",
+              "<strong>Identificador dentro de la cobertura</strong>.",
+              "Alta / Edición"
+            ],
+            [
+              "Gestión de pacientes",
+              "Particular",
+              "<strong>Paciente sin cobertura</strong>.",
+              "Alta"
+            ],
+            [
+              "Gestión de pacientes",
+              "Restablecer contraseña",
+              "<strong>Envío de enlace de recuperación</strong>.",
+              "Listado"
+            ],
+            [
+              "Gestión de pacientes",
+              "Subestado del estudio",
+              "<strong>Estado interno de cada análisis</strong> de un protocolo.",
+              "Ver"
+            ],
+            [
+              "Gestión de pacientes",
+              "Tutor",
+              "<strong>Responsable legal</strong> del paciente.",
+              "Alta"
+            ],
+            [
+              "Gestión de analítica",
+              "Acondicionamiento de muestra",
+              "<strong>Preparación previa</strong> de la muestra.",
+              "Pre"
+            ],
+            [
+              "Gestión de analítica",
+              "Configuración de rótulos",
+              "<strong>Cantidad de etiquetas impresas</strong> por análisis.",
+              "Reimpresión"
+            ],
+            [
+              "Gestión de analítica",
+              "Contaminación de muestra",
+              "<strong>Muestra alterada o no apta</strong>.",
+              "Pre"
+            ],
+            [
+              "Gestión de analítica",
+              "Derivación",
+              "<strong>Envío de la muestra</strong> a otra sede/laboratorio.",
+              "Pre"
+            ],
+            [
+              "Gestión de analítica",
+              "Determinación",
+              "<strong>Prueba individual</strong> dentro de un análisis.",
+              "Post"
+            ],
+            [
+              "Gestión de analítica",
+              "Grupo de análisis",
+              "<strong>Conjunto de determinaciones</strong>.",
+              "Post"
+            ],
+            [
+              "Gestión de analítica",
+              "Hemólisis",
+              "<strong>Ruptura de glóbulos rojos</strong> que invalida la muestra.",
+              "Pre"
+            ],
+            [
+              "Gestión de analítica",
+              "Laboratorio externo",
+              "<strong>Lugar donde se analiza una muestra derivada</strong>.",
+              "Pre"
+            ],
+            [
+              "Gestión de analítica",
+              "Planilla de trabajo",
+              "<strong>Documento para carga manual</strong> de resultados.",
+              "Pre / Post"
+            ],
+            [
+              "Gestión de analítica",
+              "Muestra perdida/rechazada",
+              "<strong>Muestra extraviada o no apta</strong>.",
+              "Pre"
+            ],
+            [
+              "Gestión de analítica",
+              "Rótulo / etiqueta",
+              "<strong>Identificación adhesiva</strong> de la muestra.",
+              "Reimpresión"
+            ],
+            [
+              "Gestión de analítica",
+              "Transición de estados",
+              "<strong>Cambio entre etapas de proceso</strong>.",
+              "Pre"
+            ],
+            [
+              "Gestión de usuarios",
+              "Campos protegidos",
+              "<strong>Ocultan información digitada</strong>.",
+              "Login"
+            ],
+            [
+              "Gestión de usuarios",
+              "Enlace de restablecimiento",
+              "<strong>URL temporal</strong> para cambio de clave.",
+              "Recuperación"
+            ],
+            [
+              "Gestión de usuarios",
+              "Expiración del enlace",
+              "<strong>Tiempo máximo</strong> para usar el enlace.",
+              "Recuperación"
+            ],
+            [
+              "Gestión de usuarios",
+              "Recuperación de contraseña",
+              "<strong>Proceso de restablecer la clave</strong>.",
+              "Recuperación"
+            ],
+            [
+              "Gestión de usuarios",
+              "Restablecimiento seguro",
+              "<strong>Requiere repetir nueva clave</strong> para validación.",
+              "Recuperación"
+            ],
+            [
+              "Gestión de usuarios",
+              "Roles del sistema",
+              "<strong>Permisos del usuario</strong>.",
+              "Gestión"
+            ],
+            [
+              "Gestión de usuarios",
+              "Sucursal asignada",
+              "<strong>Sede en la que opera el usuario</strong>.",
+              "Gestión"
+            ],
+            [
+              "Gestión de usuarios",
+              "Validación de identidad",
+              "<strong>Comprobación de credenciales</strong>.",
+              "Login"
+            ],
+            [
+              "Gestión de usuarios",
+              "Verificación de email",
+              "<strong>Confirma que el correo coincide</strong> con el del usuario.",
+              "Recuperación"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "facturación",
+    "cobros",
+    "caja",
+    "comprobantes",
+    "administración"
+  ]
+}

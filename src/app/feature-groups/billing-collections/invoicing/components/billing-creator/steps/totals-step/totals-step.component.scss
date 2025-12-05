@@ -1,0 +1,228 @@
+.totals-step {
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// Hide titles since they're shown in parent
+.step-title,
+.step-description {
+  display: none;
+}
+
+.totals-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 100%;
+
+  label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.75rem;
+
+    &.required::after {
+      content: " *";
+      color: var(--red-500);
+    }
+  }
+
+  .p-inputnumber,
+  .p-dropdown {
+    width: 100%;
+
+    input {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+    }
+
+    &.ng-invalid.ng-dirty input {
+      border-color: var(--red-500);
+    }
+
+    &.disabled-field input {
+      background-color: var(--surface-100);
+      color: var(--text-color-secondary);
+      cursor: not-allowed;
+    }
+
+    &.total-field input {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary-color);
+    }
+  }
+
+  input.disabled-field {
+    background-color: var(--surface-100);
+    color: var(--text-color-secondary);
+    cursor: not-allowed;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .field-help {
+    color: var(--text-color-secondary);
+    font-size: 0.65rem;
+    font-style: italic;
+  }
+}
+
+.error-message {
+  color: var(--red-500);
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+  display: block;
+}
+
+.file-attachment-section {
+  background: var(--surface-ground);
+  border: 1px dashed var(--surface-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+
+  .section-title {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      color: var(--primary-color);
+    }
+  }
+
+  .upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+
+    .upload-info {
+      color: var(--text-color-secondary);
+      font-size: 0.85rem;
+    }
+  }
+
+  .attached-files {
+    h5 {
+      margin: 0 0 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .files-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .file-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: white;
+        border: 1px solid var(--surface-border);
+        border-radius: var(--border-radius);
+
+        i.pi-file {
+          color: var(--blue-500);
+          font-size: 1.25rem;
+        }
+
+        .file-name {
+          flex: 1;
+          font-size: 0.9rem;
+          color: var(--text-color);
+        }
+      }
+    }
+  }
+}
+
+.summary-card {
+  background: linear-gradient(
+    135deg,
+    var(--primary-50) 0%,
+    var(--primary-100) 100%
+  );
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+
+  .summary-title {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+  }
+
+  .summary-content {
+    background: white;
+    border-radius: calc(var(--border-radius) - 2px);
+    padding: 1rem;
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--surface-border);
+      font-size: 1rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.total-row {
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--primary-color);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      span:first-child {
+        color: var(--text-color-secondary);
+        font-weight: 500;
+      }
+
+      span:last-child {
+        color: var(--text-color);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (width <= 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

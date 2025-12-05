@@ -1,0 +1,124 @@
+<div class="appointment-form-modal">
+  <div class="modal-content">
+    <div class="info-block">
+      <i class="pi pi-info-circle icon"></i>
+      <p>Complete los datos para crear un nuevo turno</p>
+    </div>
+
+    <!-- Alert -->
+    <app-generic-alert
+      *ngIf="showAlert"
+      [type]="alertType"
+      [title]="alertTitle"
+      [message]="alertMessage"
+    ></app-generic-alert>
+
+    <!-- Form -->
+    <app-generic-form
+      *ngIf="formFields.length > 0"
+      [fields]="formFields"
+      [initialValue]="initialFormValues"
+      [title]="'Datos del Turno'"
+      [showHeader]="false"
+      [saving]="isSaving"
+      [size]="'full'"
+      [showSubmit]="false"
+      [showCancel]="false"
+      (submitForm)="onSubmit($event)"
+      (cancelForm)="onCancel()"
+    >
+    </app-generic-form>
+
+    <!-- Slots Section -->
+    <div class="slots-section" *ngIf="currentBranchId">
+      <h4 class="slots-title">
+        <i class="pi pi-calendar"></i>
+        Seleccione un horario disponible
+      </h4>
+
+      <!-- Loading State -->
+      <div *ngIf="loadingSlots" class="slots-loading">
+        <i class="pi pi-spinner pi-spin"></i>
+        <p>Cargando horarios disponibles...</p>
+      </div>
+
+      <!-- No Slots Available -->
+      <div *ngIf="!loadingSlots && availableSlots.length === 0" class="no-slots">
+        <i class="pi pi-calendar-times"></i>
+        <p>No hay horarios disponibles para esta sucursal</p>
+      </div>
+
+      <!-- Slots Carousel -->
+      <div *ngIf="!loadingSlots && availableSlots.length > 0" class="slots-carousel">
+        <p-carousel
+          [value]="availableSlots"
+          [numVisible]="3"
+          [numScroll]="1"
+          [circular]="false"
+          [responsiveOptions]="[
+            { breakpoint: '1024px', numVisible: 3, numScroll: 1 },
+            { breakpoint: '768px', numVisible: 2, numScroll: 1 },
+            { breakpoint: '560px', numVisible: 1, numScroll: 1 }
+          ]"
+        >
+          <ng-template let-slot pTemplate="item">
+            <div
+              class="slot-card"
+              [class.selected]="selectedSlotId === (slot.slot_id || slot.slotId)"
+              (click)="selectSlot(slot.slot_id || slot.slotId)"
+            >
+              <div class="slot-card-header">
+                <i class="pi pi-clock"></i>
+              </div>
+              <div class="slot-card-body">
+                <div class="slot-date">{{ slot.date }}</div>
+                <div class="slot-time">
+                  {{ slot.start_time || slot.startTime }} - {{ slot.end_time || slot.endTime }}
+                </div>
+                <div class="slot-availability">
+                  <i class="pi pi-users"></i>
+                  {{ slot.available_appointments || slot.availableAppointments }} disponibles
+                </div>
+              </div>
+              <div class="slot-card-footer" *ngIf="selectedSlotId === (slot.slot_id || slot.slotId)">
+                <i class="pi pi-check-circle"></i>
+                Seleccionado
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+      <!-- Validation Message -->
+      <div *ngIf="!selectedSlotId && currentBranchId && !loadingSlots && availableSlots.length > 0" class="slot-validation">
+        <i class="pi pi-exclamation-triangle"></i>
+        Debe seleccionar un horario para continuar
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage && !showAlert" class="error-message">
+      <i class="pi pi-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="modal-actions">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        severity="secondary"
+        (onClick)="onCancel()"
+        [disabled]="isSaving"
+      />
+      <p-button
+        label="Crear Turno"
+        icon="pi pi-check"
+        severity="success"
+        (onClick)="onSubmit(genericForm?.form?.value || {})"
+        [disabled]="isSaving || !selectedSlotId"
+        [loading]="isSaving"
+      />
+    </div>
+  </div>
+</div>

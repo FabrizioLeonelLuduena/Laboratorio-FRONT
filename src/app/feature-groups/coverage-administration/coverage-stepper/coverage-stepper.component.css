@@ -1,0 +1,103 @@
+/* ===== Vars locales del componente (no pisan :root) ===== */
+:host {
+  --stepper-h: 72px;          /* alto visual del stepper */
+  --content-max: 1200px;      /* opcional: ancho máx. interno */
+  --sidebar-w: 280px;         /* ancho del aside en desktop */
+  --stepper-blur: 8px;        /* blur del fondo del stepper */
+}
+
+/* Reserva espacio para que el contenido no quede tapado por el stepper */
+.stepper-spacer{
+  height: calc(var(--stepper-h) + env(safe-area-inset-bottom));
+}
+
+/* ===== STEPPER FOOTER (fijo y full-width) ===== */
+.stepper-footer{
+  position: fixed;
+  z-index: 100;                                /* por encima del contenido */
+  left: 0;
+  right: 0;
+  bottom: env(safe-area-inset-bottom);         /* móvil */
+  min-height: var(--stepper-h);
+  padding: 0 12px;
+  background: var(--surface, #fff);
+  border-top: 1px solid var(--border-color, #e5e7eb);
+  backdrop-filter: blur(var(--stepper-blur));
+}
+
+/* contenedor interno opcional */
+.stepper-footer__inner{
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding: 10px clamp(12px, 3vw, 24px) calc(10px + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Desktop: ubicar el stepper justo encima del footer global fijo */
+@media (width >= 960px){
+  .stepper-footer{
+    bottom: calc(var(--footer-height, 0px) + env(safe-area-inset-bottom));
+  }
+}
+
+/* =========================================================
+   BOTONES (FABs) DENTRO DEL STEPPER
+   - Posicionados dentro de la barra .stepper-footer
+   - Centrados verticalmente (top:50% + translateY)
+   - El izquierdo se corre si el sidebar está abierto
+   ========================================================= */
+.fab{
+  position: absolute;                /* relativo al stepper */
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);       /* centro vertical exacto */
+  transition:
+    left 300ms ease,
+    right 300ms ease,
+    transform 300ms ease,
+    opacity 200ms ease;
+  will-change: left, right, transform;
+}
+
+/* Botón derecho (Guardar) */
+.fab--right{
+  right: max(16px, env(safe-area-inset-right));
+}
+
+/* Botón izquierdo (Cancelar) al lado del navbar */
+.fab--near-navbar{
+  left: max(16px, env(safe-area-inset-left));
+}
+
+/* Desktop: si el sidebar está abierto, desplazar el botón izquierdo */
+@media (width >= 960px){
+  :host-context(.main-content.sidebar-open) .fab--near-navbar{
+    left: calc(var(--sidebar-w) + max(16px, env(safe-area-inset-left)));
+  }
+}
+
+/* =========================================================
+   STEP ACTIONS (botones inline en cada panel)
+   ========================================================= */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.step-actions-left {
+  display: flex;
+  gap: 12px;
+}
+
+.step-actions-right {
+  display: flex;
+  gap: 12px;
+}

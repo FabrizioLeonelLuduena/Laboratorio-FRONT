@@ -1,0 +1,112 @@
+.dialog-content {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dialog-actions {
+  padding: 0 0.75rem 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dialog-actions app-generic-button ::ng-deep button {
+  min-height: 34px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.current-box {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #e7f5ff;
+  color: #0b7285;
+  border: 1px solid #a5d8ff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+.config-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.extractors-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.extractor-item {
+  background: #f1f3f5;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.extractor-key {
+  background: #e9ecef;
+  color: #495057;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  width: 40px;
+  align-self: center;
+}
+
+.extractor-name {
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.extractor-item:hover {
+  background: #e7f0ff;
+  border-color: #74a8ff;
+}
+
+.extractor-item.selected {
+  background: #e0ecff;
+  border-color: #2979ff;
+  box-shadow: 0 0 6px rgb(41 121 255 / 35%);
+}

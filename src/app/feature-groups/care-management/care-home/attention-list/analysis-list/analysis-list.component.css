@@ -1,0 +1,225 @@
+.auth-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.auth-label i {
+  color: #007bff;
+}
+
+.auth-input {
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.left-inputs {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Urgent Section */
+.urgent-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.urgent-label {
+  font-weight: 600;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.inline-spinner {
+  width: 20px;
+  height: 20px;
+}
+
+.actions {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Next Button Container */
+.next-button-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.next-button-left {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.next-button-right {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+:host ::ng-deep .p-inputtext {
+  width: 220px;
+}
+
+/* Analysis Counter */
+.analysis-counter {
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Custom Table Styles */
+.analysis-table-container {
+  margin-bottom: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.analysis-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.analysis-table thead {
+  background-color: #f8f9fa;
+}
+
+.analysis-table th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+  color: #495057;
+}
+
+.analysis-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.analysis-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  color: #6c757d;
+}
+
+.action-btn:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.delete-btn:hover {
+  background-color: #f8d7da;
+  color: #dc3545;
+}
+
+.empty-message {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Details Row */
+.details-row {
+  background-color: #f8f9fa;
+}
+
+.details-content {
+  padding: 1rem;
+}
+
+.details-content h4 {
+  margin: 0 0 1rem;
+  color: #495057;
+  font-size: 1rem;
+}
+
+.detail-item {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  color: #495057;
+  font-weight: 400;
+}
+
+.detail-value {
+  font-weight: 700;
+  color: #212529;
+}
+
+.determinations-list {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+}
+
+.determinations-list li {
+  margin-bottom: 0.5rem;
+}
+
+.handling-time {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Authorized cell with badge and checkbox */
+.authorized-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #dee2e6;
+}

@@ -1,0 +1,225 @@
+<section class="pb-4 flex flex-col gap-1">
+  @if (alert) {
+    <app-generic-alert [type]="alert.type" [text]="alert.text"></app-generic-alert>
+  }
+
+  @if (viewingProvidedServicesFor) {
+    <app-settlement-details-provided
+      [baseKey]="viewingProvidedServicesFor.baseKey"
+      [pageCount]="viewingProvidedServicesFor.pageCount"
+      [excludedIds]="excludedServicesByKey[viewingProvidedServicesFor.baseKey]"
+      (backPressed)="onProvidedServicesClosed()"
+      (servicesExcluded)="onProvidedServicesExcluded($event)">
+    </app-settlement-details-provided>
+  } @else {
+    <app-generic-modal-form
+      [visible]="showGeneratingModal"
+      [title]="'Generando liquidación'"
+      [width]="'520px'"
+      (closed)="onGeneratingClosed()"
+    >
+      <div class="flex flex-col items-center justify-center text-center gap-3 py-4">
+        <i class="pi pi-spin pi-spinner text-3xl text-brand-primary-700"></i>
+        <p class="title-18">Estamos generando la liquidación…</p>
+        <p class="text-surface-600">Este proceso puede demorar algunos segundos. Por favor, no cierres esta ventana.</p>
+      </div>
+    </app-generic-modal-form>
+
+  <div class="flex flex-wrap items-center justify-between gap-4">
+
+    <div class="flex flex-wrap items-center gap-4 filtros-responsive">
+
+      <div class="filtro-field">
+        <p-select
+          id="aseguradora"
+          [(ngModel)]="filtros.insurerId"
+          [options]="insurersOptions"
+          [filter]="true"
+          [showClear]="true"
+          scrollHeight="200px"
+          (onChange)="onInsurerChange()"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar aseguradora"
+          filterPlaceholder="Buscar aseguradora..."
+        ></p-select>
+      </div>
+
+      <div class="filtro-field">
+        <p-datePicker
+          [(ngModel)]="filtros.fechaDesde"
+          dateFormat="dd/mm/yy"
+          placeholder="Fecha desde"
+          showIcon>
+        </p-datePicker>
+      </div>
+
+      <div class="filtro-field">
+        <p-datePicker
+          [(ngModel)]="filtros.fechaHasta"
+          dateFormat="dd/mm/yy"
+          placeholder="Fecha hasta"
+          showIcon>
+        </p-datePicker>
+      </div>
+
+      <div class="filtro-field">
+        <p-select
+          [options]="tiposLiquidacion"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Tipo de liquidación"
+          [(ngModel)]="filtros.tipoLiquidacion"
+          (onChange)="onTypeSettlementChange($event)">
+        </p-select>
+      </div>
+
+    </div>
+
+    <!-- 🔹 Botones alineados a la derecha -->
+    <div class="flex items-center gap-3 ml-auto">
+      @if (filtros.tipoLiquidacion === 'especial') {
+        <app-generic-button
+          type="custom"
+          [text]="loadedRules ? 'Ver reglas' : 'Cargar reglas'"
+          [icon]="loadedRules ? 'pi pi-eye' : 'pi pi-plus'"
+          color="--brand-primary-700"
+          customTextColor="--on-primary"
+          (pressed)="onNewRule()">
+        </app-generic-button>
+      }
+
+      <app-generic-button
+        type="custom"
+        text="Buscar prestaciones"
+        icon="pi pi-search"
+        color="--brand-primary-700"
+        customTextColor="--on-primary"
+        [disabled]="filtros.tipoLiquidacion === 'especial' && !loadedRules"
+        (pressed)="onSearchProvidedService()">
+      </app-generic-button>
+    </div>
+
+  </div>
+
+    <app-special-rules
+    [insurerId]="filtros.insurerId"
+    [plans]="availablePlans"
+    (confirm)="confirmedRules($event)"
+    [visible]="showNewRuleModal"
+    (visibleChange)="closeRulesModal()"
+  >
+  </app-special-rules>
+
+  <!-- 🔹 ESTADO INICIAL -->
+  @if (searchStatus === 'inicial') {
+    <div class="card flex justify-center items-center text-center p-8">
+      <div>
+        <i class="pi pi-search text-4xl text-brand-primary-700 mb-3"></i>
+        <p class="title-20 mb-1">Debe buscar prestaciones</p>
+        <p class="text-surface-600">Utilice los filtros superiores y presione <strong>“Buscar prestaciones”</strong>
+          para visualizar los resultados.</p>
+      </div>
+    </div>
+
+  } @else if (searchStatus === 'buscando') {
+    <div class="card flex flex-col justify-center items-center text-center p-8 gap-3 animate-pulse">
+      <i class="pi pi-spin pi-spinner text-4xl text-brand-primary-700 mb-2"></i>
+      <p class="title-20 mb-1">Buscando prestaciones...</p>
+      <p class="text-surface-600">Esto puede demorar algunos segundos. Estamos obteniendo la información desde el
+        servidor.</p>
+    </div>
+  } @else if (searchStatus === 'noEncontrado') {
+    <div class="card flex justify-center items-center text-center p-8">
+      <div>
+        <i class="pi pi-search text-4xl text-brand-primary-700 mb-3"></i>
+        <p class="title-20 mb-1">No se encontraron prestaciones para la aseguradora y periodo seleccionado</p>
+        <p class="text-surface-600">Utilice los filtros superiores y presione <strong>“Buscar prestaciones”</strong>
+          para visualizar los resultados.</p>
+      </div>
+    </div>
+  } @else if (searchStatus === 'completado') {
+    <div class="flex flex-col lg:flex-row items-start">
+      <!-- 🔸 Tabla -->
+      <app-generic-table
+        class="flex-1 min-w-0 order-2 lg:order-1"
+        [data]="providedServices"
+        [columns]="columns"
+        [pageable]="true"
+        [rows]="50"
+        [loading]="loading"
+        [getActions]="getActions"
+        (pageChange)="{}"
+        [showCreateButton]="false"
+        [showActions]="true"
+        [showExcelOption]="false"
+        [showDownloadMenu]="false"
+        [showPdfOption]="false"
+        [showSearch]="false">
+      </app-generic-table>
+
+      <!-- 🔸 Resumen -->
+      <aside class="summary-section shrink-0 w-full lg:w-[320px] order-1 lg:order-2">
+        <div class="summary-content">
+          <div class="info-group highlight">
+            <label>Nro de Liquidación:</label>
+            <span class="amount">{{ resumen?.settlementNumber }}</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="info-group highlight">
+            <label>Cantidad de prestaciones:</label>
+            <span>{{ resumen?.providedServicesCount }}</span>
+          </div>
+
+          <div class="info-group highlight">
+            <label>Total:</label>
+            <span class="amount final">
+              {{ resumen?.total | currency:'ARS':'symbol-narrow':'1.2-2' }}
+            </span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="info-group highlight">
+            <label>Estado:</label>
+            @if (resumen?.status) {
+              <app-generic-badge
+                [status]="badgeStatusFrom(resumen?.status)"
+                [text]="resumen?.status"></app-generic-badge>
+            }
+          </div>
+        </div>
+
+        <div class="actions">
+          <app-generic-button
+            type="custom"
+            color="--brand-primary-700"
+            text="Generar Liquidación"
+            icon="pi pi-file"
+            (pressed)="onConfirm()" />
+
+          @if (false) {
+            <i class="pi pi-spinner pi-spin"></i>
+          }
+        </div>
+      </aside>
+
+    </div>
+    <!-- 🔸 Estado condicional de carga interna -->
+    @if (loading) {
+      <p-skeleton width="100%" height="2rem" />
+    } @else if (!providedServices.length) {
+      <p class="text-center text-surface-600">No hay registros disponibles.</p>
+    }
+  }
+
+  <!-- Botón Anterior al final -->
+  <div class="back-button-container">
+    <app-generic-button
+      type="back"
+      (click)="toReturn()">
+    </app-generic-button>
+  </div>
+  }
+</section>

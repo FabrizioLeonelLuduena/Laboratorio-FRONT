@@ -1,0 +1,15 @@
+.required-asterisk {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-weight: 500;
+  color: var(--text-color);
+}

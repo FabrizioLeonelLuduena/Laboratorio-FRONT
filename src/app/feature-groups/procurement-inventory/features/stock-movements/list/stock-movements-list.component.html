@@ -1,0 +1,533 @@
+<!-- Alertas -->
+@if (showAlert) {
+<app-generic-alert
+  [message]="alertMessage"
+  [type]="alertType"
+>
+</app-generic-alert>
+}
+
+<!-- Selector de tipo de movimiento -->
+<div class="movement-type-selector-container rounded-xl pb-2 pr-2 pl-2 shadow-[0_2px_8px_rgba(0,79,87,0.08)] border border-[#e8eef3] transition-shadow duration-300 hover:shadow-[0_4px_12px_rgba(0,79,87,0.12)]">
+  <p-tabs [(value)]="selectedMovementType">
+    <p-tablist>
+      @for (option of movementTypeOptions; track option.value) {
+        <p-tab [value]="option.value" (click)="onTabChange(option.value)">
+          <div class="flex flex-col items-center gap-1 px-3 py-2 transition-all duration-200">
+            <i [class]="option.icon" class="text-[1.75rem] text-[#01786f] transition-transform duration-200"></i>
+            <span class="text-sm font-semibold text-[#004f57]">{{ option.label }}</span>
+          </div>
+        </p-tab>
+      }
+    </p-tablist>
+    <p-tabpanels>
+      @for (option of movementTypeOptions; track option.value) {
+        <p-tabpanel [value]="option.value">
+          <!-- Content will be rendered below the tabs -->
+        </p-tabpanel>
+      }
+    </p-tabpanels>
+  </p-tabs>
+</div>
+
+<!-- ========== SECCIÓN FORMULARIO ========== -->
+<section class="section-box">
+  <div class="section-title collapsible-header" (click)="toggleFormSection()">
+    <i class="toggle-icon" [class.rotated]="formSectionCollapsed"></i>
+    {{ formTitle }}
+    <span class="badge-info">{{ editableItems.length }} items</span>
+  </div>
+
+  <div class="collapsible-content pt-2" [class.collapsed]="formSectionCollapsed">
+    <!-- Mensaje informativo para RETURN sin permiso -->
+    @if (selectedMovementType() === StockMovementType.RETURN && !canCreateReturn) {
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 flex items-start gap-3">
+        <i class="pi pi-info-circle text-blue-600 text-xl mt-0.5"></i>
+        <div>
+          <p class="text-sm text-blue-900 font-medium mb-1">Acceso restringido</p>
+          <p class="text-sm text-blue-800">
+            Para crear una devolución, debe iniciar el proceso desde el apartado de
+            <a
+              routerLink="/procurement-inventory/goods-receipts"
+              class="text-blue-600 hover:text-blue-700 font-semibold underline cursor-pointer">
+              Remitos
+            </a>.
+          </p>
+          <p class="text-sm text-blue-700 mt-2">
+            Puede ver el historial de devoluciones en la sección inferior.
+          </p>
+        </div>
+      </div>
+    }
+
+    @if (selectedMovementType() !== StockMovementType.RETURN || canCreateReturn) {
+    <div class="w-full">
+      <div class="bg-[#fafbfc] p-5 rounded-lg mb-6 border border-[#e8eef3]">
+        <div class="grid grid-cols-2 gap-4">
+              @if (selectedMovementType() === StockMovementType.PURCHASE) {
+                <div class="flex flex-col relative">
+                  <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Proveedor <span class="text-red-500">*</span></label>
+                  <p-dropdown
+                    [(ngModel)]="movementHeader.supplierId"
+                    [options]="suppliers"
+                    optionLabel="companyName"
+                    optionValue="id"
+                    placeholder="Seleccionar proveedor"
+                    [filter]="true"
+                    filterBy="companyName"
+                    [showClear]="true"
+                    (onChange)="onSupplierChange($event.value)">
+                    <ng-template let-supplier pTemplate="item">
+                      <div>
+                        <div class="font-medium">{{ supplier.companyName }}</div>
+                        <div class="text-12 text-muted">Cuit: {{ supplier.cuit }}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              }
+
+              <!-- Ubicación de Origen (para EXIT/TRANSFER) -->
+              @if (selectedMovementType() === StockMovementType.TRANSFER) {
+                <div class="flex flex-col relative">
+                  <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Ubicación de origen <span class="text-red-500">*</span></label>
+                  <p-dropdown
+                    [(ngModel)]="movementHeader.originLocationId"
+                    [options]="locations"
+                    optionLabel="name"
+                    optionValue="id"
+                    placeholder="Seleccionar ubicación de origen"
+                    [emptyMessage]="'No hay ubicaciones disponibles'"
+                    [filter]="true"
+                    filterBy="name,locationType"
+                    [showClear]="true"
+                    styleClass="w-full"
+                    (onChange)="onOriginLocationChange($event.value)"
+                    [style]="{'width': '100%'}">
+                    <ng-template let-location pTemplate="item">
+                      <div>
+                        <div class="font-medium">{{ location.name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              }
+
+              <!-- Ubicación Destino (para PURCHASE/TRANSFER) -->
+              @if (selectedMovementType() === StockMovementType.PURCHASE || selectedMovementType() === StockMovementType.TRANSFER) {
+                <div class="flex flex-col relative">
+                  <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Ubicación de destino <span class="text-red-500">*</span></label>
+                  <p-dropdown
+                    [(ngModel)]="movementHeader.locationId"
+                    [options]="locations"
+                    optionLabel="name"
+                    optionValue="id"
+                    placeholder="Seleccionar ubicación de destino"
+                    [emptyMessage]="'No hay ubicaciones disponibles'"
+                    [filter]="true"
+                    filterBy="name,locationType"
+                    [showClear]="true"
+                    styleClass="w-full"
+                    [style]="{'width': '100%'}">
+                    <ng-template let-location pTemplate="item">
+                      <div>
+                        <div class="font-medium">{{ location.name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              }
+
+              <!-- Ubicación (para RETURN/ADJUSTMENT) -->
+              @if (selectedMovementType() === StockMovementType.RETURN || selectedMovementType() === StockMovementType.ADJUSTMENT) {
+                <!-- Si hay metadata precargada, mostrar como input disabled -->
+                @if ( hasPreloadedMetadata() && movementHeader.originLocationName) {
+                  <div class="flex flex-col relative">
+                    <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Ubicación de origen</label>
+                    <input
+                      type="text"
+                      [value]="movementHeader.originLocationName"
+                      disabled
+                      class="w-full px-3 py-2.5 border border-[#d1d5db] rounded-md bg-gray-100 text-sm transition-all duration-200 h-10 leading-6 cursor-not-allowed"
+                      placeholder="Ubicación de origen" />
+                  </div>
+                } @else {
+                  <!-- Dropdown normal cuando no hay metadata -->
+                  <div class="flex flex-col relative">
+                    <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">
+                      @if (selectedMovementType() === StockMovementType.RETURN) {
+                        Ubicación de origen
+                      } @else {
+                        Ubicación de destino
+                      }
+                      <span class="text-red-500">*</span>
+                    </label>
+                    <p-dropdown
+                      [(ngModel)]="movementHeader.locationId"
+                      [options]="locations"
+                      optionLabel="name"
+                      optionValue="id"
+                      [placeholder]="selectedMovementType() === StockMovementType.RETURN ? 'Seleccionar ubicación de origen' : 'Seleccionar ubicación de destino'"
+                      [emptyMessage]="'No hay ubicaciones disponibles'"
+                      [filter]="true"
+                      filterBy="name,locationType"
+                      [showClear]="true"
+                      styleClass="w-full"
+                      [style]="{'width': '100%'}"
+                      (onChange)="selectedMovementType() === StockMovementType.RETURN ? onReturnLocationChange($event.value) : onAdjustmentLocationChange($event.value)">
+                      <ng-template let-location pTemplate="item">
+                        <div>
+                          <div class="font-medium">{{ location.name }}</div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+                }
+              }
+
+              <!-- Tipo de Egreso (solo para RETURN) -->
+              @if (selectedMovementType() === StockMovementType.RETURN) {
+                <!-- Si hay metadata precargada, mostrar como input disabled -->
+                @if (hasPreloadedMetadata()) {
+                  <div class="flex flex-col relative">
+                    <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Tipo de Egreso</label>
+                    <input
+                      type="text"
+                      [value]="getExitReasonTextFromMetadata()"
+                      disabled
+                      class="w-full px-3 py-2.5 border border-[#d1d5db] rounded-md bg-gray-100 text-sm transition-all duration-200 h-10 leading-6 cursor-not-allowed"
+                      placeholder="Tipo de egreso" />
+                  </div>
+                } @else {
+                  <!-- Dropdown normal cuando no hay metadata -->
+                  <div class="flex flex-col relative">
+                    <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Tipo de Egreso <span class="text-red-500">*</span></label>
+                    <p-dropdown
+                      [(ngModel)]="movementHeader.exitReason"
+                      [options]="exitReasonOptions"
+                      optionLabel="label"
+                      optionValue="value"
+                      placeholder="Seleccionar tipo de egreso"
+                      styleClass="w-full"
+                      [style]="{'width': '100%'}">
+                      <ng-template let-option pTemplate="item">
+                        <div class="flex items-center gap-2">
+                          @if (option.value === ExitReason.SUPPLIER_RETURN) {
+                            <i class="pi pi-replay text-orange-500"></i>
+                          } @else {
+                            <i class="pi pi-box text-blue-500"></i>
+                          }
+                          <span>{{ option.label }}</span>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+                }
+
+                <!-- Nombre del Proveedor - SOLO cuando metadata.type es RETURN -->
+                @if (movementHeader.supplierName && hasPreloadedMetadata() && isMetadataTypeReturn()) {
+                  <div class="flex flex-col relative">
+                    <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Proveedor</label>
+                    <input
+                      type="text"
+                      [value]="movementHeader.supplierName"
+                      readonly
+                      class="w-full px-3 py-2.5 border border-[#d1d5db] rounded-md bg-gray-100 text-sm transition-all duration-200 h-10 leading-6 cursor-not-allowed"
+                      placeholder="Proveedor" />
+                  </div>
+                }
+              }
+
+              <!-- Motivo (opcional) -->
+              <div class="flex flex-col relative">
+                <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">Motivo <span class="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  [(ngModel)]="movementHeader.reason"
+                  class="w-full px-3 py-2.5 border border-[#d1d5db] rounded-md bg-white text-sm transition-all duration-200 h-10 leading-6 focus:outline-none focus:border-[#01786f] focus:bg-white focus:shadow-[0_0_0_3px_rgba(1,120,111,0.1)]"
+                  placeholder="Ej: Reposición"
+                  required />
+              </div>
+            </div>
+          </div>
+
+          <!-- Grilla de productos - Estructura idéntica a invoice-items-step -->
+          <div class="stock-items-grid-wrapper">
+            <div class="custom-items-grid">
+              <!-- Header de la grilla -->
+              <div class="grid-header">
+                <div class="grid-header-cell col-descripcion">Producto</div>
+                <div class="grid-header-cell col-cantidad">Cantidad</div>
+                <div class="grid-header-cell col-lote">Lote</div>
+                <div class="grid-header-cell col-vencimiento">Vencimiento</div>
+                <div class="grid-header-cell col-notas">Notas</div>
+                <div class="grid-header-cell col-actions">
+                  <button
+                    type="button"
+                    class="grid-action-btn add-btn header-add-btn"
+                    (click)="addNewItem()"
+                    title="Agregar producto">
+                    <i class="pi pi-plus"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Rows de items -->
+              <div class="grid-body">
+                @for (item of editableItems; let i = $index; track i) {
+                  <div
+                    class="grid-row"
+                    [class.editing]="editingIndex === i">
+
+                    <!-- Producto (supplyId) -->
+                    <div class="grid-cell col-descripcion">
+                      <!-- Si el item es readonly (viene de metadata), mostrar input disabled -->
+                      @if (item.isReadOnly ) {
+                        @if(item.supplyName)
+                        {
+                        <input
+                          type="text"
+                          [value]="item.supplyName"
+                          disabled
+                          class="grid-input bg-gray-100 cursor-not-allowed"
+                          placeholder="Producto" />
+                        } @else {
+                          <input
+                            type="text"
+                            [value]="item.supplierItemName"
+                            disabled
+                            class="grid-input bg-gray-100 cursor-not-allowed"
+                            placeholder="Producto" />
+                        }
+
+
+                      } @else {
+                        <!-- Dropdown normal cuando no hay metadata -->
+                        <p-dropdown
+                          [(ngModel)]="item.supplyId"
+                          [options]="getAvailableSupplyOptions(i)"
+                          optionLabel="name"
+                          optionValue="id"
+                          [placeholder]="getSupplyPlaceholder()"
+                          [filter]="true"
+                          filterBy="name"
+                          [showClear]="false"
+                          [disabled]="isSupplyDropdownDisabled()"
+                          appendTo="body"
+                          styleClass="grid-dropdown"
+                          [attr.data-row]="i"
+                          [attr.data-col]="'supplyId'"
+                          [pTooltip]="item.supplyId ? getSelectedSupplyName(item.supplyId) : ''"
+                          tooltipPosition="top"
+                          (onFocus)="onCellFocus(i, 'supplyId')"
+                          (onChange)="onSupplyChange($event.value, i)">
+                          <ng-template let-supplyItem pTemplate="item">
+                            <div class="font-medium">{{ supplyItem.name }}</div>
+                          </ng-template>
+                        </p-dropdown>
+                      }
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="grid-cell col-cantidad">
+                      <input
+                        type="number"
+                        [(ngModel)]="item.quantity"
+                        [attr.data-row]="i"
+                        [attr.data-col]="'quantity'"
+                        [min]="item.isReadOnly ? 1 : 0"
+                        [max]="item.isReadOnly ? (item.maxQuantity ?? null) : null"
+                        (keydown)="onKeyDown($event, i, 'quantity')"
+                        (blur)="onQuantityChange(i)"
+                        (focus)="onCellFocus(i, 'quantity')"
+                        placeholder="0"
+                        required
+                        [pTooltip]="
+                          item.isReadOnly && item.maxQuantity !== undefined
+                            ? 'Cantidad del remito: ' + item.maxQuantity + '. Debe ingresar entre 1 y ' + item.maxQuantity
+                            : (selectedMovementType() === StockMovementType.TRANSFER || selectedMovementType() === StockMovementType.RETURN) &&
+                              item.maxQuantity !== undefined
+                              ? 'Máx: ' + item.maxQuantity
+                              : ''
+                        "
+                        tooltipPosition="top" />
+                    </div>
+
+                    <!-- Lote -->
+                    <div class="grid-cell col-lote">
+                      @if (item.isReadOnly) {
+                        <!-- Input disabled cuando viene de remito externo -->
+                        <input
+                          type="text"
+                          [value]="item.batchNumber"
+                          disabled
+                          class="grid-input bg-gray-100 cursor-not-allowed"
+                          placeholder="Lote" />
+                      } @else if (selectedMovementType() === StockMovementType.TRANSFER || selectedMovementType() === StockMovementType.ADJUSTMENT || selectedMovementType() === StockMovementType.RETURN) {
+                        <!-- Dropdown para TRANSFERENCIAS, AJUSTES y EGRESOS -->
+                        <p-dropdown
+                          [(ngModel)]="item.batchId"
+                          [options]="item.availableBatches || []"
+                          optionLabel="batchCode"
+                          optionValue="id"
+                          placeholder="Seleccione lote"
+                          [filter]="true"
+                          appendTo="body"
+                          filterBy="batchCode"
+                          [showClear]="true"
+                          [emptyMessage]="'No hay lotes disponibles'"
+                          [disabled]="!item.availableBatches || item.availableBatches.length === 0"
+                          styleClass="grid-dropdown"
+                          [attr.data-row]="i"
+                          [attr.data-col]="'batchNumber'"
+                          (onFocus)="onCellFocus(i, 'batchNumber')"
+                          (onChange)="onBatchChange($event.value, i)">
+                          <ng-template let-batch pTemplate="item">
+                            <div>
+                              <div class="font-medium">{{ batch.batchCode }}</div>
+                            </div>
+                          </ng-template>
+                        </p-dropdown>
+                      } @else {
+                        <!-- Input para ENTRADA -->
+                        <input
+                          type="text"
+                          class="grid-input"
+                          [(ngModel)]="item.batchNumber"
+                          [attr.data-row]="i"
+                          [attr.data-col]="'batchNumber'"
+                          (keydown)="onKeyDown($event, i, 'batchNumber')"
+                          (focus)="onCellFocus(i, 'batchNumber')"
+                          placeholder="Ej: L-001" />
+                      }
+                    </div>
+
+                    <!-- Vencimiento -->
+                    <div class="grid-cell col-vencimiento">
+                      <p-calendar
+                        [(ngModel)]="item.expirationDate"
+                        dateFormat="dd/mm/yy"
+                        [showIcon]="true"
+                        [iconDisplay]="'input'"
+                        placeholder="dd/mm/aaaa"
+                        [minDate]="minExpirationDate"
+                        [disabled]="selectedMovementType() === StockMovementType.TRANSFER || selectedMovementType() === StockMovementType.ADJUSTMENT || selectedMovementType() === StockMovementType.RETURN"
+                        appendTo="body"
+                        styleClass="grid-calendar"
+                        [attr.data-row]="i"
+                        [attr.data-col]="'expirationDate'"
+                        (onFocus)="onCellFocus(i, 'expirationDate')">
+                      </p-calendar>
+                    </div>
+
+                    <!-- Notas -->
+                    <div class="grid-cell">
+                      <input
+                        type="text"
+                        class="grid-input"
+                        [(ngModel)]="item.notes"
+                        [attr.data-row]="i"
+                        [attr.data-col]="'notes'"
+                        (keydown)="onKeyDown($event, i, 'notes')"
+                        (focus)="onCellFocus(i, 'notes')"
+                        placeholder="Ej: Refrigerar" />
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="grid-cell col-actions">
+                      <button
+                        type="button"
+                        class="grid-action-btn delete-btn"
+                        (click)="deleteItem(i)"
+                        title="Eliminar">
+                        <i class="pi pi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <!-- Empty state - Idéntico a invoice-items-step -->
+              @if (editableItems.length === 0) {
+                <div class="empty-grid-message">
+                  <i class="pi pi-inbox"></i>
+                  <p>No hay productos agregados</p>
+                  <small>Presioná el botón "+" para agregar productos</small>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="mt-6 flex gap-3 justify-end">
+            <app-generic-button
+              text="Limpiar"
+              type="cancel"
+              icon="pi pi-times"
+              [disabled]="saving"
+              (pressed)="onFormCancel()">
+            </app-generic-button>
+
+            <app-generic-button
+              [text]="saving ? 'Guardando...' : 'Crear movimiento'"
+              type="create"
+              icon="pi pi-check"
+              [disabled]="saving"
+              (pressed)="save()">
+            </app-generic-button>
+          </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ========== SECCIÓN HISTORIAL ========== -->
+<section class="section-box">
+  <div class="section-title collapsible-header" (click)="toggleHistorySection()">
+    <i class="toggle-icon" [class.rotated]="historySectionCollapsed"></i>
+    Historial de movimientos
+  </div>
+
+  <div class="collapsible-content" [class.collapsed]="historySectionCollapsed">
+
+    <ng-template #expandedRowTemplate let-movement>
+        @if (getDetailsFromMovement(movement).length === 0) {
+          <div class="text-gray-600 italic">Sin detalles disponibles</div>
+        } @else {
+          <app-generic-table
+            [data]="getDetailsFromMovement(movement)"
+            [columns]="movement.movementType === 'TRANSFER' ? detailColumnsTransfer : detailColumns"
+            [showFilters]="false"
+            [showCreateButton]="false"
+            [showActions]="false"
+            [showSearch]="false"
+            [showDownloadMenu]="false"
+            [pageable]="false"
+            [loading]="false"
+            [expandable]="false"
+          >
+          </app-generic-table>
+        }
+    </ng-template>
+
+    <!-- Tabla de Movimientos de stock con GenericTableComponent -->
+    <app-generic-table
+      [data]="stockMovements()"
+      [columns]="columns"
+      [showFilters]="false"
+      [showCreateButton]="false"
+      [showActions]="false"
+      [getActions]="getActionsForMovement.bind(this)"
+      [loading]="loading"
+      [expandable]="true"
+      (downloadExcel)="onExport($event, { type: 'excel' })"
+      [expandedRowTemplate]="expandedRowTemplate"
+      [rows]="10"
+      [rowsOptions]="[5, 10, 25]"
+    >
+    </app-generic-table>
+  </div>
+</section>
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>

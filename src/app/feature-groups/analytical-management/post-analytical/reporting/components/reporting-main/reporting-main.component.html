@@ -1,0 +1,81 @@
+<div class="min-h-screen bg-[var(--background)]">
+  <!-- Filtros Sticky -->
+  <app-reporting-filters
+    (filtersApplied)="onFiltersApplied($event)">
+  </app-reporting-filters>
+
+  <div class="max-w-[1400px] mx-auto px-6 pb-6 md:pb-[calc(24px+var(--footer-height,52px)+16px)] pt-6">
+
+    @if (isLoading()) {
+      <!-- Loader -->
+      <app-spinner [overlay]="false" label="Cargando reportes..."></app-spinner>
+    } @else {
+
+      <!-- Vista de Cards de Métricas (solo visible cuando NO se están mostrando detalles) -->
+      @if (!showingDetails()) {
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold text-[var(--on-surface)] mb-4">Métricas Principales</h2>
+          <div class="reporting-kpi-grid mb-8">
+            @for (metric of metrics(); track metric.id) {
+              <app-reporting-metric-card
+                [metric]="metric"
+                (viewDetails)="onViewDetails($event)">
+              </app-reporting-metric-card>
+            }
+          </div>
+        </div>
+
+        <!-- Vista de Reportes con Gráficos -->
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold text-[var(--on-surface)] mb-4">Análisis Gráfico</h2>
+          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            @for (card of reportCards(); track card.title) {
+              <app-care-reporting-card
+                [reportingData]="card">
+              </app-care-reporting-card>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Vista de Tabla de Detalles (solo visible cuando se selecciona un reporte) -->
+      @if (showingDetails() && selectedReport()) {
+        <div class="mb-8">
+          <!-- Header con título y botón volver -->
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-semibold text-[var(--on-surface)] m-0">
+              {{ selectedReportLabel() }} - Detalles
+            </h2>
+            <button
+              pButton
+              type="button"
+              label="Volver"
+              icon="pi pi-arrow-left"
+              class="p-button-outlined p-button-secondary"
+              (click)="onBackToCards()">
+            </button>
+          </div>
+
+          <!-- Tabla Genérica Reutilizable -->
+          <app-generic-table
+            [data]="detailsData()"
+            [columns]="detailsColumns()"
+            [rows]="5"
+            [rowsOptions]="[5, 10, 25, 50]"
+            [pageable]="true"
+            [lazy]="false"
+            [loading]="isLoading()"
+            [dataKey]="'patientDocument'"
+            [showSearch]="false"
+            [showFilters]="true"
+            [showActions]="false"
+            [showDownloadMenu]="true"
+            [showPdfOption]="false"
+            [showCreateButton]="false"
+            (downloadExcel)="onExportExcel()">
+          </app-generic-table>
+        </div>
+      }
+    }
+  </div>
+</div>

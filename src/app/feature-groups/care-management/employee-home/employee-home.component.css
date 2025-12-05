@@ -1,0 +1,238 @@
+.employee-crud {
+  display: grid;
+  gap: 1rem;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.form-section,
+.table-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 6%);
+}
+
+.alert-container {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 35%);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.basic-grid {
+  --cols-lg: 4;
+}
+
+.basic-grid-large {
+  --cols-lg: 1;
+}
+
+.basic-grid ::ng-deep .form-grid-2 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.basic-grid ::ng-deep .field-item[data-span="1"] {
+  grid-column: span 1;
+}
+
+.form-personal{
+  margin-bottom: 1rem;
+}
+
+.signature-modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgb(0 0 0);
+}
+
+.signature-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e0e6ea;
+  background: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+}
+
+.signature-modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #003b4a;
+  font-weight: 600;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  transition: color 0.2s;
+  font-size: 1.25rem;
+}
+
+.close-button:hover {
+  color: #003b4a;
+}
+
+.close-button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Stepper layout similar to coverage-administration */
+.employee-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.step-card {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-top: 1px solid #e6e6e6;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+@media (width <= 768px) {
+  .step-card { padding: 1rem; }
+}
+
+
+/* ===========================================================
+   1) Quitar borde-bottom del header del GenericForm
+   =========================================================== */
+:host ::ng-deep app-generic-form .gf-header,
+:host ::ng-deep app-generic-form .gf-header-title,
+:host ::ng-deep app-generic-form .header,
+:host ::ng-deep app-generic-form header {
+  border-bottom: none ;
+  box-shadow: none ;
+  background: transparent ;
+  padding-bottom: 0 ;
+  margin-bottom: 0.25rem ;
+}
+
+/* Evitar que el GenericForm agregue lineas o backgrounds */
+:host ::ng-deep app-generic-form .gf-container,
+:host ::ng-deep app-generic-form .gf-wrapper {
+  border: none ;
+  background: transparent ;
+  box-shadow: none ;
+}
+
+/* ===========================================================
+   2) Quitar bordes y líneas de la tabla de Contactos
+   =========================================================== */
+
+/* Quitar borde del p-panel */
+:host ::ng-deep p-panel > .p-panel-header,
+:host ::ng-deep p-panel > .p-panel-content,
+:host ::ng-deep p-panel {
+  border: none ;
+  background: transparent ;
+  box-shadow: none ;
+}
+
+/* Quitar borde superior/inferior del bloque que envuelve la tabla */
+:host ::ng-deep p-panel .p-panel-content > div {
+  border: none ;
+  background: transparent ;
+}
+
+/* Quitar borde de la tabla */
+:host ::ng-deep p-table table {
+  border: none ;
+  box-shadow: none ;
+  background: transparent ;
+}
+
+/* Header sin bordes */
+:host ::ng-deep p-table thead tr th {
+  border: none ;
+  background: transparent ;
+}
+
+/* Body sin líneas */
+:host ::ng-deep p-table tbody tr td {
+  border: none ;
+}
+
+/* Quitar hover gris del theme */
+:host ::ng-deep p-table tbody tr:hover {
+  background: transparent ;
+}
+
+/* Quitar la línea horizontal de "No se agregaron contactos…" */
+:host ::ng-deep .contact-empty-message,
+:host ::ng-deep p-panel p {
+  border: none ;
+  background: transparent ;
+}
+
+/* ===========================================================
+   3) Neutralizar backgrounds parásitos del GenericForm
+   =========================================================== */
+:host ::ng-deep app-generic-form .card,
+:host ::ng-deep app-generic-form .surface,
+:host ::ng-deep app-generic-form .surface-alt,
+:host ::ng-deep app-generic-form .form-section,
+:host ::ng-deep app-generic-form .gf-card {
+  background: transparent ;
+  border: none ;
+  box-shadow: none ;
+}
+
+/* El grid interno sin padding artificial */
+:host ::ng-deep app-generic-form .form-grid,
+:host ::ng-deep app-generic-form .gf-grid {
+  padding: 0 ;
+  margin: 0 ;
+}
+
+/* ===========================================================
+   4) Evitar que cualquier .card fuera del GF genere conflicto
+   =========================================================== */
+.employee-stepper .step-card {
+  background: #fff ;
+  border: 1px solid #e6e6e6 ;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%) ;
+}

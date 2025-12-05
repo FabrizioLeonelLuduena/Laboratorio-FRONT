@@ -1,0 +1,39 @@
+<div class="min-h-screen">
+  <div class="w-full mx-auto px-6 pb-6 md:pb-[calc(24px+var(--footer-height,52px)+16px)]">
+
+    <app-billing-date-filters (filtersChanged)="onFiltersChanged($event)"></app-billing-date-filters>
+
+    <section class="grid grid-cols-1 gap-4 my-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (metric of metrics; track $index) {
+        <app-dashboard-metric-card [metric]="metric"></app-dashboard-metric-card>
+      }
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      @for (card of chartCards; track $index) {
+        @defer {
+          <app-dashboard-chart-card
+            [title]="card.title"
+            [description]="card.description"
+            [icon]="card.icon ?? 'pi pi-chart-bar'"
+            [helpText]="card.helpText"
+            [chartType]="card.chartType"
+            [data]="card.data"
+            [options]="card.options"
+            [footer]="card.footer">
+          </app-dashboard-chart-card>
+        } @loading {
+          <div class="border border-[var(--border-color)] rounded-lg bg-[var(--surface-card)] p-4">
+            <p-skeleton height="24px" styleClass="mb-3"></p-skeleton>
+            <p-skeleton height="260px"></p-skeleton>
+          </div>
+        } @placeholder {
+          <div class="border border-[var(--border-color)] rounded-lg bg-[var(--surface-card)] p-4">
+            <p-skeleton height="24px" styleClass="mb-3"></p-skeleton>
+            <p-skeleton height="260px"></p-skeleton>
+          </div>
+        }
+      }
+    </section>
+  </div>
+</div>

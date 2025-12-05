@@ -1,0 +1,198 @@
+<!-- patients-list.component.html -->
+
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando pacientes...'" />
+}
+
+<p-card>
+  @if (alertType !== null) {
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertText"
+      (closed)="alertType = null"
+    ></app-generic-alert>
+  }
+
+  @if (showPasswordResetModal && passwordResetTarget) {
+    <app-generic-modal-form
+      [visible]="showPasswordResetModal"
+      title="Restablecer contraseña"
+      width="360px"
+      (closed)="closePasswordResetModal()"
+    >
+      <div class="password-reset-modal">
+        <div class="password-reset-modal__icon">
+          <i class="pi pi-key"></i>
+        </div>
+        <h3 class="password-reset-modal__title">¿Enviar correo de recuperación?</h3>
+        <p class="password-reset-modal__message">
+          Se enviará un correo de recuperación de contraseña a
+          "<strong>{{ passwordResetTargetName }}</strong>".
+        </p>
+
+        <label class="password-reset-modal__label" for="password-reset-email">Correo electrónico destino</label>
+        <input
+          id="password-reset-email"
+          type="email"
+          class="password-reset-modal__input"
+          [(ngModel)]="passwordResetEmail"
+          placeholder="correo@paciente.com"
+        />
+
+        <div class="password-reset-modal__actions">
+          <app-generic-button
+            type="cancel"
+            text="Cancelar"
+            [disabled]="passwordResetSubmitting"
+            (pressed)="closePasswordResetModal()"
+          ></app-generic-button>
+
+          <app-generic-button
+            type="accept"
+            [text]="passwordResetButtonText"
+            [disabled]="!passwordResetEmail.trim() || passwordResetSubmitting"
+            (pressed)="submitPasswordReset()"
+          ></app-generic-button>
+        </div>
+      </div>
+    </app-generic-modal-form>
+  }
+
+  <!-- Template of filters for AdvancedTable (popover) -->
+  <ng-template #filtersTpl let-api>
+    <!-- same layout as insurer-table -->
+    <div class="stack-16 filters-pane">
+      <div class="stack-12">
+        <div class="title-20">Actividad</div>
+        <div class="group-content">
+          <label>
+            <input type="radio" name="patient-state" [value]="'all'" [checked]="state === 'all'"
+                   (change)="state = 'all'"> Todos
+          </label>
+          <label>
+            <input type="radio" name="patient-state" [value]="'active'" [checked]="state === 'active'"
+                   (change)="state = 'active'"> Activos
+          </label>
+          <label>
+            <input type="radio" name="patient-state" [value]="'inactive'" [checked]="state === 'inactive'"
+                   (change)="state = 'inactive'"> Inactivos
+          </label>
+        </div>
+      </div>
+
+      <div class="stack-12">
+        <div class="title-20">Estado</div>
+        <div class="group-content columns">
+          <label>
+            <input type="radio" name="patient-status" [value]="null" [checked]="status === null"
+                   (change)="status = null"> Todos
+          </label>
+          <label>
+            <input type="radio" name="patient-status" value="MIN" [checked]="status === 'MIN'"
+                   (change)="status = 'MIN'"> Mínimo
+          </label>
+          <label>
+            <input type="radio" name="patient-status" value="COMPLETE" [checked]="status === 'COMPLETE'"
+                   (change)="status = 'COMPLETE'"> Completo
+          </label>
+          <label>
+            <input type="radio" name="patient-status" value="VERIFIED" [checked]="status === 'VERIFIED'"
+                   (change)="status = 'VERIFIED'"> Verificado
+          </label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <app-generic-button
+          type="accept"
+          (pressed)="api.emit('apply', { state, status }); api.close()"
+        ></app-generic-button>
+
+        <app-generic-button
+          type="alternative"
+          text="Limpiar"
+          icon="pi pi-refresh"
+          (pressed)="status = null; state = 'all'; api.emit('clear'); api.close()"
+        ></app-generic-button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Generic table -->
+  <div class="patients-table">
+  <app-generic-table
+    [data]="patients"
+    [columns]="columns"
+    [filters]="filters"
+    [loading]="loading()"
+    [columnTemplates]="columnTemplates"
+    [rows]="size"
+    [rowsOptions]="[10, 25, 50]"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [expandable]="true"
+    [expandedRowTemplate]="expandedRowTpl"
+    [getActions]="getActionsForRow.bind(this)"
+    (filterChange)="onFilterChange($event)"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+    (globalFilterChange)="onSearchInput($event)"
+    (downloadExcel)="onExport($event, { type: 'excel' })"
+    (downloadPdf)="onExport($event, { type: 'pdf' })"
+    (create)="goToPatientForm()"
+  ></app-generic-table>
+  </div>
+
+</p-card>
+<app-tutorial-overlay
+  #tutorialOverlay
+[config]="tutorialConfig">
+</app-tutorial-overlay>
+
+<!-- Age template -->
+<ng-template #ageTpl let-row>
+  {{ row.ageLabel || (row.age !== null && row.age !== undefined ? row.age + ' años' : '-') }}
+</ng-template>
+
+<!-- Expanded row template -->
+<ng-template #expandedRowTpl let-row>
+  <div class="expanded-row-section">
+    <div class="expanded-row-fields">
+      <p><strong>Género</strong><span>{{ row.genderLabel || '-' }}</span></p>
+      <p><strong>Sexo al nacer</strong><span>{{ row.sexAtBirthLabel || '-' }}</span></p>
+      <p><strong>Obra social</strong><span>{{ row.insurerName || '-' }}</span></p>
+      <p><strong>Teléfono</strong><span>{{ row.phone || '-' }}</span></p>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Coverage template -->
+<ng-template #coverageTpl let-row>
+  {{ row.primaryCoverage || 'Sin obra social registrada' }}
+</ng-template>
+
+<!-- Status template (reused). This TemplateRef must be assigned to the 'status' column in TS -->
+<ng-template #statusTpl let-row>
+  <!-- unified to status-badge same as insurer -->
+  <span
+    class="status-badge"
+    [class.status-badge--verified]="row.status === 'VERIFIED'"
+    [class.status-badge--complete]="row.status === 'COMPLETE'"
+    [class.status-badge--min]="row.status === 'MIN'"
+    [class.status-badge--deactivated]="row.status === 'DEACTIVATED'">
+    {{ (statusLabel[row.status] || row.status) | uppercase }}
+  </span>
+</ng-template>
+
+<!-- Activ template -->
+<ng-template #activeTpl let-row>
+  <app-generic-badge [status]="row.isActive ? 'activo' : 'inactivo'" [text]="row.isActive ? 'Activo' : 'Inactivo'"></app-generic-badge>
+</ng-template>
+
+<!-- Full name template: Surname, First name -->
+<ng-template #fullNameTpl let-row>
+  {{ row.lastName }}, {{ row.firstName }}
+</ng-template>

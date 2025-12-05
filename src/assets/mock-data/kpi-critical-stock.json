@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Insumos en stock crítico",
+      "value": 12
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

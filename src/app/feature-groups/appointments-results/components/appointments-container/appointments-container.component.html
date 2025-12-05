@@ -1,0 +1,10 @@
+<p-card>
+  <app-appointments-filters (filtersChanged)="onFiltersChanged($event)" />
+
+  <app-appointments-table
+    [data]="data"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    (selectAppointment)="onAppointmentSelected($event)"
+  />
+</p-card>

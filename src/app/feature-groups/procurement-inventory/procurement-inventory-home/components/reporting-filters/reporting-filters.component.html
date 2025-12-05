@@ -1,0 +1,36 @@
+<div class="flex items-end gap-3 flex-wrap">
+  <div class="flex flex-col gap-1 min-w-[180px]">
+    <label for="dateFrom" class="text-xs font-semibold text-[var(--on-surface)] m-0">Desde</label>
+    <p-datepicker
+      id="dateFrom"
+      [(ngModel)]="dateFrom"
+      dateFormat="dd/mm/yy"
+      [showIcon]="true"
+      placeholder="dd/mm/aaaa"
+      class="w-full"
+      [maxDate]="dateTo || maxDate">
+    </p-datepicker>
+  </div>
+
+  <div class="flex flex-col gap-1 min-w-[180px]">
+    <label for="dateTo" class="text-xs font-semibold text-[var(--on-surface)] m-0">Hasta</label>
+    <p-datepicker
+      id="dateTo"
+      [(ngModel)]="dateTo"
+      dateFormat="dd/mm/yy"
+      [showIcon]="true"
+      placeholder="dd/mm/aaaa"
+      class="w-full"
+      [minDate]="dateFrom"
+      [maxDate]="maxDate">
+    </p-datepicker>
+  </div>
+
+  <div class="flex items-end shrink-0">
+    <app-filter
+      [filters]="popoverFilters()"
+      (filterChange)="onFilterChange($event)">
+    </app-filter>
+  </div>
+</div>
+

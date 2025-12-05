@@ -1,0 +1,15 @@
+<div class="p-6 max-w-[1200px] mx-auto">
+  @if(showAlert) {
+  <app-generic-alert [message]="alertMessage" [type]="alertType" (close)="showAlert = false"></app-generic-alert>
+  }
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-semibold text-gray-800">Crear Nuevo Lote</h1>
+  </div>
+  <p-card>
+    <ng-template pTemplate="header">
+      <h3 class="text-xl font-semibold text-gray-700 p-4">Información del Lote</h3>
+    </ng-template>
+    <app-generic-form [fields]="batchFields" [initialValue]="batchForm.value" title="" size="lg" [saving]="saving" (submitForm)="onFormSubmit($event)" (cancelForm)="onCancel()"></app-generic-form>
+  </p-card>
+</div>
+

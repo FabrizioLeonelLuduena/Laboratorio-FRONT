@@ -1,0 +1,58 @@
+.help-button {
+  background: transparent;
+  border: none;
+  color: var(--on-primary);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+  z-index: 1200;
+}
+
+.help-button:hover {
+  opacity: 0.85;
+  transform: scale(1.1);
+}
+
+.help-button:active {
+  transform: scale(0.95);
+}
+
+.help-button.bottom-right {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+.help-button.bottom-left {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+}
+
+.help-button.static {
+  position: static;
+}
+
+.help-content {
+  text-align: left;
+  color: var(--on-surface);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+@media (max-width <= 600px) {
+  .help-button {
+    font-size: 20px;
+  }
+
+  .help-content {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}

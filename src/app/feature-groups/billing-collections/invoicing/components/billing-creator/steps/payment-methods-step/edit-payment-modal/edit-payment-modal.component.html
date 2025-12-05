@@ -1,0 +1,221 @@
+<div class="edit-payment-modal">
+  <form [formGroup]="paymentForm" class="payment-form">
+    <!-- Payment Method Selection -->
+    <div class="form-grid">
+      <div class="form-field full-width">
+        <label for="paymentMethod" class="required">Medio de pago</label>
+        <p-dropdown
+          id="paymentMethod"
+          formControlName="paymentMethod"
+          [options]="paymentMethodOptions"
+          placeholder="Seleccioná un medio de pago"
+          [styleClass]="isFieldInvalid('paymentMethod') ? 'ng-invalid ng-dirty' : ''"
+          optionLabel="label"
+          optionValue="value"
+        ></p-dropdown>
+        @if (isFieldInvalid('paymentMethod')) {
+          <small class="error-message">
+            {{ getFieldError('paymentMethod') }}
+          </small>
+        }
+      </div>
+    </div>
+
+    <!-- Fund Destination and Account Plan -->
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="fundDestination" class="required">Destino de fondos</label>
+        <p-dropdown
+          id="fundDestination"
+          formControlName="fundDestination"
+          [options]="fundDestinationOptions"
+          placeholder="Seleccioná un destino"
+          [styleClass]="isFieldInvalid('fundDestination') ? 'ng-invalid ng-dirty' : ''"
+          optionLabel="label"
+          optionValue="value"
+        ></p-dropdown>
+        @if (isFieldInvalid('fundDestination')) {
+          <small class="error-message">
+            {{ getFieldError('fundDestination') }}
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="accountPlanId" class="required">Cuenta contable</label>
+        <p-dropdown
+          id="accountPlanId"
+          formControlName="accountPlanId"
+          [options]="accountOptions"
+          [placeholder]="isLoadingAccounts ? 'Cargando...' : 'Seleccioná una cuenta'"
+          [disabled]="isLoadingAccounts"
+          [styleClass]="isFieldInvalid('accountPlanId') ? 'ng-invalid ng-dirty' : ''"
+          optionLabel="label"
+          optionValue="value"
+          [filter]="true"
+          filterBy="label"
+        ></p-dropdown>
+        @if (isFieldInvalid('accountPlanId')) {
+          <small class="error-message">
+            {{ getFieldError('accountPlanId') }}
+          </small>
+        }
+      </div>
+    </div>
+
+    <!-- Bank (if required) -->
+    @if (isBankRequired()) {
+      <div class="form-field">
+        <label for="bank" class="required">Entidad</label>
+        <p-dropdown
+          id="bank"
+          formControlName="bank"
+          [options]="bankOptions"
+          placeholder="Seleccioná una entidad de destino"
+          [styleClass]="isFieldInvalid('bank') ? 'ng-invalid ng-dirty' : ''"
+          optionLabel="label"
+          optionValue="value"
+          [filter]="true"
+        ></p-dropdown>
+        @if (isFieldInvalid('bank')) {
+          <small class="error-message">
+            {{ getFieldError('bank') }}
+          </small>
+        }
+      </div>
+    }
+
+    <!-- Number and Date -->
+    <div class="form-grid">
+      @if (isNumberRequired()) {
+        <div class="form-field">
+          <label for="number" [class.required]="isNumberRequired()">{{ getNumberLabel() }}</label>
+          <input
+            id="number"
+            type="text"
+            pInputText
+            formControlName="number"
+            [placeholder]="getNumberLabel()"
+            [class.ng-invalid]="isFieldInvalid('number')"
+            [class.ng-dirty]="isFieldInvalid('number')"
+          />
+          @if (isFieldInvalid('number')) {
+            <small class="error-message">
+              {{ getFieldError('number') }}
+            </small>
+          }
+        </div>
+      }
+
+      <div class="form-field">
+        <label for="paymentDate" class="required">Fecha de pago</label>
+        <p-calendar
+          id="paymentDate"
+          formControlName="paymentDate"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          placeholder="Seleccioná una fecha"
+          [styleClass]="isFieldInvalid('paymentDate') ? 'ng-invalid ng-dirty' : ''"
+        ></p-calendar>
+        @if (isFieldInvalid('paymentDate')) {
+          <small class="error-message">
+            {{ getFieldError('paymentDate') }}
+          </small>
+        }
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="amount-section">
+      <div class="form-field">
+        <label for="amount" class="required">Importe</label>
+        <div class="amount-input-group">
+          <p-inputNumber
+            id="amount"
+            formControlName="amount"
+            mode="currency"
+            currency="ARS"
+            locale="es-AR"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+            [min]="0"
+            placeholder="0.00"
+            [styleClass]="isFieldInvalid('amount') ? 'ng-invalid ng-dirty' : ''"
+          ></p-inputNumber>
+          @if (remainingBalance > 0) {
+            <p-button
+              label="Usar saldo restante"
+              icon="pi pi-calculator"
+              [outlined]="true"
+              size="small"
+              (onClick)="fillRemainingBalance()"
+            ></p-button>
+          }
+        </div>
+        @if (isFieldInvalid('amount')) {
+          <small class="error-message">
+            {{ getFieldError('amount') }}
+          </small>
+        }
+        @if (remainingBalance > 0) {
+          <small class="field-help">
+            Saldo pendiente: ${{ remainingBalance.toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}
+          </small>
+        }
+      </div>
+    </div>
+
+    <!-- Transaction Reference (optional) -->
+    <div class="form-field">
+      <label for="transactionReference">Referencia de la transacción</label>
+      <input
+        id="transactionReference"
+        type="text"
+        pInputText
+        formControlName="transactionReference"
+        placeholder="Ingresá la referencia (opcional)"
+      />
+    </div>
+
+    <!-- Observations -->
+    <div class="form-field">
+      <label for="observations">Observaciones</label>
+      <textarea
+        id="observations"
+        pInputTextarea
+        formControlName="observations"
+        rows="3"
+        placeholder="Ingresá observaciones adicionales (opcional)"
+      ></textarea>
+    </div>
+
+    <!-- Summary Info -->
+    <div class="info-card">
+      <div class="info-row">
+        <span class="info-label">Total de la factura:</span>
+        <span class="info-value">${{ totalAmount.toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Saldo pendiente:</span>
+        <span class="info-value">${{ remainingBalance.toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+      </div>
+    </div>
+  </form>
+
+  <!-- Modal Footer -->
+  <div class="modal-footer">
+    <p-button
+      label="Cancelar"
+      icon="pi pi-times"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancel()"
+    ></p-button>
+    <p-button
+      label="Guardar"
+      icon="pi pi-check"
+      (onClick)="save()"
+    ></p-button>
+  </div>
+</div>
+

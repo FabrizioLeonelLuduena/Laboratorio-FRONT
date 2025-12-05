@@ -1,0 +1,188 @@
+{
+  "id": "gestion-ubicaciones",
+  "moduleId": "locations",
+  "title": "Gestión de Ubicaciones",
+  "intro": "La pantalla de Ubicaciones permite modelar la estructura física del laboratorio, registrando y organizando jerárquicamente los espacios de almacenamiento para conocer con exactitud dónde se encuentra cada insumo.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>Pantalla principal</strong> presenta un listado completo de las ubicaciones registradas, permitiendo visualizar la <strong>jerarquía</strong> entre los distintos espacios y facilitando la navegación entre depósitos y subdivisiones."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-table.jpeg",
+          "alt": "Pantalla principal de gestión de ubicaciones"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite filtrar la grilla ingresando el <strong>nombre de la ubicación</strong>."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega opciones avanzadas para acotar los resultados por <strong>Estado</strong> o <strong>Tipo</strong>."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Permite exportar la lista visible en pantalla a formato <strong>PDF</strong> o <strong>Excel</strong>."
+            ],
+            [
+              "Crear",
+              "<i class='pi pi-plus'></i>",
+              "Botón de acción para dar de alta una <strong>nueva Pantalla</strong> de ubicación."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/locations/location-filters.jpeg",
+          "alt": "Filtros de ubicaciones"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Estado:</strong> Permite ver ubicaciones Activas o Inactivas.",
+            "<strong>Tipo de Ubicación:</strong> Permite seleccionar la clase de espacio (Ej: Archivo, Área de Cuarentena, Armario, Depósito Central, Heladera, etc.)."
+          ]
+        },
+          {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar</strong> para restablecer todos los filtros a su estado original."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-ubicaciones",
+      "title": "Contenido de la Tabla de Datos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La información de cada ubicación se estructura en las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "<strong>Identificación</strong> única de la ubicación.",
+              "Área de Cultivos"
+            ],
+            [
+              "Tipo",
+              "<strong>Clasificación</strong> del espacio según su función o tamaño.",
+              "Área Interna, Cajón"
+            ],
+            [
+              "Ubicación padre",
+              "Indica la <strong>jerarquía</strong> y a qué espacio mayor pertenece la ubicación actual.",
+              "Un 'Cajón' dentro de un 'Armario'"
+            ],
+            [
+              "Dirección",
+              "<strong>Referencia física</strong> o zona específica dentro del laboratorio.",
+              "Lab Microbiología - Zona B"
+            ],
+            [
+              "Acciones",
+              "Menú desplegable ( <i class='pi pi-ellipsis-v'></i> ) que permite <strong>Editar</strong> o <strong>Desactivar</strong> el registro.",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-ubicacion",
+      "title": "Estados de la Ubicación",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Las ubicaciones pueden presentar los siguientes estados en el sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "La ubicación está <strong>operativa</strong> y habilitada para almacenar insumos."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "La ubicación ha sido <strong>deshabilitada</strong> y no se pueden asignar nuevos insumos a este espacio."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "ubicaciones",
+    "depósitos",
+    "infraestructura",
+    "stock"
+  ]
+}

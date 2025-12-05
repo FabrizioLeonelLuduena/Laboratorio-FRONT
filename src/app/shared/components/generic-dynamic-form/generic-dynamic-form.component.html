@@ -1,0 +1,290 @@
+<section class="form-container"
+         [attr.data-size]="size"
+         [attr.data-mw]="''">
+  <header class="header" *ngIf="title">
+    <h2 class="heading">{{ title }}</h2>
+    <span class="subtle" *ngIf="saving">
+      <span class="spin"></span>&nbsp;Guardando…
+    </span>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid-2">
+      <!-- Use visibleFields() computed signal for conditional visibility -->
+      <div class="field-item"
+           *ngFor="let field of visibleFields(); trackBy: trackByName"
+           [attr.data-span]="field.colSpan ?? 2">
+
+        <label class="text-14"
+               [attr.for]="field.name"
+               [attr.data-invalid]="isInvalid(field.name) ? 'true' : 'false'">
+          {{ field.label }}
+          <span *ngIf="isFieldRequired(field.name)" class="req" aria-hidden="true">*</span>
+        </label>
+
+        <ng-container [ngSwitch]="field.type">
+
+          <!-- TEXT -->
+          <ng-container *ngSwitchCase="'text'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <input pInputText class="field-input w-100" type="text"
+                     [attr.id]="field.name" [attr.placeholder]="field.placeholder || ''"
+                     [formControlName]="field.name"
+                     (blur)="markTouched(field.name)"
+                     (change)="onFieldChange(field.name)"
+                     [attr.aria-invalid]="isInvalid(field.name)"
+                     [attr.aria-describedby]="field.name + '-err'"/>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- PASSWORD -->
+          <ng-container *ngSwitchCase="'password'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <input pInputText class="field-input w-100" type="password"
+                     [attr.id]="field.name" [attr.placeholder]="field.placeholder || ''"
+                     [formControlName]="field.name"
+                     (blur)="markTouched(field.name)"
+                     (change)="onFieldChange(field.name)"
+                     [attr.aria-invalid]="isInvalid(field.name)"
+                     [attr.aria-describedby]="field.name + '-err'"/>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- URL -->
+          <ng-container *ngSwitchCase="'url'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <input pInputText class="field-input w-100" type="url"
+                     [attr.id]="field.name" [attr.placeholder]="field.placeholder || ''"
+                     [formControlName]="field.name"
+                     (blur)="markTouched(field.name)"
+                     (change)="onFieldChange(field.name)"
+                     [attr.aria-invalid]="isInvalid(field.name)"
+                     [attr.aria-describedby]="field.name + '-err'"/>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- EMAIL -->
+          <ng-container *ngSwitchCase="'email'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <input pInputText class="field-input w-100" type="email"
+                     [attr.id]="field.name" [attr.placeholder]="field.placeholder || ''"
+                     [formControlName]="field.name"
+                     (blur)="markTouched(field.name)"
+                     (change)="onFieldChange(field.name)"
+                     [attr.aria-invalid]="isInvalid(field.name)"
+                     [attr.aria-describedby]="field.name + '-err'"/>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- TEL -->
+          <ng-container *ngSwitchCase="'tel'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <input pInputText class="field-input w-100" type="tel"
+                     [attr.id]="field.name" [attr.placeholder]="field.placeholder || ''"
+                     [formControlName]="field.name"
+                     (blur)="markTouched(field.name)"
+                     (change)="onFieldChange(field.name)"
+                     [attr.aria-invalid]="isInvalid(field.name)"
+                     [attr.aria-describedby]="field.name + '-err'"/>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- NUMBER -->
+          <ng-container *ngSwitchCase="'number'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <p-inputNumber [inputId]="field.name"
+                             [min]="field.min ?? null"
+                             [max]="field.max ?? null"
+                             [useGrouping]="false"
+                             [formControlName]="field.name"
+                             (onBlur)="markTouched(field.name)"
+                             (onChange)="onFieldChange(field.name)"
+                             inputStyleClass="field-input w-100"
+                             [attr.aria-invalid]="isInvalid(field.name)"
+                             [attr.aria-describedby]="field.name + '-err'">
+              </p-inputNumber>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- SELECT -->
+          <ng-container *ngSwitchCase="'select'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <p-select
+                [options]="field.options || []"
+                optionLabel="label"
+                optionValue="value"
+                [placeholder]="field.placeholder || 'Seleccionar…'"
+                [formControlName]="field.name"
+                [filter]="field.filter === true"
+                [filterBy]="field.filterBy || 'label'"
+                [filterPlaceholder]="field.filterPlaceholder || 'Buscar…'"
+                [inputId]="field.name"
+                [emptyMessage]="selectEmptyMessage || 'No se encontraron resultados'"
+                [emptyFilterMessage]="selectEmptyFilterMessage || 'No se encontraron resultados'"
+                panelStyleClass="select-panel surface"
+                styleClass="field-input w-100"
+                (onChange)="markTouched(field.name); onFieldChange(field.name)"
+                [attr.aria-invalid]="isInvalid(field.name)"
+                [attr.aria-describedby]="field.name + '-err'">
+              </p-select>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- TEXTAREA -->
+          <ng-container *ngSwitchCase="'textarea'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <textarea pInputTextarea [autoResize]="false" class="field-input w-100"
+                        [rows]="field.rows || 3" [attr.id]="field.name"
+                        [attr.placeholder]="field.placeholder || ''"
+                        [formControlName]="field.name"
+                        (blur)="markTouched(field.name)"
+                        (change)="onFieldChange(field.name)"
+                        [attr.aria-invalid]="isInvalid(field.name)"
+                        [attr.aria-describedby]="field.name + '-err'"></textarea>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- CHECKBOX -->
+          <ng-container *ngSwitchCase="'checkbox'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <div class="checkbox-shell">
+                <p-checkbox [binary]="true" [inputId]="field.name"
+                            [formControlName]="field.name"
+                            (onBlur)="markTouched(field.name)"
+                            (onChange)="onFieldChange(field.name)"
+                            [attr.aria-invalid]="isInvalid(field.name)"
+                            [attr.aria-describedby]="field.name + '-err'">
+                </p-checkbox>
+                <label class="checkbox-label text-14" [attr.for]="field.name">
+                  {{ field.placeholder || field.label }}
+                </label>
+              </div>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- RADIO -->
+          <ng-container *ngSwitchCase="'radio'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <div class="radio-group" role="radiogroup"
+                   [attr.aria-describedby]="field.name + '-err'">
+                <div class="radio-item" *ngFor="let opt of field.options || []; let i = index">
+                  <p-radioButton [name]="field.name"
+                                 [inputId]="field.name + '_' + i"
+                                 [value]="opt.value"
+                                 [formControlName]="field.name"
+                                 (onClick)="onFieldChange(field.name)">
+                  </p-radioButton>
+                  <label class="text-14" [attr.for]="field.name + '_' + i">
+                    {{ opt.label }}
+                  </label>
+                </div>
+              </div>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- CHIPS -->
+          <ng-container *ngSwitchCase="'chips'">
+            <p-inputGroup [styleClass]="isInvalid(field.name) ? 'has-error' : ''"
+                          (focusout)="markTouched(field.name)">
+              <p-inputGroupAddon *ngIf="field.addonLeft">{{ field.addonLeft }}</p-inputGroupAddon>
+              <p-chips
+                [separator]="field.separator || undefined"
+                [addOnBlur]="field.addOnBlur ?? false"
+                [allowDuplicate]="field.allowDuplicate ?? false"
+                [formControlName]="field.name"
+                (onAdd)="onChipsAdd(field.name); onFieldChange(field.name)"
+                (onRemove)="onChipsRemove(field.name); onFieldChange(field.name)"
+                (onBlur)="markTouched(field.name)"
+                styleClass="field-input w-100">
+              </p-chips>
+              <p-inputGroupAddon *ngIf="field.addonRight">{{ field.addonRight }}</p-inputGroupAddon>
+            </p-inputGroup>
+          </ng-container>
+
+          <!-- DATE -->
+          <ng-container *ngSwitchCase="'date'">
+            <div class="control-shell"
+                 [attr.data-invalid]="isInvalid(field.name) ? 'true' : 'false'"
+                 (focusout)="markTouched(field.name)">
+              <p-datepicker
+                [appendTo]="'body'"
+                [showIcon]="true"
+                iconDisplay="input"
+                [showButtonBar]="true"
+                dateFormat="dd/mm/yy"
+                panelStyleClass="datepicker-panel surface"
+                styleClass="date-ctrl w-100"
+                inputStyleClass="field-input"
+                [minDate]="getMinDate(field.name)"
+                [maxDate]="getMaxDate(field.name)"
+                [formControlName]="field.name"
+                [inputId]="field.name"
+                [placeholder]="field.placeholder || ''"
+                (onBlur)="markTouched(field.name)"
+                (onSelect)="onFieldChange(field.name)"
+                [attr.aria-invalid]="isInvalid(field.name)"
+                [attr.aria-describedby]="field.name + '-err'">
+              </p-datepicker>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
+        <!-- Error/Hint Footer -->
+        <div class="field-foot">
+          <span *ngIf="isInvalid(field.name)" class="form-error-pill" [id]="field.name + '-err'">
+            {{ errorMsg(field.name) }}
+          </span>
+          <span *ngIf="!isInvalid(field.name)" class="form-hint" [id]="field.name + '-err'">
+            {{ field.hint || '' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions-end">
+      <app-generic-button
+        type="cancel"
+        text="Cancelar"
+        (pressed)="onCancel()">
+      </app-generic-button>
+      <app-generic-button
+        type="save"
+        text="Guardar"
+        [disabled]="saving"
+        (pressed)="onSubmit()">
+      </app-generic-button>
+    </div>
+  </form>
+</section>

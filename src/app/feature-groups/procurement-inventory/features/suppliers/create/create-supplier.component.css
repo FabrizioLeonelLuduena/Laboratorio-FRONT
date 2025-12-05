@@ -1,0 +1,205 @@
+/* ========== SUPPLIER ITEMS GRID STYLES ========== */
+@import '../../../../../shared/styles/grid-styles.css';
+
+/* CollapsableForm: ancho completo de su contenedor */
+:host ::ng-deep app-collapsable-form .max-w-2xl,
+:host ::ng-deep app-collapsable-form .max-w-md,
+:host ::ng-deep app-collapsable-form .max-w-sm {
+  max-width: 100%;
+  width: 100%;
+}
+
+:host ::ng-deep app-collapsable-form .mx-auto {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Espaciado vertical entre secciones */
+.stack-24 > * + * {
+  margin-top: 1.5rem;
+}
+
+.stack-16 > * + * {
+  margin-top: 1rem;
+}
+
+.stack-8 > * + * {
+  margin-top: 0.5rem;
+}
+
+/* Override de columnas para 5 columnas específicas de supplier items */
+.supplier-items-grid-wrapper {
+  width: 100%;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+
+/* Override de columnas para 5 columnas específicas de supplier items */
+.supplier-items-grid-wrapper .grid-header,
+.supplier-items-grid-wrapper .grid-row {
+  grid-template-columns: 300px 180px 1fr 120px 70px;
+}
+
+/* Required field asterisk styling */
+.required-asterisk {
+  color: #ef4444;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+.supplier-items-grid-wrapper .header-add-btn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.supplier-items-grid-wrapper .header-add-btn i {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.supplier-items-grid-wrapper .grid-action-btn.delete-btn {
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: transparent;
+  color: #000;
+}
+
+/* Asegurar que los dropdowns ocupen el 100% del ancho de la columna */
+.supplier-items-grid-wrapper .grid-cell.col-supply,
+.supplier-items-grid-wrapper .grid-cell.col-packaging {
+  overflow: visible;
+  position: relative;
+  padding: 0.5rem;
+}
+
+.supplier-items-grid-wrapper .grid-cell.col-supply p-dropdown,
+.supplier-items-grid-wrapper .grid-cell.col-packaging p-dropdown {
+  width: 100%;
+  flex: 1;
+  display: flex;
+}
+
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-supply .p-dropdown,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-packaging .p-dropdown {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  height: 38px;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-supply .p-dropdown-label,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-packaging .p-dropdown-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+  display: block;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-supply .p-dropdown-trigger,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-packaging .p-dropdown-trigger {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-supply .p-dropdown:hover,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-packaging .p-dropdown:hover {
+  border-color: #9ca3af;
+}
+
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-supply .p-dropdown:focus,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-supply .p-dropdown.p-focus,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-packaging .p-dropdown:focus,
+:host ::ng-deep .supplier-items-grid-wrapper .grid-cell.col-packaging .p-dropdown.p-focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgb(20 184 166 / 15%);
+}
+
+/* Force visible text color and line-height for dropdown labels inside this wrapper */
+:host ::ng-deep .supplier-items-grid-wrapper .p-dropdown .p-dropdown-label,
+:host ::ng-deep .supplier-items-grid-wrapper .p-dropdown .p-placeholder,
+:host ::ng-deep .supplier-items-grid-wrapper .p-dropdown .p-dropdown-label span {
+  color: #111;
+  line-height: 1.2;
+}
+
+/* Ensure dropdown selected label uses the full height and vertically centered */
+:host ::ng-deep .supplier-items-grid-wrapper .p-dropdown .p-dropdown-label {
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+
+/* Ensure dropdown selected label doesn't get clipped behind next column */
+:host ::ng-deep .supplier-items-grid-wrapper .p-dropdown {
+  overflow: visible;
+}
+
+/* Centrar contenido de la columna de acciones tanto en header como body */
+.supplier-items-grid-wrapper .grid-header-cell.col-actions,
+.supplier-items-grid-wrapper .grid-cell.col-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Price input wrapper with $ prefix */
+.price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.price-prefix {
+  position: absolute;
+  left: 8px;
+  color: #374151;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.price-input {
+  padding-left: 20px;
+}
+
+/* Responsive */
+@media (width <= 1400px) {
+  .supplier-items-grid-wrapper .grid-header,
+  .supplier-items-grid-wrapper .grid-row {
+    grid-template-columns: 1.5fr 90px 1fr 110px 70px;
+  }
+}
+
+@media (width <= 1200px) {
+  .supplier-items-grid-wrapper .grid-header,
+  .supplier-items-grid-wrapper .grid-row {
+    grid-template-columns: 1fr 80px 1fr 100px 60px;
+    font-size: 0.8rem;
+  }
+}

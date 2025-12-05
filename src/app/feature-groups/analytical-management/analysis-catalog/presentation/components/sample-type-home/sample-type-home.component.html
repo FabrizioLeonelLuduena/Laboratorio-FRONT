@@ -1,0 +1,74 @@
+<div class="sample-type-home-container">
+  <!-- Alert Component -->
+  @if (showAlert()) {
+    <app-generic-alert
+      [type]="alertType()"
+      [title]="alertTitle()"
+      [text]="alertText()"
+    />
+  }
+
+  <!-- Main Table -->
+  <app-advanced-table
+    [columns]="columns"
+    [data]="sampleTypes()"
+    [config]="effectiveTableConfig()"
+    [loading]="loading()"
+    [actionItems]="effectiveActionItems()"
+    (action)="onTableAction($event)"
+  />
+
+  <!-- Edit/Create Modal -->
+  @if (showEditDialog()) {
+    <app-generic-modal-form
+      [visible]="showEditDialog()"
+      [title]="selectedSampleType() ? 'Editar Tipo de Muestra' : 'Nuevo Tipo de Muestra'"
+      [width]="'600px'"
+      (closed)="showEditDialog.set(false)"
+    >
+      <app-sample-type-edit-form
+        [sampleType]="selectedSampleType()"
+        (save)="onSave($event)"
+        (cancelled)="onCancel()"
+      />
+    </app-generic-modal-form>
+  }
+
+  <!-- Details Modal -->
+  @if (showDetailsDialog()) {
+    <app-generic-modal-form
+      [visible]="showDetailsDialog()"
+      [title]="'Detalles del Tipo de Muestra'"
+      [width]="'600px'"
+      (closed)="showDetailsDialog.set(false)"
+    >
+      <div class="details-content">
+        @if (selectedSampleType(); as type) {
+          <div class="detail-row">
+            <label class="detail-label">Nombre:</label>
+            <span class="detail-value">{{ type.name }}</span>
+          </div>
+
+          <div class="detail-row">
+            <label class="detail-label">ID:</label>
+            <span class="detail-value">{{ type.id }}</span>
+          </div>
+
+          <div class="detail-row">
+            <label class="detail-label">Versión:</label>
+            <span class="detail-value">{{ type.entityVersion }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <p-button
+          label="Cerrar"
+          icon="pi pi-times"
+          severity="secondary"
+          (onClick)="showDetailsDialog.set(false)"
+        />
+      </div>
+    </app-generic-modal-form>
+  }
+</div>

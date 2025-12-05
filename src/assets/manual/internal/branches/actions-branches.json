@@ -1,0 +1,1371 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones de Sucursales",
+  "intro": "Detalle de las operaciones de alta, modificación, consulta y baja lógica de las sedes del laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+        {
+
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador "
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "crear-sucursal",
+      "title": "Crear Sucursal",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Si la sucursal no existe en el sistema, inicie su registro haciendo clic en el ícono de <strong>Crear sucursal</strong> <i class='pi pi-plus'></i> ubicado en la parte superior de la pantalla principal. Será redirigido a la pantalla de <strong>Crear</strong> donde deberá completar distintos pasos."
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 1: Sucursal y Dirección"
+        },
+        {
+          "type": "paragraph",
+          "text": "Carga de datos básicos y ubicación física."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create1.jpg",
+          "alt": "Paso 1: Datos básicos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a modificar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Código",
+              "Identificador numérico interno.",
+              "Sí"
+            ],
+            [
+              "Descripción",
+              "Nombre o denominación de la sucursal.",
+              "Sí"
+            ],
+            [
+              "Responsable",
+              "Es un selector que permite elegir la persona a cargo de la sede.",
+              "Sí"
+            ],
+            [
+              "Cantidad de boxes de extracción",
+              "Cantidad disponible.",
+              "Sí"
+            ],
+            [
+              "Cantidad de boxes de atención",
+              "Cantidad disponible.",
+              "Sí"
+            ],
+            [
+              "Cantidad de cajas",
+              "Cantidad destinada a cobro.",
+              "Sí"
+            ],
+            [
+              "Calle",
+              "Nombre de la calle.",
+              "Sí"
+            ],
+            [
+              "Número",
+              "Altura del domicilio.",
+              "Sí"
+            ],
+            [
+              "Código postal",
+              "Código asignado a la zona.",
+              "Sí"
+            ],
+            [
+              "Provincia",
+              "Es un selector que permite elegir la provincia donde se ubica la sucursal.",
+              "Sí"
+            ],
+            [
+              "Ciudad",
+              "Es un selector que permite elegir la ciudad correspondiente.",
+              "Sí"
+            ],
+            [
+              "Barrio",
+              "Es un selector que permite elegir el barrio correspondiente.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 2: Horarios."
+            ],
+            [
+              "Cancelar",
+              "No guarda los cambios y vuelve a la pantalla principal de <strong>Sucursales</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 2: Horarios"
+        },
+        {
+          "type": "paragraph",
+          "text": "Configuración de días y horarios de atención."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create2.png",
+          "alt": "Paso 2: Horarios"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a modificar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Tipo de atención",
+              "Puede ser Atención o Extracción.",
+              "Sí"
+            ],
+            [
+              "Primer día",
+              "Es un selector que permite elegir el día inicial del rango (ej. Lunes).",
+              "Sí"
+            ],
+            [
+              "Último día",
+              "Es un selector que permite elegir el día final del rango (ej. Viernes).",
+              "Sí"
+            ],
+            [
+              "Hora de inicio",
+              "Es un campo con selector de hora que permite indicar el horario de apertura.",
+              "Sí"
+            ],
+            [
+              "Hora de fin",
+              "Es un campo con selector de hora que permite indicar el horario de cierre.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al agregar el horario con el ícono <strong><i class='pi pi-plus'></i></strong>, aparecerá una tabla con el detalle:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Atención"
+            ],
+            [
+              "Días",
+              "Lunes → Viernes"
+            ],
+            [
+              "Horario",
+              "08:00 - 14:00"
+            ],
+            [
+              "Acciones",
+              "<i class='pi pi-trash'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 3: Contactos."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 1: Sucursal y Dirección."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 3: Contactos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Registro de los medios de contacto disponibles."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create3.jpg",
+          "alt": "Paso 3"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a modificar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Teléfono o Email.",
+              "Sí"
+            ],
+            [
+              "Contacto",
+              "Número o dirección según corresponda.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al agregar un contacto con <strong><i class='pi pi-plus'></i></strong>, aparecerá una tabla:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Teléfono"
+            ],
+            [
+              "Contacto",
+              "3516082342"
+            ],
+            [
+              "Acción",
+              "<i class='pi pi-trash'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 4: Áreas y secciones."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 2: Horarios."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 4: Áreas y secciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Permite seleccionar áreas ya existentes o crear nuevas áreas y secciones."
+        },
+
+        {
+          "type": "subtitle",
+          "text": "Áreas existentes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Seleccione un área previamente creada para asociarla a la sucursal."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create4-existing-areas.jpg",
+          "alt": "Áreas existentes"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de áreas"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Indica el nombre del área.",
+              "Unidad de Nefrología"
+            ],
+            [
+              "Secciones",
+              "Es un selector que permite elegir múltiples secciones.",
+              "Orina completa"
+            ],
+            [
+              "Acción",
+              "Permite eliminar un área de la sucursal",
+              "<i class='pi pi-trash'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 5: Confirmar."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 3: Contactos."
+            ]
+          ]
+        },
+          {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Crear nueva área"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create4-new-area.jpg",
+          "alt": "Nueva área"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a modificar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Nombre del área",
+              "Nombre identificatorio.",
+              "Sí"
+            ],
+            [
+              "Tipo",
+              "Categoría interna.",
+              "Sí"
+            ],
+            [
+              "¿Es externa?",
+              "Es un selector que indica si pertenece a un tercero.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al presionar <strong><i class='pi pi-plus'></i> Agregar</strong>, el área pasa a la sección Áreas nuevas a crear."
+        },
+        {
+          "type": "subtitle",
+          "text": "Áreas nuevas a crear"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Nombre del área.",
+              "Unidad de Nefrología"
+            ],
+            [
+              "Medio",
+              "Interno / Externo.",
+              "Interno"
+            ],
+            [
+              "Secciones",
+              "Listado de secciones cargadas.",
+              "Orina completa"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Agregar secciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Para agregar secciones, presione el ícono <strong><i class='pi pi-list'></i></strong> en el área creada."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create4-new-area-sections.jpg",
+          "alt": "Secciones de nueva área"
+        },
+        {
+          "type": "paragraph",
+          "text": "Complete el formulario con el nombre de la sección y presione <strong><i class='pi pi-plus'></i> Agregar sección</strong>."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Guarda las secciones agregadas y cierra la ventana."
+            ],
+            [
+              "Cancelar",
+              "No guarda los cambios y cierra la ventana."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 5: Confirmación"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mostrará todos los datos ingresados divididos según cada paso completado."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create5.1.jpg",
+          "alt": "Paso 5.1"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create5.2.jpg",
+          "alt": "Paso 5.2"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Guarda toda la información y crea la nueva sucursal."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 4: Áreas y secciones."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editar-sucursal",
+      "title": "Editar información de una sucursal",
+      "open": false,
+      "blocks": [
+         {
+          "type": "paragraph",
+          "text": "Esta función permite modificar, completar o actualizar los datos de una sucursal registrada. Para iniciar, busque la sucursal y, en la columna <strong>Acciones</strong>, seleccione la opción <strong>Editar</strong> <i class='pi pi-pencil'></i> del menú desplegable."
+        },        {
+          "type": "subtitle",
+          "text": "<strong>Paso 1: Sucursal y Dirección"
+        },
+        {
+          "type": "paragraph",
+          "text": "Carga de datos básicos y ubicación física."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-edit1.jpg",
+          "alt": "Edición paso 1"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a modificar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+                      [
+              "Descripción",
+              "Nombre o denominación de la sucursal.",
+              "Sí"
+            ],
+            [
+              "Responsable",
+              "Es un selector que permite elegir la persona a cargo de la sede.",
+              "Sí"
+            ],
+            [
+              "Cantidad de boxes de extracción",
+              "Cantidad disponible.",
+              "Sí"
+            ],
+            [
+              "Cantidad de boxes de atención",
+              "Cantidad disponible.",
+              "Sí"
+            ],
+            [
+              "Cantidad de cajas",
+              "Cantidad destinada a cobro.",
+              "Sí"
+            ],
+            [
+              "Calle",
+              "Nombre de la calle.",
+              "Sí"
+            ],
+            [
+              "Número",
+              "Altura del domicilio.",
+              "Sí"
+            ],
+            [
+              "Código postal",
+              "Código asignado a la zona.",
+              "Sí"
+            ],
+            [
+              "Provincia",
+              "Es un selector que permite elegir la provincia donde se ubica la sucursal.",
+              "Sí"
+            ],
+            [
+              "Ciudad",
+              "Es un selector que permite elegir la ciudad correspondiente.",
+              "Sí"
+            ],
+            [
+              "Barrio",
+              "Es un selector que permite elegir el barrio correspondiente.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 2: Horarios."
+            ],
+            [
+              "Cancelar",
+              "No guarda los cambios y vuelve a la pantalla principal de <strong>Sucursales</strong>."
+            ]
+          ]
+        },
+        {
+        "type":"note",
+        "variant":"info",
+        "title":"Nota importante",
+        "text":"<br> Código de la sucursal: este campo no puede modificarse y se encuentra deshabilitado.  El código es un identificador único asignado en el momento del alta y se utiliza en procesos internos del sistema, por lo que permanece bloqueado durante la edición."
+
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 2: Horarios"
+        },
+        {
+          "type": "paragraph",
+          "text": "Configuración de días y horarios de atención."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-edit2.jpg",
+          "alt": "Edición paso 2"
+        },
+        {
+              "type": "paragraph",
+          "text": "No se pueden modificar los horarios agregados, para ello deberá eliminar los creados anteriormente a conciencia y crearlos nuevamente"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Tipo de atención",
+              "Puede ser Atención o Extracción.",
+              "Sí"
+            ],
+            [
+              "Primer día",
+              "Es un selector que permite elegir el día inicial del rango (ej. Lunes).",
+              "Sí"
+            ],
+            [
+              "Último día",
+              "Es un selector que permite elegir el día final del rango (ej. Viernes).",
+              "Sí"
+            ],
+            [
+              "Hora de inicio",
+              "Es un campo con selector de hora que permite indicar el horario de apertura.",
+              "Sí"
+            ],
+            [
+              "Hora de fin",
+              "Es un campo con selector de hora que permite indicar el horario de cierre.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al agregar el horario con el ícono <strong><i class='pi pi-plus'></i></strong>, aparecerá una tabla con el detalle:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Atención"
+            ],
+            [
+              "Días",
+              "Lunes → Viernes"
+            ],
+            [
+              "Horario",
+              "08:00 - 14:00"
+            ],
+            [
+              "Acciones",
+              "<i class='pi pi-trash'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 3: Contactos."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 1: Sucursal y Dirección."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 3: Contactos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Registro de los medios de contacto disponibles."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-edit3.jpg",
+          "alt": "Edición paso 3"
+        },
+          {
+              "type": "paragraph",
+          "text": "No se pueden modificar los contactos agregados, para ello deberá eliminar los creados anteriormente a conciencia y crearlos nuevamente"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Teléfono o Email.",
+              "Sí"
+            ],
+            [
+              "Contacto",
+              "Número o dirección según corresponda.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al agregar un contacto con <strong><i class='pi pi-plus'></i></strong>, aparecerá una tabla:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Teléfono"
+            ],
+            [
+              "Contacto",
+              "3516082342"
+            ],
+            [
+              "Acción",
+              "<i class='pi pi-trash'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 4: Áreas y secciones."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 2: Horarios."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 4: Áreas y secciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Permite editar áreas ya existentes o crear nuevas áreas y secciones."
+        },
+
+        {
+          "type": "subtitle",
+          "text": "Áreas existentes"
+        },
+
+        {
+          "type": "paragraph",
+          "text": "En este caso podrá seleccionar un área previamente creada para asociarla a la sucursal o eliminar alguna previamente añadida."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-edit4.jpg",
+          "alt": "Edición paso 4"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de áreas"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Indica el nombre del área.",
+              "Unidad de Nefrología"
+            ],
+            [
+              "Secciones",
+              "Es un selector que permite elegir múltiples secciones.",
+              "Orina completa"
+            ],
+            [
+              "Acción",
+              "Permite eliminar un área de la sucursal",
+              "<i class='pi pi-trash'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Si todo está correcto, redirige al Paso 5: Confirmar."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 3: Contactos."
+            ]
+          ]
+        },
+          {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Crear nueva área"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create4-new-area.jpg",
+          "alt": "Nueva área"
+        },
+          {
+              "type": "paragraph",
+          "text": "No se pueden modificar las áreas creadas, para ello deberá eliminar las creadas anteriormente a conciencia y crearlas nuevamente"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Nombre del área",
+              "Nombre identificatorio.",
+              "Sí"
+            ],
+            [
+              "Tipo",
+              "Categoría interna.",
+              "Sí"
+            ],
+            [
+              "¿Es externa?",
+              "Es un selector que indica si pertenece a un tercero.",
+              "Sí"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al presionar <strong><i class='pi pi-plus'></i> Agregar</strong>, el área pasa a la sección Áreas nuevas a crear."
+        },
+        {
+          "type": "subtitle",
+          "text": "Áreas nuevas a crear"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Nombre",
+              "Nombre del área.",
+              "Unidad de Nefrología"
+            ],
+            [
+              "Medio",
+              "Interno / Externo.",
+              "Interno"
+            ],
+            [
+              "Secciones",
+              "Listado de secciones cargadas.",
+              "Orina completa"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Agregar secciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Para agregar secciones, presione el ícono <strong><i class='pi pi-list'></i></strong> en el área creada."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-create4-new-area-sections.jpg",
+          "alt": "Secciones de nueva área"
+        },
+        {
+          "type": "paragraph",
+          "text": "Complete el formulario con el nombre de la sección y presione <strong><i class='pi pi-plus'></i> Agregar sección</strong>."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Guarda las secciones agregadas y cierra la ventana."
+            ],
+            [
+              "Cancelar",
+              "No guarda los cambios y cierra la ventana."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 5: Confirmación"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mostrará todos los datos ingresados divididos según cada paso completado."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-edit5.1.jpg",
+          "alt": "Edición paso 5.1"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-edit5.2.jpg",
+          "alt": "Edición paso 5.2"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Guarda toda la información y crea la nueva sucursal."
+            ],
+            [
+              "Anterior",
+              "Vuelve al Paso 4: Áreas y secciones."
+            ]
+          ]
+        }
+      ]
+    },
+{
+  "id": "consultar-sucursal",
+  "title": "Consultar información de una sucursal",
+  "open": false,
+  "blocks": [
+    {
+          "type": "paragraph",
+          "text": "Para visualizar el contenido de una sucursal, haga clic en el ícono de <strong>Ver</strong> <i class='pi pi-eye'></i> ubicado en la parte superior de la pantalla principal. Será redirigido a la pantalla de <strong>Detalle</strong> donde podrá ver toda la información de esa sucursal"
+        },
+    {
+      "type": "image",
+      "src": "assets/manual/internal/branches/branches-details.jpg",
+      "alt": "Detalles de sucursal"
+    },
+    {
+  "type": "subtitle",
+  "text": "Información General"
+},
+{
+  "type": "table",
+  "columns": [
+    "Campo",
+    "Descripción",
+    "Ejemplo"
+  ],
+  "rows": [
+    [
+      "Responsable asignado",
+      "Persona a cargo de la sucursal.",
+      "Juan Pérez"
+    ],
+    [
+      "Cantidad de boxes",
+      "Número total de boxes disponibles en la sucursal.",
+      "8"
+    ],
+    [
+      "Cantidad de cajas registradoras",
+      "Total de cajas habilitadas para atención al cliente.",
+      "3"
+    ],
+    [
+      "Estado",
+      "Indica si la sucursal está activa o inactiva.",
+      "Activo"
+    ]
+
+  ]
+},
+{
+  "type": "subtitle",
+  "text": "Contacto y Ubicación"
+},
+{
+  "type": "table",
+  "columns": [
+    "Campo",
+    "Descripción",
+    "Ejemplo"
+  ],
+  "rows": [
+    [
+      "Teléfonos",
+      "Números de contacto de la sucursal.",
+      "(351) 456-7890"
+    ],
+    [
+      "Email",
+      "Correo electrónico para contacto o consultas.",
+      "sucursal@laboratorio.com"
+    ],
+    [
+      "WhatsApp",
+      "Número habilitado para mensajería.",
+      "+54 9 351 555 1234"
+    ],
+    [
+      "Dirección",
+      "Saldrá el nombre de la calle con su numéro, barrio, provincia y ciudad.",
+      "Av. Colón 4301, Centro, Córdoba, Córdoba"
+    ]
+
+  ]
+},
+{
+  "type":"note",
+  "variant":"info",
+  "title":"Nota importante",
+  "text":"<br> En contacto la información presentada dependerá de lo que se cargó al crear la sucursal"
+},
+{
+  "type": "subtitle",
+  "text": "Horarios"
+},
+{
+  "type": "table",
+  "columns": [
+    "Campo",
+    "Descripción",
+    "Ejemplo"
+  ],
+  "rows": [
+    [
+      "Tipo de atención",
+      "Define si la atención es por demanda, turno previo, etc.",
+      "Con turno"
+    ],
+    [
+      "Días declarados",
+      "Días en los que la sucursal atiende.",
+      "Lunes a Viernes"
+    ],
+    [
+      "Franja horaria",
+      "Horario de atención de la sucursal.",
+      "08:00 a 18:00"
+    ]
+  ]
+},
+{
+  "type": "subtitle",
+  "text": "Áreas y Secciones"
+},
+{
+  "type": "table",
+  "columns": [
+    "Campo",
+    "Descripción",
+    "Ejemplo"
+  ],
+  "rows": [
+    [
+      "Nombre del área",
+      "Identificación del área dentro de la sucursal.",
+      "Laboratorio"
+    ],
+    [
+      "Tipo",
+      "Define si el área es administrativa, técnica u operativa.",
+      "Técnica"
+    ],
+    [
+      "Interna o externa",
+      "Indica si pertenece a la empresa o a un tercero.",
+      "Interna"
+    ],
+    [
+      "Secciones asociadas",
+      "Listado de secciones dentro del área.",
+      "Extracciones, Hematología"
+    ],
+    [
+      "Estado",
+      "Estado actual del área.",
+      "Activa"
+    ]
+  ]
+}
+
+
+  ]
+},
+{
+  "id": "eliminar-sucursal",
+  "title": "Desactivar una sucursal",
+  "open": false,
+  "blocks": [
+    {
+          "type": "paragraph",
+          "text": "Al seleccionar la opción <strong>Desactivar</strong> desde el menú de acciones <strong>⋮</strong> se abre una ventana de confirmación para <strong>desactivar</strong>la sucursal del sistema."
+        },
+    {
+      "type": "image",
+      "src": "assets/manual/internal/branches/branches-delete.jpg",
+      "alt": "Eliminar sucursal"
+    },
+   {
+      "type": "subtitle",
+      "text": "Acciones Finales"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Botón",
+        "Resultado"
+      ],
+      "rows": [
+        [
+          "Aceptar",
+          "La sucursal cambia su estado a <strong>Inactivo</strong>."
+        ],
+        [
+          "Cancelar",
+          "Cierra la ventana sin realizar cambios."
+        ]
+      ]
+    }
+  ]
+},
+
+    {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Sucursales",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Ubique el botón con el ícono de descarga en la barra superior."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-table-download.jpg",
+          "alt": "Descargar listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos Disponibles"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "Genera una hoja de cálculo editable. Ideal para <strong>análisis de datos o reportes internos</strong>."
+            ],
+            [
+              "PDF (Rojo)",
+              "Genera un documento estático. Recomendado para <strong>impresión o archivo</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota",
+          "text": "<br>El archivo generado respeta los <strong>filtros activos</strong>. Si ha filtrado por estado 'Activo', el archivo solo contendrá esas sucursales."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "sucursales",
+    "crear",
+    "editar",
+    "eliminar",
+    "consultar"
+  ]
+}

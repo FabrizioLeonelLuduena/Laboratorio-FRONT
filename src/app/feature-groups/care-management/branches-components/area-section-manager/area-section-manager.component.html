@@ -1,0 +1,276 @@
+<div class="area-section-manager">
+  <p-tabView>
+    <!-- Tab 1: Seleccionar áreas existentes -->
+    <p-tabPanel header="Áreas existentes" leftIcon="pi pi-sitemap">
+      <div class="tab-content">
+        <div class="section-header">
+          <h3 class="title-18">Seleccionar áreas y secciones</h3>
+        </div>
+
+        <!-- Area selector -->
+        <div class="area-selector">
+          <p-dropdown
+            [(ngModel)]="selectedAreaToAdd"
+            [options]="areaOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar área..."
+            [loading]="loading()"
+            [disabled]="disableAddAreas"
+            (onChange)="onSelectAreaToAdd()"
+            [emptyMessage]="'No se encontraron resultados'"
+            [emptyFilterMessage]="'No se encontraron resultados'"
+            styleClass="w-full"
+          ></p-dropdown>
+        </div>
+
+        <!-- Selected workspaces -->
+        @if (safeWorkspaces.length > 0) {
+          <div class="workspaces-grid">
+            @for (workspace of safeWorkspaces; track workspace.areaId) {
+              @if (workspace) {
+                <div class="workspace-card">
+                  <div class="card-header">
+                    <div class="card-title">
+                      <i class="pi pi-sitemap"></i>
+                      <span>{{ workspace.areaName }}</span>
+                    </div>
+                    <button
+                      pButton
+                      icon="pi pi-trash"
+                      class="p-button-rounded p-button-text p-button-danger p-button-sm"
+                      (click)="removeWorkspace(workspace.areaId)"
+                      pTooltip="Eliminar área"
+                    ></button>
+                  </div>
+
+                  <div class="card-body">
+                    <label class="field-label">Secciones</label>
+                    <p-multiSelect
+                      [options]="getSectionOptionsForArea(workspace)"
+                      [(ngModel)]="workspace.sectionIds"
+                      (ngModelChange)="onSectionModelChange($event, workspace)"
+                      optionLabel="label"
+                      optionValue="value"
+                      [showToggleAll]="false"
+                      [filter]="true"
+                      placeholder="Seleccionar secciones..."
+                      [maxSelectedLabels]="0"
+                      [selectedItemsLabel]="getSelectedItemsLabel(workspace.sectionIds.length || 0)"
+                      [emptyMessage]="'No se encontraron resultados'"
+                      [emptyFilterMessage]="'No se encontraron resultados'"
+                      styleClass="w-full"
+                      appendTo="body"
+                    ></p-multiSelect>
+
+                    <!-- Badges for selected sections -->
+                    @if (workspace.sectionIds && workspace.sectionIds.length > 0) {
+                      <div class="selected-sections-badges">
+                        @for (sectionId of workspace.sectionIds; track sectionId) {
+                          <span class="section-badge">{{ getSectionName(workspace.areaId, sectionId) }}</span>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <i class="pi pi-inbox"></i>
+            <p>No hay áreas seleccionadas</p>
+            <small>Usá el selector de arriba para agregar áreas</small>
+          </div>
+        }
+      </div>
+    </p-tabPanel>
+
+    <!-- Tab 2: Crear nuevas áreas -->
+    <p-tabPanel header="Crear nueva área" leftIcon="pi pi-plus-circle">
+      <div class="tab-content compact-form">
+        <div class="section-header">
+          <h3 class="title-18">Crear área personalizada</h3>
+        </div>
+
+        <!-- New area form -->
+        <div class="new-area-form-container">
+          <app-generic-form
+            #newAreaForm
+            [fields]="newAreaFields"
+            [showSubmit]="false"
+            [showCancel]="false"
+          ></app-generic-form>
+
+          <div class="form-actions">
+            <button
+              pButton
+              label="Agregar"
+              icon="pi pi-plus"
+              class="p-button-success"
+              [disabled]="disableCreateAreas"
+              (click)="addNewArea()"
+            ></button>
+          </div>
+        </div>
+
+        <!-- List of new areas -->
+        @if (newAreas().length > 0) {
+          <div class="new-areas-section">
+            <h4 class="list-title">Áreas nuevas a crear</h4>
+            <div class="workspaces-grid">
+              @for (area of newAreas(); track $index) {
+                <div class="new-area-card">
+                  <div class="card-header">
+                    <div class="card-title">
+                      <i class="pi pi-tag"></i>
+                      <div>
+                        <span class="area-name">{{ area.name }}</span>
+                        <small class="area-type">{{ getAreaTypeLabel(area.type) }}</small>
+                      </div>
+                    </div>
+                    <div class="card-actions">
+                      <button
+                        pButton
+                        icon="pi pi-list"
+                        class="p-button-rounded p-button-text p-button-sm"
+                        (click)="editNewAreaSections($index)"
+                        pTooltip="Gestionar secciones"
+                      ></button>
+                      <button
+                        pButton
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger p-button-sm"
+                        (click)="removeNewArea($index)"
+                        pTooltip="Eliminar área"
+                      ></button>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    @if (area.sections.length > 0) {
+                      <div class="sections-preview">
+                        <label class="field-label">Secciones:</label>
+                        <div class="section-chips">
+                          @for (section of area.sections; track $index) {
+                            <span class="section-chip">{{ section.name }}</span>
+                          }
+                        </div>
+                      </div>
+                    } @else {
+                      <small class="warning-text">
+                        <i class="pi pi-exclamation-triangle"></i>
+                        No hay secciones. Hacé click en <i class="pi pi-list"></i> para agregar.
+                      </small>
+                    }
+                  </div>
+                </div>
+              }
+
+            </div>
+          </div>
+        }
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+
+  <!-- Apply button (optional) -->
+  @if (showApplyButton) {
+    <div class="manager-footer">
+      <button
+        pButton
+        label="Guardar"
+        icon="pi pi-check"
+        class="p-button-success"
+        (click)="onApply()"
+        [disabled]="!isValid()"
+      ></button>
+
+      @if (!isValid()) {
+        <small class="validation-hint">
+          <i class="pi pi-info-circle"></i>
+          Seleccioná al menos una sección en alguna área
+        </small>
+      }
+    </div>
+  }
+</div>
+
+<!-- Section Editor Modal -->
+@if (editingNewAreaIndex !== null) {
+  <div class="modal-overlay" (click)="closeSectionEditor()">
+    <div class="modal-content section-editor-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="pi pi-list"></i>
+          Gestionar Secciones: {{ newAreas()[editingNewAreaIndex].name }}
+        </h3>
+        <button
+          pButton
+          icon="pi pi-times"
+          class="p-button-rounded p-button-text p-button-sm"
+          (click)="closeSectionEditor()"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Section form -->
+        <app-generic-form
+          #newSectionForm
+          [fields]="newSectionFields"
+          [showSubmit]="false"
+          [showCancel]="false"
+        ></app-generic-form>
+
+        <div class="form-actions">
+          <button
+            pButton
+            label="Agregar Sección"
+            icon="pi pi-plus"
+            class="p-button-sm"
+            (click)="addSectionToNewArea()"
+          ></button>
+        </div>
+
+        <!-- Sections list as chips -->
+        @if (tempSections.length > 0) {
+          <div class="sections-list-chips">
+            <h4 class="list-subtitle">Secciones agregadas</h4>
+            <div class="p-d-flex p-flex-wrap">
+              @for (section of tempSections; track $index) {
+                <p-chip
+                  [label]="section.name"
+                  [removable]="true"
+                  (onRemove)="removeSectionFromTemp($index)"
+                  styleClass="p-mr-2 p-mb-2"
+                ></p-chip>
+              }
+            </div>
+          </div>
+        } @else {
+          <div class="empty-sections">
+            <i class="pi pi-inbox"></i>
+            <p>No hay secciones agregadas</p>
+          </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button
+          pButton
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-secondary"
+          (click)="closeSectionEditor()"
+        ></button>
+        <button
+          pButton
+          label="Guardar"
+          icon="pi pi-check"
+          class="p-button-success"
+          (click)="saveSectionsToNewArea()"
+        ></button>
+      </div>
+    </div>
+  </div>
+}

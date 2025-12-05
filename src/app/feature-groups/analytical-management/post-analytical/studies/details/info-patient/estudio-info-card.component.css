@@ -1,0 +1,134 @@
+:host {
+  --brand-primary: #008c89;
+  --brand-primary-700: #009e9a;
+  --on-surface: #00435d;
+  --on-surface-muted: #757477;
+}
+
+/* Avatar */
+.paciente-avatar {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    var(--brand-primary-700) 100%
+  );
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--brand-primary) 30%, transparent);
+}
+
+/* Nombre */
+.paciente-nombre {
+  font-family: var(--font-display, 'Roboto', sans-serif);
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+/* Estado de firma */
+.estado-firma-badge {
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .estado-badge.p-badge {
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+/* Firma */
+:host ::ng-deep .p-card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--card, #fff);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 6%), 0 2px 6px rgb(0 0 0 / 4%);
+}
+
+:host ::ng-deep .p-badge {
+  font-size: 0.85rem;
+}
+
+:host ::ng-deep .p-button {
+  font-size: 0.875rem;
+  padding: 0.45rem 1rem;
+  border-radius: 0.4rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botón Warning (Naranja) - Firmar Parcial */
+:host ::ng-deep .p-button-warning {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  color: #fff;
+}
+
+:host ::ng-deep .p-button-warning:enabled:hover {
+  background-color: #d97706;
+  border-color: #d97706;
+}
+
+:host ::ng-deep .p-button-warning:enabled:active {
+  background-color: #b45309;
+  border-color: #b45309;
+}
+
+:host ::ng-deep .p-button-warning:disabled {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  opacity: 0.6;
+}
+
+/* Botón Success (Verde) - Firmar Total */
+:host ::ng-deep .p-button-success {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+:host ::ng-deep .p-button-success:enabled:hover {
+  background-color: #43a047;
+  border-color: #43a047;
+}
+
+:host ::ng-deep .p-button-outlined {
+  background-color: transparent;
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+:host ::ng-deep .p-button-info {
+  background-color: var(--brand-primary);
+  border: none;
+}
+
+@media (width <= 1024px) {
+  :host ::ng-deep .p-card > div {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+  }
+
+  :host ::ng-deep .p-card > div > div {
+    min-width: 100%;
+  }
+
+  .estado-firma-badge {
+    align-items: flex-start;
+  }
+}
+
+/* Contenedor general que actúa como overlay */
+.modal-confirm {
+  position: fixed;
+  inset: 0; /* top, right, bottom, left = 0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(0 0 0 / 40%);
+  z-index: 2000; /* Asegura que esté por encima de PrimeNG y cards */
+}
+
+/* Asegura que el contenido interno del modal no se deforme */
+.modal-confirm > * {
+  position: relative;
+  z-index: 2100;
+}

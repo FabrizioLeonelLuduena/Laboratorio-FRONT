@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "purchaseOrderNumber": "PO-2024-001",
+    "orderDate": "2024-11-01",
+    "status": "RECEIVED",
+    "notes": "Pedido urgente para reposición de stock crítico",
+    "cancellationReason": null,
+    "supplier": {
+      "id": 1,
+      "companyName": "Laboratorios Bagó S.A.",
+      "cuit": "30546897451"
+    },
+    "destinationLocation": {
+      "id": 1,
+      "name": "Depósito Principal",
+      "address": "Av. Corrientes 1234, CABA"
+    },
+    "details": [
+      {
+        "id": 1,
+        "supplyId": 1,
+        "supplyName": "Glucosa Oxidasa Kit",
+        "packagingId": 1,
+        "packagingDescription": "100 Determinaciones",
+        "quantity": 20,
+        "unitPrice": "12500.00",
+        "subtotal": "250000.00"
+      },
+      {
+        "id": 2,
+        "supplyId": 5,
+        "supplyName": "Kit Hemograma Completo",
+        "packagingId": 5,
+        "packagingDescription": "500 Determinaciones",
+        "quantity": 10,
+        "unitPrice": "45000.00",
+        "subtotal": "450000.00"
+      }
+    ],
+    "created_datetime": "2024-11-01T08:30:00",
+    "last_updated_datetime": "2024-11-15T16:45:00",
+    "created_user": 1,
+    "last_updated_user": 1,
+    "is_active": true
+  },
+  {
+    "id": 2,
+    "purchaseOrderNumber": "PO-2024-002",
+    "orderDate": "2024-11-05",
+    "status": "APPROVED",
+    "notes": "Material descartable mensual",
+    "cancellationReason": null,
+    "supplier": {
+      "id": 2,
+      "companyName": "Química Montpellier S.A.",
+      "cuit": "30678912345"
+    },
+    "destinationLocation": {
+      "id": 1,
+      "name": "Depósito Principal",
+      "address": "Av. Corrientes 1234, CABA"
+    },
+    "details": [
+      {
+        "id": 3,
+        "supplyId": 2,
+        "supplyName": "Tubos con EDTA 5ml",
+        "packagingId": 2,
+        "packagingDescription": "100 Unidades",
+        "quantity": 50,
+        "unitPrice": "3200.00",
+        "subtotal": "160000.00"
+      },
+      {
+        "id": 4,
+        "supplyId": 4,
+        "supplyName": "Guantes de Nitrilo Talle M",
+        "packagingId": 4,
+        "packagingDescription": "100 Unidades",
+        "quantity": 30,
+        "unitPrice": "8500.00",
+        "subtotal": "255000.00"
+      },
+      {
+        "id": 5,
+        "supplyId": 6,
+        "supplyName": "Agujas 21G x 1.5 pulgadas",
+        "packagingId": 6,
+        "packagingDescription": "100 Unidades",
+        "quantity": 40,
+        "unitPrice": "2800.00",
+        "subtotal": "112000.00"
+      }
+    ],
+    "created_datetime": "2024-11-05T09:15:00",
+    "last_updated_datetime": "2024-11-06T10:20:00",
+    "created_user": 1,
+    "last_updated_user": 1,
+    "is_active": true
+  },
+  {
+    "id": 3,
+    "purchaseOrderNumber": "PO-2024-003",
+    "orderDate": "2024-11-10",
+    "status": "PENDING",
+    "notes": "Pedido de solventes y soluciones",
+    "cancellationReason": null,
+    "supplier": {
+      "id": 3,
+      "companyName": "Biodiagnóstico S.A.",
+      "cuit": "30521478963"
+    },
+    "destinationLocation": {
+      "id": 2,
+      "name": "Laboratorio Sector A",
+      "address": "Piso 2, Ala Norte"
+    },
+    "details": [
+      {
+        "id": 6,
+        "supplyId": 3,
+        "supplyName": "Alcohol Etílico 96°",
+        "packagingId": 3,
+        "packagingDescription": "1 Litro",
+        "quantity": 15,
+        "unitPrice": "1800.00",
+        "subtotal": "27000.00"
+      },
+      {
+        "id": 7,
+        "supplyId": 8,
+        "supplyName": "Solución Fisiológica Estéril 500ml",
+        "packagingId": 8,
+        "packagingDescription": "1 Botella",
+        "quantity": 50,
+        "unitPrice": "950.00",
+        "subtotal": "47500.00"
+      }
+    ],
+    "created_datetime": "2024-11-10T11:30:00",
+    "last_updated_datetime": "2024-11-10T11:30:00",
+    "created_user": 1,
+    "last_updated_user": 1,
+    "is_active": true
+  },
+  {
+    "id": 4,
+    "purchaseOrderNumber": "PO-2024-004",
+    "orderDate": "2024-11-12",
+    "status": "CANCELLED",
+    "notes": "Pedido duplicado por error",
+    "cancellationReason": "Orden duplicada - ver PO-2024-002",
+    "supplier": {
+      "id": 2,
+      "companyName": "Química Montpellier S.A.",
+      "cuit": "30678912345"
+    },
+    "destinationLocation": null,
+    "details": [],
+    "created_datetime": "2024-11-12T14:00:00",
+    "last_updated_datetime": "2024-11-12T15:30:00",
+    "created_user": 1,
+    "last_updated_user": 2,
+    "is_active": false
+  },
+  {
+    "id": 5,
+    "purchaseOrderNumber": "PO-2024-005",
+    "orderDate": "2024-11-20",
+    "status": "PENDING",
+    "notes": "Material de laboratorio para diciembre",
+    "cancellationReason": null,
+    "supplier": {
+      "id": 4,
+      "companyName": "Droguería del Sud",
+      "cuit": "30789654123"
+    },
+    "destinationLocation": {
+      "id": 1,
+      "name": "Depósito Principal",
+      "address": "Av. Corrientes 1234, CABA"
+    },
+    "details": [
+      {
+        "id": 8,
+        "supplyId": 7,
+        "supplyName": "Pipetas Pasteur Plásticas",
+        "packagingId": 7,
+        "packagingDescription": "500 Unidades",
+        "quantity": 20,
+        "unitPrice": "4200.00",
+        "subtotal": "84000.00"
+      }
+    ],
+    "created_datetime": "2024-11-20T10:00:00",
+    "last_updated_datetime": "2024-11-20T10:00:00",
+    "created_user": 1,
+    "last_updated_user": 1,
+    "is_active": true
+  }
+]

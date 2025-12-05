@@ -1,0 +1,34 @@
+<div class="min-h-screen">
+  <div class="w-full mx-auto px-6 pb-6 md:pb-[calc(24px+var(--footer-height,52px)+16px)]">
+
+    <app-care-reporting-filters (filtersApplied)="onFiltersApplied($event)"></app-care-reporting-filters>
+
+    <section class="grid grid-cols-1 gap-4 my-6 sm:grid-cols-2 lg:grid-cols-4">
+      @for (metric of metrics; track $index) {
+        <app-dashboard-metric-card [metric]="metric"></app-dashboard-metric-card>
+      }
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      @for (card of chartCards; track $index) {
+        @defer {
+          <app-dashboard-chart-card
+            [title]="card.title"
+            [description]="card.description"
+            [icon]="card.icon ?? 'pi pi-chart-bar'"
+            [helpText]="card.helpText"
+            [chartType]="card.chartType"
+            [data]="card.data"
+            [options]="card.options"
+            [footer]="card.footer">
+          </app-dashboard-chart-card>
+        } @loading {
+          <app-skeleton-card></app-skeleton-card>
+        } @placeholder {
+          <app-skeleton-card></app-skeleton-card>
+        }
+      }
+      <app-delayed-attentions-table [data]="delayedAttentions"></app-delayed-attentions-table>
+    </section>
+  </div>
+</div>

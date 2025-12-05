@@ -1,0 +1,91 @@
+.insurer-plans {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 5%);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-20 {
+  padding-bottom: 4px;
+  margin-bottom: 0.25rem;
+}
+
+:host ::ng-deep .p-dialog-content .insurer-plans .card {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Badge de estado */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.status-badge--active {
+  background: #ecfdf5; /* green-50 */
+  color: #065f46; /* green-800 */
+  border-color: #a7f3d0; /* green-200 */
+}
+
+.status-badge--inactive {
+  background: #fef2f2; /* red-50 */
+  color: #991b1b; /* red-800 */
+  border-color: #fecaca; /* red-200 */
+}
+
+/* para pisar estilos del form genérico */
+:host ::ng-deep input[disabled],
+:host ::ng-deep textarea[disabled],
+:host ::ng-deep select[disabled]{
+  background-color: #fff;
+  border: none;
+  box-shadow: none;
+  cursor: default;
+  color: #222;
+  appearance: none; /* elimina flecha nativa */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Contenedor del p-select cuando está deshabilitado */
+:host ::ng-deep .p-select.p-disabled,
+:host ::ng-deep .p-select[aria-disabled="true"] {
+  background-color: #fff;
+  border: none;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Ocultar el ícono de flecha del p-select deshabilitado */
+:host ::ng-deep .p-select.p-disabled .p-select-dropdown {
+  display: none;
+}
+
+/* Texto del select */
+:host ::ng-deep .p-select.p-disabled .p-select-label {
+  color: #222;
+}
+
+/* elimina el control del textarea */
+:host ::ng-deep textarea {
+  resize: none;
+}

@@ -1,0 +1,111 @@
+<div class="card">
+  <p-panel header="Agregar Detalle" [toggleable]="false">
+    <form [formGroup]="form" class="space-y-4">
+
+      <!-- Selector de Supplier Item y Precio Unitario -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div>
+          <label class="text-14 font-medium">Producto <span class="text-red-500">*</span></label>
+          <p-dropdown
+            [options]="filteredSupplierItems"
+            formControlName="supplier_item_id"
+            optionLabel="label"
+            optionValue="id"
+            [filter]="true"
+            filterBy="label,name"
+            [showClear]="true"
+            placeholder="Seleccione un producto"
+            [disabled]="!supplierId || !filteredSupplierItems.length"
+            [appendTo]="'body'"
+            class="w-full"
+            (onChange)="onSupplierItemSelected($event.value)">
+            <ng-template let-item pTemplate="item">
+              <div>
+                <div class="font-medium">{{ item.label || item.name }}</div>
+                <div class="text-12 text-muted">{{ item.sublabel }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <small *ngIf="!supplierId" class="text-muted">Primero seleccione un proveedor en el formulario principal</small>
+        </div>
+        <div>
+          <label class="text-14 font-medium">Precio Unitario <span class="text-red-500">*</span></label>
+          <p-inputNumber
+            formControlName="unit_price"
+            [min]="0"
+            mode="currency"
+            currency="ARS"
+            locale="es-AR"
+            class="w-full">
+          </p-inputNumber>
+          <small class="text-muted text-12">Se autocompleta al seleccionar el ítem</small>
+        </div>
+      </div>
+
+      <!-- Campos autocompletados + Cantidad + Subtotal (alineados en 8 columnas) -->
+      <div class="grid grid-cols-1 lg:grid-cols-8 gap-3 items-center">
+        <div class="lg:col-span-2">
+          <label class="text-14 font-medium">Unidad de Medida</label>
+          <input type="text" pInputText [value]="getUnitOfMeasureName()" readonly class="w-full bg-gray-100" />
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="text-14 font-medium">Empaque</label>
+          <input type="text" pInputText [value]="getPackagingInfo()" readonly class="w-full bg-gray-100" />
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="text-14 font-medium">Cantidad <span class="text-red-500">*</span></label>
+          <div class="w-full lg:w-auto">
+            <p-inputNumber
+              formControlName="quantity"
+              [min]="1"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              decrementButtonClass="p-button-text p-button-plain"
+              incrementButtonClass="p-button-text p-button-plain"
+              incrementButtonIcon="pi pi-plus"
+              decrementButtonIcon="pi pi-minus"
+              mode="decimal"
+              inputStyle="width:100%">
+            </p-inputNumber>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 flex items-center justify-end">
+          <div class="text-right p-3 bg-gray-50 rounded-lg border-2 border-gray-200" style="min-width:0;">
+            <div class="text-12 text-muted uppercase tracking-wide">Subtotal</div>
+            <div class="text-20 font-bold text-green-700">{{ subtotal | currency:'ARS':'symbol-narrow':'1.2-2':'es-AR' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="flex justify-end gap-2 pt-3 border-t">
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-text p-button-secondary"
+          (click)="onCancel()">
+        </button>
+        <button
+          pButton
+          type="button"
+          label="Agregar Línea"
+          icon="pi pi-plus"
+          class="p-button-success"
+          [disabled]="!form.valid"
+          (click)="onSave()">
+        </button>
+      </div>
+
+      <!-- Mensajes de validación -->
+      <div *ngIf="form.touched && !form.valid" class="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-14">
+        <i class="pi pi-exclamation-triangle mr-2"></i>
+        Por favor complete todos los campos requeridos antes de agregar la línea.
+      </div>
+    </form>
+  </p-panel>
+</div>

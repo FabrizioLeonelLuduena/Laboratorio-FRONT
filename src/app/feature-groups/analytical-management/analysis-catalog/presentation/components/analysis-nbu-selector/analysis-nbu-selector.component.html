@@ -1,0 +1,56 @@
+<div class="nbu-selector-container">
+  <label for="nbuSelector" class="selector-label">
+    <i class="pi pi-database"></i>
+    NBU (Nomenclador Bioquímico Único)
+  </label>
+  
+  <p-select
+    id="nbuSelector"
+    [options]="options()"
+    [(ngModel)]="selectedNbuId"
+    [filter]="true"
+    filterBy="label"
+    [placeholder]="loading() ? 'Cargando NBUs...' : 'Seleccionar NBU'"
+    [disabled]="disabled || loading()"
+    [showClear]="true"
+    optionLabel="label"
+    optionValue="value"
+    (onChange)="onSelectionChange($event)"
+    styleClass="w-full">
+    
+    <ng-template pTemplate="selectedItem" let-selectedOption>
+      @if (selectedOption) {
+        <div class="selected-nbu">
+          <i class="pi pi-database"></i>
+          <span>{{ selectedOption.label }}</span>
+        </div>
+      }
+    </ng-template>
+    
+    <ng-template pTemplate="item" let-option>
+      <div class="nbu-option">
+        <span class="nbu-code">{{ option.label.split(' - ')[0] }}</span>
+        <span class="nbu-determination">{{ option.label.split(' - ')[1] }}</span>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="empty">
+      <div class="empty-state">
+        <i class="pi pi-info-circle"></i>
+        <span>No hay NBUs disponibles</span>
+      </div>
+    </ng-template>
+  </p-select>
+  
+  @if (loading()) {
+    <small class="loading-hint">
+      <i class="pi pi-spin pi-spinner"></i>
+      Cargando NBUs disponibles...
+    </small>
+  }
+  
+  <small class="selector-hint">
+    <i class="pi pi-info-circle"></i>
+    Seleccione el código NBU asociado con este análisis
+  </small>
+</div>

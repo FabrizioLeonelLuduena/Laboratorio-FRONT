@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.reporting-filters {
+  position: sticky;
+}
+
+/* Estilos para el botón de filtros - cursor pointer */
+:host ::ng-deep button {
+  cursor: pointer;
+}
+
+/* Estilos para inputs dentro del componente */
+:host ::ng-deep input[type="number"],
+:host ::ng-deep .p-inputtext {
+  cursor: text;
+}
+
+/* Estilos para el select */
+:host ::ng-deep .p-select {
+  cursor: pointer;
+}
+
+/* Estilos para el datepicker */
+:host ::ng-deep .p-datepicker input {
+  cursor: pointer;
+}
+
+:host ::ng-deep .p-datepicker-trigger {
+  cursor: pointer;
+}

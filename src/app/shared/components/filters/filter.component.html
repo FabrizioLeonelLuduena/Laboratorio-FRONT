@@ -1,0 +1,125 @@
+<div class="filter-container">
+  <span class="filter-button-wrapper" #filterButton>
+    <app-generic-button
+      (click)="popover.toggle($event)"
+      type="custom"
+      icon="pi pi-filter"
+      color="--card"
+      customTextColor="--brand-primary-700"
+      borderColor="--border-color"
+    ></app-generic-button>
+
+    @if (filtersCount() > 0) {
+      <span class="indicator-badge" title="Filtros aplicados">
+        {{ filtersCount() }}
+      </span>
+    }
+  </span>
+
+  <p-popover #popover>
+    <ng-template pTemplate="content">
+      <div class="filter-panel">
+        <div class="filter-title">
+          <h3>Filtros</h3>
+        </div>
+
+        <p-divider></p-divider>
+
+        @for (filter of localFilters(); track filter.id) {
+          <div class="filter-section">
+            <div class="filter-section-title">{{ filter.label }}</div>
+
+            @switch (filter.type) {
+              @case ('radio') {
+                <div class="grid grid-cols-2 gap-4">
+                  @for (option of filter.options; track option.value) {
+                    <div class="flex items-center cursor-pointer">
+                      <p-radioButton
+                        name="{{ filter.id }}"
+                        [inputId]="filter.id + '-' + option.value"
+                        [value]="option.value"
+                        [ngModel]="getActiveOptionValue(filter)"
+                        (ngModelChange)="onFilterChange(filter.id, $event)"
+                      ></p-radioButton>
+                      <label
+                        [for]="filter.id + '-' + option.value"
+                        class="ml-2 text-sm"
+                      >
+                        {{ option.label }}
+                      </label>
+                    </div>
+                  }
+                </div>
+              }
+
+              @case ('select') {
+                <p-select
+                  [options]="filter.options"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Seleccionar"
+                  [filter]="filter.filterConfig?.searchBar"
+                  [ngModel]="getActiveOptionValue(filter)"
+                  (onChange)="onSelectChange(filter, $event)"
+                  styleClass="w-full"
+                  [style]="{'width': '100%'}"
+                ></p-select>
+              }
+
+              @case ('dateRange') {
+                <div class="date-range-container">
+                  <div class="date-field">
+                    <label class="date-label">Desde</label>
+                    <p-datepicker
+                      [(ngModel)]="filter.dateFrom"
+                      (onSelect)="onDateFromChange(filter, $event)"
+                      [maxDate]="filter.dateTo ?? undefined"
+                      dateFormat="dd/mm/yy"
+                      [showIcon]="true"
+                      placeholder="Seleccionar fecha"
+                      [style]="{'width': '100%'}"
+                    ></p-datepicker>
+                  </div>
+                  <div class="date-field">
+                    <label class="date-label">Hasta</label>
+                    <p-datepicker
+                      [(ngModel)]="filter.dateTo"
+                      (onSelect)="onDateToChange(filter, $event)"
+                      [minDate]="filter.dateFrom ?? undefined"
+                      dateFormat="dd/mm/yy"
+                      [showIcon]="true"
+                      placeholder="Seleccionar fecha"
+                      [style]="{'width': '100%'}"
+                    ></p-datepicker>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+
+          <p-divider></p-divider>
+        }
+
+        <div class="filter-actions">
+          <app-generic-button
+            type="custom"
+            text="Limpiar"
+            icon="pi pi-refresh"
+            color="--card"
+            customTextColor="--on-surface"
+            borderColor="--border-color"
+            (pressed)="clearFilters()"
+          ></app-generic-button>
+          @if (!autoApply()) {
+            <app-generic-button
+              type="create"
+              text="Filtrar"
+              icon="pi pi-search"
+              (pressed)="applyFilters()"
+            ></app-generic-button>
+          }
+        </div>
+      </div>
+    </ng-template>
+  </p-popover>
+</div>

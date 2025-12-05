@@ -1,0 +1,192 @@
+.invisible-btn {
+  opacity: 0;          /* lo hace invisible */
+  pointer-events: none; /* evita clics si no querés que funcione */
+}
+
+/* Summary panel + contenido interno */
+.summary-section {
+  background-color: var(--surface-a, #fff);
+  padding: 1rem;
+  border-radius: 8px;
+  height: fit-content;
+  position: sticky;
+  top: 1rem;
+  border: 1px solid var(--surface-d, #e0e0e0);
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Filas de info */
+.info-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  gap: 0.5rem;
+}
+
+.info-group label {
+  font-weight: 500;
+  color: var(--text-secondary, #6c757d);
+  font-size: 0.875rem;
+}
+
+.info-group span {
+  font-weight: 400;
+  color: var(--text-primary, #212529);
+}
+
+/* Estados y acentos */
+.info-group.highlight {
+  background-color: var(--surface-50, #f8f9fa);
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.info-group.highlight .amount {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.info-group.highlight .final {
+  color: var(--brand-success);
+}
+
+.info-group.difference .diff {
+  color: var(--brand-warn);
+}
+
+/* Separador */
+.divider {
+  height: 1px;
+  background-color: var(--border-color, #dee2e6);
+  margin: 0.25rem 0;
+}
+
+/* Comportamiento en mobile: desactiva sticky */
+@media (width <= 992px) {
+  .summary-section {
+    position: relative;
+    top: 0;
+  }
+}
+
+:host ::ng-deep .filtro-field .p-select-label {
+  width: 100%;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* selects and datepicker responsive */
+.filtros-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filtro-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 260px;
+  flex: 1 1 240px;
+}
+
+:host ::ng-deep .filtro-field p-select .p-select,
+:host ::ng-deep .filtro-field p-datepicker .p-datepicker,
+:host ::ng-deep .filtro-field .p-select,
+:host ::ng-deep .filtro-field .p-datepicker {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (width <= 1024px) {
+  .filtros-responsive .filtro-field {
+    flex: 1 1 calc(50% - 1rem);
+  }
+}
+
+@media (width <= 600px) {
+  .filtros-responsive .filtro-field {
+    flex: 1 1 100%;
+  }
+
+  :host ::ng-deep .p-inputtext,
+  :host ::ng-deep .p-select-label,
+  :host ::ng-deep .p-dropdown-label {
+    font-size: 0.9rem;
+    padding: 0.55rem 0.7rem;
+  }
+}
+
+:host ::ng-deep .p-select .p-select-trigger {
+  flex-shrink: 0;
+}
+
+@media (width <= 1024px) {
+  .filtro-field {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: unset;
+  }
+
+  :host ::ng-deep .filtro-field .p-select.p-component,
+  :host ::ng-deep .filtro-field .p-datepicker {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+:host ::ng-deep .p-datepicker .p-inputtext {
+  min-width: 0;
+}
+
+:host ::ng-deep .p-datepicker .p-datepicker-trigger {
+  flex-shrink: 0;
+}
+
+:host ::ng-deep .p-select .p-select-label {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (1180px <= width) {
+  :host ::ng-deep .p-select.p-component,
+  :host ::ng-deep .p-datepicker {
+    width: 260px;
+    max-width: 260px;
+  }
+
+  .filtro-field {
+    min-width: 260px;
+    flex: 1 1 260px;
+  }
+}
+
+@media (1025px <= width <= 1179px) {
+  :host ::ng-deep .p-select.p-component,
+  :host ::ng-deep .p-datepicker {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .filtro-field {
+    flex: 1 1 calc(33.33% - 1rem);
+    min-width: 240px;
+  }
+
+  :host ::ng-deep .filtros-responsive .p-inputtext,
+  :host ::ng-deep .filtros-responsive .p-datepicker .p-inputtext {
+    height: 40px;
+  }
+}

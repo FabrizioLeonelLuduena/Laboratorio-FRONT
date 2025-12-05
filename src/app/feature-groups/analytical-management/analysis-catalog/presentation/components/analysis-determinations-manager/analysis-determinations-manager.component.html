@@ -1,0 +1,107 @@
+<div class="determinations-manager">
+  <!-- Add Determinations Section -->
+  <div class="add-section">
+    <div class="add-header">
+      <i class="pi pi-plus-circle"></i>
+      <span class="section-title">Agregar Determinaciones</span>
+    </div>
+    
+    <div class="add-controls">
+      <div class="multiselect-wrapper">
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-search" />
+          <p-multiselect
+            [(ngModel)]="selectedDeterminationIds"
+            [options]="options()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Buscar y seleccionar determinaciones"
+            [filter]="true"
+            [showToggleAll]="true"
+            [loading]="loading()"
+            [disabled]="loading()"
+            display="chip"
+            styleClass="w-full"
+            [maxSelectedLabels]="3">
+          </p-multiselect>
+        </p-iconfield>
+      </div>
+      
+      <p-button
+        label="Agregar"
+        icon="pi pi-plus"
+        [disabled]="selectedDeterminationIds().length === 0 || loading()"
+        (onClick)="onAdd()"
+        severity="success"
+        styleClass="add-button" />
+    </div>
+  </div>
+
+  <p-divider />
+
+  <!-- Current Determinations Table -->
+  <div class="table-section">
+    <div class="table-header">
+      <i class="pi pi-list"></i>
+      <span class="section-title">Determinaciones Actuales</span>
+      <span class="count-badge">{{ tableData().length }}</span>
+    </div>
+
+    @if (tableData().length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-inbox"></i>
+        <p class="empty-message">No hay determinaciones asociadas</p>
+        <p class="empty-hint">Use el selector de arriba para agregar determinaciones</p>
+      </div>
+    } @else {
+      <p-table
+        [value]="tableData()"
+        [loading]="loading()"
+        styleClass="p-datatable-sm"
+        responsiveLayout="scroll">
+        
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 40%">Nombre</th>
+            <th style="width: 20%">Unidad</th>
+            <th style="width: 20%">Tiempo de Manejo</th>
+            <th style="width: 20%; text-align: center">Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-determination>
+          <tr>
+            <td>
+              <div class="determination-name">
+                <i class="pi pi-flask"></i>
+                <span>{{ determination.name }}</span>
+              </div>
+            </td>
+            <td>{{ getUnitName(determination) }}</td>
+            <td>{{ formatHandlingTime(determination.handlingTime) }}</td>
+            <td style="text-align: center">
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                [text]="true"
+                severity="danger"
+                size="small"
+                (onClick)="onRemove(determination.id)"
+                [disabled]="loading()"
+                pTooltip="Eliminar determinación"
+                tooltipPosition="left" />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="empty-message-cell">
+              No se encontraron determinaciones
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    }
+  </div>
+</div>

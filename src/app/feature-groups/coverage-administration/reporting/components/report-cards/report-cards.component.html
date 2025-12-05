@@ -1,0 +1,51 @@
+<div class="summary-cards">
+
+  <!-- Monto liquidado -->
+  <div class="p-col-12 p-md-4">
+    <p-card class="summary-card">
+      <div class="card-content">
+        <div class="icon-wrapper bg-blue">
+          <i class="pi pi-dollar"></i>
+        </div>
+        <div class="text-wrapper">
+          <h4>Monto liquidado</h4>
+          <p>{{ safeSummary.totalAmount | currency:'ARS':'symbol-narrow':'1.0-0' }}</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Última liquidación -->
+  <div class="p-col-12 p-md-4">
+    <p-card class="summary-card">
+      <div class="card-content">
+        <div class="icon-wrapper bg-green">
+          <i class="pi pi-calendar-check"></i>
+        </div>
+        <div class="text-wrapper">
+          <h4>Última liquidación</h4>
+          <p>{{ safeSummary.lastSettlementDate | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Variación mensual -->
+  <div class="p-col-12 p-md-4">
+    <p-card class="summary-card">
+      <div class="card-content">
+        <div class="icon-wrapper bg-purple">
+          <i class="pi pi-chart-line"></i>
+        </div>
+        <div class="text-wrapper">
+          <h4>Variación mensual</h4>
+          <p [ngClass]="{ up: safeSummary.variation >= 0, down: safeSummary.variation < 0 }">
+            {{ safeSummary.variation | number:'1.1-1' }}%
+            <i class="pi" [ngClass]="safeSummary.variation >= 0 ? 'pi-arrow-up' : 'pi-arrow-down'"></i>
+          </p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+</div>

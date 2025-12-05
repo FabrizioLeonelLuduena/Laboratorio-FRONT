@@ -1,0 +1,5 @@
+
+> 2025-piv-tpi-lcc-fe@2.2.0 build
+> ng build
+
+❯ Building...

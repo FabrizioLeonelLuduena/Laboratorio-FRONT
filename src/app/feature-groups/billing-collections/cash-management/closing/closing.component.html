@@ -1,0 +1,126 @@
+<div class="cash-closing-container">
+  @if (alert()) {
+    <app-generic-alert [type]="alert()!.type" [title]="alert()!.title" [text]="alert()!.text">
+    </app-generic-alert>
+  }
+
+  <div class="cash-closing-grid">
+    <main class="table-section">
+      <div class="page-header">
+        <div class="info-group dashboard__meta-item">
+          <i class="pi pi-user"></i>
+          <span>{{ userName() }}</span>
+        </div>
+        <div class="info-group dashboard__meta-item">
+          <i class="pi pi-building"></i>
+          <span>{{ branchName() }}</span>
+        </div>
+        <div class="info-group dashboard__meta-item">
+          <i class="pi pi-briefcase"></i>
+          <span>{{ registerName() }}</span>
+        </div>
+        <div class="info-group dashboard__meta-item">
+          <i class="pi pi-calendar"></i>
+          <span>{{ formattedOpeningDate() }}</span>
+        </div>
+      </div>
+      @if (isLoadingSummary()) {
+        <div class="loading-state">
+          <i class="pi pi-spinner pi-spin"></i>
+          <span>Cargando transacciones...</span>
+        </div>
+      } @else {
+        @if (transactions().length > 0) {
+          <app-basic-table [columns]="tableColumns" [data]="transactions()"></app-basic-table>
+        } @else {
+          <div class="empty-state">
+            <p>No hay transacciones disponibles</p>
+          </div>
+        }
+      }
+    </main>
+
+    <aside class="summary-section">
+      <h3>Resumen de cierre</h3>
+      <div class="summary-content">
+        <div class="info-group highlight">
+          <label>Movimientos:</label>
+          <span>{{ movementCount() }}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info-group highlight">
+          <label>Saldo inicial:</label>
+          <span class="amount">{{ initialCash() | currency:'ARS':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <div class="info-group highlight">
+          <label>Saldo final:</label>
+          <span class="amount final">{{ finalCash() | currency:'ARS':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <div class="info-group difference highlight">
+          <label>Diferencia:</label>
+          <span class="amount diff">{{ differenceValue() | currency:'ARS':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <form [formGroup]="closingForm" class="closing-form">
+          <div class="info-group highlight">
+            <label for="declaredCash">Monto declarado:</label>
+            <p-inputNumber
+              (onFocus)="selectAll($event)"
+              id="declaredCash"
+              formControlName="declaredCash"
+              mode="decimal"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              [min]="minAmount"
+              [max]="maxAmount"
+              [maxlength]="18"
+              prefix="$"
+              (onInput)="onAmountInput($event)"
+              (onBlur)="onAmountBlur()"
+              (keydown)="onKeyDown($event)">
+            </p-inputNumber>
+          </div>
+
+          <div class="form-field highlight">
+            <label for="observations">Observaciones:</label>
+            <textarea id="observations" formControlName="observations" pInputTextarea rows="4" maxlength="500"
+                      placeholder="Máximo 500 caracteres"></textarea>
+          </div>
+        </form>
+
+        <div class="actions">
+          <app-generic-button type="cancel" (pressed)="onCancel()"></app-generic-button>
+
+          @if (isSaving()) {
+            <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+          }
+
+          <app-generic-button type="custom" text="Cerrar Caja" icon="pi pi-lock" color="--brand-primary-700"
+                              customTextColor="--on-primary" [disabled]="closingForm.invalid || isSaving()"
+                              (pressed)="onSubmit()"></app-generic-button>
+        </div>
+
+        @if (error()) {
+          <div class="error-message">
+            {{ error() }}
+          </div>
+        }
+      </div>
+    </aside>
+  </div>
+  @if (showConfirmationModal()) {
+    <app-confirmation-modal
+      icon="pi pi-lock"
+      title="Confirmar cierre"
+      message="¿Estás seguro de cerrar la caja?"
+      (confirmed)="onConfirmClose()"
+      (dismissed)="onCancelClose()">
+    </app-confirmation-modal>
+  }
+</div>

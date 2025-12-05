@@ -1,0 +1,52 @@
+<div class="payment-methods-step">
+
+  <!-- Add Payment Button -->
+  <div class="actions-bar">
+    <p-button
+      label="Agregar medio de pago"
+      icon="pi pi-plus"
+      (onClick)="addPaymentMethod()"
+      [disabled]="isPaymentComplete()"
+    ></p-button>
+  </div>
+
+  <!-- Payments Table -->
+  @if (paymentMethods.length > 0) {
+    <div class="payments-table-container">
+      <app-advanced-table
+        [columns]="paymentColumns"
+        [data]="tableData()"
+        [loading]="false"
+        [config]="{
+          showGlobalFilter: true,
+          paginator: true,
+          rows: 10,
+          showActions: true
+        }"
+        [actionItems]="[
+          { type: 'edit', label: 'Editar', icon: 'pi pi-pencil' },
+          { type: 'delete', label: 'Eliminar', icon: 'pi pi-trash' }
+        ]"
+        (action)="onPaymentAction($event)"
+      ></app-advanced-table>
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (paymentMethods.length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-wallet"></i>
+      <h4>No hay medios de pago cargados</h4>
+      <p>Hacé clic en "Agregar medio de pago" para comenzar</p>
+    </div>
+  }
+
+  <!-- Info message -->
+  <div class="info-message">
+    <i class="pi pi-info-circle"></i>
+    <span>
+      Podés agregar varios medios de pago. El total debe coincidir con el importe de la factura.
+    </span>
+  </div>
+</div>
+

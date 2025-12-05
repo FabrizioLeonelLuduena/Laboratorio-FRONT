@@ -1,0 +1,236 @@
+{
+  "id": "recepcion-mercaderia",
+  "moduleId": "remits",
+  "title": "Recepción de Mercadería (Remitos)",
+  "intro": "La pantalla de Remitos es el centro de control para la entrada de insumos al inventario. Su función principal es validar y registrar la recepción física de mercadería, ya sea de proveedores externos o transferencias internas.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock"
+    ]
+  },
+  "sections": [
+       {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema organiza la información en dos pestañas superiores para separar el origen de la mercadería: <strong>Externo</strong> (Proveedores) e <strong>Interno</strong> (Transferencias entre sucursales)."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/remits/remits-external-table.jpeg",
+          "alt": "Tabla de remitos externos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite localizar remitos específicos ingresando su <strong>código</strong> o <strong>referencia</strong>."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Permite <strong>segmentar el listado</strong> según el estado del trámite (Pendiente, Recibida, etc.)."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Exporta la lista actual de remitos visible en la tabla a formato <strong>Excel</strong>."
+            ],
+            [
+              "Crear",
+              "<i class='pi pi-plus'></i>",
+              "Inicia un nuevo <strong>registro manual</strong> de recepción de mercadería."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al desplegar los filtros, es posible visualizar los remitos según su situación actual en el proceso de recepción:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/remits/remits-external-filters.jpeg",
+          "alt": "Filtros de remitos externos"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Pendiente:</strong> Trámites a la espera de confirmación de llegada (Común en internos).",
+            "<strong>Recibida:</strong> El proceso de recepción concluyó exitosamente.",
+            "<strong>Devuelta:</strong> Se realizó un reintegro de mercadería.",
+            "<strong>Cancelada:</strong> La operación fue anulada."
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-remitos",
+      "title": "Contenido de la Tabla de Datos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La grilla principal muestra la información resumida del remito:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Remito",
+              "<strong>Código único</strong> de identificación del trámite.",
+              "RN_0002"
+            ],
+            [
+              "Fecha",
+              "<strong>Fecha</strong> de registro o emisión del remito.",
+              "25/11/2025"
+            ],
+            [
+              "Proveedor",
+              "Nombre de la <strong>empresa proveedora</strong> (Solo visible en pestaña Externo).",
+              "Droguería Central"
+            ],
+            [
+              "Estado",
+              "<strong>Etiqueta visual</strong> que indica la situación actual.",
+              "Recibida"
+            ],
+            [
+              "Acciones",
+              "Menú desplegable ( <i class='pi pi-ellipsis-v'></i> ) para <strong>gestionar el estado</strong> del remito.",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle del Producto (Fila Desplegada)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cada fila es desplegable. Al hacer clic en la flecha ( <strong>></strong> ), se observa el detalle de los productos incluidos:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Producto",
+              "<strong>Nombre del insumo</strong> recibido."
+            ],
+            [
+              "Cantidad",
+              "<strong>Unidades físicas</strong> involucradas en la operación."
+            ],
+            [
+              "Lote",
+              "<strong>Código de trazabilidad</strong> asignado por el fabricante."
+            ],
+            [
+              "Vencimiento",
+              "<strong>Fecha de caducidad</strong> del insumo."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-remito",
+      "title": "Estados del Remito",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Los remitos pueden transitar por los siguientes estados:"
+        },
+        {
+          "type": "badge",
+          "text": "RECIBIDA",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "La mercadería ha ingresado correctamente al stock."
+        },
+        {
+          "type": "badge",
+          "text": "PENDIENTE",
+          "color": "#f59e0b"
+        },
+        {
+          "type": "paragraph",
+          "text": "El remito ha sido generado pero aún se espera la confirmación física de la llegada."
+        },
+        {
+          "type": "badge",
+          "text": "DEVUELTA",
+          "color": "#3b82f6"
+        },
+        {
+          "type": "paragraph",
+          "text": "Se ha registrado un reintegro parcial o total de la mercadería."
+        },
+        {
+          "type": "badge",
+          "text": "CANCELADA",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "La operación ha sido anulada y no impacta en el inventario."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "remitos",
+    "recepción",
+    "stock",
+    "proveedores",
+    "transferencias"
+  ]
+}

@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "name": "Depósito Principal",
+    "address": "Av. Corrientes 1234, CABA",
+    "locationType": "WAREHOUSE",
+    "parentId": null,
+    "parentName": null,
+    "isActive": true,
+    "createdDatetime": "2024-01-10T08:00:00",
+    "lastUpdatedDatetime": "2024-01-10T08:00:00"
+  },
+  {
+    "id": 2,
+    "name": "Laboratorio Sector A",
+    "address": "Piso 2, Ala Norte",
+    "locationType": "AREA",
+    "parentId": null,
+    "parentName": null,
+    "isActive": true,
+    "createdDatetime": "2024-01-10T08:15:00",
+    "lastUpdatedDatetime": "2024-01-10T08:15:00"
+  },
+  {
+    "id": 3,
+    "name": "Estante A1",
+    "address": null,
+    "locationType": "SHELF",
+    "parentId": 1,
+    "parentName": "Depósito Principal",
+    "isActive": true,
+    "createdDatetime": "2024-01-10T09:00:00",
+    "lastUpdatedDatetime": "2024-01-10T09:00:00"
+  },
+  {
+    "id": 4,
+    "name": "Estante A2",
+    "address": null,
+    "locationType": "SHELF",
+    "parentId": 1,
+    "parentName": "Depósito Principal",
+    "isActive": true,
+    "createdDatetime": "2024-01-10T09:15:00",
+    "lastUpdatedDatetime": "2024-01-10T09:15:00"
+  },
+  {
+    "id": 5,
+    "name": "Freezer Principal",
+    "address": "Sector Refrigeración",
+    "locationType": "FREEZER",
+    "parentId": 1,
+    "parentName": "Depósito Principal",
+    "isActive": true,
+    "createdDatetime": "2024-01-10T10:00:00",
+    "lastUpdatedDatetime": "2024-01-10T10:00:00"
+  },
+  {
+    "id": 6,
+    "name": "Heladera Reactivos",
+    "address": "Lab Sector A",
+    "locationType": "REFRIGERATOR",
+    "parentId": 2,
+    "parentName": "Laboratorio Sector A",
+    "isActive": true,
+    "createdDatetime": "2024-01-10T10:30:00",
+    "lastUpdatedDatetime": "2024-01-10T10:30:00"
+  },
+  {
+    "id": 7,
+    "name": "Estante B1",
+    "address": null,
+    "locationType": "SHELF",
+    "parentId": 2,
+    "parentName": "Laboratorio Sector A",
+    "isActive": true,
+    "createdDatetime": "2024-01-10T11:00:00",
+    "lastUpdatedDatetime": "2024-01-10T11:00:00"
+  },
+  {
+    "id": 8,
+    "name": "Depósito Secundario",
+    "address": "Subsuelo, Sector B",
+    "locationType": "WAREHOUSE",
+    "parentId": null,
+    "parentName": null,
+    "isActive": true,
+    "createdDatetime": "2024-02-01T08:00:00",
+    "lastUpdatedDatetime": "2024-02-01T08:00:00"
+  },
+  {
+    "id": 9,
+    "name": "Laboratorio Sector B",
+    "address": "Piso 2, Ala Sur",
+    "locationType": "AREA",
+    "parentId": null,
+    "parentName": null,
+    "isActive": false,
+    "createdDatetime": "2024-01-10T08:30:00",
+    "lastUpdatedDatetime": "2024-03-15T14:00:00"
+  },
+  {
+    "id": 10,
+    "name": "Freezer Secundario",
+    "address": "Depósito Secundario",
+    "locationType": "FREEZER",
+    "parentId": 8,
+    "parentName": "Depósito Secundario",
+    "isActive": true,
+    "createdDatetime": "2024-02-01T09:00:00",
+    "lastUpdatedDatetime": "2024-02-01T09:00:00"
+  }
+]

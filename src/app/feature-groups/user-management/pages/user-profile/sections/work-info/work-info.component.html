@@ -1,0 +1,141 @@
+<div class="section-container">
+  <div class="section-header">
+    <h2>
+      <i class="pi pi-briefcase"></i>
+      Información laboral
+    </h2>
+    <p class="section-description">
+      Detalles sobre tu rol y asignación en el laboratorio
+    </p>
+  </div>
+
+  <div class="info-grid">
+    <!-- Roles Section -->
+    <div class="info-card roles-card">
+      <div class="card-header">
+        <i class="pi pi-users"></i>
+        <h3>Roles Asignados</h3>
+      </div>
+      <div class="card-content">
+        @if (user.roles && user.roles.length > 0) {
+          <div class="roles-list">
+            @for (role of user.roles; track role.id) {
+              <div class="role-badge">
+                <i class="pi pi-shield"></i>
+                <span>{{ formatRole(role) }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="empty-state">No hay roles asignados</p>
+        }
+      </div>
+    </div>
+
+    <!-- Branch Information -->
+    <div class="info-card branch-card">
+      <div class="card-header">
+        <i class="pi pi-building"></i>
+        <h3>Sucursal Asignada</h3>
+      </div>
+      <div class="card-content">
+        @if (isLoadingBranch()) {
+          <div class="loading-state">
+            <i class="pi pi-spin pi-spinner"></i>
+            <span>Cargando información de sucursal...</span>
+          </div>
+        } @else if (branchError()) {
+          <div class="error-state">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span>{{ branchError() }}</span>
+          </div>
+        } @else {
+          @if (branchInfo(); as branch) {
+            <div class="branch-details">
+              <div class="branch-item">
+                <label>Nombre:</label>
+                <span>{{ branch.description }}</span>
+              </div>
+              @if (branch.fullAddress) {
+                <div class="branch-item">
+                  <label><i class="pi pi-map-marker"></i> Dirección:</label>
+                  <span>{{ branch.fullAddress }}</span>
+                </div>
+              }
+              @if (branch.schedules && branch.schedules.length > 0) {
+                <div class="branch-item">
+                  <label><i class="pi pi-clock"></i> Horarios:</label>
+                  <ul class="schedule-list">
+                    @for (schedule of branch.schedules; track schedule.id) {
+                      <li>{{ formatSchedule(schedule) }}</li>
+                    }
+                  </ul>
+                </div>
+              }
+              @else {
+                <p class="empty-state">Horarios no disponibles</p>
+              }
+            </div>
+          } @else {
+            <p class="empty-state">No hay sucursal asignada</p>
+          }
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Work Info -->
+  <div class="work-stats-section">
+    <h3>Información adicional</h3>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <i class="pi pi-calendar"></i>
+        <div class="stat-content">
+          <span class="stat-label">Miembro desde</span>
+          <span class="stat-value">
+            {{ user.createdDatetime | date: 'MMMM yyyy' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <i class="pi pi-id-badge"></i>
+        <div class="stat-content">
+          <span class="stat-label">Tipo de empleado</span>
+          <span class="stat-value">
+            @if (user.isExternal) {
+              Externo
+            } @else {
+              Interno
+            }
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <i class="pi pi-check-circle"></i>
+        <div class="stat-content">
+          <span class="stat-label">Estado laboral</span>
+          <span class="stat-value">
+            @if (user.isActive) {
+              <span class="status-active">Activo</span>
+            } @else {
+              <span class="status-inactive">Inactivo</span>
+            }
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Section -->
+  <div class="help-section">
+    <div class="alert alert-info">
+      <i class="pi pi-info-circle"></i>
+      <div>
+        <strong>Nota:</strong> La información laboral es administrada por Recursos Humanos.
+        Si necesitas cambiar tu sucursal asignada o roles, contacta al administrador del sistema.
+      </div>
+    </div>
+  </div>
+</div>

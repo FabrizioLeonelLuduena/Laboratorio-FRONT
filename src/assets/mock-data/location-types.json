@@ -1,0 +1,30 @@
+[
+  {
+    "code": "WAREHOUSE",
+    "label": "Depósito"
+  },
+  {
+    "code": "AREA",
+    "label": "Área"
+  },
+  {
+    "code": "SHELF",
+    "label": "Estante"
+  },
+  {
+    "code": "FREEZER",
+    "label": "Freezer"
+  },
+  {
+    "code": "REFRIGERATOR",
+    "label": "Heladera"
+  },
+  {
+    "code": "CABINET",
+    "label": "Gabinete"
+  },
+  {
+    "code": "DRAWER",
+    "label": "Cajón"
+  }
+]

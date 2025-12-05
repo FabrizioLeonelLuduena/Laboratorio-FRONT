@@ -1,0 +1,126 @@
+<section class="dashboard">
+  <p-confirmDialog></p-confirmDialog>
+
+  @if (alertType !== null) {
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertText"
+      (closed)="alertType = null">
+    </app-generic-alert>
+  }
+
+  <header class="dashboard__header">
+    <div class="dashboard__context">
+      <h1 class="dashboard__title">Movimientos</h1>
+      <div class="dashboard__meta">
+        <span class="dashboard__meta-item">
+          <i class="pi pi-calendar"></i>
+          {{ formattedOpeningDate() }}
+        </span>
+        <span class="dashboard__meta-divider" aria-hidden="true"></span>
+        <span class="dashboard__meta-item">
+          <i class="pi pi-user"></i>
+          {{ userName }}
+        </span>
+        <span class="dashboard__meta-divider" aria-hidden="true"></span>
+        <span class="dashboard__meta-item">
+          <i class="pi pi-building"></i>
+          {{ branchName() }}
+        </span>
+        <span class="dashboard__meta-divider" aria-hidden="true"></span>
+        <span class="dashboard__meta-item">
+          <i class="pi pi-briefcase"></i>
+          {{ registerName() }}
+        </span>
+      </div>
+    </div>
+
+    <div class="dashboard__actions">
+      <app-generic-button
+        type="custom"
+        text="Cerrar caja"
+        icon="pi pi-lock"
+        color="--card"
+        customTextColor="--on-surface"
+        borderColor="--border-color"
+        (pressed)="navigateTo('/billing-collections/closing')">
+      </app-generic-button>
+      <app-generic-button
+        text="Registrar"
+        icon="pi pi-plus"
+        type="create"
+        (pressed)="navigateTo('/billing-collections/operations')">
+      </app-generic-button>
+    </div>
+    <div class="dashboard__balance" pTooltip="Saldo disponible en caja" tooltipPosition="bottom">
+      <i class="pi pi-wallet"></i>
+      <div class="dashboard__balance-copy">
+        <span class="dashboard__balance-label">Saldo en caja</span>
+        <span class="dashboard__balance-amount">
+          {{ currentBalance() | currency:'ARS':'symbol':'1.2-2' }}
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <section class="dashboard__content">
+    <div class="panel__body">
+      <ng-template #dateTemplate let-row>
+        {{ row.transactionDate | date:'dd/MM/yyyy HH:mm' }}
+      </ng-template>
+
+      <ng-template #typeTemplate let-row>
+        <p-tag
+          [value]="getTransactionTypeLabel(row)"
+          [severity]="getTransactionTypeSeverity(row)">
+        </p-tag>
+      </ng-template>
+
+      <ng-template #paymentMethodTemplate let-row>
+        <p-tag [value]="getPaymentMethodLabel(row.paymentMethod)" severity="warning"></p-tag>
+      </ng-template>
+
+      <ng-template #amountTemplate let-row>
+        <div style=" text-align:right;">
+    <span
+      [class.dashboard__amount--negative]="row.type === 'OUTFLOW'"
+      [class.dashboard__amount--positive]="row.type === 'INFLOW'">
+      {{ formatAmount(row.amount, row.type) }}
+    </span>
+        </div>
+      </ng-template>
+
+      <ng-template #prevAmountTemplate let-row>
+        <div style="text-align: right;">
+    <span>
+      {{ row.previousAmount | currency:'ARS':'symbol':'1.2-2' }}
+    </span>
+        </div>
+      </ng-template>
+
+      <ng-template #userTemplate let-row>
+        {{ userName }}
+      </ng-template>
+
+      <app-generic-table
+        [data]="transactionsTableData()"
+        [columns]="transactionsColumns"
+        [loading]="isLoading()"
+        [dataKey]="'id'"
+        [showDownloadMenu]="true"
+        [filters]="tableFilters"
+        (downloadExcel)="onTableExportAction({ type: 'excel' })"
+        (downloadPdf)="onTableExportAction({ type: 'pdf' })"
+        (filterChange)="onTableFilterAction($event)"
+        [showActions]="false"
+        [showCreateButton]="false"
+      >
+      </app-generic-table>
+    </div>
+  </section>
+
+  <p-menu #menu [popup]="true" [model]="menuItems"></p-menu>
+
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+</section>

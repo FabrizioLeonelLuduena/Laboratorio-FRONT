@@ -1,0 +1,12 @@
+<div class="manual-toggle">
+  <button class="manual-toggle__header" (click)="toggle()" [attr.aria-expanded]="currentOpen" [class.open]="currentOpen">
+    <span class="manual-toggle__title">{{ title }}</span>
+    <i class="pi" [ngClass]="currentOpen ? 'pi-chevron-down' : 'pi-chevron-right'"></i>
+  </button>
+
+  <div class="manual-toggle__body" [class.open]="currentOpen" [attr.aria-hidden]="!currentOpen">
+    <div class="manual-toggle__inner">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

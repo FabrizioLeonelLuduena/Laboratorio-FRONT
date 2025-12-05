@@ -1,0 +1,81 @@
+<div class="worksheet-setting-home-container">
+  <!-- Alert Component -->
+  @if (showAlert()) {
+    <app-generic-alert
+      [type]="alertType()"
+      [title]="alertTitle()"
+      [text]="alertText()"
+    />
+  }
+
+  <!-- Main Table -->
+  <app-advanced-table
+    [columns]="columns"
+    [data]="worksheetSettings()"
+    [config]="effectiveTableConfig()"
+    [loading]="loading()"
+    [actionItems]="effectiveActionItems()"
+    (action)="onTableAction($event)"
+  />
+
+  <!-- Edit/Create Modal -->
+  @if (showEditDialog()) {
+    <app-generic-modal-form
+      [visible]="showEditDialog()"
+      [title]="selectedWorksheetSetting() ? 'Editar Configuración' : 'Nueva Configuración'"
+      [width]="'600px'"
+      (closed)="showEditDialog.set(false)"
+    >
+      <app-worksheet-setting-edit-form
+        [worksheetSetting]="selectedWorksheetSetting()"
+        (save)="onSave($event)"
+        (cancelled)="onCancel()"
+      />
+    </app-generic-modal-form>
+  }
+
+  <!-- Details Modal -->
+  @if (showDetailsDialog()) {
+    <app-generic-modal-form
+      [visible]="showDetailsDialog()"
+      [title]="'Detalles de Configuración'"
+      [width]="'600px'"
+      (closed)="showDetailsDialog.set(false)"
+    >
+      <div class="details-content">
+        @if (selectedWorksheetSetting(); as setting) {
+          <div class="detail-row">
+            <label class="detail-label">Nombre:</label>
+            <span class="detail-value">{{ setting.name }}</span>
+          </div>
+
+          @if (setting.description) {
+            <div class="detail-row">
+              <label class="detail-label">Descripción:</label>
+              <span class="detail-value">{{ setting.description }}</span>
+            </div>
+          }
+
+          <div class="detail-row">
+            <label class="detail-label">ID:</label>
+            <span class="detail-value">{{ setting.id }}</span>
+          </div>
+
+          <div class="detail-row">
+            <label class="detail-label">Versión:</label>
+            <span class="detail-value">{{ setting.entityVersion }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <p-button
+          label="Cerrar"
+          icon="pi pi-times"
+          severity="secondary"
+          (onClick)="showDetailsDialog.set(false)"
+        />
+      </div>
+    </app-generic-modal-form>
+  }
+</div>

@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "name": "Reactivos Bioquímicos",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 2,
+    "name": "Material Descartable",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 3,
+    "name": "Solventes",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 4,
+    "name": "Equipamiento de Protección",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 5,
+    "name": "Reactivos Hematológicos",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 6,
+    "name": "Material de Laboratorio",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 7,
+    "name": "Soluciones",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 8,
+    "name": "Reactivos Inmunológicos",
+    "parentCategory": {
+      "id": 1,
+      "name": "Reactivos Bioquímicos",
+      "parentCategory": null,
+      "isActive": true
+    },
+    "isActive": true
+  },
+  {
+    "id": 9,
+    "name": "Reactivos Microbiológicos",
+    "parentCategory": null,
+    "isActive": true
+  },
+  {
+    "id": 10,
+    "name": "Consumibles Generales",
+    "parentCategory": null,
+    "isActive": true
+  }
+]

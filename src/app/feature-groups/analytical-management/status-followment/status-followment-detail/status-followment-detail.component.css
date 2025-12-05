@@ -1,0 +1,348 @@
+/* Loading spinner */
+.loading-detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+/* Header section */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.protocol-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Meta grid (date, time, creator) */
+.meta-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 3rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-label {
+  font-weight: 400;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.meta-value {
+  font-size: 0.875rem;
+  color: #212529;
+  font-weight: 400;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid #dee2e6;
+  margin: 1.5rem 0;
+}
+
+/* Analysis section */
+.section-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Table wrapper with horizontal scroll */
+::ng-deep .p-card .p-card-body {
+  overflow-x: auto;
+}
+
+::ng-deep app-generic-table {
+  display: block;
+  overflow-x: auto;
+}
+
+/* Samples section */
+.samples-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.subsection-title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.no-samples-message,
+.no-analysis-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Expanded analysis row */
+.expanded-analysis-row {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+}
+
+/* Carousel container */
+::ng-deep .samples-carousel .p-carousel-content {
+  padding: 1rem 0;
+}
+
+::ng-deep .samples-carousel .p-carousel-item {
+  padding: 0 0.5rem;
+}
+
+::ng-deep .samples-carousel .p-carousel-prev,
+::ng-deep .samples-carousel .p-carousel-next {
+  background: var(--primary-color);
+  color: white;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+}
+
+::ng-deep .samples-carousel .p-carousel-prev .p-icon,
+::ng-deep .samples-carousel .p-carousel-next .p-icon {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+::ng-deep .samples-carousel .p-carousel-prev:hover,
+::ng-deep .samples-carousel .p-carousel-next:hover {
+  background: var(--primary-color-dark, #0056b3);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
+}
+
+::ng-deep .samples-carousel .p-carousel-prev:disabled,
+::ng-deep .samples-carousel .p-carousel-next:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+::ng-deep .samples-carousel .p-carousel-indicators {
+  padding: 1rem 0 0;
+}
+
+.sample-card-compact {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.sample-card-compact:hover {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.sample-card-compact-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s;
+}
+
+.sample-card-compact-header:hover {
+  background-color: #e9ecef;
+}
+
+.card-chevron {
+  font-size: 0.875rem;
+  color: #6c757d;
+  transition: transform 0.2s;
+}
+
+.sample-card-header-content {
+  flex: 1;
+}
+
+.sample-type-compact {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: #212529;
+}
+
+.sample-card-compact-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sample-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.info-value {
+  font-size: 0.875rem;
+  color: #212529;
+}
+
+.info-value-small {
+  font-size: 0.8125rem;
+  color: #495057;
+}
+
+/* Timeline inside card */
+.sample-card-timeline {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+.timeline-title {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.timeline-step-card {
+  position: relative;
+  padding-left: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.timeline-step-card::before {
+  content: '';
+  position: absolute;
+  left: 0.375rem;
+  top: 1.5rem;
+  bottom: 0;
+  width: 2px;
+  background-color: #dee2e6;
+}
+
+.timeline-step-card.last-step-card::before {
+  display: none;
+}
+
+.timeline-step-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  border: 2px solid white;
+}
+
+.step-card-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.step-card-time {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.step-card-details {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.step-card-user,
+.step-card-section {
+  font-size: 0.75rem;
+}
+
+.step-card-separator {
+  color: #dee2e6;
+}
+
+.step-card-reason {
+  font-size: 0.75rem;
+  color: #495057;
+  font-style: italic;
+  padding: 0.25rem 0.5rem;
+  background-color: #fff3cd;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (width <= 768px) {
+  .header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-left {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .analysis-section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .analysis-filter {
+    flex: 1;
+  }
+
+  .samples-cards-horizontal {
+    grid-template-columns: 1fr;
+  }
+}

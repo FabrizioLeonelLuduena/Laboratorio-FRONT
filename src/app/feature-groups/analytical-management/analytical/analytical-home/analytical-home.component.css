@@ -1,0 +1,46 @@
+.analytical-container {
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.analytical-layout {
+  display: grid;
+  grid-template-columns: 2.05fr 0.95fr;
+  gap: 1rem;
+  height: calc(100vh - 3rem);
+  align-items: start;
+}
+
+.left-panel,
+.right-panel {
+  height: 100%;
+  overflow: visible;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive layout for smaller screens */
+@media (width <=1200px) {
+  .analytical-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    height: auto;
+  }
+
+  .left-panel,
+  .right-panel {
+    height: auto;
+    overflow: visible;
+  }
+}

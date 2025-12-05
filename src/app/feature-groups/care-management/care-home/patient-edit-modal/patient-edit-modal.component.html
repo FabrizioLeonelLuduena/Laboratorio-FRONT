@@ -1,0 +1,20 @@
+
+<app-generic-modal-form
+  [visible]="visible"
+  [title]="readOnly ? 'Ver Paciente' : 'Editar Paciente'"
+  [width]="'90vw'"
+  (closed)="closeModal()">
+  @if (formFields.length > 0 && initialFormValue) {
+    <app-generic-form
+      [fields]="formFields"
+      [initialValue]="initialFormValue"
+      [maxCols]="4"
+      [showSubmit]="!readOnly"
+      [showCancel]="true"
+      [submitLabel]="'Guardar'"
+      [cancelLabel]="readOnly ? 'Cerrar' : 'Cancelar'"
+      (submitForm)="onSubmit($event)"
+      (cancelForm)="closeModal()">
+    </app-generic-form>
+  }
+</app-generic-modal-form>

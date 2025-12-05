@@ -1,0 +1,41 @@
+<div class="download-menu-container relative inline-block">
+  <!-- Main button -->
+  <button
+    type="button"
+    [class]="disabled()
+      ? 'flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium bg-gray-300 text-gray-500 cursor-not-allowed transition-all duration-150'
+      : 'flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium bg-[var(--brand-primary-700)] text-[var(--on-primary)] hover:brightness-110 transition-all duration-150'"
+    [disabled]="disabled()"
+    (click)="toggleMenu()"
+  >
+    <i class="pi pi-download"></i>
+    @if (text()) {
+      <span>{{ text() }}</span>
+    }
+  </button>
+
+  <!-- Drop-down menu -->
+  @if (isOpen()) {
+    <ul
+      class="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg
+             shadow-md text-sm overflow-hidden animate-fade-in z-50"
+    >
+      @if (showExcel()) {
+        <li
+          class="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer transition-colors"
+          (click)="download('excel')"
+        >
+          <i class="pi pi-file-excel text-green-600 mr-2"></i> Excel
+        </li>
+      }
+      @if (showPdf()) {
+        <li
+          class="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer transition-colors"
+          (click)="download('pdf')"
+        >
+          <i class="pi pi-file-pdf text-red-600 mr-2"></i> PDF
+        </li>
+      }
+    </ul>
+  }
+</div>

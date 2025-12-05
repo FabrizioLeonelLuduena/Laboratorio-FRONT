@@ -1,0 +1,59 @@
+<div class="table-container">
+  <!-- Analysis title -->
+  <h2 class="analysis-title">{{ analysis.analysisName }}</h2>
+
+  <!-- Inverted table -->
+  <div class="table-wrapper">
+    <table class="results-table">
+      <!-- Header: Patients as columns -->
+      <thead>
+        <tr>
+          <th class="determination-header">Determinaciones</th>
+          <th *ngFor="let patient of paginatedPatients()" class="sample-header">
+            <div class="sample-info">
+              <span class="protocol">#{{ patient.protocolNumber }}</span>
+              <span class="name">{{ patient.patientName }}</span>
+              <span class="date">{{ formatDate(patient.collectionDate) }}</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <!-- Body: Each row is a determination -->
+      <tbody>
+        <tr *ngFor="let determination of analysis.determinations; let rowIndex = index">
+          <!-- First column: Determination info -->
+          <td class="determination-cell">
+            <div class="determination-info">
+              <span class="determination-name">{{ determination.determinationName }}</span>
+              <span *ngIf="determination.unit" class="unit">({{ determination.unit }})</span>
+              <span *ngIf="determination.normalRange" class="range">Rango: {{ determination.normalRange }}</span>
+            </div>
+          </td>
+
+          <!-- Remaining columns: Input for each patient -->
+          <td *ngFor="let patient of paginatedPatients(); let colIndex = index" class="value-cell">
+            <input
+              pInputText
+              type="text"
+              class="value-input"
+              [value]="getValue(patient.sampleId, determination.determinationId)"
+              (input)="onInput(patient.sampleId, determination.determinationId, $event)"
+              (keydown)="onKeyDown($event, rowIndex, colIndex)"
+              [attr.data-row]="rowIndex"
+              [attr.data-col]="colIndex"
+              [placeholder]="'...'"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination controls -->
+  <div *ngIf="analysis.patients && (analysis.patients.length > pageSize)" class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="currentPage() === 0">Anterior</button>
+    <span>{{ currentPage() + 1 }} - {{ Math.min(currentPage() + pageSize, analysis.patients.length) }} de {{ analysis.patients.length }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage() + pageSize >= analysis.patients.length">Siguiente</button>
+  </div>
+</div>

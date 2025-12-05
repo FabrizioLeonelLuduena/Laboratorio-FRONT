@@ -1,0 +1,208 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Insumos",
+  "intro": "En esta sección se detallan los procedimientos paso a paso para operar sobre el inventario.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Manager Stock",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note-insumos",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Manager Stock - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-insumo",
+      "title": "Crear Insumo",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta acción permite dar de alta un nuevo producto. El acceso se encuentra en las <strong>Acciones disponibles en la parte superior</strong> derecha, haciendo clic en el botón <strong>( + )</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-create.jpeg",
+          "alt": "Crear insumo"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema redirige a la <strong>Pantalla</strong> de alta. Para guardar correctamente el insumo, el usuario debe completar los siguientes campos (los marcados con * son obligatorios):"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Nombre del insumo *:</strong> Nombre descriptivo del producto.",
+            "<strong>SKU *:</strong> (Stock Keeping Unit) Código único alfanumérico para el rastreo e identificación interna del producto (Ej: JER-001).",
+            "<strong>Categoría del insumo *:</strong> Selección del tipo de material (ej. Material Descartable).",
+            "<strong>Empaque *:</strong> Selección de la presentación (ej. Unidad X 1). La unidad de medida se asigna automáticamente según este campo.",
+            "<strong>Notas:</strong> Campo de texto libre para agregar observaciones o características especiales del producto."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Guardar cambios / Crear insumo</strong>",
+              "Confirma la operación y guarda el nuevo insumo."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Descarta los datos ingresados y vuelve a la lista."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Todos los campos marcados con asterisco (*) son obligatorios para poder completar el registro."
+        }
+      ]
+    },
+    {
+      "id": "editar-insumo",
+      "title": "Editar Insumo",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta acción permite modificar un producto existente. El acceso se realiza desde el menú de acciones <strong>(:)</strong> ubicado en la fila del insumo, seleccionando la opción <strong>Editar</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-edit.jpeg",
+          "alt": "Editar insumo"
+        },
+        {
+          "type": "paragraph",
+          "text": "En la <strong>Pantalla</strong> de edición se pueden alterar los mismos campos que en la creación, incluyendo la nota para detallar el motivo de la edición."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "gestionar-umbrales",
+      "title": "Gestionar Umbrales de Stock",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite configurar los límites de alerta para el inventario por depósito. Se accede desde el menú de acciones <strong>(:)</strong> en la fila del insumo, seleccionando la opción <strong>Umbrales</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-umbral.jpeg",
+          "alt": "Umbral de insumo"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema despliega una <strong>Pantalla</strong> donde se debe definir:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Ubicación:</strong> Menú desplegable para seleccionar el depósito físico o ubicación a configurar (Ej: Prueba Meli y Jere).",
+            "<strong>Stock mínimo:</strong> Cantidad numérica mínima deseada. Por debajo de este número el sistema alertará necesidad de reposición.",
+            "<strong>Stock máximo:</strong> Cantidad límite superior para controlar el sobre-stock."
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "desactivar-insumo",
+      "title": "Desactivar Insumo",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Permite dar de baja un insumo que ya no se utiliza, sin eliminar su historial de trazabilidad. Acceda desde el menú de acciones <strong>(:)</strong> y seleccione la opción <strong>Desactivar</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-desactive.jpeg",
+          "alt": "Desactivar insumo"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema mostrará una ventana de advertencia preguntando: '¿Está seguro que desea desactivar el insumo?'."
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Al pulsar <strong>Aceptar</strong>, el estado cambiará inmediatamente a <span class=\"badge status-inactive\">INACTIVO</span> (color rojo)."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "reactivar-insumo",
+      "title": "Reactivar Insumo",
+      "open": false,
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "✓ Requisito previo",
+          "text": "<br>Para realizar esto, primero debe usar el filtro de <strong>Estado</strong> en la pantalla principal y seleccionar <strong>Inactivos</strong> para visualizar el ítem en la grilla."
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta acción permite volver a habilitar un insumo. Acceda desde el menú de acciones <strong>(:)</strong> y seleccione la opción <strong>Reactivar</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/inventory/supplies/supplies-reactivate.jpeg",
+          "alt": "Reactivar insumo"
+        },
+        {
+          "type": "paragraph",
+          "text": "Aparecerá una ventana de confirmación. Al pulsar <strong>Aceptar</strong>, el insumo volverá a estar disponible para operaciones y su estado pasará a <span class=\"badge status-active\">ACTIVO</span> (color verde)."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "insumos",
+    "acciones",
+    "crear",
+    "editar",
+    "umbrales",
+    "desactivar",
+    "reactivar"
+  ]
+}

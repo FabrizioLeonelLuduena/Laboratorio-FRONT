@@ -1,0 +1,81 @@
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando usuarios...'" />
+}
+
+@for ( alert of alerts; track alert) {
+  <app-generic-alert
+    [type]="alert.type"
+    [text]="alert.text"
+    [title]="alert.title"
+  >
+  </app-generic-alert>
+}
+
+@if (showConfirmationModal) {
+  <app-confirmation-modal
+    [icon]="confirmationModalData.icon"
+    [title]="confirmationModalData.title"
+    [message]="confirmationModalData.message"
+    [inputField]="confirmationModalData.inputField"
+    (confirmed)="onConfirmationAccepted($event)"
+    (dismissed)="onConfirmationDismissed()"
+  >
+  </app-confirmation-modal>
+}
+
+@if (showRegisterForm) {
+  <app-internal-user-register
+    (notified)="onNotified($event)"
+    (cancelled)="onCancelRegister()"
+  ></app-internal-user-register>
+} @else if (showEditModal && selectedUser) {
+  <app-internal-user-editing-form
+    [user]="selectedUser"
+    (updated)="closeEditModal(true)"
+    (cancelled)="closeEditModal()"
+  ></app-internal-user-editing-form>
+} @else {
+<ng-template #rolesChipTemplate let-row>
+  <div class="flex flex-wrap gap-1">
+    @for (role of row.roles; track role.id) {
+      <app-generic-badge
+        status="pendiente"
+        [text]="role.description">
+      </app-generic-badge>
+    }
+  </div>
+</ng-template>
+
+<ng-template #lastNameTemplate let-row>
+  {{ row.lastName | capitalize }}
+</ng-template>
+
+<ng-template #firstNameTemplate let-row>
+  {{ row.firstName | capitalize }}
+</ng-template>
+
+  <app-generic-table
+    [data]="filteredData()"
+    [columns]="columns"
+    [getActions]="getActionsForRow.bind(this)"
+    [rows] = "5"
+    [pageable] = "true"
+    [loading] = "loading()"
+    [lazy] = "true"
+    [filters] = "filtersFields"
+    [totalRecords] = "totalElements"
+    (create) = "onCreateUser()"
+    (filterChange) = "onFilterChange($event)"
+    (globalFilterChange) = "onGlobalFilterChange($event)"
+    (pageChange) = "onPageChange($event)"
+    [showDownloadMenu]="false"
+  ></app-generic-table>
+}
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

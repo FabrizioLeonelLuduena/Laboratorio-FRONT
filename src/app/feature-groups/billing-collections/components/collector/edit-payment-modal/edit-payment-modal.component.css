@@ -1,0 +1,132 @@
+.edit-payment-modal {
+  padding: 0;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.form-field label.required::after {
+  content: ' *';
+  color: var(--red-500);
+}
+
+.form-field input,
+.form-field textarea,
+.form-field ::ng-deep .p-dropdown,
+.form-field ::ng-deep .p-calendar,
+.form-field ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+.form-field ::ng-deep .p-inputtext.ng-invalid.ng-dirty,
+.form-field ::ng-deep .p-dropdown.ng-invalid.ng-dirty,
+.form-field ::ng-deep .p-calendar .p-inputtext.ng-invalid.ng-dirty,
+.form-field ::ng-deep .p-inputnumber input.ng-invalid.ng-dirty {
+  border-color: var(--red-500);
+}
+
+.form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.amount-section {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+}
+
+.amount-section .form-field {
+  margin: 0;
+}
+
+.amount-section .amount-input-group {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.amount-section .amount-input-group ::ng-deep .p-inputnumber {
+  flex: 1;
+  min-width: 200px;
+}
+
+.info-card {
+  background: var(--surface-50);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-card .info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.info-card .info-row .info-label {
+  color: var(--text-color-secondary);
+  font-weight: 500;
+}
+
+.info-card .info-row .info-value {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: var(--red-500);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive design */
+@media (width <= 768px) {
+  .amount-section .amount-input-group {
+    flex-direction: column;
+  }
+
+  .amount-section .amount-input-group ::ng-deep .p-inputnumber {
+    min-width: 100%;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+}

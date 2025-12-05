@@ -1,0 +1,26 @@
+<!-- Alerta genérica -->
+@if (alertVisible) {
+  <div>
+    <app-generic-alert
+    [type]="alertType"
+    [text]="alertText"
+    (close)="alertVisible = false">
+   </app-generic-alert>
+  </div>
+}
+
+<!-- Formulario genérico -->
+<app-generic-form
+  [title]="'Editar usuario'"
+  [fields]="fields"
+  [initialValue]="initialValue"
+  submitType="save"
+  submitLabel="Guardar cambios"
+  (submitForm)="onSubmit($event)"
+  [showCancel]="true"
+  (cancelForm)="onCancel()"
+  [saving]="saving"
+  [showHeader]="false">
+</app-generic-form>
+
+

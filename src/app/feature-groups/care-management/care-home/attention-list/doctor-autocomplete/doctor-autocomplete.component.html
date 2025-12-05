@@ -1,0 +1,66 @@
+<div class="doctor-autocomplete-container">
+  @if (showAlert) {
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [text]="alertText"
+      (dismissed)="dismissAlert()">
+    </app-generic-alert>
+  }
+
+  <label class="doctor-label">
+    {{ label }}
+    @if (required) {
+      <span class="required-indicator">*</span>
+    }
+  </label>
+
+  <div class="doctor-input-wrapper">
+    <p-autoComplete
+      [formControl]="doctorCtrl"
+      [suggestions]="filteredDoctors"
+      (completeMethod)="filterDoctors($event)"
+      (onSelect)="onDoctorSelect($event)"
+      field="name"
+      dataKey="id"
+      [dropdown]="false"
+      [showEmptyMessage]="false"
+      emptyMessage="Escriba al menos 3 caracteres para buscar"
+      [placeholder]="placeholder"
+      styleClass="doctor-autocomplete-input"
+    >
+      <ng-template let-doctor pTemplate="item">
+        <div class="doctor-option">
+          <div class="doctor-name">
+            {{ doctor.title }} {{ doctor.name }} {{ doctor.lastName }}
+          </div>
+          <div class="doctor-tuition">
+            Matrícula: {{ doctor.tuition }}
+          </div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+
+    <app-generic-button
+      type="create"
+      (pressed)="onCreateDoctor()">
+    </app-generic-button>
+  </div>
+</div>
+
+<!-- Modal para crear médico -->
+<app-generic-modal-form
+  [visible]="showCreateModal"
+  [title]="'Nuevo médico'"
+  [width]="'600px'"
+  (closed)="closeModal()">
+
+  <app-generic-dynamic-form
+    [title]="''"
+    [fields]="formFields"
+    [initialValue]="initialValue"
+    [saving]="saving"
+    (submitForm)="onSubmitNewDoctor($event)"
+    (cancelForm)="closeModal()">
+  </app-generic-dynamic-form>
+</app-generic-modal-form>

@@ -1,0 +1,193 @@
+{
+  "id": "flujo-general-sistema-laboratorio",
+  "moduleId": "flujo-general",
+  "title": "Flujo General del Sistema del Laboratorio",
+  "intro": "Este documento describe la secuencia de interacción entre los módulos del sistema, desde el acceso del usuario hasta la entrega de resultados y el cierre administrativo-financiero.",
+  "roles": {
+    "title": "Audiencia principal",
+    "items": [
+      "Administradores",
+      "Facturación",
+      "Bioquímicos",
+      "Operadores de Sistema"
+    ]
+  },
+  "sections": [
+     {
+            "id": "roles-note",
+            "introBlocks": [
+              {
+          "type": "title",
+          "text": "Diagrama integral del flujo de atención."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/general/pruebaDiagrama+general.jpg",
+          "alt": "Diagrama de flujo general"
+        }
+            ]
+        },
+    {
+      "id": "fase-1-inicio-y-datos",
+      "title": "Fase 1: Acceso, Seguridad y Datos del Paciente",
+      "blocks": [
+
+        {
+          "type": "subtitle",
+          "text": "1. Acceso y Seguridad"
+        },
+        {
+          "type": "paragraph",
+          "text": "Antes de cualquier interacción, el sistema verifica la identidad y los permisos. Incluye Autenticación (login), Autorización (según roles como bioquímico, recepción, paciente, etc.) y *Registro de auditoría* de acciones. Es el primer filtro de seguridad."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "2. Gestión de Pacientes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Se gestiona el registro y la información básica del paciente: Alta/Edición, historial clínico, contactos y Validaciones (duplicados, edad). Esta información es fundamental y alimenta todos los módulos posteriores (Turnos, Atenciones, Facturación)."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "3. Coberturas (Validación Financiera)"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema administra obras sociales/prepagas, planes y convenios. El objetivo es validar automáticamente la cobertura, determinando si el estudio está cubierto, si requiere *autorización* (manual o API) u *orden médica*. Es un paso crítico que define si se factura al paciente o a la cobertura y si el estudio puede realizarse."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Interconexión Clave",
+          "text": "La información de Coberturas y Gestión de Pacientes es obligatoria antes de avanzar a la solicitud de Turnos o Atenciones."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "fase-2-turnos-y-atencion",
+      "title": "Fase 2: Coordinación y Atención Presencial",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "4. Turnos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una vez validada la cobertura, el sistema coordina la cita (Solicitud, Confirmación, Reprogramación, Cancelación) con asignación a profesional/sede/box. El módulo incluye:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Configuración de turnos</strong>: Reglas de horarios, cupos y disponibilidad de bioquímicos.",
+            "<strong>Tótem</strong>: Para turnos presenciales (*Check-in*, generación de ticket, ordenamiento en cola y llamado a box)."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "5. Gestión de Atenciones (En Sede)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Gestiona la operatividad del día de la cita: Confirmación de asistencia, cola de espera, asignación a box, Control de requisitos pre-estudios (ayuno, medicación) y Cierre del turno. Este módulo enlaza directamente la parte administrativa con la analítica y la financiera."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "fase-3-analisis-y-cierre",
+      "title": "Fase 3: Procesamiento, Resultados y Cierre Financiero",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "6. Gestión de Analítica"
+        },
+        {
+          "type": "paragraph",
+          "text": "Gestiona el procesamiento de muestras: Carga de muestras y Trazabilidad, interfaz con equipos automatizados (importación de resultados), Validación técnica por bioquímico, Firma digital del informe y Publicación de resultados en el portal del paciente. Determina el estatus del estudio (pendiente, validado, entregado)."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "7. Facturación y Cobros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Realiza el cierre administrativo-financiero. Incluye Facturación automática (a particulares y obras sociales), Generación de comprobantes fiscales y Gestión de caja (cobros, métodos de pago y cierres diarios). Se alimenta de toda la información de Coberturas, Pacientes, Turnos y Analítica."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "fase-4-soporte-transversal",
+      "title": "Fase 4: Gestión y Soporte Interno",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "8. Gestión Interna"
+        },
+        {
+          "type": "paragraph",
+          "text": "Administración del personal y de los servicios ofrecidos:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Gestión de médicos:</strong> Alta, especialidades y Firma digital.",
+            "<strong>Gestión de empleados:</strong> Roles, permisos y turnos laborales.",
+            "<strong>Gestión de análisis:</strong> Catálogo de prácticas, agrupadores, tiempos de procesamiento y requisitos."
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "9. Adquisición e Inventario + Movimiento de Stock"
+        },
+        {
+          "type": "paragraph",
+          "text": "Soporte operativo para el laboratorio. Incluye Gestión de proveedores, Órdenes de compra, control de Lotes y vencimientos. El Movimiento de Stock gestiona el Consumo por práctica (descontando insumos usados), Ajustes de stock y Reportes de alerta (bajo stock/vencimiento)."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "10. Gestión de Usuarios (Transversal)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Regula el acceso y seguridad de todo el sistema. Incluye Alta/baja de usuarios, edición de roles y permisos, Control de accesos y Reset de contraseñas. Es el módulo que determina quién tiene acceso y qué acciones puede realizar dentro del sistema."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "flujo-sistema",
+    "laboratorio",
+    "modulos",
+    "trazabilidad",
+    "analitica"
+  ]
+}

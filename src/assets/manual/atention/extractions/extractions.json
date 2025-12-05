@@ -1,0 +1,125 @@
+{
+  "id": "gestion-extracciones",
+  "moduleId": "atention",
+  "title": "Gestión de Extracciones",
+  "intro": "El módulo de Extracciones organiza el flujo de pacientes para la toma de muestras, ofreciendo una vista en tiempo real de la sala de espera y la ocupación de los boxes.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Técnico de extracción",
+      "Bioquímico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Técnico de extracción - Bioquímico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla Principal y Paneles",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>Pantalla principal</strong> se divide en dos paneles claramente diferenciados para facilitar el control del flujo de trabajo:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Panel En espera:</strong> Lista de pacientes que aguardan ser llamados.",
+            "<strong>Panel En extracción:</strong> Lista de pacientes que están siendo atendidos actualmente dentro de un box."
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/atention/extractions/extraccion-cola.jpg",
+          "alt": "Pantalla principal de gestión de extracciones"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Box activo",
+              "<i class='pi pi-search'></i>",
+              "Indicá el box en el que se está operando y el usuario que lo maneja."
+            ],
+            [
+              "Configuración de box",
+              "<i class='pi pi-filter'></i>",
+              "Permite configurar el box con un usuario designado"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-extracciones",
+      "title": "Contenido de las Tablas de Datos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La información de los pacientes se visualiza con los siguientes datos:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "N° Extracción",
+              "Identificador único del turno de toma de muestra (Ej: CS-100)."
+            ],
+            [
+              "Documento / Paciente",
+              "Datos identificatorios del paciente."
+            ],
+            [
+              "Urgente",
+              "Indicador visual para <strong>priorizar la atención</strong>."
+            ],
+            [
+              "Box asignado",
+              "Número de box donde se encuentra el paciente (Visible en panel derecho)."
+            ],
+            [
+              "Acciones",
+              "Botones operativos: <strong>Extraer</strong> (iniciar) o <strong>Finalizar</strong> (terminar)."
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "extracciones",
+    "boxes",
+    "toma de muestras",
+    "flujo",
+    "pacientes"
+  ]
+}

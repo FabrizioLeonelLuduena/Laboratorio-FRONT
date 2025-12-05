@@ -1,0 +1,150 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Versiones NBU",
+  "intro": "En esta sección se detallan los pasos para registrar y configurar una nueva actualización del nomenclador.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note-nbu",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-version",
+      "title": "Crear Nueva Versión",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cuando CUBRA publica una actualización, el administrador debe registrarla. El acceso se encuentra en el botón <strong>+ Crear versión</strong> en la parte superior derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/nbu/nbu-create.jpg",
+          "alt": "Formulario de alta de versión"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema abre la <strong>Pantalla</strong> de alta. Complete el formulario con la información oficial:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Código de versión *:</strong> Nombre interno para identificar la versión.",
+            "<strong>Año de publicación *:</strong> Año oficial de la norma.",
+            "<strong>Fechas:</strong> Complete la 'Fecha de publicación' y, fundamentalmente, la 'Fecha de vigencia' (hasta cuándo es válida)."
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Versión Base"
+        },
+        {
+          "type": "paragraph",
+          "text": "Es opcional pero recomendado. Seleccione del menú desplegable una versión anterior (Ej: 2012_2024). Esto permite al sistema 'copiar' la asociación de prácticas existente para ahorrar tiempo."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/nbu/nbu-create-combo.jpg",
+          "alt": "Selección de versión base"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "asociar-nbus",
+      "title": "Asociación de NBUs (Prácticas)",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Una versión solo es útil si tiene prácticas asociadas. El sistema desplegará una <strong>Pantalla</strong> titulada 'Asociar NBUs a versión'."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/nbu/nbu-selection.jpg",
+          "alt": "Selección de NBUs"
+        },
+        {
+          "type": "subtitle",
+          "text": "Información de la Tabla"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Código NBU:</strong> Identificador numérico de la práctica.",
+            "<strong>Determinación:</strong> Nombre del análisis.",
+            "<strong>Versión actual:</strong> Referencia de procedencia.",
+            "<strong>Estado:</strong> Etiqueta verde indicando 'YA ASOCIADO' si la práctica ya está vinculada."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Utilice el <strong>Buscador</strong> superior para encontrar determinaciones y marque las <strong>Casillas de verificación</strong> a la izquierda de cada fila. Un contador (badge) en la parte superior le indicará la cantidad total seleccionada."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "guardar-version",
+      "title": "Guardar y Finalizar",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Una vez completado el formulario y la selección de prácticas, proceda al cierre de la operación."
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "<strong>Guardar</strong>",
+              "Confirma la operación y la nueva versión aparecerá listada en el panel izquierdo."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Descarta la creación de la versión."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Resultado",
+          "text": "<br>La nueva versión quedará lista para ser utilizada en los convenios y la facturación."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "nbu",
+    "versiones",
+    "nomenclador",
+    "crear",
+    "asociar"
+  ]
+}

@@ -1,0 +1,367 @@
+<!-- Alertas -->
+@if (flash()) {
+  <div class="alert-container">
+    <app-generic-alert
+      [type]="flash()!.type"
+      [title]="flash()!.title || ''"
+      [text]="flash()!.text">
+    </app-generic-alert>
+  </div>
+}
+
+<!-- Templates para columnas personalizadas -->
+<ng-template #nbuCodeTpl let-row>
+  @if (row.nbuCode) {
+    <span class="nbu-code-value">{{ row.nbuCode }}</span>
+  } @else {
+    <span class="text-muted">-</span>
+  }
+</ng-template>
+
+<ng-template #typeTpl let-row>
+  @if (row.nbuType) {
+    <span class="type-badge">{{ row.nbuType }}</span>
+  } @else {
+    <span class="text-muted">-</span>
+  }
+</ng-template>
+
+<ng-template #flagsTpl let-row>
+  <div class="flags-inline">
+    @if (row.isUrgency) {
+      <span class="flag-badge urgency" title="Urgencia">
+        <i class="pi pi-exclamation-circle"></i>
+      </span>
+    }
+    @if (row.isByReference) {
+      <span class="flag-badge reference" title="Por Referencia">
+        <i class="pi pi-link"></i>
+      </span>
+    }
+    @if (row.isInfrequent) {
+      <span class="flag-badge infrequent" title="Infrecuente">
+        <i class="pi pi-chart-bar"></i>
+      </span>
+    }
+    @if (!row.isUrgency && !row.isByReference && !row.isInfrequent) {
+      <span class="text-muted">-</span>
+    }
+  </div>
+</ng-template>
+
+<div class="nbu-container">
+  <!-- Tabla de NBUs -->
+  <div class="table-section">
+    <app-generic-table
+      [data]="nbus()"
+      [columns]="columns"
+      [loading]="loading()"
+      [dataKey]="'id'"
+      [pageable]="true"
+      [rows]="10"
+      [rowsOptions]="[5, 10, 20, 50]"
+      [showSearch]="true"
+      [showActions]="true"
+      [getActions]="getRowActions"
+      [showCreateButton]="false"
+      [showDownloadMenu]="true"
+      (downloadExcel)="onNbuExport($event, { type: 'excel' })"
+      (downloadPdf)="onNbuExport($event, { type: 'pdf' })">
+
+      <!-- Template expandible -->
+      <ng-template let-row>
+        <div class="expanded-content">
+          <div class="detail-grid">
+            <div class="detail-item">
+              <label><i class="pi pi-hashtag"></i> Código NBU</label>
+              <span>{{ row.nbuCode }}</span>
+            </div>
+
+            <div class="detail-item">
+              <label><i class="pi pi-tag"></i> Tipo</label>
+              <span>{{ row.nbuType ?? '-' }}</span>
+            </div>
+
+            <div class="detail-item full-width">
+              <label><i class="pi pi-list"></i> Determinación</label>
+              <span>{{ row.determination ?? '-' }}</span>
+            </div>
+
+            @if (row.nbuVersionDetails && row.nbuVersionDetails.length > 0) {
+              <div class="detail-item">
+                <label><i class="pi pi-code"></i> Código Versión</label>
+                <span>{{ row.nbuVersionDetails[0]?.nbuVersion?.versionCode ?? '-' }}</span>
+              </div>
+
+              <div class="detail-item">
+                <label><i class="pi pi-calendar"></i> Año Publicación</label>
+                <span>{{ row.nbuVersionDetails[0]?.nbuVersion?.publicationYear ?? '-' }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Flags Section -->
+          <div class="flags-section">
+            <div class="flag-item" [class.active]="row.isUrgency">
+              <i class="pi pi-exclamation-circle"></i>
+              <span>Urgencia</span>
+            </div>
+            <div class="flag-item" [class.active]="row.isByReference">
+              <i class="pi pi-link"></i>
+              <span>Por Referencia</span>
+            </div>
+            <div class="flag-item" [class.active]="row.isInfrequent">
+              <i class="pi pi-chart-bar"></i>
+              <span>Infrecuente</span>
+            </div>
+          </div>
+
+          @if (row.abbreviations && row.abbreviations.length > 0) {
+            <div class="detail-section">
+              <label><i class="pi pi-bookmark"></i> Abreviaturas</label>
+              <div class="tags-container">
+                @for (abbr of row.abbreviations; track abbr) {
+                  <p-tag [value]="abbr" severity="info"></p-tag>
+                }
+              </div>
+            </div>
+          }
+
+          @if (row.synonyms && row.synonyms.length > 0) {
+            <div class="detail-section">
+              <label><i class="pi pi-book"></i> Sinónimos</label>
+              <div class="tags-container">
+                @for (syn of row.synonyms; track syn) {
+                  <p-tag [value]="syn" severity="secondary"></p-tag>
+                }
+              </div>
+            </div>
+          }
+
+          @if (row.specificStandardInterpretation) {
+            <div class="detail-section">
+              <label><i class="pi pi-file-o"></i> Interpretación Estándar Específica</label>
+              <p class="interpretation-text">{{ row.specificStandardInterpretation }}</p>
+            </div>
+          }
+        </div>
+      </ng-template>
+    </app-generic-table>
+  </div>
+</div>
+
+<!-- Edit Dialog -->
+<app-generic-modal-form
+  [visible]="showEditDialog()"
+  title="Editar NBU"
+  [width]="'55rem'"
+  (closed)="onEditCancelled()">
+  <app-nbu-edit-form
+    *ngIf="selectedNbuForEdit()"
+    [nbu]="selectedNbuForEdit()!"
+    [readOnly]="false"
+    (saved)="onNbuSaved($event)"
+    (cancelled)="onEditCancelled()">
+  </app-nbu-edit-form>
+</app-generic-modal-form>
+
+<!-- Details Dialog -->
+<app-generic-modal-form
+  [visible]="showDetailsDialog()"
+  title="Detalles del NBU"
+  [width]="'700px'"
+  (closed)="showDetailsDialog.set(false)">
+
+  <div class="dialog-header">
+    <div class="header-content">
+      <i class="pi pi-database header-icon"></i>
+      <div class="header-info">
+        <span class="header-subtitle" *ngIf="selectedNbu()">Código {{ selectedNbu()!.nbuCode }}</span>
+      </div>
+    </div>
+    <p-button
+      *ngIf="selectedNbu()"
+      label="Editar"
+      icon="pi pi-pencil"
+      severity="secondary"
+      size="small"
+      (click)="onEditNbu(selectedNbu()!); showDetailsDialog.set(false)">
+    </p-button>
+  </div>
+
+  <div *ngIf="selectedNbu(); else noNbu" class="dialog-content">
+    <!-- Basic Information Section -->
+    <section class="info-section">
+      <h4 class="section-title">
+        <i class="pi pi-info-circle"></i>
+        Información básica
+      </h4>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Código NBU</label>
+          <p class="nbu-code-value">{{ selectedNbu()!.nbuCode }}</p>
+        </div>
+
+        <div class="info-item">
+          <label>Tipo NBU</label>
+          <p>
+            @if (selectedNbu()!.nbuType) {
+              <span class="type-badge-inline">{{ selectedNbu()!.nbuType }}</span>
+            } @else {
+              <span>-</span>
+            }
+          </p>
+        </div>
+
+        <div class="info-item">
+          <label>Determinación</label>
+          <p>{{ selectedNbu()!.determination ?? '-' }}</p>
+        </div>
+      </div>
+    </section>
+
+    <p-divider></p-divider>
+
+    <!-- Version Information Section -->
+    @if (selectedNbu()!.nbuVersionDetails && selectedNbu()!.nbuVersionDetails!.length > 0) {
+      <section class="info-section">
+        <h4 class="section-title">
+          <i class="pi pi-history"></i>
+          Información de versión
+        </h4>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Código de versión</label>
+            <p>{{ selectedNbu()!.nbuVersionDetails![0].nbuVersion?.versionCode || '-' }}</p>
+          </div>
+
+          <div class="info-item">
+            <label>Año de publicación</label>
+            <p>{{ selectedNbu()!.nbuVersionDetails![0].nbuVersion?.publicationYear || '-' }}</p>
+          </div>
+
+          <div class="info-item">
+            <label>Año de actualización</label>
+            <p>{{ selectedNbu()!.nbuVersionDetails![0].nbuVersion?.updateYear || '-' }}</p>
+          </div>
+
+          <div class="info-item">
+            <label>Fecha de publicación</label>
+            <p>{{ selectedNbu()!.nbuVersionDetails![0].nbuVersion?.publicationDate ? (selectedNbu()!.nbuVersionDetails![0].nbuVersion!.publicationDate | date: 'dd/MM/yyyy') : '-' }}</p>
+          </div>
+
+          <div class="info-item">
+            <label>Fecha de vigencia</label>
+            <p>{{ selectedNbu()!.nbuVersionDetails![0].nbuVersion?.effectivityDate ? (selectedNbu()!.nbuVersionDetails![0].nbuVersion!.effectivityDate | date: 'dd/MM/yyyy') : '-' }}</p>
+          </div>
+        </div>
+      </section>
+
+      <p-divider></p-divider>
+    }
+
+    <!-- Standard Interpretation Section -->
+    @if (selectedNbu()!.interpretation || selectedNbu()!.minimumWorkStandard) {
+      <section class="info-section">
+        <h4 class="section-title">
+          <i class="pi pi-file-edit"></i>
+          Interpretación estándar
+        </h4>
+        <div class="info-grid">
+          @if (selectedNbu()!.interpretation) {
+            <div class="info-item full-width">
+              <label>Interpretación</label>
+              <p class="interpretation-text">{{ selectedNbu()!.interpretation }}</p>
+            </div>
+          }
+
+          @if (selectedNbu()!.minimumWorkStandard) {
+            <div class="info-item full-width">
+              <label>Norma mínima de trabajo</label>
+              <p class="standard-text">{{ selectedNbu()!.minimumWorkStandard }}</p>
+            </div>
+          }
+        </div>
+      </section>
+
+      <p-divider></p-divider>
+    }
+
+    <!-- Flags Section -->
+    <section class="info-section">
+      <h4 class="section-title">
+        <i class="pi pi-flag"></i>
+        Indicadores
+      </h4>
+      <div class="flags-grid">
+        <div class="flag-item" [class.active]="selectedNbu()!.isUrgency">
+          <i class="pi pi-exclamation-circle"></i>
+          <span>Urgencia</span>
+        </div>
+        <div class="flag-item" [class.active]="selectedNbu()!.isByReference">
+          <i class="pi pi-link"></i>
+          <span>Por Referencia</span>
+        </div>
+        <div class="flag-item" [class.active]="selectedNbu()!.isInfrequent">
+          <i class="pi pi-chart-bar"></i>
+          <span>Infrecuente</span>
+        </div>
+      </div>
+    </section>
+
+    <p-divider *ngIf="(selectedNbu()!.abbreviations && selectedNbu()!.abbreviations!.length > 0) || (selectedNbu()!.synonyms && selectedNbu()!.synonyms!.length > 0)"></p-divider>
+
+    <!-- Tags Section -->
+    @if (selectedNbu()!.abbreviations && selectedNbu()!.abbreviations!.length > 0) {
+      <section class="info-section">
+        <h4 class="section-title">
+          <i class="pi pi-bookmark"></i>
+          Abreviaturas
+        </h4>
+        <div class="tags-container">
+          <p-tag *ngFor="let abbr of selectedNbu()!.abbreviations" [value]="abbr" severity="info"></p-tag>
+        </div>
+      </section>
+    }
+
+    @if (selectedNbu()!.synonyms && selectedNbu()!.synonyms!.length > 0) {
+      <section class="info-section">
+        <h4 class="section-title">
+          <i class="pi pi-book"></i>
+          Sinónimos
+        </h4>
+        <div class="tags-container">
+          <p-tag *ngFor="let syn of selectedNbu()!.synonyms" [value]="syn" severity="secondary"></p-tag>
+        </div>
+      </section>
+    }
+
+    <p-divider *ngIf="selectedNbu()!.specificStandardInterpretation"></p-divider>
+
+    <!-- Interpretation Section -->
+    @if (selectedNbu()!.specificStandardInterpretation) {
+      <section class="info-section">
+        <h4 class="section-title">
+          <i class="pi pi-file-o"></i>
+          Interpretación estándar específica
+        </h4>
+        <p class="description-text">{{ selectedNbu()!.specificStandardInterpretation }}</p>
+      </section>
+    }
+  </div>
+
+  <ng-template #noNbu>
+    <div class="empty-state">
+      <i class="pi pi-info-circle"></i>
+      <p>No hay información de NBU disponible.</p>
+    </div>
+  </ng-template>
+
+  <div class="dialog-footer">
+    <app-generic-button
+      type="cancel"
+      (pressed)="showDetailsDialog.set(false)">
+    </app-generic-button>
+  </div>
+</app-generic-modal-form>
+

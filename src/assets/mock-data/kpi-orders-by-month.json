@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "label": "Ene 2025",
+      "value": 38
+    },
+    {
+      "label": "Feb 2025",
+      "value": 42
+    },
+    {
+      "label": "Mar 2025",
+      "value": 45
+    },
+    {
+      "label": "Abr 2025",
+      "value": 39
+    },
+    {
+      "label": "May 2025",
+      "value": 51
+    },
+    {
+      "label": "Jun 2025",
+      "value": 48
+    },
+    {
+      "label": "Jul 2025",
+      "value": 44
+    },
+    {
+      "label": "Ago 2025",
+      "value": 47
+    },
+    {
+      "label": "Sep 2025",
+      "value": 52
+    },
+    {
+      "label": "Oct 2025",
+      "value": 49
+    },
+    {
+      "label": "Nov 2025",
+      "value": 46
+    },
+    {
+      "label": "Dic 2025",
+      "value": 54
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

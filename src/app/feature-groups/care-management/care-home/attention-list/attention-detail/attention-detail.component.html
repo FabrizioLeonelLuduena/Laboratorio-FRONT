@@ -1,0 +1,130 @@
+<div class="summary-container p-fluid">
+  <h2 class="summary-title">Resumen de la atención</h2>
+  <p-divider></p-divider>
+
+  <!-- MAIN GRID -->
+  <div class="summary-grid">
+    <!-- PATIENT DATA -->
+    <div class="summary-section">
+      <div class="section-header">
+        <i class="pi pi-user"></i>
+        <span>Datos del paciente</span>
+      </div>
+      <div class="section-content">
+        <div class="info-row">
+          <span class="label">Documento</span>
+          <span class="value">{{ patient?.dni ||  'DNI' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Nombre</span>
+          <span class="value">{{ patient?.lastName }} {{ patient?.firstName }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Plan</span>
+          <span class="value">{{ plan?.name || 'N/A' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- REQUESTING DOCTOR -->
+    <div class="summary-section">
+      <div class="section-header">
+        <i class="pi pi-briefcase"></i>
+        <span>Médico solicitante</span>
+      </div>
+      <div class="section-content">
+        <div class="info-row">
+          <span class="label">Médico</span>
+          <span class="value">{{ doctorObject?.name || 'No asignado' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Matrícula</span>
+          <span class="value">{{ doctorObject?.tuition }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMINISTRATIVE INFORMATION -->
+    <div class="summary-section">
+      <div class="section-header">
+        <i class="pi pi-building"></i>
+        <span>Información administrativa</span>
+      </div>
+      <div class="section-content">
+        <div class="info-row">
+          <span class="label">Autorización</span>
+          <span class="value">{{ attention?.authorizationNumber || 'N/A' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Fecha</span>
+          <span class="value">{{ parseDate(attention?.admissionDate) | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Urgente</span>
+          <app-generic-badge
+            [status]="attention?.isUrgent ? 'inactivo' : 'activo'"
+            [text]="attention?.isUrgent ? 'SI' : 'NO'">
+          </app-generic-badge>
+        </div>
+        <div class="info-row full-width flex-wrap">
+          <span class="label">Observaciones</span>
+          <span class="value">{{ attention?.indications || 'Sin Observaciones' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+
+  <!-- PRACTICES -->
+  <div class="summary-section">
+    <div class="section-header">
+      <i class="pi pi-list"></i>
+      <span>Prácticas seleccionadas</span>
+    </div>
+    <div class="section-content">
+      @if (analyses.length > 0) {
+        <div class="practices-list">
+          @for (item of analyses; track item?.id) {
+            <div class="practice-item">
+              <span class="practice-code"> {{ (item?.name | titlecase) || 'Análisis' }}</span>
+              <app-generic-badge status="activo" text="AUTORIZADO"></app-generic-badge>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="empty-message">No hay prácticas seleccionadas</p>
+      }
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions-container">
+    <app-generic-button
+      type="back"
+      text="Anterior"
+      icon="pi pi-arrow-left"
+      [disabled]="saving"
+      (pressed)="previousStep()"
+    ></app-generic-button>
+
+    <app-generic-button
+      type="custom"
+      [text]="saving ? 'Finalizando...' : 'Finalizar Atención'"
+      [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+      color="var(--brand-ig-stop-1)"
+      [disabled]="saving"
+      (pressed)="onSaveAndNext()"
+    ></app-generic-button>
+  </div>
+
+  <!-- Confirmation method for printing upon completion of service-->
+  @if (showPrintConfirm) {
+    <app-confirmation-modal
+      [title]="'¿Desea imprimir la atención?'"
+      [message]="'¿Querés imprimir la atención antes de finalizar?'"
+      (confirmed)="onPrintConfirmed()"
+      (dismissed)="onPrintDismissed()"
+    ></app-confirmation-modal>
+  }
+</div>

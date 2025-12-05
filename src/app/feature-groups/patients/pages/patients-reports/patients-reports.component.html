@@ -1,0 +1,311 @@
+@if (alertType !== null) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText"
+  ></app-generic-alert>
+}
+
+<div class="min-h-screen bg-[var(--background)]">
+
+  <!-- Filter Section -->
+  <div class="bg-[var(--surface)] border-b border-[var(--border-color)] px-6 py-4 shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+    <div class="flex items-end gap-4 max-w-[1400px] mx-auto">
+      <!-- Desde -->
+      <div class="flex flex-col gap-1">
+        <label for="dateFrom" class="text-xs font-semibold text-[var(--on-surface)] m-0">Desde</label>
+        <p-datepicker
+          id="dateFrom"
+          [ngModel]="dateFrom()"
+          (ngModelChange)="onDateFromChange($event)"
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          placeholder="dd/mm/aaaa"
+          [maxDate]="dateTo() || maxDate">
+        </p-datepicker>
+      </div>
+
+      <!-- Hasta -->
+      <div class="flex flex-col gap-1">
+        <label for="dateTo" class="text-xs font-semibold text-[var(--on-surface)] m-0">Hasta</label>
+        <p-datepicker
+          id="dateTo"
+          [ngModel]="dateTo()"
+          (ngModelChange)="onDateToChange($event)"
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          placeholder="dd/mm/aaaa"
+          [minDate]="dateFrom()"
+          [maxDate]="maxDate">
+        </p-datepicker>
+      </div>
+
+      <!-- Filters Button -->
+      <div class="flex items-end">
+        <p-button
+          icon="pi pi-filter"
+          [outlined]="true"
+          [badge]="activeFiltersCount() > 0 ? activeFiltersCount().toString() : undefined"
+          badgeClass="p-badge-danger"
+          (onClick)="toggleFilterPanel($event)">
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Overlay Panel -->
+  <p-overlayPanel #filterPanel [style]="{ width: '320px' }">
+    <ng-template pTemplate="content">
+      <div class="flex flex-col gap-4 p-2">
+        <h3 class="text-base font-semibold text-[var(--on-surface)] m-0 mb-2">Filtros adicionales</h3>
+
+        <!-- Min Age -->
+        <div class="flex flex-col gap-1">
+          <label for="minAge" class="text-xs font-semibold text-[var(--on-surface)] m-0">Edad mínima</label>
+          <p-inputNumber
+            id="minAge"
+            [(ngModel)]="minAge"
+            [showButtons]="true"
+            [min]="0"
+            [max]="120"
+            placeholder="Ej: 18">
+          </p-inputNumber>
+        </div>
+
+        <!-- Max Age -->
+        <div class="flex flex-col gap-1">
+          <label for="maxAge" class="text-xs font-semibold text-[var(--on-surface)] m-0">Edad máxima</label>
+          <p-inputNumber
+            id="maxAge"
+            [(ngModel)]="maxAge"
+            [showButtons]="true"
+            [min]="0"
+            [max]="120"
+            placeholder="Ej: 65">
+          </p-inputNumber>
+        </div>
+
+        <!-- Gender -->
+        <div class="flex flex-col gap-1">
+          <label for="gender" class="text-xs font-semibold text-[var(--on-surface)] m-0">Género</label>
+          <p-dropdown
+            id="gender"
+            [(ngModel)]="selectedGender"
+            [options]="genderOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar género">
+          </p-dropdown>
+        </div>
+
+        <!-- Sex at Birth -->
+        <div class="flex flex-col gap-1">
+          <label for="sexAtBirth" class="text-xs font-semibold text-[var(--on-surface)] m-0">Sexo al nacer</label>
+          <p-dropdown
+            id="sexAtBirth"
+            [(ngModel)]="selectedSexAtBirth"
+            [options]="sexAtBirthOptions"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar sexo">
+          </p-dropdown>
+        </div>
+
+        <!-- Plan ID -->
+        <div class="flex flex-col gap-1">
+          <label for="planId" class="text-xs font-semibold text-[var(--on-surface)] m-0">Plan</label>
+          <p-dropdown
+            id="planId"
+            [(ngModel)]="selectedPlanId"
+            [options]="planOptions()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar plan">
+          </p-dropdown>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-2 mt-2">
+          <p-button
+            label="Aplicar"
+            icon="pi pi-check"
+            class="flex-1"
+            (onClick)="applyAdditionalFilters()">
+          </p-button>
+          <p-button
+            label="Limpiar"
+            icon="pi pi-times"
+            [outlined]="true"
+            severity="secondary"
+            class="flex-1"
+            (onClick)="clearAdditionalFilters()">
+          </p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-overlayPanel>
+
+  <!-- Main Content -->
+  <div class="max-w-[1400px] mx-auto px-6 pb-6 md:pb-[calc(24px+var(--footer-height,52px)+16px)] pt-6">
+
+    <!-- Metric Cards (KPIs) -->
+    <div class="grid grid-cols-1 gap-4 mb-8 sm:grid-cols-2 lg:grid-cols-4">
+      @for (metric of metricCards(); track metric.label) {
+        <p-card class="h-full min-h-[140px] transition-shadow duration-200 flex flex-col">
+          <div class="flex items-start justify-between gap-3 pb-3 border-b border-[var(--border-color)] mb-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-medium text-[var(--on-surface-muted)] m-0">{{ metric.label }}</h3>
+                <p-button
+                  icon="pi pi-question-circle"
+                  [text]="true"
+                  [rounded]="true"
+                  [outlined]="true"
+                  size="small"
+                  class="w-7 h-7 min-w-7 p-0"
+                  [pTooltip]="metric.description"
+                  tooltipPosition="top">
+                </p-button>
+              </div>
+            </div>
+            <i [class]="metric.icon" class="text-lg text-[var(--brand-primary)] shrink-0"></i>
+          </div>
+          <div class="flex flex-col gap-1">
+            <div
+              class="text-[28px] font-semibold leading-tight"
+              [class]="metric.label.includes('crecimiento') ? getGrowthRateColorClass() : 'text-[var(--on-surface)]'">
+              {{ metric.value }}
+            </div>
+            <p class="text-xs text-[var(--on-surface-muted)] m-0">{{ metric.subtext }}</p>
+          </div>
+        </p-card>
+      }
+    </div>
+
+    <!-- Report Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+      @for (card of reportCards(); track card.title; let cardIndex = $index) {
+        <p-card class="flex flex-col">
+          <!-- Card Header -->
+          <div class="flex items-start justify-between gap-3 pb-3 border-b border-[var(--border-color)] mb-3">
+            <div class="flex items-start gap-2 flex-1 min-w-0">
+              <i [ngClass]="['pi', card.icon]" class="text-base text-[var(--brand-primary)] shrink-0 mt-0.5"></i>
+              <div class="min-w-0 flex-1">
+                <h3 class="text-base font-semibold text-[var(--on-surface)] m-0 leading-tight">{{ card.title }}</h3>
+                <p class="text-xs text-[var(--on-surface-muted)] mt-0.5 mb-0 leading-snug overflow-hidden text-ellipsis whitespace-nowrap">{{ card.description }}</p>
+              </div>
+            </div>
+            <p-button
+              icon="pi pi-question-circle"
+              [text]="true"
+              [rounded]="true"
+              [outlined]="true"
+              size="small"
+              class="shrink-0 w-7 h-7 min-w-7 self-start"
+              [pTooltip]="card.helpText"
+              tooltipPosition="top">
+            </p-button>
+          </div>
+
+          <!-- Card Content -->
+          <div class="flex flex-col gap-3">
+            <!-- Table -->
+            <div class="border border-[var(--border-color)] rounded-lg overflow-hidden">
+              <table class="w-full text-xs border-collapse">
+                <thead>
+                <tr class="bg-[var(--surface-alt)] border-b border-[var(--border-color)]">
+                  @for (column of card.tableColumns; track column) {
+                    <th class="px-3 py-2 text-left font-semibold text-[var(--on-surface)] text-xs">{{ column }}</th>
+                  }
+                </tr>
+                </thead>
+                <tbody>
+                  @if (card.tableData && card.tableData.length > 0) {
+                    @for (row of card.tableData; track $index) {
+                      <tr class="border-b border-[var(--border-color)] transition-colors duration-200 hover:bg-[var(--surface-alt)] last:border-b-0">
+                        @for (column of card.tableColumns; track column) {
+                          <td class="px-3 py-2 text-[var(--on-surface-muted)] text-xs">
+                            @if (cardIndex === 3 && column === 'Campos faltantes') {
+                              @for (field of getMissingFieldsArray(row); track field) {
+                                <p-tag
+                                  [value]="translateMissingField(field)"
+                                  [severity]="getMissingFieldSeverity(field)"
+                                  styleClass="mr-1 mb-1">
+                                </p-tag>
+                              }
+                            } @else {
+                              {{ getTableValue(row, column, cardIndex) }}
+                            }
+                          </td>
+                        }
+                      </tr>
+                    }
+                  } @else {
+                    <tr>
+                      <td
+                        class="px-3 py-6 text-center text-[var(--on-surface-muted)] text-xs"
+                        [attr.colspan]="card.tableColumns.length">
+                        @if (cardIndex === 3) {
+                          <i class="pi pi-check-circle text-[2rem] text-[#4caf50]"></i>
+                          <p class="mt-2">No hay pacientes con datos incompletos</p>
+                        } @else {
+                          No hay datos disponibles
+                        }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Button to Show Chart -->
+            @if (card.chartType && cardIndex !== 3) {
+              <div class="flex justify-end mt-2">
+                <p-button
+                  [label]="isChartExpanded(cardIndex) ? 'Ocultar Gráfico' : 'Ver Gráfico'"
+                  [icon]="isChartExpanded(cardIndex) ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+                  [outlined]="true"
+                  size="small"
+                  class="text-xs"
+                  (onClick)="toggleChart(cardIndex)"
+                  [disabled]="!hasChartData(cardIndex)">
+                </p-button>
+              </div>
+            }
+
+            <!-- Expanded Chart -->
+            @if (card.chartType && cardIndex !== 3) {
+              <div
+                class="overflow-hidden"
+                [style.maxHeight]="isChartExpanded(cardIndex) ? '340px' : '0px'"
+                [style.opacity]="isChartExpanded(cardIndex) ? '1' : '0'"
+                [style.transition]="'max-height 0.35s ease, opacity 0.25s ease'"
+                [style.pointerEvents]="isChartExpanded(cardIndex) ? 'auto' : 'none'">
+                <div
+                  class="h-[300px] pt-4 border-t border-[var(--border-color)]"
+                  [style.borderColor]="isChartExpanded(cardIndex) ? 'var(--border-color)' : 'transparent'">
+                  @if (isChartExpanded(cardIndex)) {
+                    @if (hasChartData(cardIndex)) {
+                      <p-chart
+                        [type]="card.chartType"
+                        [data]="getChartDataForCard(cardIndex)"
+                        [options]="getChartOptionsForCard(cardIndex)"
+                        class="w-full h-full">
+                      </p-chart>
+                    } @else {
+                      <div class="flex items-center justify-center h-full text-sm text-[var(--on-surface-muted)]">
+                        No hay datos para graficar
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </p-card>
+      }
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,103 @@
+<div class="manual-home ">
+
+  <!-- ============================= -->
+  <!-- HERO: icono + título principal + subtítulo (reemplaza la introducción) -->
+  <!-- ============================= -->
+  <div class="manual-hero">
+    <div class="hero-icon">
+      <i class="pi pi-question-circle" aria-hidden="true"></i>
+    </div>
+    <h1 class="hero-title">¿Con qué te ayudamos?</h1>
+  </div>
+
+  <!-- BUSCADOR: colocado bajo la introducción -->
+  <div class="manual-search">
+
+    <!-- Indicador de indexado/prefetch -->
+    <div class="prefetch-indicator" *ngIf="!manualService.searchReady()">
+      <div>Indexando manual... {{ manualService.prefetchProgress() }}%</div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="manualService.prefetchProgress()"></div>
+      </div>
+    </div>
+
+    <div class="search-input-wrap">
+      <input
+        #searchInput
+        type="search"
+        placeholder="Buscar en el manual por palabras clave..."
+        [value]="query()"
+        (input)="onSearchInput(searchInput.value)"
+        class="search-input"
+        [disabled]="!manualService.searchReady()"
+      />
+      <!-- botón cruz minimalista dentro del input -->
+      <button *ngIf="query()" class="search-clear-btn" (click)="clearSearch()" type="button" aria-label="Limpiar búsqueda">×</button>
+    </div>
+
+    <div class="search-status" *ngIf="loading()">Buscando...</div>
+
+  </div>
+
+  <!-- Si hay texto en el buscador, mostramos los resultados en lugar de los módulos -->
+  <div *ngIf="query()?.trim(); else showModules">
+    <div class="results-header">
+      <h2>Resultados de búsqueda ({{ results()?.length }})</h2>
+    </div>
+
+    <div class="results-list">
+      <div class="result-card-large" *ngFor="let r of results()" (click)="openResult(r)">
+        <div class="result-meta">{{ r.moduleLabel }}</div>
+        <h3 class="result-title">{{ r.pageLabel }}</h3>
+        <p class="result-body" [innerHTML]="r.excerpt ? (r.excerpt + '...') : ''"></p>
+        <div class="result-arrow">›</div>
+      </div>
+      <div *ngIf="!results()?.length && !loading()" class="no-results">No se encontraron resultados.</div>
+    </div>
+  </div>
+
+  <ng-template #showModules>
+    <h2 class="modules-title">Módulos</h2>
+
+    <!-- ============================= -->
+    <!-- GRID DE MÓDULOS -->
+    <!-- ============================= -->
+    <div class="modules-grid">
+
+      <div class="module-card" *ngFor="let mod of modules()" (click)="openModule(mod) ">
+
+        <div class="icon-box">
+          <i class="icon" [class]="mod.icon"></i>
+        </div>
+
+        <div class="header-row">
+          <div class="module-text">
+            <h3>{{ mod.homeCard?.title }}</h3>
+            <p>{{ mod.homeCard?.description }}</p>
+          </div>
+        </div>
+
+        <!-- BULLETS -->
+        <ul class="bullet-list">
+          <li *ngFor="let b of mod.homeCard?.bullets">
+            <i class="pi pi-chevron-right bullet-icon"></i>
+            {{ b }}
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </ng-template>
+
+
+  <!-- ============================= -->
+  <!-- TEXTO FINAL -->
+  <!-- ============================= -->
+  <div class="final-box">
+    El sistema de gestión centraliza las operaciones cotidianas del laboratorio, garantizando la trazabilidad completa del flujo de trabajo, desde la admisión del paciente hasta la entrega de resultados. Entre sus principales funcionalidades se incluyen la gestión de turnos y agendas, el registro y control de atenciones, la administración de órdenes de análisis y estudios, la emisión y validación de resultados, así como la gestión de cobros y facturación. Todo ello en cumplimiento de las normativas nacionales e internacionales aplicables, como la Ley Nacional N° 26.529, la Norma ISO 15189 y la Norma ISO 27001.
+    Este manual está dirigido tanto al personal interno del laboratorio —administrativos, bioquímicos y técnicos—, según el nivel de acceso asignado a cada perfil.
+
+  </div>
+
+</div>

@@ -1,0 +1,150 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, computed, signal } from '@angular/core';
+
+import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
+import { PageTitleService } from 'src/app/shared/services/page-title.service';
+
+import { CareReportingFiltersComponent, CareReportingFilters } from '../care-reporting-filters/care-reporting-filters.component';
+import { CareReportingCardComponent, CareReportingCardData } from '../care-reporting-card/care-reporting-card.component';
+
+@Component({
+  selector: 'app-care-reporting-main',
+  standalone: true,
+  imports: [CommonModule, CareReportingFiltersComponent, CareReportingCardComponent],
+  templateUrl: './care-reporting-main.component.html'
+})
+export class CareReportingMainComponent implements OnInit {
+  filters = signal<CareReportingFilters>({});
+
+  constructor(
+    private readonly breadcrumb: BreadcrumbService,
+    private readonly pageTitle: PageTitleService
+  ) {}
+
+  ngOnInit(): void {
+    this.pageTitle.setTitle('Reportes de Atención');
+    this.breadcrumb.setBreadcrumbs([
+      { label: 'Gestión de atenciones', route: '/care-management/care-home' },
+      { label: 'Reportes' }
+    ]);
+  }
+
+  onFiltersApplied(f: CareReportingFilters): void {
+    this.filters.set(f);
+  }
+
+  readonly cards = computed<CareReportingCardData[]>(() => {
+    // Data placeholders; will be replaced with service results using this.filters()
+    return [
+      {
+        title: 'Atenciones por estado',
+        icon: 'pi-chart-bar',
+        description: 'Cantidad y listado por fase del proceso',
+        helpText: 'Cuenta de atenciones agrupadas por estado actual.',
+        chartType: 'bar',
+        tableColumns: ['Estado', 'Cantidad'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'state',
+        chartValueKey: 'count'
+      },
+      {
+        title: 'Atenciones finalizadas por período',
+        icon: 'pi-chart-line',
+        description: 'Volumen por día, semana o mes',
+        helpText: 'Conteo de atenciones con estado FINISHED agrupadas por fecha.',
+        chartType: 'line',
+        tableColumns: ['Fecha', 'Cantidad'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'date',
+        chartValueKey: 'count'
+      },
+      {
+        title: 'Atenciones canceladas',
+        icon: 'pi-times',
+        description: 'Motivo y estado de origen',
+        helpText: 'Registra cancelaciones con su motivo y estado inicial.',
+        chartType: 'bar',
+        tableColumns: ['Motivo', 'Estado origen', 'Cantidad'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'reason',
+        chartValueKey: 'count'
+      },
+      {
+        title: 'Duración por etapas',
+        icon: 'pi-stopwatch',
+        description: 'Tiempo promedio y máximo por fase',
+        helpText: 'Registro, carga de análisis, cobro, confirmación y extracción.',
+        chartType: 'bar',
+        tableColumns: ['Etapa', 'Promedio (min)', 'Máximo (min)'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'stage',
+        chartValueKey: 'avg'
+      },
+      {
+        title: 'Atenciones demoradas',
+        icon: 'pi-clock',
+        description: 'Atenciones con permanencia prolongada en un estado',
+        helpText: 'Más de 10 minutos en el mismo estado.',
+        chartType: 'bar',
+        tableColumns: ['Atención', 'Estado', 'Minutos en estado'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'state',
+        chartValueKey: 'count'
+      },
+      {
+        title: 'Tiempo de espera hasta llamado de secretaría',
+        icon: 'pi-users',
+        description: 'Desde que saca número hasta ser llamado',
+        helpText: 'Distribución de espera al inicio del proceso.',
+        chartType: 'bar',
+        tableColumns: ['Fecha', 'Promedio (min)', 'Máximo (min)'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'date',
+        chartValueKey: 'avg'
+      },
+      {
+        title: 'Tiempo en cola de secretaría',
+        icon: 'pi-briefcase',
+        description: 'Desde admisión hasta fin de fase administrativa',
+        helpText: 'Mide eficiencia administrativa.',
+        chartType: 'bar',
+        tableColumns: ['Fecha', 'Promedio (min)', 'Máximo (min)'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'date',
+        chartValueKey: 'avg'
+      },
+      {
+        title: 'Espera en cola pre-extracción',
+        icon: 'pi-sitemap',
+        description: 'Desde ingreso a cola hasta liberación post-extracción',
+        helpText: 'Detecta saturación en extracción.',
+        chartType: 'bar',
+        tableColumns: ['Fecha', 'Promedio (min)', 'Máximo (min)'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'date',
+        chartValueKey: 'avg'
+      },
+      {
+        title: 'Tiempo de atención en extracción',
+        icon: 'pi-heart',
+        description: 'Desde llamado por extracción hasta liberación',
+        helpText: 'Duración efectiva de la atención en box.',
+        chartType: 'bar',
+        tableColumns: ['Fecha', 'Promedio (min)', 'Máximo (min)'],
+        tableData: [],
+        chartData: [],
+        chartLabelKey: 'date',
+        chartValueKey: 'avg'
+      }
+    ];
+  });
+}
+

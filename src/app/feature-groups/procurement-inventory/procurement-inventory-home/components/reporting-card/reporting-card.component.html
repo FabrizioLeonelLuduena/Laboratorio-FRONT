@@ -1,0 +1,99 @@
+<p-toast />
+
+<p-card class="flex flex-col">
+  <!-- Card Header -->
+  <div class="flex items-start justify-between gap-3 pb-3 border-b border-[var(--border-color)] mb-3">
+    <div class="flex items-start gap-2 flex-1 min-w-0">
+      <i [ngClass]="['pi', reportingData.icon]" class="text-base text-[var(--brand-primary)] shrink-0 mt-0.5"></i>
+      <div class="min-w-0 flex-1">
+        <h3 class="text-base font-semibold text-[var(--on-surface)] m-0 leading-tight">{{ reportingData.title }}</h3>
+        <p class="text-xs text-[var(--on-surface-muted)] mt-0.5 mb-0 leading-snug overflow-hidden text-ellipsis whitespace-nowrap">{{ reportingData.description }}</p>
+      </div>
+    </div>
+    <p-button
+      icon="pi pi-question-circle"
+      [text]="true"
+      [rounded]="true"
+      [outlined]="true"
+      size="small"
+      class="shrink-0 w-7 h-7 min-w-7 self-start"
+      (onClick)="openHelpModal()">
+    </p-button>
+  </div>
+
+  <!-- Card Content -->
+  <div class="flex flex-col gap-3">
+    <!-- Table (resumida - solo primeras 4 filas) -->
+    <div class="border border-[var(--border-color)] rounded-lg overflow-hidden">
+      <table class="w-full text-xs border-collapse">
+        <thead>
+          <tr class="bg-[var(--surface-alt)] border-b border-[var(--border-color)]">
+            @for (column of reportingData.tableColumns; track column) {
+              <th class="px-3 py-2 text-left font-semibold text-[var(--on-surface)] text-xs">{{ column }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @if (reportingData.tableData && reportingData.tableData.length > 0) {
+            @for (row of reportingData.tableData.slice(0, 4); track $index) {
+              <tr class="border-b border-[var(--border-color)] transition-colors duration-200 hover:bg-[var(--surface-alt)] last:border-b-0">
+                @for (column of reportingData.tableColumns; track column) {
+                  <td class="px-3 py-2 text-[var(--on-surface-muted)] text-xs">{{ getTableValue(row, column) }}</td>
+                }
+              </tr>
+            }
+          } @else {
+            <tr>
+              <td
+                class="px-3 py-6 text-center text-[var(--on-surface-muted)] text-xs"
+                [attr.colspan]="reportingData.tableColumns.length">
+                No hay datos
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Solo botón Ver más (sin gráfico ni descargas en el dashboard) -->
+    <div class="flex justify-end mt-2">
+      <p-button
+        label="Ver más"
+        icon="pi pi-external-link"
+        [outlined]="true"
+        size="small"
+        class="text-xs"
+        (onClick)="openDetailModal()">
+      </p-button>
+    </div>
+  </div>
+</p-card>
+
+<!-- Help modal -->
+<p-dialog
+  [(visible)]="showHelpModal"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '450px', maxWidth: '90vw' }"
+  [header]="reportingData.title">
+  <div class="flex flex-col gap-3">
+    <div class="flex items-start gap-3 p-3 bg-[var(--surface-ground)] rounded-lg border border-[var(--border-color)]">
+      <i [ngClass]="['pi', reportingData.icon]" class="text-3xl text-[var(--brand-primary)] mt-1"></i>
+      <div class="flex-1">
+        <p class="text-sm text-[var(--on-surface)] m-0 leading-relaxed">
+          {{ reportingData.helpText }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cerrar"
+      icon="pi pi-times"
+      [text]="true"
+      (onClick)="closeHelpModal()">
+    </p-button>
+  </ng-template>
+</p-dialog>
+

@@ -1,0 +1,129 @@
+[
+  {
+    "id": 1,
+    "companyName": "Laboratorios Bagó S.A.",
+    "cuit": "30546897451",
+    "contacts": [
+      {
+        "id": 1,
+        "label": "Comercial",
+        "description": "ventas@bago.com.ar",
+        "contactType": "EMAIL",
+        "isActive": true
+      },
+      {
+        "id": 2,
+        "label": "Principal",
+        "description": "011-4321-5678",
+        "contactType": "PHONE",
+        "isActive": true
+      },
+      {
+        "id": 3,
+        "label": "Sede Central",
+        "description": "Av. Cabildo 2850, CABA, Argentina",
+        "contactType": "ADDRESS",
+        "isActive": true
+      }
+    ],
+    "isActive": true,
+    "createdDatetime": "2024-01-15T10:00:00",
+    "lastUpdatedDatetime": "2024-11-20T15:30:00"
+  },
+  {
+    "id": 2,
+    "companyName": "Química Montpellier S.A.",
+    "cuit": "30678912345",
+    "contacts": [
+      {
+        "id": 4,
+        "label": "Ventas",
+        "description": "info@montpellier.com",
+        "contactType": "EMAIL",
+        "isActive": true
+      },
+      {
+        "id": 5,
+        "label": "Atención al cliente",
+        "description": "0810-555-6677",
+        "contactType": "PHONE",
+        "isActive": true
+      }
+    ],
+    "isActive": true,
+    "createdDatetime": "2024-02-10T09:15:00",
+    "lastUpdatedDatetime": "2024-10-05T11:20:00"
+  },
+  {
+    "id": 3,
+    "companyName": "Biodiagnóstico S.A.",
+    "cuit": "30521478963",
+    "contacts": [
+      {
+        "id": 6,
+        "label": "Comercial",
+        "description": "comercial@biodiagnostico.com",
+        "contactType": "EMAIL",
+        "isActive": true
+      },
+      {
+        "id": 7,
+        "label": "Técnico",
+        "description": "011-5678-1234",
+        "contactType": "PHONE",
+        "isActive": true
+      }
+    ],
+    "isActive": true,
+    "createdDatetime": "2024-03-05T14:00:00",
+    "lastUpdatedDatetime": "2024-11-15T16:45:00"
+  },
+  {
+    "id": 4,
+    "companyName": "Droguería del Sud",
+    "cuit": "30789654123",
+    "contacts": [
+      {
+        "id": 8,
+        "label": "Pedidos",
+        "description": "pedidos@drogueriadelsud.com.ar",
+        "contactType": "EMAIL",
+        "isActive": true
+      },
+      {
+        "id": 9,
+        "label": "WhatsApp Ventas",
+        "description": "011-2345-6789",
+        "contactType": "PHONE",
+        "isActive": true
+      }
+    ],
+    "isActive": true,
+    "createdDatetime": "2024-01-20T08:30:00",
+    "lastUpdatedDatetime": "2024-09-30T10:00:00"
+  },
+  {
+    "id": 5,
+    "companyName": "MedSupply Argentina",
+    "cuit": "30456789321",
+    "contacts": [
+      {
+        "id": 10,
+        "label": "Gerencia Comercial",
+        "description": "gerencia@medsupply.com.ar",
+        "contactType": "EMAIL",
+        "isActive": true
+      },
+      {
+        "id": 11,
+        "label": "Línea Directa",
+        "description": "0800-333-4455",
+        "contactType": "PHONE",
+        "isActive": true
+      }
+    ],
+    "isActive": false,
+    "createdDatetime": "2023-11-10T11:00:00",
+    "lastUpdatedDatetime": "2024-08-15T13:30:00"
+  }
+]

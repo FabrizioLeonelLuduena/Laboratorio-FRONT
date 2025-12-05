@@ -1,0 +1,31 @@
+/* ========== ESTILOS COMPARTIDOS DE GRILLA ========== */
+
+/* Importar estilos compartidos desde archivo centralizado */
+@import '../../../../../shared/styles/grid-styles.css';
+
+.edit-goods-receipt-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}
+
+@media (width <= 768px) {
+  .edit-goods-receipt-container {
+    padding: 1rem;
+  }
+}
+
+.loading-state,
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--on-surface-muted);
+}
+
+/* Receipt Items Grid Wrapper */
+.receipt-items-grid-wrapper {
+  width: 100%;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+

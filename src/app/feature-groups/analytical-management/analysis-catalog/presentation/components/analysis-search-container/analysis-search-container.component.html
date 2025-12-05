@@ -1,0 +1,35 @@
+<div class="search-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <i class="pi pi-search"></i>
+      <div class="header-text">
+        <h2>Búsqueda de análisis</h2>
+        <p>Buscar análisis usando criterios de búsqueda avanzados</p>
+      </div>
+    </div>
+  </div>
+
+  <p-divider />
+
+  <!-- Search Form Section -->
+  <section class="search-section">
+    <app-analysis-advanced-search
+      (searchResults)="onSearchResults($event)"
+      (searchCleared)="onSearchCleared()">
+    </app-analysis-advanced-search>
+  </section>
+
+  <!-- Results Section (only shown after search) -->
+  @if (showResults()) {
+    <p-divider />
+    
+    <section class="results-section">
+      <app-analysis-search-results
+        [results]="searchResults()"
+        (editAnalysis)="onEditAnalysis($event)"
+        (viewDetails)="onViewDetails($event)">
+      </app-analysis-search-results>
+    </section>
+  }
+</div>

@@ -1,0 +1,17 @@
+@if (alertType !== null) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText"
+    (closed)="alertType = null">
+  </app-generic-alert>
+}
+<p-confirmDialog></p-confirmDialog>
+
+<app-advanced-table
+  [columns]="columns"
+  [data]="data"
+  [config]="config"
+  [totalRecords]="totalRecords"
+  [loading]="loading"
+></app-advanced-table>

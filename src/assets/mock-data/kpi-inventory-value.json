@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "label": "Valor total inventario",
+      "value": 3456789.50
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

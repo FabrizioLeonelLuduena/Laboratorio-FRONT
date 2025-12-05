@@ -1,0 +1,138 @@
+.title-20 {
+  padding-bottom: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.form-grid-2 {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.contact-card {
+  transition: 0.2s ease-in-out;
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+}
+
+.badge.inactive {
+  background: #bbb;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+.badge {
+  background: #007ad9;
+  color: #fff;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 0.75rem;
+}
+
+/* descripción | URL : con opcion de ver mas/menos  */
+.description-container {
+  position: relative;
+  max-width: 100%;
+}
+
+.description-text, .url-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.description-text.expanded, .url-text.expanded {
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+.toggle-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--brand-secondary);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* para pisar estilos del form genérico */
+:host ::ng-deep input[disabled],
+:host ::ng-deep textarea[disabled],
+:host ::ng-deep select[disabled] {
+  background-color: #fff;
+  border: none;
+  box-shadow: none;
+  cursor: default;
+  color: #222;
+  appearance: none; /* elimina flecha nativa */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+/* Contenedor del p-select cuando está deshabilitado */
+:host ::ng-deep .p-select.p-disabled,
+:host ::ng-deep .p-select[aria-disabled="true"] {
+  background-color: #fff;
+  border: none;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Ocultar el ícono de flecha del p-select deshabilitado */
+:host ::ng-deep .p-select.p-disabled .p-select-dropdown {
+  display: none;
+}
+
+/* Texto del select */
+:host ::ng-deep .p-select.p-disabled .p-select-label {
+  color: #222;
+}
+
+/* elimina el control del textarea */
+:host ::ng-deep textarea {
+  resize: none;
+}
+
+/* Modo vista: labels sin negrita, valor destacado */
+:host ::ng-deep .view-mode label.text-14 {
+  font-weight: 400 ;
+  color: #555;
+}
+
+:host ::ng-deep .view-mode .field-input input[disabled],
+:host ::ng-deep .view-mode .field-input textarea[disabled],
+:host ::ng-deep .view-mode .field-input .p-select.p-disabled .p-select-label {
+  font-weight: 600;
+  color: #111;
+}
+
+/* Modo edición: labels vuelven a negrita */
+:host ::ng-deep .edit-mode label.text-14 {
+  font-weight: 600 ;
+  color: #222;
+}
+
+/* Botón editar personalizado (usa variable brand-success-600 si está definida) */
+:host ::ng-deep app-generic-button[type='custom'] .btn {
+  background: var(--brand-primary-700, #16a34a);
+}

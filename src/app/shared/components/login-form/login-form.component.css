@@ -1,0 +1,384 @@
+.login-header-strip {
+  width: 100%;
+  background: var(--brand-primary-700);
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0 12px;
+  margin-bottom: 0;
+}
+
+.login-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
+}
+
+.auth-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 70vw;
+  max-width: 700px;
+  margin: 0 auto;
+  flex-direction: column;
+
+  /* include padding in the height calculation to avoid creating a vertical scrollbar */
+  box-sizing: border-box;
+  
+  /* ensure container never exceeds viewport height; allow inner scrolling only if needed */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Full-screen background behind the login component */
+.login-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0; /* behind the login container but above body */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.auth-card {
+  width: 100%;
+  padding: 2rem;
+  padding-bottom: 1rem;
+  border-radius: 0 0 15px 15px;
+} 
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-title {
+  font-size: var(--font-size-large);
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+  color: var(--on-surface);
+  text-align: center;
+}
+
+.form-subtitle {
+  font-size: var(--font-size-medium);
+  color: var(--on-surface-muted);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: var(--font-size-small);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: var(--on-surface);
+}
+
+.error {
+  color: var(--brand-warn);
+  font-size: var(--font-size-small);
+  margin-top: 0.25rem;
+  min-height: 1.25rem; /* reserva espacio */
+}
+
+.input-full {
+  width: 100%;
+  padding: 10px 38px 10px 10px;
+  font-size: 1rem;
+  border: 2px solid var(--brand-secondary-300, #ccc);
+  border-radius: 6px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.input-full.error-input {
+  border-color: #e53935;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 14px; 
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #888;
+  font-size: 1.4rem;
+  z-index: 2;
+}
+
+.input-full::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.form-options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-container {
+  width: 100%;
+  max-width: 300px; /* ajusta el tamaño máximo */
+  aspect-ratio: 3 / 1; /* relación horizontal (puedes probar 4/1 según tu logo) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.login-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* recorta el logo */
+}
+
+:host ::ng-deep app-generic-button button { /* aplica ancho al botón solo para este componente */
+  width: 100%;
+  justify-content: center;
+}
+
+.forgot-link {
+  text-decoration: none;
+  font-size: var(--font-size-small);
+  color: var(--brand-secondary);
+  text-align: center;
+  margin: 10px;
+}
+
+.auth-footer {
+  padding-top: 20px;
+  text-align: center;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 10px;
+}
+
+.footer-text {
+  margin: 0;
+  color: #666;
+  font-size: var(--font-size-small);
+}
+
+.login-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.login-actions app-generic-button {
+  width: 100%; /* fuerza el botón a ocupar todo el ancho */
+  max-width: 100%; /* evita que se achique */
+}
+
+.recover-success {
+  align-items: center;
+}
+
+@media (width <= 1400px) {
+  .info-box-wrapper {
+    right: 1rem;
+  }
+
+  .info-box {
+    width: 320px;
+  }
+}
+
+@media (width <= 1100px) {
+  .info-box-wrapper {
+    display: none;
+  }
+}
+
+@media (width <= 600px) {
+  .auth-container {
+    width: 90vw;
+    max-width: 100vw;
+    padding: 10px;
+  }
+}
+
+/* Styles for the compact header shown in alternative states (e.g., success) */
+.compact-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0; /* Adds some vertical space */
+}
+
+/* Style for the icon inside the compact header */
+.compact-header .compact-header-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.compact-header .form-subtitle {
+  margin-top: 0;
+}
+
+/* Extra content section for projected buttons or actions */
+.extra-content {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Information Box Wrapper and Styles */
+.info-box-wrapper {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.info-box {
+  width: 380px;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 1rem 0;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.info-content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.info-main {
+  font-size: 1rem;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.info-main strong {
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.info-secondary {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.credentials-box {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border: 2px solid var(--brand-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.75rem;
+}
+
+.credential-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.credential-item:last-of-type {
+  margin-bottom: 0.5rem;
+}
+
+.credential-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  min-width: 85px;
+}
+
+.credential-value {
+  background: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  color: var(--brand-primary);
+  font-weight: 600;
+  border: 1px solid #cbd5e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.credential-note {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #cbd5e0;
+  text-align: center;
+}
+
+.credential-note small {
+  color: #718096;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+@media (width <= 600px) {
+  .info-box {
+    padding: 1rem;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .info-title {
+    font-size: 1.1rem;
+  }
+
+  .info-content {
+    padding: 1rem;
+  }
+
+  .info-main,
+  .info-secondary {
+    font-size: 0.85rem;
+  }
+
+  .credential-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .credential-label {
+    min-width: auto;
+  }
+}

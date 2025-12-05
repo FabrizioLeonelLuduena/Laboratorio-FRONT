@@ -1,0 +1,1259 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones en Gestión de Pacientes",
+  "intro": "A continuación se detallan las acciones que los usuarios pueden realizar en el módulo de Gestión de Pacientes. El registro de un paciente es fundamental para identificar correctamente a cada persona y vincular toda la información asociada a su atención (órdenes médicas, toma de muestras, resultados, etc.).",
+  "roles": {
+    "title": "Roles autorizados a interactuar y su impacto en el estado del paciente",
+    "items": [
+      "Secretaría (Permite estado 'Verificado')",
+      "Administrador (Permite estado 'Verificado')",
+      "Bioquímico (Permite estado 'Mínimo' o 'Completo')",
+      "Técnico de laboratorio (Permite estado 'Mínimo' o 'Completo')"
+    ]
+  },
+  "sections": [
+        {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador - Secretaría - Bioquímico - Técnico de laboratorio"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-paciente-sin-tutor",
+      "title": "Crear Paciente Sin Tutor",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Si el paciente no existe en el sistema, inicie su registro haciendo clic en el ícono de <strong>Nuevo paciente</strong> <i class='pi pi-plus-circle'></i> ubicado en la parte superior de la pantalla principal. Será redirigido a la pantalla de <strong>Crear paciente</strong> donde deberá completar distintos pasos."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/create-patient.jpg",
+          "alt": "Pantalla de creación de paciente"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 1: Paciente"
+        },
+        {
+          "type": "paragraph",
+          "text": "A continuación se deben completar los campos requeridos para crear un nuevo paciente:"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Básicos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Documento",
+              "Número de documento de identidad (DNI) del paciente.",
+              "Sí"
+            ],
+            [
+              "Apellido",
+              "Apellido del paciente que se está registrando",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Nombre del paciente que se está registrando",
+              "Sí"
+            ],
+            [
+              "Fecha de nacimiento",
+              "Seleccione la fecha de nacimiento del paciente en el calendario",
+              "Sí"
+            ],
+            [
+              "Sexo al nacer",
+              "Seleccione en el desplegable el sexo biológico del paciente",
+              "Sí"
+            ],
+            [
+              "Género",
+              "Seleccione en el desplegable la identidad de género declarada",
+              "Sí"
+            ],
+            [
+              "Teléfono",
+              "Número de contacto del paciente",
+              "Sí"
+            ],
+            [
+              "Email",
+              "Correo electrónico para contacto",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de Cobertura Médica"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Detalle",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Aseguradora",
+              "Selección principal (elegir 'Particular' si no tiene cobertura).",
+              "Si"
+            ],
+            [
+              "Plan",
+              "Se habilita automáticamente según la Aseguradora elegida (elegir 'Particular' si aplica).",
+              "Si"
+            ],
+            [
+              "Número de Afiliado",
+              "Deshabilitado si se selecciona 'Particular' en Aseguradora/Plan. Puede registrar más de una cobertura marcando una como <strong>principal</strong>.",
+              "Si"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota importante",
+          "text": "<br>• Siempre debe marcarse una cobertura como principal, ya que será la utilizada en atención y facturación.<br>• Si se agregan varias coberturas, se pueden eliminar las que sean incorrectas o ya no correspondan.<br>• El campo Número de afiliado solo se habilita si la cobertura no es Particular."
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de Domicilio (Opcional)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Detalle",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Provincia",
+              "Selección del estado o departamento.",
+              "No"
+            ],
+            [
+              "Ciudad",
+              "Localidad o municipio.",
+              "No"
+            ],
+            [
+              "Calle y Número",
+              "Nombre de la calle y numeración.",
+              "No"
+            ],
+            [
+              "Código Postal",
+              "Código de área local.",
+              "No"
+            ],
+            [
+              "Piso / Departamento",
+              "Información complementaria de ubicación.",
+              "No"
+            ],
+            [
+              "Barrio",
+              "Nombre del barrio o zona.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota importante",
+          "text": "<br>• El sistema valida que el número de Documento no haya sido registrado con anterioridad para evitar duplicados. <br>• Si alguno de los campos obligatorios está incompleto o contiene un formato no válido, el sistema mostrará un mensaje de error en color rojo debajo del campo correspondiente. Mientras exista información incorrecta o faltante, el formulario no permitirá avanzar al siguiente paso."
+        },
+        {
+          "type": "subtitle",
+          "text": "Agregar Tutor"
+        },
+        {
+          "type": "paragraph",
+          "text": "Para este caso (paciente sin tutor), <strong>no</strong> se debe utilizar la opción de Agregar Tutor."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Avanza al Paso 2: Verificación (si todos los campos obligatorios son válidos)."
+            ],
+            [
+              "Cancelar",
+              "Cancela la operación y <strong>redirige al listado de pacientes</strong>. Redirige a la pantalla <strong>Pacientes"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Nota importante",
+          "text": "<br>Solo los usuarios con rol de Secretaria o Administrador tienen los permisos para verificar la identidad de un paciente. Los demás roles podrán crear un nuevo paciente, pero en estado Mínimo o Completo según los datos cargados. "
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 2: Verificación"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema muestra un <strong>Resumen del Paciente</strong> con todos los datos ingresados para la revisión final antes de guardar."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/create-patient-summary.jpg",
+          "alt": "Resumen de datos del paciente"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 1 para realizar modificaciones."
+            ],
+            [
+              "Guardar",
+              "Confirma y registra al paciente en el sistema. Redirige a la pantalla de <strong>Pacientes"
+            ]
+          ]
+        },
+         {
+          "type": "subtitle",
+          "text": "Confirmación de Información"
+        },
+       {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/create-patient-confirmation.jpg",
+          "alt": "Confirmación de creación"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Cancelar",
+              "Cierra el mensaje sin guardar al paciente."
+            ],
+            [
+              "Aceptar",
+              "Confirma la verificación y registra al paciente en el sistema. El estado final depende del rol del usuario."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota importante",
+          "text": "<br>Si en el paso anterior el tutor no fue verificado mediante la opción correspondiente, en el Resumen del Paciente aparecerá marcado como Rechazado.<br>En ese caso, el tutor no será vinculado con el nuevo paciente en el Portal de Pacientes."
+        }
+      ]
+    },
+
+
+    {
+      "id": "crear-paciente-con-tutor",
+      "title": "Crear Paciente Con Tutor",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Si el paciente no existe en el sistema, inicie su registro haciendo clic en el ícono de <strong>Nuevo paciente</strong> <i class='pi pi-plus-circle'></i> ubicado en la parte superior de la pantalla principal. Será redirigido al formulario de alta de pacientes con un asistente de pasos (stepper)."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/create-patient.jpg",
+          "alt": "Pantalla de creación de paciente"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 1: Paciente"
+        },
+        {
+          "type": "paragraph",
+          "text": "A continuación se deben completar los campos requeridos para crear un nuevo paciente:"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Básicos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Documento",
+              "Número de documento de identidad (DNI) del paciente.",
+              "Sí"
+            ],
+            [
+              "Apellido",
+              "Apellido del paciente que se está registrando",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Nombre del paciente que se está registrando",
+              "Sí"
+            ],
+            [
+              "Fecha de nacimiento",
+              "Seleccione la fecha de nacimiento del paciente en el calendario",
+              "Sí"
+            ],
+            [
+              "Sexo al nacer",
+              "Seleccione en el desplegable el sexo biológico del paciente",
+              "Sí"
+            ],
+            [
+              "Género",
+              "Seleccione en el desplegable la identidad de género declarada",
+              "Sí"
+            ],
+            [
+              "Teléfono",
+              "Número de contacto del paciente",
+              "Sí"
+            ],
+            [
+              "Email",
+              "Correo electrónico para contacto",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de Cobertura Médica"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Detalle",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Aseguradora",
+              "Selección principal (elegir 'Particular' si no tiene cobertura).",
+              "Si"
+            ],
+            [
+              "Plan",
+              "Se habilita automáticamente según la Aseguradora elegida (elegir 'Particular' si aplica).",
+              "Si"
+            ],
+            [
+              "Número de Afiliado",
+              "Deshabilitado si se selecciona 'Particular' en Aseguradora/Plan. Puede registrar más de una cobertura marcando una como <strong>principal</strong>.",
+              "Si"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota importante",
+          "text": "<br>• Siempre debe marcarse una cobertura como principal, ya que será la utilizada en atención y facturación.<br>• Si se agregan varias coberturas, se pueden eliminar las que sean incorrectas o ya no correspondan.<br>• El campo Número de afiliado solo se habilita si la cobertura no es Particular."
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de Domicilio (Opcional)"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Detalle",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Provincia",
+              "Selección del estado o departamento.",
+              "No"
+            ],
+            [
+              "Ciudad",
+              "Localidad o municipio.",
+              "No"
+            ],
+            [
+              "Calle y Número",
+              "Nombre de la calle y numeración.",
+              "No"
+            ],
+            [
+              "Código Postal",
+              "Código de área local.",
+              "No"
+            ],
+            [
+              "Piso / Departamento",
+              "Información complementaria de ubicación.",
+              "No"
+            ],
+            [
+              "Barrio",
+              "Nombre del barrio o zona.",
+              "No"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota importante",
+          "text": "<br>• El sistema valida que el número de Documento no haya sido registrado con anterioridad para evitar duplicados. <br>• Si alguno de los campos obligatorios está incompleto o contiene un formato no válido, el sistema mostrará un mensaje de error en color rojo debajo del campo correspondiente. Mientras exista información incorrecta o faltante, el formulario no permitirá avanzar al siguiente paso."
+        },
+        {
+          "type": "subtitle",
+          "text": "Agregar Tutor"
+        },
+        {
+          "type": "paragraph",
+          "text": "Presione el botón <strong>Agregar Tutor</strong>."
+        },
+        {
+          "type": "paragraph",
+          "text": "Al seleccionarlo, se mostrará el botón como <strong>Tutor Agregado</strong>."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Siguiente",
+              "Avanza al Paso 2: Agregar tutor (si todos los campos obligatorios son válidos)."
+            ],
+            [
+              "Cancelar",
+              "Cancela la operación y <strong>redirige al listado de pacientes</strong>. Redirige a la pantalla <strong>Pacientes"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Nota importante",
+          "text": "<br>Solo los usuarios con rol de Secretaria o Administrador tienen los permisos para verificar la identidad de un paciente. Los demás roles podrán crear un nuevo paciente, pero en estado Mínimo o Completo según los datos cargados. "
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 2: Tutor"
+        },
+        {
+          "type": "paragraph",
+          "text": "Se habilita el formulario para completar la información personal del adulto responsable."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/create-tutor-data.jpg",
+          "alt": "Datos del tutor"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos del Tutor "
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Obligatorio"
+          ],
+          "rows": [
+            [
+              "Relación",
+              "Tipo de vínculo (Madre, Padre, Tutor Legal, etc.).",
+              "Si"
+            ],
+            [
+              "Documento",
+              "Número de documento de identidad (DNI) del paciente.",
+              "Sí"
+            ],
+            [
+              "Apellido",
+              "Apellido del paciente que se está registrando",
+              "Sí"
+            ],
+            [
+              "Nombre",
+              "Nombre del paciente que se está registrando",
+              "Sí"
+            ],
+            [
+              "Teléfono",
+              "Número de contacto del paciente",
+              "Sí"
+            ],
+            [
+              "Email",
+              "Correo electrónico para contacto",
+              "No"
+            ],
+            [
+              "Tutor Verificado (Opción)",
+              "Debe marcarse para continuar. Si no se marca, el tutor aparecerá como 'Rechazado' en el resumen.",
+              "Si"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 1: Paciente para realizar modificaciones."
+            ],
+            [
+              "Siguiente",
+              "Avanza al Paso 3: Verificación (si todos los campos son válidos y la opción 'Tutor Verificado' ha sido marcada)."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 3: Verificación"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema muestra el <strong>Resumen del Paciente</strong> con la información del paciente y la sección del <strong>Tutor</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/patient-summary-validation.jpg",
+          "alt": "Validación de resumen"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Anterior",
+              "Vuelve al Paso 2: Tutor."
+            ],
+            [
+              "Guardar",
+              "Abre la ventana de Confirmación para verificar la información."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación de Información"
+        },
+       {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/create-patient-confirmation.jpg",
+          "alt": "Confirmación de creación"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Cancelar",
+              "Cierra el mensaje sin guardar al paciente."
+            ],
+            [
+              "Aceptar",
+              "Confirma la verificación y registra al paciente en el sistema. El estado final depende del rol del usuario."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "Nota importante",
+          "text": "<br>Si en el paso anterior el tutor no fue verificado mediante la opción correspondiente, en el Resumen del Paciente aparecerá marcado como Rechazado.<br>En ese caso, el tutor no será vinculado con el nuevo paciente en el Portal de Pacientes."
+        }
+      ]
+    },
+   {
+  "id": "editar-informacion-paciente",
+  "title": "Editar la Información de un Paciente",
+  "open": false,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Esta función permite modificar, completar o actualizar los datos personales de un paciente registrado. Para iniciar, busque al paciente y, en la columna <strong>Acciones</strong>, seleccione la opción <strong>Editar</strong> <i class='pi pi-pencil'></i> del menú desplegable."
+    },
+    {
+      "type": "subtitle",
+      "text": "Paso 1: Paciente"
+    },
+    {
+      "type": "paragraph",
+      "text": "La pantalla de edición precarga la información actual del paciente."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/management-patients/patients/edit-patient.jpg",
+      "alt": "Edición de paciente"
+    },
+    {
+      "type": "note",
+      "variant": "info",
+      "title": "Nota sobre el flujo de pasos",
+      "text": "Al completar el Paso 1: Paciente, el sistema avanza al **Paso 2: Tutor** si el paciente es menor de edad y/o requiere un tutor. Si no requiere tutor, avanza directamente al **Paso 2: Verificación** (que se convierte en Paso 3 si existe un tutor)."
+    },
+    {
+      "type": "subtitle",
+      "text": "Datos Básicos"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Campo",
+        "Descripción",
+        "Obligatorio"
+      ],
+      "rows": [
+        [
+          "Documento",
+          "Número de documento de identidad (DNI) del paciente.",
+          "Sí"
+        ],
+        [
+          "Apellido",
+          "Apellido del paciente que se está registrando",
+          "Sí"
+        ],
+        [
+          "Nombre",
+          "Nombre del paciente que se está registrando",
+          "Sí"
+        ],
+        [
+          "Fecha de nacimiento",
+          "Seleccione la fecha de nacimiento del paciente en el calendario",
+          "Sí"
+        ],
+        [
+          "Sexo al nacer",
+          "Seleccione en el desplegable el sexo biológico del paciente",
+          "Sí"
+        ],
+        [
+          "Género",
+          "Seleccione en el desplegable la identidad de género declarada",
+          "Sí"
+        ],
+        [
+          "Teléfono",
+          "Número de contacto del paciente",
+          "Sí"
+        ],
+        [
+          "Email",
+          "Correo electrónico para contacto",
+          "No"
+        ]
+      ]
+    },
+    {
+      "type": "subtitle",
+      "text": "Datos de Cobertura Médica"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Campo",
+        "Detalle",
+        "Obligatorio"
+      ],
+      "rows": [
+        [
+          "Aseguradora",
+          "Selección principal (elegir 'Particular' si no tiene cobertura).",
+          "Si"
+        ],
+        [
+          "Plan",
+          "Se habilita automáticamente según la Aseguradora elegida (elegir 'Particular' si aplica).",
+          "Si"
+        ],
+        [
+          "Número de Afiliado",
+          "Deshabilitado si se selecciona 'Particular' en Aseguradora/Plan. Puede registrar más de una cobertura marcando una como <strong>principal</strong>.",
+          "Si"
+        ]
+      ]
+    },
+    {
+      "type": "note",
+      "variant": "success",
+      "title": "Nota importante",
+      "text": "<br>• <strong>Modificación de datos:</strong> Puede modificar y agregar los datos permitidos. El sistema validará automáticamente los <strong>campos obligatorios</strong> y <strong>formatos</strong> (email válido, teléfono numérico).<br>• <strong>Campos críticos:</strong> Si el paciente está en estado <strong>Verificado</strong>, los campos <strong>Documento</strong>, <strong>Nombre completo</strong>, <strong>Fecha de nacimiento</strong> y <strong>Sexo al nacer</strong> estarán deshabilitados.<br>• <strong>Actualización de estado:</strong> Si el paciente está en estado <strong>Mínimo</strong> o <strong>Completo</strong> y el usuario es <strong>Secretaria</strong> o <strong>Administrador</strong>, podrá actualizar el estado a <strong>Verificado</strong> desde el formulario."
+    },
+    {
+      "type": "subtitle",
+      "text": "Acciones Finales (Paso 1)"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Opción",
+        "Acción"
+      ],
+      "rows": [
+        [
+          "Siguiente",
+          "Avanza al Paso 2: Tutor o al Paso 2: Verificación, según corresponda (si todos los campos son válidos)."
+        ],
+        [
+          "Cancelar",
+          "Cierra el formulario sin guardar."
+        ]
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "id": "paso-2-tutor",
+      "type": "subtitle",
+      "text": "Paso 2: Tutor"
+    },
+    {
+      "type": "paragraph",
+      "text": "Esta pantalla solo aparece si el paciente requiere un tutor. Permite ingresar o verificar los datos de la persona a cargo."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/management-patients/patients/patients-tutor-edit.jpg",
+      "alt": "Edición de tutor"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Campo",
+        "Descripción",
+        "Obligatorio"
+      ],
+      "rows": [
+        [
+          "Relación",
+          "Vínculo del tutor con el paciente (ej. Padre, Madre, Apoderado).",
+          "Sí"
+        ],
+        [
+          "Documento",
+          "Número de documento de identidad del tutor.",
+          "Sí"
+        ],
+        [
+          "Apellido",
+          "Apellido del tutor.",
+          "Sí"
+        ],
+        [
+          "Nombre",
+          "Nombre del tutor.",
+          "Sí"
+        ],
+        [
+          "Teléfono",
+          "Número de contacto del tutor.",
+          "Sí"
+        ],
+        [
+          "Email",
+          "Correo electrónico de contacto del tutor.",
+          "No"
+        ]
+      ]
+    },
+    {
+      "type": "subtitle",
+      "text": "Acciones Finales (Paso 2: Tutor)"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Opción",
+        "Acción"
+      ],
+      "rows": [
+        [
+          "Anterior",
+          "Vuelve al Paso 1: Paciente."
+        ],
+        [
+          "Siguiente",
+          "Avanza al Paso 3: Verificación (si todos los campos son válidos)."
+        ]
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "id": "paso-3-verificacion",
+      "type": "subtitle",
+      "text": "Paso 3: Verificación"
+    },
+    {
+      "type": "paragraph",
+      "text": "El sistema muestra un <strong>Resumen del Paciente</strong> con la información modificada para su revisión."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/management-patients/patients/edit-patient-summary.jpg",
+      "alt": "Resumen de edición"
+    },
+    {
+      "type": "subtitle",
+      "text": "Acciones Finales (Paso 3: Verificación)"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Opción",
+        "Acción"
+      ],
+      "rows": [
+        [
+          "Anterior",
+          "Vuelve al paso anterior (Paso 2: Tutor o Paso 1: Paciente, según corresponda)."
+        ],
+        [
+          "Guardar",
+          "Abre la ventana de Confirmación para verificar y guardar los cambios."
+        ]
+      ]
+    },
+    {
+      "type": "subtitle",
+      "text": "Confirmación de cambios"
+    },
+    {
+      "type": "table",
+      "columns": [
+        "Opción",
+        "Acción"
+      ],
+      "rows": [
+        [
+          "Cancelar",
+          "Cierra el mensaje de confirmación."
+        ],
+        [
+          "Aceptar",
+          "Guarda todas las modificaciones. Si aplica, actualiza el estado del paciente a 'Verificado'."
+        ]
+      ]
+    }
+  ]
+},
+   {
+  "id": "consultar-paciente",
+  "title": "Consultar Información de un Paciente",
+  "open": false,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Permite visualizar todos los datos registrados del paciente y su historial de atenciones, sin realizar modificaciones. Para acceder, busque al paciente y seleccione la opción <strong>Ver</strong> <i class='pi pi-eye'></i> del submenú <strong>Acciones</strong>."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/management-patients/patients/view-patient.jpg",
+      "alt": "Vista del paciente"
+    },
+
+
+
+    {
+      "type": "subtitle",
+      "text": "Encabezado y Resumen del Paciente"
+    },
+    {
+      "type": "table",
+      "columns": ["Datos", "Descripción"],
+      "rows": [
+        ["Nombre Completo", "Muestra nombre y apellido del paciente."],
+        ["Documento", "Número de documento registrado."],
+        ["Edad", "Edad calculada automáticamente."],
+        ["Estado del Paciente", "Muestra el nivel de completitud o verificación de la ficha."]
+      ]
+    },
+
+
+    {
+      "type": "subtitle",
+      "text": "Estados de la Ficha del Paciente"
+    },
+    {
+      "type": "paragraph",
+      "text": "La ficha del paciente puede contar con diferentes niveles de completitud:"
+    },
+    {
+      "type": "badge",
+      "text": "VERIFICADO",
+      "color": "#cff4fc"
+    },
+    {
+      "type":"paragraph",
+        "text": "<strong>Verificado</strong> significa que la identidad del paciente ha sido validada por un usuario autorizado (Secretaría o Administrador)."
+    },
+    {
+      "type": "badge",
+      "text": "COMPLETO",
+      "color": "#e2e3ff"
+    },
+    {
+      "type":"paragraph",
+      "text":" <strong>Completo</strong> indica que se registraron todos los datos requeridos."
+    },
+    {
+      "type": "badge",
+      "text": "MÍNIMO",
+      "color": "#fff3cd"
+    },
+    {
+      "type": "paragraph",
+      "text":"<strong>Mínimo</strong> corresponde a fichas creadas con datos básicos."
+
+    },
+
+
+
+
+
+    {
+      "type": "subtitle",
+      "text": "<strong>Detalle del Paciente (Vista General)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Muestra los datos principales y de contacto del paciente."
+    },
+
+
+    {
+      "type": "subtitle",
+      "text": "Información Personal Detallada"
+    },
+    {
+      "type": "table",
+      "columns": ["Campo", "Descripción"],
+      "rows": [
+        ["Fecha de Nacimiento", "Día, mes y año de nacimiento."],
+        ["Género", "Identidad de género del paciente."],
+        ["Sexo al Nacer", "Sexo biológico registrado al nacer."],
+        ["Estado", "Estado actual del paciente (Activo o Inactivo)."],
+        ["Teléfono", "Número de contacto principal."],
+        ["Email", "Dirección de correo electrónico."]
+      ]
+    },
+
+ {
+      "type":"subtitle",
+      "text":"Estado del paciente"
+    },
+    {
+      "type": "badge",
+      "text": "ACTIVO",
+      "color": "#d1e7dd"
+    },
+    {
+      "type": "paragraph",
+      "text": "Indica que el paciente se encuentra activo dentro del sistema y disponible"
+    },
+    {
+      "type": "badge",
+      "text": "INACTIVO",
+      "color": "#f8d7da"
+    },
+    {
+      "type": "paragraph",
+      "text": "Un paciente puede aparecer como <strong>Inactivo</strong> si su cuenta fue deshabilitada por baja administrativa."
+    },
+
+    {
+      "type": "subtitle",
+      "text": "Coberturas Médicas"
+    },
+    {
+      "type": "paragraph",
+      "text": "El paciente puede tener una o varias coberturas registradas. Una de ellas puede estar marcada como <strong>Principal</strong>, lo que indica cuál se utilizará por defecto al generar una nueva atención."
+    },
+    {
+      "type": "badge",
+      "text": "PRINCIPAL",
+      "color": "#d1e7dd"
+    },
+    {
+      "type": "badge",
+      "text": "SECUNDARIA",
+      "color": "#f8d7da"
+    },
+    {
+      "type": "table",
+      "columns": ["Datos", "Descripción"],
+      "rows": [
+        ["Aseguradora", "Nombre de la cobertura médica asociada."],
+        ["Plan", "Plan o categoría dentro de la aseguradora."],
+        ["Nº Afiliado", "Número de afiliación del paciente."],
+        ["Estado", "Indica si la cobertura es Principal o Secundaria."]
+      ]
+    },
+
+
+    {
+      "type": "subtitle",
+      "text": "Direcciones"
+    },
+    {
+      "type": "paragraph",
+      "text": "El sistema permite registrar una o varias direcciones. Una de ellas puede figurar como <strong>Dirección Principal</strong>, utilizada por defecto en comunicaciones o documentos."
+    },
+    {
+      "type": "badge",
+      "text": "PRINCIPAL",
+      "color": "#d1e7dd"
+    },
+    {
+      "type": "badge",
+      "text": "ADICIONAL",
+      "color": "#fff3cd"
+    },
+    {
+      "type": "table",
+      "columns": ["Campo", "Detalle"],
+      "rows": [
+        ["Provincia", "Provincia o estado del domicilio."],
+        ["Ciudad", "Localidad o municipio."],
+        ["Calle y Número", "Nombre de la calle y numeración exacta."],
+        ["Código Postal", "Código postal correspondiente a la zona."],
+        ["Piso / Departamento", "Datos adicionales de ubicación del domicilio."],
+        ["Barrio", "Nombre del barrio o sector."]
+      ]
+    },
+
+
+
+    {
+      "type": "divider"
+    },
+    {
+      "type": "subtitle",
+      "text": "Análisis (Historial de Estudios)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Muestra el listado de todos los estudios realizados por el paciente. Si no posee registros, se mostrará el mensaje <em>“Sin registros disponibles”</em>."
+    },
+    {
+      "type": "image",
+      "src": "assets/manual/management-patients/patients/view-patient-analysis.jpg",
+      "alt": "Análisis del paciente"
+    },
+
+
+    {
+      "type": "subtitle",
+      "text": "Acciones disponibles en la parte superior"
+    },
+    {
+      "type": "table",
+      "columns": ["Elemento", "Ícono", "Función"],
+      "rows": [
+        ["Búsqueda", "<i class='pi pi-search'></i>", "Filtra por número de atención, cobertura o fecha."],
+        ["Filtros", "<i class='pi pi-filter'></i>", "Permite filtrar por estado de atención."]
+      ]
+    },
+
+
+    {
+      "type": "subtitle",
+      "text": "Contenido de la Tabla de Análisis"
+    },
+    {
+      "type": "table",
+      "columns": ["Columna", "Descripción"],
+      "rows": [
+        ["Número de Atención", "Número de protocolo de la atención."],
+        ["Fecha de admisión", "Fecha de inicio de la atención."],
+        ["Cobertura", "Cobertura utilizada en el estudio."],
+        ["Estado", "Estado actual del análisis."],
+        ["Descargar Resultados <i class='pi pi-download'></i>", "Descarga el estudio en formato PDF."]
+      ]
+    }
+  ]
+},
+
+    {
+      "id": "restablecer-contrasena",
+      "title": "Restablecer Contraseña de un Paciente",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Inicia el proceso para que el paciente pueda generar una nueva contraseña en el Portal del Paciente. Al seleccionar esta opción, el sistema mostrará una ventana emergente donde se indica el nombre del paciente y un campo para agregar el correo electrónico al cual se enviará el enlace de recuperación."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/restore-password.jpg",
+          "alt": "Restablecer contraseña"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Enviar enlace",
+              "Envía un correo electrónico al paciente con el enlace para generar una nueva contraseña."
+            ],
+            [
+              "Cancelar",
+              "Cierra la ventana emergente sin enviar ningún correo."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado",
+      "title": "Descargar Listado de Pacientes",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la información visible en la grilla para reportes o impresión. Esta función respeta los filtros aplicados previamente. Ubique el botón con el <strong>ícono de descarga</strong> <i class='pi pi-download'></i> en la esquina superior derecha."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/patients-table-actions.jpg",
+          "alt": "Descargar listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos de Descarga"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Icono",
+            "Uso recomendado"
+          ],
+          "rows": [
+            [
+              "Excel (Verde)",
+              "<i class='pi pi-file-excel'></i>",
+              "Ideal si necesita editar la información, realizar cálculos o reorganizar los datos."
+            ],
+            [
+              "PDF (Rojo)",
+              "<i class='pi pi-file-pdf'></i>",
+              "Recomendado para imprimir el listado, enviarlo por correo o archivarlo como lectura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>El archivo generado depende de los filtros activos. Si ha filtrado por un paciente en específico, el archivo solo contendrá los datos de los pacientes encontrados. Para descargar todo, limpie los filtros antes de presionar el botón de descarga."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "pacientes",
+    "registro",
+    "creación",
+    "edición",
+    "verificación",
+    "consulta",
+    "tutor",
+    "cobertura"
+  ]
+}

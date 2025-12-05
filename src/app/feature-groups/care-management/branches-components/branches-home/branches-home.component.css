@@ -1,0 +1,104 @@
+
+/* .mb-4 { */
+
+/*  display: flex; */
+
+/*  margin-bottom: 2rem; */
+
+/* } */
+
+/* .primary-color { */
+
+/*  color: var(--brand-primary); */
+
+/*  cursor: pointer; */
+
+/* } */
+
+/* .warn-color { */
+
+/*  color: var(--brand-warn); */
+
+/*  cursor: pointer; */
+
+/* } */
+
+/* .primary-color:hover { */
+
+/*  color: var(--brand-primary-700); */
+
+/* } */
+
+/* .warn-color:hover { */
+
+/*  color: #6f1616; */
+
+/* } */
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem
+}
+
+.filter-control {
+  flex: 1;
+  min-width: 200px;
+  max-width: 100%;
+}
+
+.filter-control .p-dropdown,
+.filter-control input[pInputText] {
+  width: 100%;
+}
+
+.filter-card .filter-row .filter-control {
+  min-width: 280px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 35%);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+@media (width <=768px) {
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .filter-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .filter-actions button {
+    flex: 1;
+  }
+}

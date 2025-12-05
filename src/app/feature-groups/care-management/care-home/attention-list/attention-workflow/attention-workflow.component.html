@@ -1,0 +1,315 @@
+<app-generic-alert
+  *ngIf="alertType"
+  [type]="alertType"
+  [title]="alertTitle"
+  [text]="alertText"
+></app-generic-alert>
+<div class="attention-workflow">
+  <div class="workflow-header">
+    <h1 class="title">
+      @if (attention?.attentionId && attention?.attentionNumber !== 'CS-100') {
+        Gestión de atención N° {{ attention.attentionNumber | attentionNumber : hasShift }}
+      } @else {
+        Gestión de atención
+      }
+    </h1>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <app-spinner label="Cargando atención..."></app-spinner>
+    </div>
+  }
+
+  <!-- Workflow Steps -->
+  @if(!loading && attention) {
+    <div class="workflow-content">
+      <!-- Steps Indicator -->
+      <p-stepper [value]="activeStep()" [linear]="true">
+        <p-step-list>
+          <p-step [value]="1" (click)="goToStep(1)">Datos Generales</p-step>
+          <p-step [value]="2" (click)="goToStep(2)">Análisis</p-step>
+          <p-step [value]="3" (click)="goToStep(3)">Cobranza</p-step>
+          <p-step [value]="4" (click)="goToStep(4)">Facturación</p-step>
+          <p-step [value]="5" (click)="goToStep(5)">Finalizar</p-step>
+        </p-step-list>
+      </p-stepper>
+
+      <!-- Step 1: General Information (Patient, Doctor, Coverage) -->
+      @if(activeStep() === 1) {
+        <div class="step-content">
+          <div class="general-info-container">
+
+            <div class="form-inputs-wrapper">
+              <app-patient-general-data [patientDni]="incomingShift?.document || patientDni" (loading)="setIsLoading($event)">
+              </app-patient-general-data>
+
+              <!-- Doctor Autocomplete -->
+              <div class="doctor-field-wrapper">
+                <div class="doctor-selector-row">
+                  <div class="doctor-autocomplete-container">
+                    <app-doctor-autocomplete
+                      #doctorAutocomplete
+                      label="Médico solicitante"
+                      placeholder="Nombre o matrícula..."
+                      [required]="true"
+                      (doctorSelected)="selectedDoctorId = $event"
+                      (doctorObjectSelected)="selectedDoctor = $event"
+                    ></app-doctor-autocomplete>
+                  </div>
+
+                  @if (selectedDoctor) {
+                    <div class="doctor-info-display">
+                      <div class="doctor-info-item">
+                        <span class="doctor-info-label">Médico:</span>
+                        <span class="doctor-info-value">
+                          {{ (selectedDoctor.gender === 'FEMALE' ? 'Dra.' : 'Dr.') }}
+                          {{ selectedDoctor.name }}
+                          {{ selectedDoctor.lastName }}
+                        </span>
+                      </div>
+                      <div class="doctor-info-item">
+                        <span class="doctor-info-label">Matrícula:</span>
+                        <span class="doctor-info-value">{{ selectedDoctor.tuition || 'N/A' }}</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <!-- Indications Textarea -->
+                <div class="indications-field">
+                  <label for="indications" class="indications-label">
+                    Indicaciones
+                  </label>
+                  <textarea
+                    id="indications"
+                    [(ngModel)]="indicationsText"
+                    placeholder="Ingrese las indicaciones o observaciones..."
+                    class="indications-textarea"
+                    rows="4"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Form Actions -->
+              <div class="form-actions">
+                <div class="form-actions-left">
+                  <app-generic-button
+                    type="cancel"
+                    text="Cancelar Atención"
+                    icon="pi pi-times-circle"
+                    [disabled]="saving"
+                    (pressed)="openCancelModal()"
+                  ></app-generic-button>
+
+                  <app-generic-button
+                    type="back"
+                    text="Volver"
+                    [disabled]="saving"
+                    (pressed)="cancel()"
+                  ></app-generic-button>
+                </div>
+
+                <app-generic-button
+                  type="advance"
+                  [text]="saving ? 'Guardando...' : 'Siguiente'"
+                  [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-arrow-right'"
+                  iconPosition="right"
+                  [disabled]="saving"
+                  (pressed)="onGeneralInformationSubmit()"
+                ></app-generic-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Step 2: Analysis and Observations -->
+      @if(activeStep() === 2) {
+        <div class="step-content">
+          <div class="step-2-container">
+            <!-- Analysis List Component -->
+            <div class="analysis-card">
+              <div class="card-header">
+                <h2>Lista de análisis</h2>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <app-analysis-list
+              [attentionId]="attentionId"
+              [existingAnalysisIds]="attention?.analysisIds"
+              (analysesSaved)="nextStep()"
+              (goBack)="previousStep()"
+              (cancelAttention)="openCancelModal()">
+            </app-analysis-list>
+          </div>
+        </div>
+      }
+
+      <!-- Step 3: Cobranza -->
+      @if(activeStep() === 3) {
+        <div class="step-content">
+          <div class="billing-section">
+            @if (!hasPayment) {
+              <!-- Show collector component if payment doesn't exist -->
+              <app-collector
+                [attentionId]="attentionId"
+                [analysisIds]="analysisIds()"
+                (billingDataChange)="onCollectorDataChange($event)"
+                (paymentCreated)="addPayment($event)"
+              ></app-collector>
+            } @else {
+              <!-- Show payment summary if payment already exists -->
+              <app-payment-summary
+                [paymentId]="attention.paymentId"
+                [attentionId]="attentionId!"
+              ></app-payment-summary>
+            }
+
+            <div class="billing-actions">
+              <div class="billing-actions-left">
+                <app-generic-button
+                  type="cancel"
+                  text="Cancelar Atención"
+                  icon="pi pi-times-circle"
+                  [disabled]="saving"
+                  (pressed)="openCancelModal()"
+                ></app-generic-button>
+
+                <app-generic-button
+                  [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-arrow-left'"
+                  [text]="saving ? 'Procesando...' : 'Volver'"
+                  type="back"
+                  (pressed)="previousStep()"
+                  [disabled]="saving"
+                ></app-generic-button>
+              </div>
+
+              @if (hasPayment) {
+                <app-generic-button
+                  [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-arrow-right'"
+                  [text]="saving ? 'Procesando...' : 'Siguiente'"
+                  type="advance"
+                  iconPosition="right"
+                  (pressed)="nextStep()"
+                  [disabled]="saving"
+                ></app-generic-button>
+              }
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Step 4: Facturación -->
+      @if(activeStep() === 4) {
+        <div class="step-content">
+          <div class="billing-section">
+            @if (!hasInvoice) {
+              <!-- Show invoice component if invoice doesn't exist -->
+              <app-invoice
+                [attentionId]="attentionId"
+                [billingData]="billingDataFromCollection"
+                [paymentId]="paymentId"
+                (invoiceCreatedId)="storeBillingId($event)"
+              ></app-invoice>
+            } @else {
+              <!-- Show invoice summary if invoice already exists -->
+              <app-invoice-summary
+                [billingId]="billingId"
+                [attentionId]="attentionId!"
+                [billingData]="billingDataFromCollection"
+              ></app-invoice-summary>
+            }
+
+            <div class="billing-actions">
+              <div class="billing-actions-left">
+                <app-generic-button
+                  type="cancel"
+                  text="Cancelar Atención"
+                  icon="pi pi-times-circle"
+                  [disabled]="saving"
+                  (pressed)="openCancelModal()"
+                ></app-generic-button>
+
+                <app-generic-button
+                  [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-arrow-left'"
+                  [text]="saving ? 'Procesando...' : 'Volver'"
+                  type="back"
+                  (pressed)="previousStep()"
+                  [disabled]="saving">
+                </app-generic-button>
+              </div>
+
+              @if (!hasInvoice) {
+                <app-generic-button
+                  type="advance"
+                  [text]="saving ? 'Procesando...' : 'Procesar facturación'"
+                  [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-credit-card'"
+                  (pressed)="billAttention()"
+                  [disabled]="saving">
+                </app-generic-button>
+              } @else {
+                <app-generic-button
+                  [icon]="saving ? 'pi pi-spin pi-spinner' : 'pi pi-arrow-right'"
+                  [text]="saving ? 'Procesando...' : 'Siguiente'"
+                  type="advance"
+                  iconPosition="right"
+                  (pressed)="advanceToConfirmation()"
+                  [disabled]="saving"
+                ></app-generic-button>
+              }
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Step 5: Finish -->
+      @if(activeStep() === 5) {
+        <div class="step-content">
+          <div class="finish-section">
+            <app-attention-detail
+              [attention]="attention"
+              [doctorObject]="selectedDoctor"
+              [saving]="saving"
+              (confirm)="finishWorkflow()"
+              (previous)="previousStep()"
+              (print)="printAttention()"
+              (cancelAttention)="openCancelModal()"
+            >
+            </app-attention-detail>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<!-- Cancel Attention Modal -->
+<app-confirmation-modal
+  *ngIf="showCancelModal()"
+  icon="pi pi-exclamation-triangle"
+  title="Cancelar atención"
+  width="600px"
+  message="¿Está seguro que desea cancelar esta atención? Esta acción no se puede deshacer."
+  [inputField]="{
+    label: 'Motivo de cancelación *',
+    placeholder: 'Ingrese el motivo de la cancelación...',
+    required: true,
+    type: 'textarea'
+  }"
+  (confirmed)="confirmCancelAttention($event)"
+  (dismissed)="closeCancelModal()"
+></app-confirmation-modal>
+
+<app-confirmation-modal
+  *ngIf="showPdfBillingModal"
+  icon="pi pi-file-pdf"
+  title="¿Generar PDF de la factura?"
+  message="Puedes generar el PDF ahora o continuar sin descargarlo."
+  confirmText="Sí, generar PDF"
+  cancelText="No, continuar"
+  (confirmed)="onPdfBillingConfirm()"
+  (dismissed)="onPdfBillingDismiss()"
+></app-confirmation-modal>
+

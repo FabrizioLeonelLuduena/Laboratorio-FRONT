@@ -1,0 +1,321 @@
+/**
+ * Shared Grid Styles
+ *
+ * Estilos compartidos para las tablas editables tipo grilla
+ * utilizadas en invoice-items, goods-receipts y stock-movements.
+ *
+ * Para usar estos estilos, importa este archivo en tu componente:
+ * @import 'src/app/shared/styles/grid-styles';
+ */
+
+/* Custom Items Grid */
+.custom-items-grid {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+
+/* Grid Header */
+.grid-header {
+  display: grid;
+  grid-template-columns: 300px 120px 120px 150px 150px 1.5fr 70px;
+  background: #14b8a6;
+  color: white;
+  font-weight: 600;
+  font-size: 0.75rem;
+  border-bottom: 3px solid #0d9488;
+  position: sticky;
+  top: 0;
+  min-height: 45px;
+}
+
+.grid-header-cell {
+  padding: 0.85rem 0.5rem;
+  text-align: left;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid rgb(255 255 255 / 30%);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.grid-header-cell:last-child {
+  border-right: none;
+}
+
+.grid-header-cell.col-cantidad,
+.grid-header-cell.col-solicitada,
+.grid-header-cell.col-recibida {
+  justify-content: center;
+}
+
+.grid-header-cell.col-actions {
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Grid Body */
+.grid-body {
+  max-height: 500px;
+  overflow-y: auto;
+  background: white;
+}
+
+/* Grid Row */
+.grid-row {
+  display: grid;
+  grid-template-columns: 300px 120px 120px 150px 150px 1.5fr 70px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.15s ease;
+  background: white;
+  min-height: 50px;
+}
+
+.grid-row:hover {
+  background-color: #f5f8ff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 5%);
+}
+
+.grid-row.editing {
+  background-color: #f0f7ff;
+}
+
+.grid-row:last-child {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.grid-row:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.grid-row:nth-child(even):hover {
+  background-color: #f5f8ff;
+}
+
+/* Grid Cell */
+.grid-cell {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #e5e7eb;
+}
+
+.grid-cell:last-child {
+  border-right: none;
+}
+
+.grid-cell.col-descripcion {
+  max-width: 300px;
+  min-width: 300px;
+  overflow: visible;
+  position: relative;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.grid-cell.col-solicitada,
+.grid-cell.col-recibida {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.grid-cell.col-cantidad {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.grid-cell.col-actions {
+  justify-content: center;
+}
+
+/* Grid Input */
+.grid-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 0.5rem 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  background: white;
+  transition: all 0.15s ease;
+  height: 38px;
+}
+
+.grid-input:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgb(20 184 166 / 15%);
+  background-color: #f0fdfa;
+}
+
+.grid-input:hover {
+  border-color: #9ca3af;
+}
+
+.grid-input.text-center {
+  text-align: center;
+}
+
+.grid-input.text-right {
+  text-align: right;
+}
+
+.grid-input::placeholder {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+/* Ocultar spinners de inputs numéricos */
+.grid-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.grid-input[type="number"]::-webkit-outer-spin-button,
+.grid-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Dropdowns de PrimeNG - styleClass="grid-dropdown" */
+::ng-deep .grid-cell.col-descripcion p-dropdown {
+  width: 100%;
+  flex: 1;
+}
+
+::ng-deep .grid-dropdown .p-dropdown {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  height: 38px;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+::ng-deep .grid-dropdown .p-dropdown:hover {
+  border-color: #9ca3af;
+}
+
+::ng-deep .grid-dropdown .p-dropdown:focus,
+::ng-deep .grid-dropdown .p-dropdown.p-focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgb(20 184 166 / 15%);
+}
+
+/* Truncar el texto del dropdown seleccionado */
+::ng-deep .grid-dropdown .p-dropdown-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Posicionar la flecha al final */
+::ng-deep .grid-dropdown .p-dropdown-trigger {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Calendar de PrimeNG - styleClass="grid-calendar" */
+::ng-deep .grid-calendar .p-calendar {
+  width: 100%;
+}
+
+::ng-deep .grid-calendar .p-inputtext {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  height: 38px;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.4rem;
+}
+
+::ng-deep .grid-calendar .p-inputtext:hover {
+  border-color: #9ca3af;
+}
+
+::ng-deep .grid-calendar .p-inputtext:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgb(20 184 166 / 15%);
+}
+
+/* Botones de acción en la grilla */
+.grid-action-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.grid-action-btn.add-btn {
+  background-color: transparent;
+  color: white;
+  padding: 0.35rem 0.5rem;
+}
+
+.grid-action-btn.add-btn:hover {
+  background-color: rgb(255 255 255 / 20%);
+}
+
+.grid-action-btn.add-btn i {
+  font-size: 0.9rem;
+}
+
+.grid-action-btn.delete-btn {
+  color: #000;
+  background-color: transparent;
+}
+
+.grid-action-btn.delete-btn:hover {
+  color: #000;
+  background-color: #f3f4f6;
+}
+
+/* Empty Grid Message */
+.empty-grid-message {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #000;
+}
+
+.empty-grid-message i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 1;
+  color: #000;
+}
+
+.empty-grid-message p {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.empty-grid-message small {
+  font-size: 0.8125rem;
+  opacity: 1;
+  color: #000;
+}

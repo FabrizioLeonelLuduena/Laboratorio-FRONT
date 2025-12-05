@@ -1,0 +1,39 @@
+<div class="app-container">
+  <!-- Navbar superior -->
+  <app-navbar
+    [appName]="titleService.pageTitle()"
+    [isHandset]="isHandset"
+    [showHelp]="showHelp"
+    [helpTitle]="helpTitle"
+    [helpContent]="helpContent"
+    (menuClick)="onToggleSidebar()"
+  ></app-navbar>
+
+  <!-- Main content -->
+  <div class="main-layout">
+    <!-- Sidebar unificado: maneja móvil (overlay) y escritorio (aside fijo) dentro de app-sidebar -->
+    <app-sidebar [(visible)]="sidebarVisible" (visibleChange)="onSidebarVisibleChange($event)" [isHandset]="isHandset"
+      [menuItems]="menuItems"></app-sidebar>
+
+    <!-- Contenido principal -->
+    <main class="main-content" [class.sidebar-open]="sidebarVisible && !isHandset">
+      <div class="content-container">
+        @if (sessionExpiredAlert()) {
+          <div class="session-expired-alert">
+            <app-generic-alert 
+              [type]="'warning'" 
+              [text]="sessionExpiredAlert()!">
+            </app-generic-alert>
+          </div>
+        }
+
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer inferior -->
+  <app-footer></app-footer>
+</div>
+
+<app-help-center></app-help-center>

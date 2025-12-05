@@ -1,0 +1,224 @@
+{
+  "id": "gestion-post-analitica",
+  "moduleId": "post-analitica",
+  "title": "Gestión Post-Analítica",
+  "intro": "El módulo de Post-Analítica permite visualizar, validar y firmar digitalmente los resultados de los estudios pendientes. Es el punto crítico de control de calidad.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Técnico Bioquímico",
+      "Bioquímico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Técnico Bioquímico - Bioquímico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra una lista de todos los estudios que requieren <strong>validación</strong> o <strong>firma</strong>, junto con herramientas de gestión, búsqueda y filtrado."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/post/post-table.jpg",
+          "alt": "Interfaz principal post-analítica"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Campo de texto para <strong>filtrar rápidamente</strong> los resultados visibles por nombre, documento o protocolo."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Despliega <strong>opciones avanzadas</strong> (modal) para acotar la lista de estudios."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Exporta la tabla actual a formato <strong>PDF o Excel</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al desplegar el menú de filtros, podrá refinar la búsqueda mediante criterios específicos como <strong>rango de fechas</strong>, <strong>estado de análisis</strong> o <strong>estado de firma</strong>."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Fecha de inicio y fin:</strong> Define el rango temporal de los estudios a visualizar.",
+            "<strong>Limpiar Filtros:</strong> Restablece la búsqueda a su configuración original."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información de los <strong>estudios pendientes</strong> mediante las siguientes columnas:"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-post-analitica",
+      "title": "Contenido de la Tabla de Estudios",
+      "blocks": [
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Fecha",
+              "<strong>Fecha de procesamiento</strong> del estudio.",
+              "21/11/2025"
+            ],
+            [
+              "Protocolo",
+              "<strong>Número único</strong> de identificación del trámite.",
+              "12345"
+            ],
+            [
+              "Documento",
+              "Número de identificación del paciente (DNI).",
+              "12345678"
+            ],
+            [
+              "Nombre",
+              "Nombre y Apellido del paciente.",
+              "Fernandez Joaquin"
+            ],
+
+            [
+              "Estado Firma",
+              "Indica el nivel de autorización y si posee <strong>firma electrónica</strong>.",
+              "Firmado Total"
+            ],
+            [
+              "Acciones",
+              "Permite ingresar a la pantalla de <strong>Validación y Firma</strong>.",
+              "<i class='pi pi-eye'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-post-analitica",
+      "title": "Estados del Sistema",
+      "blocks": [
+        {
+          "type": "subtitle",
+          "text": "Estados de Análisis (Validación Técnica)"
+        },
+        {
+          "type": "badge",
+          "text": "PENDIENTE",
+          "color": "#d97706"
+        },
+        {
+          "type": "paragraph",
+          "text": "El resultado ha sido ingresado pero <strong>aún no ha sido revisado</strong> técnicamente."
+        },
+        {
+          "type": "badge",
+          "text": "VALIDADO",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "El resultado ha pasado el control técnico y está <strong>listo para la firma</strong> profesional."
+        },
+        {
+          "type": "badge",
+          "text": "RECHAZADO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "El resultado no cumple con los criterios de calidad y <strong>debe ser repetido o revisado</strong>."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Estados de Firma (Nivel de Autorización)"
+        },
+        {
+          "type": "badge",
+          "text": "NO FIRMADO",
+          "color": "#64748b"
+        },
+        {
+          "type": "paragraph",
+          "text": "El protocolo <strong>no tiene ninguna firma</strong> profesional aplicada todavía."
+        },
+        {
+          "type": "badge",
+          "text": "FIRMADO PARCIAL",
+          "color": "#0284c7"
+        },
+        {
+          "type": "paragraph",
+          "text": "Solo <strong>algunas determinaciones</strong> han sido firmadas. El protocolo permanece abierto."
+        },
+        {
+          "type": "badge",
+          "text": "FIRMADO TOTAL",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Todas las determinaciones</strong> han sido firmadas. El protocolo se cierra y libera el informe final."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "post-analítica",
+    "validación",
+    "firma",
+    "estudios",
+    "calidad"
+  ]
+}

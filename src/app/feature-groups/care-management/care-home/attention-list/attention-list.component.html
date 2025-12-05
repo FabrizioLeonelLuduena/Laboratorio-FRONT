@@ -1,0 +1,36 @@
+@if (loading()) {
+  <app-spinner
+    [overlay]="true"
+    [label]="'Cargando atenciones...'" />
+}
+
+<app-generic-alert
+  *ngIf="alertType"
+  [type]="alertType"
+  [title]="alertTitle"
+  [text]="alertText">
+</app-generic-alert>
+
+<div class="attention-list">
+  <div class="toolbar">
+    <h1 class="title">Atenciones activas</h1>
+  </div>
+
+
+  <div class="table-section">
+    <app-generic-table
+      [data]="attentions"
+      [columns]="columns"
+      [showSearch]="true"
+      [showCreateButton]="false"
+      [showActions]="true"
+      [showDownloadMenu]="true"
+      [loading]="loading()"
+      [getActions]="getRowActions"
+      (downloadExcel)="handleExportAction($event, { type: 'excel' })"
+      (downloadPdf)="handleExportAction($event, { type: 'pdf' })"
+      emptyMessage="No hay atenciones activas.">
+    </app-generic-table>
+  </div>
+
+</div>

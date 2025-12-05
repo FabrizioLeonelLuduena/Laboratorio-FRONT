@@ -1,0 +1,313 @@
+.cash-general {
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cash-general__alerts app-generic-alert + app-generic-alert {
+  margin-top: 8px;
+}
+
+.global-summary {
+  margin-top: 8px;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.global-summary__subtitle {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-muted);
+}
+
+.global-summary__totals {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.global-summary__totals div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--on-surface-muted);
+}
+
+.global-summary__totals span {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.global-summary__totals .highlight {
+  color: var(--brand-primary-700);
+}
+
+.cash-general__tabs {
+  background: transparent;
+}
+
+.cash-general__table-wrapper {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.tab-register-button {
+  display: none;
+}
+
+.tab-register-button--active {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  margin-left: auto;
+  padding: 0 16px;
+  border-left: 1px solid var(--surface-alt);
+  background: transparent;
+  height: auto;
+}
+
+.tab-register-button--active app-generic-button {
+  margin: 0;
+}
+
+.table-header {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.table-header__hint {
+  margin: 4px 0 0;
+  color: var(--on-surface-muted);
+  font-size: 14px;
+}
+
+.movements-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.movements-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.movements-header__description {
+  color: var(--on-surface-muted);
+  margin: 0;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--brand-success);
+}
+
+.status-chip .pi {
+  font-size: 10px;
+}
+
+.amount {
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.amount--highlight {
+  color: var(--brand-primary-700);
+}
+
+.movement-date {
+  display: flex;
+  flex-direction: column;
+}
+
+.movement-date small {
+  color: var(--on-surface-muted);
+}
+
+.movement-type {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface-alt);
+}
+
+.movement-type--income {
+  color: var(--brand-success);
+}
+
+.movement-type--expense {
+  color: var(--brand-warn);
+}
+
+/* El monto por defecto será negro (--on-surface) */
+.movement-amount {
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+/* Ingresos en verde */
+.movement-amount.movement-amount--income {
+  color: var(--brand-success);
+}
+
+/* Egresos en rojo */
+.movement-amount.movement-amount--expense {
+  color: var(--brand-warn);
+}
+
+/* ===========================
+   ALINEACIÓN TABLA RESUMEN
+   (Sucursal / Caja / Estado / Monto inicial / Monto actual / Acciones)
+   =========================== */
+
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+table
+thead
+th:nth-child(4),
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+table
+thead
+th:nth-child(5) {
+  text-align: center;
+}
+
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+table
+tbody
+td:nth-child(4),
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+table
+tbody
+td:nth-child(5),
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+.p-datatable
+.p-datatable-tbody
+> tr
+> td:nth-child(4),
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+.p-datatable
+.p-datatable-tbody
+> tr
+> td:nth-child(5) {
+  text-align: right;
+}
+
+/* Acciones (columna 6) centradas */
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+table
+tbody
+td:nth-child(6),
+:host ::ng-deep
+.cash-general__table-wrapper--register
+app-generic-table
+.p-datatable
+.p-datatable-tbody
+> tr
+> td:nth-child(6) {
+  text-align: center;
+}
+
+/* ===========================
+   ALINEACIÓN TABLA MOVIMIENTOS
+   (Método de pago / Fecha / Tipo / Monto / Saldo)
+   =========================== */
+
+:host ::ng-deep
+.cash-general__table-wrapper--movements
+app-generic-table
+table
+thead
+th:nth-child(4),
+:host ::ng-deep
+.cash-general__table-wrapper--movements
+app-generic-table
+table
+thead
+th:nth-child(5) {
+  text-align: center;
+}
+
+:host ::ng-deep
+.cash-general__table-wrapper--movements
+app-generic-table
+table
+tbody
+td:nth-child(4),
+:host ::ng-deep
+.cash-general__table-wrapper--movements
+app-generic-table
+table
+tbody
+td:nth-child(5),
+:host ::ng-deep
+.cash-general__table-wrapper--movements
+app-generic-table
+.p-datatable
+.p-datatable-tbody
+> tr
+> td:nth-child(4),
+:host ::ng-deep
+.cash-general__table-wrapper--movements
+app-generic-table
+.p-datatable
+.p-datatable-tbody
+> tr
+> td:nth-child(5) {
+  text-align: right;
+}
+
+@media (width <= 768px) {
+  .global-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tab-register-button--active {
+    border-left: none;
+    border-top: 1px solid var(--surface-alt);
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 12px 16px;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

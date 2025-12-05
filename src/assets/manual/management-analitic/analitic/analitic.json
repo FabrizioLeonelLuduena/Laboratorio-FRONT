@@ -1,0 +1,525 @@
+{
+    "id": "gestion-analitica",
+    "moduleId": "analitica",
+    "title": "Gestión y Seguimiento de Analítica",
+    "intro": "Esta pantalla permite al personal de laboratorio y administración realizar el seguimiento del ciclo de vida de los protocolos, desde la creación hasta la entrega de resultados, monitoreando el estado de los análisis y muestras asociadas.",
+    "roles": {
+        "title": "Roles autorizados a interactuar",
+        "items": [
+            "Química",
+            "Secretaría",
+            "Administrador"
+        ]
+    },
+    "sections": [
+        {
+            "id": "roles-note",
+            "introBlocks": [
+                {
+                    "type": "note",
+                    "variant": "info",
+                    "text": "<strong>Roles autorizados a interactuar:</strong> <br> Química - Secretaría - Administrador"
+                },
+                {
+                    "type": "divider"
+                }
+            ]
+        },
+        {
+            "id": "interfaz-principal",
+            "title": "Pantalla Principal",
+            "open": true,
+            "blocks": [
+                {
+                    "type": "paragraph",
+                    "text": "La vista principal presenta la lista de protocolos, permitiendo expandir cada fila para ver el detalle de los análisis, las muestras asociadas y su historial de estados."
+                },
+                {
+                    "type": "image",
+                    "src": "assets/manual/management-analitic/analitic/analytic-table.webp",
+                    "alt": "Tabla analítica"
+                },
+                {
+                    "type": "subtitle",
+                    "text": "Filtros"
+                },
+                {
+                    "type": "paragraph",
+                    "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+                },
+                {
+                    "type": "image",
+                    "src": "assets/manual/management-analitic/analitic/analytic-filters.webp",
+                    "alt": "Filtros de analítica"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "<strong>Estado:</strong> Permite ver usuarios Activos, Inactivos o Todos.",
+                        "<strong>Tipo:</strong> Permite seleccionar la clase de usuario (Interno o Externo).",
+                        "<strong>Roles:</strong> Permite seleccionar el rol específico del usuario (Ej: Administrador, Secretaría)."
+                    ]
+                },
+                {
+                    "type": "note",
+                    "variant": "info",
+                    "title": "Información",
+                    "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar</strong> para restablecer todos los filtros a su estado original."
+                },
+                {
+                    "type": "divider"
+                }
+            ]
+        },
+        {
+            "id": "interfaz-principal",
+            "title": "Contenido de la Tabla y Detalle",
+            "blocks": [
+                {
+                "type": "table",
+                "columns": [
+                    "Campo",
+                    "Descripción",
+                    "Ejemplo"
+                ],
+                "rows": [
+                    [
+                        "Nº Protocolo",
+                        "Identificador único de la solicitud de análisis.",
+                        "12"
+                    ],
+                    [
+                        "Paciente",
+                        "Nombre completo del paciente.",
+                        "Joaquín Fernandez"
+                    ],
+                    [
+                        "Fecha de creación",
+                        "Indica la fecha que se creó el protocolo",
+                        "26/11/2025"
+                    ],
+                    [
+                        "Hora de creación",
+                        "Indica la hora que se creó el protocolo",
+                        "01:49"
+                    ],
+                    [
+                        "Generado por",
+                        "Indica el rol que generó el protocolo.",
+                        "ADMINISTRADOR"
+                    ],
+                    [
+                        "Estado",
+                        "Indica el estado del protocolo.",
+                        "POST-ANALÍTICO"
+                    ],
+                    [
+                        "<i class='pi pi-angle-right'></i>",
+                        "Despliega los datos de los  analisis del protocolo seleccionado.",
+                        ""
+                    ]
+                ]
+            },
+            {
+                "type": "subtitle",
+                "text": "Datos de análisis"
+            },
+            {
+                "type": "table",
+                "columns": [
+                    "Campo",
+                    "Descripción",
+                    "Ejemplo"
+                ],
+                "rows": [
+                    [
+                        "Análisis",
+                        "Indica el nombre del análisis",
+                        "HEMOGRAMA"
+                    ],
+                    [
+                        "Código",
+                        "Indica el código de Identificador del analisis",
+                        "Joaquín Fernandez"
+                    ],
+                    [
+                        "Familia",
+                        "Indica la familia del análisis mencionado",
+                        "Hematocrito"
+                    ],
+                    [
+                        "Estado",
+                        "Indica el estado del análisis",
+                        "POST-ANALÍTICO"
+                    ],
+                    [
+                        "<i class='pi pi-angle-right'></i>",
+                        "Despliega los datos de las muestras asociadas del análisis seleccionado.",
+                        ""
+                    ]
+                ]
+            },
+            {
+                "type": "subtitle",
+                "text": "Datos de muestras asociadas"
+            },
+            {
+                "type": "table",
+                "columns": [
+                    "Campo",
+                    "Descripción",
+                    "Ejemplo"
+                ],
+                "rows": [
+                    [
+                        "Método",
+                        "Indica el método utilizado",
+                        "HEMOGRAMA"
+                    ],
+                    [
+                        "Estado",
+                        "Indica el código de Identificador del ana",
+                        "Joaquín Fernandez"
+                    ],
+                    [
+                        "Familia",
+                        "Indica la familia del análisis mencionado",
+                        "Hematocrito"
+                    ],
+                    [
+                        "Estado",
+                        "Indica el estado del análisis",
+                        "RECOLECTADO"
+                    ],
+                    [
+                        "Historial de estados",
+                        "Muestra los distintos estados por los que pasa la muestra junto a la fecha, hora, el responsable y el sector.",
+                        "RECOLECTADO 26/11/2025 01:54 <br> Pérez María - Química"
+                    ]
+                ]
+            },
+            {
+                "type":"divider"
+            }
+        ]
+    },
+    {
+        "id": "estados-protocolo-detallado",
+        "title": "Estados del protocolo",
+        "open": false,
+        "blocks": [
+            {
+                "type": "badge",
+                "text": "CREADO",
+                "color": "#1e40af"
+            },
+            {
+                "type": "paragraph",
+                "text": "El protocolo ha sido <strong>creado</strong> y registrado en el sistema."
+            },
+            {
+                "type": "badge",
+                "text": "LISTO PARA RECOLECCIÓN MUESTRAS",
+                "color": "#10b981"
+            },
+            {
+                "type": "paragraph",
+                "text": "Listo para la toma de muestras."
+            },
+            {
+                "type": "badge",
+                "text": "MUESTRAS RECOLECTADAS",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Se han <strong>recolectado</strong> las muestras necesarias."
+            },
+            {
+                "type": "badge",
+                "text": "PRE ANALÍTICO",
+                "color": "#f97316"
+            },
+            {
+                "type": "paragraph",
+                "text": "Fase previa al procesamiento: muestras en tránsito, preparación, etc."
+            },
+            {
+                "type": "badge",
+                "text": "ANALÍTICO",
+                "color": "#f59e0b"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestras <strong>en proceso de análisis</strong> o medición en el laboratorio."
+            },
+            {
+                "type": "badge",
+                "text": "POST ANALÍTICO",
+                "color": "#059669"
+            },
+            {
+                "type": "paragraph",
+                "text": "Resultados generados, pendientes de revisión técnica y validación."
+            },
+            {
+                "type": "badge",
+                "text": "ENTREGADO",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Resultados <strong>finales</strong> han sido entregados al paciente o al sistema de consulta."
+            },
+            {
+                "type": "badge",
+                "text": "CANCELADO",
+                "color": "#a3261d"
+            },
+            {
+                "type": "paragraph",
+                "text": "El protocolo ha sido <strong>anulado</strong>."
+            },
+            {
+                "type": "divider"
+            }
+        ]
+    },
+    {
+        "id": "estados-muestra-detallado",
+        "title": "Estados de la Muestra",
+        "open": false,
+        "blocks": [
+            {
+                "type": "badge",
+                "text": "PENDIENTE DE RECOLECCIÓN",
+                "color": "#94a3b8"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra pendiente de <strong>recolección</strong>."
+            },
+            {
+                "type": "badge",
+                "text": "RECOLECTADA",
+                "color": "#10b981"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>recolectada</strong> del paciente."
+            },
+            {
+                "type": "badge",
+                "text": "EN TRÁNSITO",
+                "color": "#3b82f6"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>en movimiento</strong> hacia el área de procesamiento."
+            },
+            {
+                "type": "badge",
+                "text": "EN PREPARACIÓN",
+                "color": "#f97316"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>siendo preparada</strong> para el análisis (ej. centrifugación)."
+            },
+            {
+                "type": "badge",
+                "text": "EXTRAVIADA",
+                "color": "#a3261d"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>extraviada</strong> o no encontrada."
+            },
+            {
+                "type": "badge",
+                "text": "RECHAZADA",
+                "color": "#a3261d"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>rechazada</strong> (ej. por calidad inadecuada)."
+            },
+            {
+                "type": "badge",
+                "text": "ENTREGADA",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>entregada</strong> al área de destino (ej. microscopía)."
+            },
+            {
+                "type": "badge",
+                "text": "PROCESANDO",
+                "color": "#f59e0b"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>en análisis</strong>."
+            },
+            {
+                "type": "badge",
+                "text": "DESECHADA",
+                "color": "#94a3b8"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>desechada</strong> después del análisis o por rechazo."
+            },
+            {
+                "type": "badge",
+                "text": "CANCELADA",
+                "color": "#a3261d"
+            },
+            {
+                "type": "paragraph",
+                "text": "Muestra <strong>anulada</strong>."
+            },
+            {
+                "type": "badge",
+                "text": "COMPLETADA",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Análisis de la muestra <strong>finalizado</strong>."
+            },
+            {
+                "type": "divider"
+            }
+        ]
+    },
+    {
+        "id": "estados-analisis-detallado",
+        "title": "Estados del Análisis",
+        "open": false,
+        "blocks": [
+            {
+                "type": "badge",
+                "text": "LISTO PARA RECOLECCIÓN MUESTRA",
+                "color": "#10b981"
+            },
+            {
+                "type": "paragraph",
+                "text": "El análisis está listo para que se tome la muestra asociada."
+            },
+            {
+                "type": "badge",
+                "text": "MUESTRA PREPARADA",
+                "color": "#f97316"
+            },
+            {
+                "type": "paragraph",
+                "text": "La muestra ha sido <strong>preparada</strong>."
+            },
+            {
+                "type": "badge",
+                "text": "MUESTRA REGISTRADA EN INGRESO",
+                "color": "#3b82f6"
+            },
+            {
+                "type": "paragraph",
+                "text": "La muestra ha sido <strong>ingresada</strong> en el equipo."
+            },
+            {
+                "type": "badge",
+                "text": "MEDICIÓN MANUAL EN CURSO",
+                "color": "#f59e0b"
+            },
+            {
+                "type": "paragraph",
+                "text": "Medición <strong>manual</strong> en curso."
+            },
+            {
+                "type": "badge",
+                "text": "MEDICIÓN AUTOMATIZADA EN CURSO",
+                "color": "#f59e0b"
+            },
+            {
+                "type": "paragraph",
+                "text": "Medición <strong>automatizada</strong> en curso."
+            },
+            {
+                "type": "badge",
+                "text": "RESULTADOS CARGADOS",
+                "color": "#059669"
+            },
+            {
+                "type": "paragraph",
+                "text": "Resultados <strong>cargados</strong> (automáticamente o manualmente)."
+            },
+            {
+                "type": "badge",
+                "text": "REVISIÓN MANUAL MEDICIÓN",
+                "color": "#f97316"
+            },
+            {
+                "type": "paragraph",
+                "text": "Revisión <strong>manual</strong> de la medición."
+            },
+            {
+                "type": "badge",
+                "text": "REVISIÓN AUTOMATIZADA MEDICIÓN",
+                "color": "#f97316"
+            },
+            {
+                "type": "paragraph",
+                "text": "Revisión <strong>automatizada</strong> de la medición."
+            },
+            {
+                "type": "badge",
+                "text": "REVISIÓN TÉCNICA MEDICIÓN",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Revisión y firma <strong>técnica</strong> de los resultados."
+            },
+            {
+                "type": "badge",
+                "text": "RESULTADOS VALIDADOS",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Resultados <strong>validados</strong> y listos para la entrega."
+            },
+            {
+                "type": "badge",
+                "text": "RESULTADOS ENTREGADOS",
+                "color": "#027d46"
+            },
+            {
+                "type": "paragraph",
+                "text": "Resultados <strong>entregados</strong>."
+            },
+            {
+                "type": "badge",
+                "text": "CANCELADO",
+                "color": "#a3261d"
+            },
+            {
+                "type": "paragraph",
+                "text": "El análisis ha sido <strong>anulado</strong>."
+            },
+            {
+                "type": "divider"
+            }
+        ]
+    }
+],
+"tags": [
+    "analítica",
+    "protocolos",
+    "muestras",
+    "estados",
+    "trazabilidad",
+    "laboratorio",
+    "resultados"
+]
+}

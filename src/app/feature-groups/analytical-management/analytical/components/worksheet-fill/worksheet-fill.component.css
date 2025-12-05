@@ -1,0 +1,52 @@
+:host {
+  .alert-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    max-width: 400px;
+    animation: slide-in 0.3s ease-out;
+  }
+
+  .container {
+    width: 100%;
+    padding: 1.5rem;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    text-align: center;
+    color: #6b7280;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (width <= 768px) {
+  :host {
+    .container {
+      padding: 0.5rem;
+    }
+
+    .alert-container {
+      right: 0.5rem;
+      left: 0.5rem;
+      max-width: calc(100vw - 1rem);
+    }
+  }
+}

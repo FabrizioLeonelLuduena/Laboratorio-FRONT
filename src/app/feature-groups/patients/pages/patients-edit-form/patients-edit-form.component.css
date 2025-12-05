@@ -1,0 +1,1556 @@
+/**************** GLOBAL VARIABLES ****************/
+:host {
+  /* Base sizes */
+  --cmp-h: 38px;
+  --cmp-fz: 0.9rem;
+  --gap: 8px;
+
+  /* Field widths */
+  --field-w: 240px;
+  --field-w-md: 200px;
+  --field-w-sm: 180px;
+
+  /* Utilitarian colors (institutional green) */
+  --border: #e5e7eb;
+  --muted: #6b7280;
+  --heading: #00435d;
+  --primary: #008f8c;
+  --primary-light: #d1f5f4;
+  --success: #0f5f36;
+
+  /* Stepper vars */
+  --stepper-h: 72px;
+  --content-max: 1200px;
+  --sidebar-w: 280px;
+  --stepper-blur: 8px;
+}
+
+/**************** MAIN CONTAINER ****************/
+.form-container {
+  margin: 0;
+  box-sizing: border-box;
+  max-height: none;
+  overflow: visible;
+}
+
+/**************** STEPPER LAYOUT ****************/
+.stepper-spacer {
+  height: calc(var(--stepper-h) + env(safe-area-inset-bottom));
+}
+
+/* ===== STEPPER FOOTER (fijo y full-width) ===== */
+.stepper-footer {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  bottom: env(safe-area-inset-bottom);
+  min-height: var(--stepper-h);
+  padding: 0 12px;
+  background: var(--surface, #fff);
+  border-top: 1px solid var(--border-color, #e5e7eb);
+  backdrop-filter: blur(var(--stepper-blur));
+}
+
+/* Desktop: ubicar el stepper justo encima del footer global fijo y respetar sidebar */
+@media (width >= 960px) {
+  .stepper-footer {
+    bottom: calc(var(--footer-height, 0px) + env(safe-area-inset-bottom));
+  }
+  
+  /* Ajustar el ancho del stepper footer cuando el sidebar está abierto */
+  :host-context(.main-content.sidebar-open) .stepper-footer {
+    left: var(--sidebar-w);
+  }
+}
+
+/* ===== BOTONES (FABs) DENTRO DEL STEPPER ===== */
+.fab {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    left 300ms ease,
+    right 300ms ease,
+    transform 300ms ease,
+    opacity 200ms ease;
+  will-change: left, right, transform;
+}
+
+.fab--right {
+  right: max(16px, env(safe-area-inset-right));
+}
+
+.fab--near-navbar {
+  left: max(16px, env(safe-area-inset-left));
+}
+
+/* Desktop: si el sidebar está abierto, desplazar el botón izquierdo */
+@media (width >= 960px) {
+  :host-context(.main-content.sidebar-open) .fab--near-navbar {
+    left: calc(var(--sidebar-w) + max(16px, env(safe-area-inset-left)));
+  }
+}
+
+/**************** STEPPER HEADER ****************/
+.stepper-header {
+  position: relative;
+  margin-bottom: 6px;
+  z-index: 1;
+}
+
+.status-badge-wrapper {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/**************** STEP CONTENT ****************/
+.step-content {
+  animation: fade-in 0.3s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/**************** SECTION ****************/
+.v2-section {
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 6px;
+}
+
+.form-section-header,
+.v2-title-20 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0;
+  line-height: 1.2;
+}
+
+
+/**************** BASIC DATA (improved) ****************/
+
+/* Section without "square": no border or extra background */
+.sec-basic {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.sec-basic .form-section-header {
+  padding-bottom: 0;
+  margin-bottom: 6px;
+}
+
+/* Internal container with smooth horizontal scroll (does not change the internal grid) */
+:host ::ng-deep .sec-basic app-generic-form .form-fields-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--gap);
+  overflow: auto;
+  padding: 4px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Each control a bit wider */
+:host ::ng-deep .sec-basic app-generic-form .form-fields-container > * {
+  flex: 0 0 auto;
+  width: var(--field-w);
+  max-width: 280px;
+  min-width: var(--field-w-sm);
+}
+
+/* Override the grid of the GenericForm -> 3 columns (remains as it was) */
+:host ::ng-deep section.sec-basic app-generic-form .form-grid-2.grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+
+/**************** TYPOGRAPHY AND CONTROLS (PrimeNG) ****************/
+:host ::ng-deep .p-component {
+  font-size: var(--cmp-fz);
+}
+
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-inputnumber input,
+:host ::ng-deep .p-password input,
+:host ::ng-deep .p-calendar input,
+:host ::ng-deep .p-autocomplete input,
+:host ::ng-deep .p-dropdown:not(.coverage-dropdown),
+:host ::ng-deep .p-inputtextarea {
+  height: var(--cmp-h);
+  padding: 6px 10px;
+  line-height: calc(var(--cmp-h) - 4px);
+  font-size: var(--cmp-fz);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger,
+:host ::ng-deep .p-calendar .p-datepicker-trigger {
+  padding: 0 6px;
+  width: 28px;
+}
+
+:host ::ng-deep label,
+:host ::ng-deep .p-field label,
+:host ::ng-deep .p-float-label label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  color: #374151;
+}
+
+/* No extra margins */
+:host ::ng-deep .p-field,
+:host ::ng-deep .p-float-label,
+:host ::ng-deep .p-inputgroup {
+  margin: 0;
+}
+
+/* Checkbox compact and aligned */
+:host ::ng-deep .p-checkbox {
+  display: inline-flex;
+  align-items: center;
+}
+
+:host ::ng-deep .p-checkbox .p-checkbox-box {
+  width: 16px;
+  height: 16px;
+}
+
+:host ::ng-deep .p-checkbox .p-checkbox-icon {
+  font-size: 0.7rem;
+}
+
+:host ::ng-deep .p-checkbox + label,
+:host ::ng-deep label.p-checkbox-label {
+  margin-left: 6px;
+  font-size: 0.85rem;
+}
+
+
+/**************** ADD ROW ****************/
+.add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0 8px;
+}
+
+/* Base buttons */
+:host ::ng-deep .p-button,
+.btn {
+  height: 30px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  border-radius: 6px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.btn-add {
+  background: #10b981;
+  border-color: #10b981;
+  color: #fff;
+}
+
+.btn-add:hover {
+  background: #059669;
+  border-color: #059669;
+}
+
+.btn-outline {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.btn-outline:hover {
+  background: #f3f4f6;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-danger,
+.btn-delete {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.btn-danger:hover,
+.btn-delete:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.btn-delete {
+  min-width: 28px;
+  padding: 4px;
+}
+
+
+/**************** CHIPS (summary of arrays) ****************/
+.chips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.chip-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
+.chip-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chip-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #111827;
+}
+
+.chip-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.chip-tags {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.tag {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.tag-primary {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+
+/**************** ROWS / UTILS ****************/
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.form-error {
+  font-size: 0.78rem;
+  margin-top: 4px;
+  color: #ef4444;
+  line-height: 1.2;
+}
+
+.array-errors {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mt-8 { margin-top: 4px; }
+.mt-16 { margin-top: 8px; }
+.mt-24 { margin-top: 12px; }
+
+
+/**************** FINAL BUTTONS ****************/
+.v2-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.v2-actions .left-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.v2-actions .right-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.v2-actions app-generic-button:last-child {
+  margin-left: 0;
+}
+
+/**************** ADDRESS FORM COMPACT ****************/
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  padding: 8px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.address-grid .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.address-grid .form-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.address-grid .form-field input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.address-grid .form-field .required {
+  color: #ef4444;
+}
+
+:host ::ng-deep app-generic-address-form .form-fields-container,
+:host ::ng-deep app-generic-address-form .address-grid,
+:host ::ng-deep app-generic-address-form .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+:host ::ng-deep app-generic-address-form .form-fields-container > *,
+:host ::ng-deep app-generic-address-form .address-grid > *,
+:host ::ng-deep app-generic-address-form .row > * {
+  flex: 0 0 auto;
+  width: var(--field-w);
+  max-width: 240px;
+  min-width: var(--field-w-sm);
+}
+
+/**************** DIALOGS (Prime) ****************/
+:host ::ng-deep .p-dialog .p-dialog-header {
+  padding: 6px 8px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 6px 8px;
+  min-height: 250px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+/* Compact version anchored by .dlg-compact */
+:host ::ng-deep .dlg-compact .p-dialog-header {
+  padding: 8px 10px;
+}
+
+:host ::ng-deep .dlg-compact .p-dialog-content {
+  padding: 8px 10px;
+}
+
+/* Reduce form vertical gaps within the dialog */
+:host ::ng-deep .dlg-compact app-generic-form form.stack-16 {
+  gap: 8px;
+  margin: 0;
+}
+
+/* Closed field grid */
+:host ::ng-deep .dlg-compact app-generic-form .form-grid-2 {
+  gap: 8px;
+}
+
+/* Each more compact field item */
+:host ::ng-deep .dlg-compact app-generic-form .field-item.stack-12 {
+  gap: 6px;
+}
+
+/* Compact inputs in dialog */
+:host ::ng-deep .dlg-compact .p-inputtext,
+:host ::ng-deep .dlg-compact .p-inputnumber input,
+:host ::ng-deep .dlg-compact .p-dropdown,
+:host ::ng-deep .dlg-compact .p-calendar input,
+:host ::ng-deep .dlg-compact .p-inputtextarea {
+  height: 28px;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  line-height: 22px;
+}
+
+:host ::ng-deep .dlg-compact .p-dropdown .p-dropdown-trigger {
+  width: 26px;
+  padding: 0 6px;
+}
+
+/* Small label and attached to dialog */
+:host ::ng-deep .dlg-compact label,
+:host ::ng-deep .dlg-compact .p-float-label label {
+  font-size: 0.76rem;
+  margin: 0 0 2px;
+  line-height: 1.1;
+}
+
+/* Lower error/hints footer for removing "air" */
+:host ::ng-deep .dlg-compact app-generic-form .field-foot {
+  min-height: 14px;
+  line-height: 14px;
+}
+
+:host ::ng-deep .dlg-compact app-generic-form .form-error-pill {
+  font-size: 0.74rem;
+  line-height: 14px;
+}
+
+/* Checkbox Principal in dialog */
+.addr-primary-row {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+:host ::ng-deep .addr-primary-row .p-checkbox {
+  align-items: center;
+}
+
+.field-checkbox,
+.addr-primary-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/**************** VERIFY PATIENT ****************/
+.verify-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.375rem;
+  margin: 12px 0 8px;
+}
+
+/**************** TOP ACTIONS  ****************/
+.form-top-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+/**************** SUMMARY SECTIONS  ****************/
+.summary-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Coverages → top left */
+.sec-coverages {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+/* Contacts → top right */
+.sec-contacts {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+/* Addresses → bottom row */
+.sec-addresses {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+}
+
+@media (width <= 768px) {
+  .summary-sections {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .sec-coverages,
+  .sec-contacts,
+  .sec-addresses {
+    grid-column: 1 / 2;
+  }
+}
+
+/**************** HEADER WITH BUTTON “+” ****************/
+.v2-header.with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v2-header.with-action app-generic-button {
+  padding: 0.25rem;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/**************** SUBTLE SCROLLBARS ****************/
+:host ::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+:host ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+:host ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/**************** HIDE GENERIC-FORM STUFF ****************/
+:host ::ng-deep app-generic-form .header {
+  display: none;
+}
+
+:host ::ng-deep app-generic-form .actions-end {
+  display: none;
+}
+
+/* Focused wrapper */
+.form-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (width <= 768px) {
+  .form-wrapper {
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+}
+
+/* Increases the space between "Basic Data" heading and fields */
+.form-section-header {
+  margin-bottom: 4px;
+}
+
+/* Force 4-column grid for basic data - keep! important and mute rule */
+/* stylelint-disable declaration-no-important */
+.basic-grid {
+  --cols-lg: 4 !important;
+}
+
+.basic-grid ::ng-deep .form-grid-2 {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+
+.basic-grid ::ng-deep .field-item[data-span="1"] {
+  grid-column: span 1 !important;
+}
+/* stylelint-enable declaration-no-important */
+
+/* Optional utility grid */
+.generic-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.generic-form-grid .form-field[colspan="1"] {
+  grid-column: span 1;
+}
+
+.generic-form-grid .form-field[colspan="2"] {
+  grid-column: span 2;
+}
+
+.generic-form-grid .form-field[colspan="3"] {
+  grid-column: span 3;
+}
+
+.generic-form-grid .form-field[colspan="4"] {
+  grid-column: span 4;
+}
+
+/* Mobile tweak to align checkbox */
+@media (width <= 640px) {
+  .verify-row {
+    justify-content: flex-start;
+  }
+}
+
+/**************** INLINE COVERAGE/CONTACT ****************/
+.sec-coverages-inline,
+.sec-contacts-inline {
+  margin-bottom: 6px;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.sec-coverages-inline .form-section-header,
+.sec-addresses-inline .form-section-header {
+  padding-bottom: 0;
+  margin-bottom: 6px;
+}
+
+.coverage-content-wrapper,
+.address-content-wrapper {
+  margin-top: 4px;
+}
+
+.coverage-inline-item,
+.contact-inline-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+
+.coverage-inline-item .coverage-fields {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.coverage-inline-item .coverage-fields-row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.coverage-inline-item .coverage-fields-row app-insurer-plan-selector {
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+}
+
+.coverage-inline-item .form-field-inline {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: var(--field-w);
+  min-width: var(--field-w-sm);
+  max-width: 280px;
+}
+
+.coverage-inline-item .form-field-inline label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.coverage-inline-item .form-field-inline label .required { color: #dc2626; }
+
+.coverage-inline-item .form-field-inline input {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--cmp-h);
+  padding: 6px 10px;
+  font-size: var(--cmp-fz);
+}
+
+.coverage-inline-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.coverage-inline-grid .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.coverage-inline-grid .form-field.full-width { grid-column: 1 / -1; }
+
+.coverage-inline-grid .form-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.coverage-inline-grid .form-field label .required { color: #dc2626; }
+
+/* Ajustes para alineación de Principal, + y tachito en línea */
+.coverage-inline-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  padding-top: 16px;
+  margin-left: 8px;
+}
+
+/* Remover fondos y bordes de los botones para que solo sean iconos */
+.coverage-inline-actions .p-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.coverage-inline-actions .p-button:hover {
+  background: rgb(0 0 0 / 5%);
+}
+
+.coverage-inline-actions .p-button-danger:hover {
+  background: rgb(239 68 68 / 10%);
+}
+
+.coverage-inline-actions .p-button .p-button-icon {
+  font-size: 1.2rem;
+}
+
+.coverage-inline-grid .form-field p-dropdown {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Coverage dropdown styles */
+/* stylelint-disable declaration-no-important */
+:host ::ng-deep .coverage-dropdown.p-dropdown {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 38px !important;
+}
+
+:host ::ng-deep .coverage-dropdown .p-dropdown-label {
+  padding: 9px 40px 9px 10px !important;
+  line-height: normal !important;
+  height: auto !important;
+  min-height: 20px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+/* stylelint-enable declaration-no-important */
+
+.coverage-inline-grid .checkbox-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.coverage-inline-grid .checkbox-label-inline {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Ensure that the input has the correct width */
+.coverage-inline-grid .form-field input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Style for affiliate number input - same width as autocomplete */
+.coverage-inline-grid .form-field input.coverage-input {
+  min-width: 600px;
+  width: 600px;
+  max-width: 600px;
+}
+
+/* Utility classes for full width (keep !important) */
+/* stylelint-disable declaration-no-important */
+.w-full { width: 100% !important; }
+/* stylelint-enable declaration-no-important */
+
+.coverage-inline-item app-generic-form,
+.contact-inline-item app-generic-form { flex: 1; }
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Compact buttons in actions (keep !important) */
+/* stylelint-disable declaration-no-important */
+.item-actions app-generic-button {
+  width: auto !important;
+  min-width: auto !important;
+}
+
+.item-actions app-generic-button ::ng-deep button {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  padding: 4px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* stylelint-enable declaration-no-important */
+
+
+/**************** ADDRESSES INLINE (siempre visible) ****************/
+.sec-addresses-inline { 
+  margin-bottom: 12px;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.address-content-wrapper {
+  margin-top: 8px;
+}
+
+.address-inline-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 10px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.address-inline-item .address-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Botones de navegación al final de cada paso */
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+
+@media (width <= 640px) {
+  .step-actions {
+    flex-direction: column;
+  }
+}
+
+
+/**************** SUMMARY (STEP 2) ****************/
+.summary-section { padding: 20px; }
+
+.summary-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+/* Summary cards and typography (consolidated, no duplicates) */
+.summary-group {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  border-radius: 12px;
+}
+
+.summary-group:last-child { border-bottom: none; }
+
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,
+  minmax(250px,
+    1fr));
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex; flex-direction:
+  column; gap: 4px;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 500;
+  display: inline-block;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 5px;
+}
+
+.summary-list-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.summary-list-item:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.summary-list-item i {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin-top: 2px;
+}
+
+.summary-list-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-list-contentstrong {
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.summary-list-detail {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.summary-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.summary-empty {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/**************** RESPONSIVE ****************/
+@media (width <= 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Close button floating to the right */
+.stepper-header .close-btn {
+  position: absolute;
+  right: 0;
+}
+
+.stepper-header .close-btn ::ng-deep button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Horizontal wrapper for button + stepper */
+.stepper-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+/* Left button */
+.stepper-side.left {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.stepper-side.left app-generic-button ::ng-deep button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/*******************************
+ Primary buttons (green)
+*******************************/
+:host ::ng-deep .p-button.p-button-primary,
+:host ::ng-deep .p-button.p-button-primary:enabled,
+:host ::ng-deep .p-button.p-button-primary:not(.p-button-outlined, .p-button-text) {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+
+:host ::ng-deep .p-button.p-button-primary:hover {
+  background: #007b78;
+  border-color: #007b78;
+}
+
+:host ::ng-deep .p-button.p-button-primary:focus-visible {
+  box-shadow: 0 0 0 2px rgb(0 143 140 / 30%);
+}
+
+/*******************************
+ Input with green border on focus
+*******************************/
+:host ::ng-deep .p-inputtext:focus,
+:host ::ng-deep .p-dropdown:not(.coverage-dropdown).p-focus,
+:host ::ng-deep .p-calendar input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgb(0 143 140 / 20%);
+}
+
+/* Checkbox vertically aligned with input and buttons */
+.coverage-inline-item .checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.coverage-inline-item .checkbox-field .checkbox-label-inline {
+  margin: 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+
+/* grid of 4 columns for each summary row */
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 24px; /* row-gap / column-gap */
+  margin-bottom: 8px;
+}
+
+/* optional: align "Main" badge */
+.summary-badge.primary {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: #d7f5ef;
+  color: #107c6b;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+/**************** GUARDIAN READING ONLY (Step 1.5) ****************/
+:host ::ng-deep .readonly-guard {
+  pointer-events: none; /* blocks interaction, keeps sight */
+}
+
+:host ::ng-deep .readonly-guard input,
+:host ::ng-deep .readonly-guard select,
+:host ::ng-deep .readonly-guard textarea,
+:host ::ng-deep .readonly-guard .p-inputtext,
+:host ::ng-deep .readonly-guard .p-inputnumber input,
+:host ::ng-deep .readonly-guard .p-inputtextarea,
+:host ::ng-deep .readonly-guard .p-autocomplete input,
+:host ::ng-deep .readonly-guard .p-dropdown,
+:host ::ng-deep .readonly-guard .p-calendar input {
+  background-color: #f1f5f9;
+  color: #6b7280;
+  border-color: #e5e7eb;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+:host ::ng-deep .readonly-guard .p-dropdown .p-dropdown-trigger,
+:host ::ng-deep .readonly-guard .p-calendar .p-datepicker-trigger {
+  opacity: 0.7;
+}
+
+:host ::ng-deep .readonly-guard .p-checkbox .p-checkbox-box,
+:host ::ng-deep .readonly-guard .p-radiobutton .p-radiobutton-box {
+  background-color: #f1f5f9;
+  border-color: #e5e7eb;
+}
+
+/* Guardian status badge (similar to "Principal") */
+.guardian-status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+}
+
+/* Verified (institutional green) */
+.guardian-status-badge.verified {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: rgb(0 143 140 / 30%);
+}
+
+/* Rejected (soft red) */
+.guardian-status-badge.rejected {
+  background: #fee2e2;  /* red-100 */
+  color: #b91c1c;       /* red-700 */
+  border-color: #fecaca;/* red-200 */
+}
+
+/* Pending (soft yellow) */
+.guardian-status-badge.pending {
+  background: #fef9c3; /* yellow-100 */
+  color: #a16207;      /* yellow-700 */
+  border-color: #fde68a;/* yellow-200 */
+}
+
+.stepper-header .stepper-indicator {
+  grid-column: 2;
+  justify-self: center; /* in case the stepper has a smaller width */
+}
+
+/* (keep your color classes) */
+.status-pill {
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: .875rem;
+  text-transform: uppercase;
+}
+
+.status-verificado {
+  background: #E3F6EC;
+  color: #0F7B45;
+  border: 1px solid #B8E7CF;
+}
+
+.status-completo {
+  background: #E8F0FE;
+  color: #1A56DB;
+  border: 1px solid #C9DAFD;
+}
+
+.status-minimo {
+  background: #FFF4E5;
+  color: #B45309;
+  border: 1px solid #FAD7AE;
+}
+
+/* Optional: on small screens, let the pill go down under the stepper */
+@media (width <= 640px) {
+  .stepper-header {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+
+  .stepper-header .stepper-indicator {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .stepper-header .status-pill {
+    grid-column: 1;
+    justify-self: end;
+  }
+}
+
+/* On small screens, let the badge go down under the title */
+@media (width <= 640px) {
+  .summary-group-title {
+    flex-wrap: wrap;
+  }
+
+  .summary-group-title .guardian-status-badge {
+    margin-left: 0;
+    margin-top: 6px;
+  }
+}
+
+/* stylelint-disable declaration-no-important */
+::ng-deep app-generic-button[type="alternative"] button {
+  background-color: #e94c3d !important;
+  color: #000 !important;
+}
+
+::ng-deep app-generic-button[type="alternative"] button:hover {
+  filter: brightness(0.9);
+}
+
+.stepper-header .status-pill {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-section-header,
+.summary-group-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--heading);
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+.form-section,
+.v2-header {
+  margin: 0 0 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-group-title { margin-bottom: 12px; }
+
+/* ===== ESTILOS PARA CAMPO NÚMERO DE AFILIADO ===== */
+
+
+.form-field-inline label[data-invalid="true"] {
+  color: var(--brand-warn, #dc2626);
+}
+
+
+.form-field-inline .req {
+  color: var(--brand-warn, #dc2626);
+  margin-left: 4px;
+}
+
+
+.form-field-inline .form-error-pill {
+  color: var(--brand-warn, #dc2626);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  display: block;
+  margin-top: 4px;
+}
+
+
+.form-field-inline input.p-invalid {
+  border-color: var(--brand-warn, #dc2626);
+}
+
+
+.form-field-inline input[readonly] {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+.form-field-inline .field-input {
+  width: 100%;
+}
+
+.form-field-inline .field-input input {
+  width: 100%;
+}
+
+
+.form-field-inline .field-foot {
+  min-height: 0;
+  line-height: 18px;
+  display: block;
+}
+
+.form-field-inline .field-foot:empty {
+  display: none;
+}
+
+/**************** MUTED TEXT ****************/
+.muted-text {
+  color: var(--muted, #6b7280);
+  font-size: 0.9rem;
+  font-style: italic;
+  padding: 12px;
+  text-align: center;
+}
+
+/**************** STEP ACTIONS RIGHT GROUP ****************/
+.step-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/**************** TUTOR TOGGLE BUTTON (naranja) ****************/
+.btn-tutor-toggle {
+  background: var(--brand-accent, #ff9800);
+  border: 1px solid var(--brand-accent, #ff9800);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  min-width: 160px;
+}
+
+.btn-tutor-toggle:hover {
+  background: #f57c00;
+  border-color: #f57c00;
+  color: #fff;
+}
+
+.btn-tutor-toggle.tutor-added {
+  background: var(--primary-light, #d1f5f4);
+  border-color: var(--primary, #008f8c);
+  color: var(--primary, #008f8c);
+}
+
+.btn-tutor-toggle.tutor-added:hover:not(:disabled) {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.btn-tutor-toggle:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Override PrimeNG button styles */
+:host ::ng-deep .btn-tutor-toggle.p-button {
+  background: var(--brand-accent, #ff9800);
+  border: 1px solid var(--brand-accent, #ff9800);
+  color: #fff;
+  height: 42px;
+  min-width: 160px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .btn-tutor-toggle.p-button:hover {
+  background: #f57c00;
+  border-color: #f57c00;
+  color: #fff;
+}
+
+:host ::ng-deep .btn-tutor-toggle.tutor-added.p-button {
+  background: var(--primary-light, #d1f5f4);
+  border-color: var(--primary, #008f8c);
+  color: var(--primary, #008f8c);
+}
+
+:host ::ng-deep .btn-tutor-toggle.tutor-added.p-button:hover:not(:disabled) {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+}

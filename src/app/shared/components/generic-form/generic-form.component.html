@@ -1,0 +1,310 @@
+<section class="stack-16"
+         [ngClass]="sizeClass"
+         [class.card]="showCard"
+         [class.surface]="showCard"
+         [class.card-body-24]="showCard">
+  @if (showHeader) {
+    <header class="header">
+      <h2 class="title-20 font-display mb-3">{{ title }}</h2>
+    </header>
+  }
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <input type="submit" class="sr-only" />
+
+    <div class="form-grid-2 grid gap-3 sm:grid-cols-1 md:grid-cols-2">
+    @for (f of fields; track f.name) {
+
+
+      @if (f.type === 'divider') {
+        <div class="field-item" [attr.data-span]="f.colSpan || 4">
+          <p-divider
+            [align]="f.align || 'center'"
+            [layout]="'horizontal'"
+          >
+            @if (f.label) {
+              <span class="p-divider-label">{{ f.label }}</span>
+            }
+          </p-divider>
+        </div>
+      }
+
+
+      @else if (f.type !== 'array') {
+
+        <div class="field-item" [attr.data-span]="f.colSpan || 1">
+          <label class="text-14 font-medium" [attr.data-invalid]="isInvalid(f.name)">
+            {{ f.label }}
+            @if (f.required && showAsterisk) { <span class="req">*</span> }
+          </label>
+
+          <div class="field-input">
+
+
+            @if (f.type === 'date' && !f.hideDate) {
+              <p-datepicker
+                [formControlName]="f.name"
+                [minDate]="getMinDate(f.name)"
+                [maxDate]="getMaxDate(f.name)"
+                [dateFormat]="f.dateFormat || 'dd/mm/yy'"
+                [showIcon]="showAddons"
+                inputId="{{ f.name }}"
+                class="w-full date-ctrl"
+                [ngClass]="{ 'is-invalid': isInvalid(f.name) }"
+                (onBlur)="markTouched(f.name)"
+                [showTime]="f.showTime || false"
+                [attr.aria-invalid]="ariaInvalid(f.name)"
+                [attr.aria-describedby]="ariaErrorId(f.name)"
+                appDateSlashFormat>
+              </p-datepicker>
+            }
+            @else if (f.type === 'date' && f.hideDate) {
+              <p-datepicker
+                [formControlName]="f.name"
+                [showIcon]="showAddons"
+                [showTime]="true"
+                [timeOnly]="true"
+                [hourFormat]="f.hourFormat || '24'"
+                inputId="{{ f.name }}"
+                class="w-full date-ctrl"
+                [ngClass]="{ 'is-invalid': isInvalid(f.name) }"
+                (onBlur)="markTouched(f.name)"
+                [attr.aria-invalid]="ariaInvalid(f.name)"
+                [attr.aria-describedby]="ariaErrorId(f.name)">
+              </p-datepicker>
+            }
+            @else if (f.type === 'textarea') {
+
+              <textarea
+                  pInputTextarea
+                  [formControlName]="f.name"
+                  [rows]="f.rows || 3"
+                  [placeholder]="f.placeholder || ''"
+                  class="w-full"
+                  (blur)="markTouched(f.name)"
+                  [attr.aria-invalid]="ariaInvalid(f.name)"
+                  [attr.aria-describedby]="ariaErrorId(f.name)"
+                  [attr.maxlength]="f.maxLength"
+                  [attr.minlength]="f.minLength">
+              </textarea>
+            }@else {
+
+              <p-inputGroup [ngClass]="{ 'has-error': isInvalid(f.name) }">
+                @if (f.addonLeft && showAddons) { <p-inputGroupAddon>{{ f.addonLeft }}</p-inputGroupAddon> }
+
+                @if (f.type === 'text' || f.type === 'email' || f.type === 'tel' || f.type === 'password' || f.type === 'url') {
+                  <input
+                    pInputText
+                    [type]="f.type === 'text' ? 'text' : f.type"
+                    [formControlName]="f.name"
+                    [placeholder]="f.placeholder || ''"
+                    class="w-full"
+                    (blur)="markTouched(f.name)"
+                    [attr.aria-invalid]="ariaInvalid(f.name)"
+                    [attr.aria-describedby]="ariaErrorId(f.name)"
+                    [attr.maxlength]="f.maxLength"
+                    [attr.minlength]="f.minLength" />
+                }
+                @if (f.type === 'cuit') {
+                  <input
+                    pInputText
+                    appCuitFormat
+                    [type]="f.type"
+                    [formControlName]="f.name"
+                    [placeholder]="f.placeholder || ''"
+                    class="w-full"
+                    (blur)="markTouched(f.name)"
+                    [attr.aria-invalid]="ariaInvalid(f.name)"
+                    [attr.aria-describedby]="ariaErrorId(f.name)"
+                    [attr.maxlength]="f.maxLength"
+                    [attr.minlength]="f.minLength" />
+                }
+
+                @if (f.type === 'number') {
+                  <p-inputNumber
+                    [formControlName]="f.name"
+                    [min]="f.min"
+                    [max]="f.max"
+                    inputId="{{ f.name }}"
+                    class="w-full"
+                    [maxFractionDigits]="f.maxFractionDigits || 0"
+                    (onBlur)="markTouched(f.name)"
+                    [attr.aria-invalid]="ariaInvalid(f.name)"
+                    [attr.aria-describedby]="ariaErrorId(f.name)">
+                  </p-inputNumber>
+                }
+
+                @if (f.type === 'select') {
+                  <p-select
+                    [options]="f.options || []"
+                    optionLabel="label"
+                    optionValue="value"
+                    [formControlName]="f.name"
+                    [placeholder]="f.placeholder || 'Seleccioná una opción'"
+                    [filter]="f.filter ?? false"
+                    [filterBy]="f.filterBy || 'label'"
+                    [filterPlaceholder]="f.filterPlaceholder || 'Buscar...'"
+                    [emptyMessage]="selectEmptyMessage || 'No se encontraron resultados'"
+                    [emptyFilterMessage]="selectEmptyFilterMessage || 'No se encontraron resultados'"
+                    class="w-full"
+                    (onBlur)="markTouched(f.name)"
+                    [attr.aria-invalid]="ariaInvalid(f.name)"
+                    [attr.aria-describedby]="ariaErrorId(f.name)"
+                    [overlayOptions]="overlayOpts">
+                  </p-select>
+                }
+
+
+              @if (f.type === 'multiselect') {
+                <p-multiselect
+                  [options]="f.options || []"
+                  optionLabel="label"
+                  optionValue="value"
+                  [formControlName]="f.name"
+                  [placeholder]="f.placeholder || 'Seleccioná una o más opciones'"
+                  [filter]="f.filter ?? false"
+                  [filterBy]="f.filterBy || 'label'"
+                  [maxSelectedLabels]="f.maxSelectedLabels ?? 3"
+                  [selectionLimit]="f.selectionLimit"
+                  [display]="f.display || 'chip'"
+                  [emptyMessage]="selectEmptyMessage || 'No se encontraron resultados'"
+                  [emptyFilterMessage]="selectEmptyFilterMessage || 'No se encontraron resultados'"
+                  class="w-full"
+                  [attr.aria-invalid]="ariaInvalid(f.name)"
+                  [attr.aria-describedby]="ariaErrorId(f.name)"
+                  [overlayOptions]="overlayOpts">
+                </p-multiselect>
+              }
+
+              @if (f.type === 'checkbox') {
+                <div class="checkbox-shell">
+                  <p-checkbox
+                    [binary]="true"
+                    [formControlName]="f.name"
+                    [inputId]="f.name">
+                  </p-checkbox>
+
+                  <label class="checkbox-label" [for]="f.name">
+                    {{ f.placeholder || f.label }}
+                  </label>
+                </div>
+              }
+
+                @if (f.type === 'radio') {
+                  <div class="radio-group" [ngClass]="{ 'inline': f.radioInline }">
+                    @for (opt of (f.options || []); track opt.value) {
+                      <div class="radio-item">
+                        <p-radiobutton
+                          [name]="f.name"
+                          [value]="opt.value"
+                          [inputId]="f.name + '_' + opt.value"
+                          [formControlName]="f.name">
+                        </p-radiobutton>
+                        <label [for]="f.name + '_' + opt.value">{{ opt.label }}</label>
+                      </div>
+                    }
+                  </div>
+                }
+
+                @if (f.addonRight && showAddons) { <p-inputGroupAddon>{{ f.addonRight }}</p-inputGroupAddon> }
+              </p-inputGroup>
+            }
+          </div>
+
+          <div class="field-foot">
+            @if (isInvalid(f.name)) {
+              <small class="form-error-pill" [id]="'err-' + f.name" role="alert">
+                {{ errorMsg(f.name) }}
+              </small>
+            } @else if (f.hint) {
+              <small class="form-hint">{{ f.hint }}</small>
+            }
+          </div>
+        </div>
+      }
+
+
+      @else if (f.type === 'array') {
+        <div class="field-item" [attr.data-span]="f.colSpan || 2">
+          <div class="array-header">
+            <label class="text-14 font-medium">{{ f.label }}</label>
+
+            @let st = arrayStatus(f.name);
+            <div class="array-actions">
+              @if (st.message) {
+                <span class="status-pill"
+                      [class.status-pill--error]="st.level === 'error'"
+                      [class.status-pill--warn]="st.level === 'warn'">
+                  {{ st.message }}
+                </span>
+              }
+              <button type="button" pButton class="p-button-sm" (click)="addArrayItem(f.name)">
+                {{ f.array?.addLabel || 'Agregar' }}
+              </button>
+            </div>
+          </div>
+
+          <div [formArrayName]="f.name" class="space-y-3 mt-2">
+            @for (_ctrl of arrayOf(f.name).controls; track i; let i = $index) {
+              <app-collapsable-form
+                [fields]="f.array?.itemFields || []"
+                [title]="(f.array?.itemsTitle || f.label) + ' ' + (i + 1)"
+                [defaultCollapsed]="f.array?.defaultCollapsed ?? false"
+                [formControlName]="i"
+                (save)="onArrayItemSave(f.name, i, $event)"
+                size="lg"
+                (cancelAction)="onArrayItemCancel(f.name, i)">
+              </app-collapsable-form>
+            }
+          </div>
+
+          <div class="field-foot">
+            @if (isInvalid(f.name)) {
+              <small class="form-error-pill" [id]="'err-' + f.name" role="alert">
+                {{ errorMsg(f.name) }}
+              </small>
+            } @else if (f.hint) {
+              <small class="form-hint">{{ f.hint }}</small>
+            }
+          </div>
+        </div>
+      }
+    }
+    </div>
+
+    <!-- FormGroup Errors -->
+  @if (form.errors && form.touched) {
+    <div class="form-group-errors">
+      @if (form.errors['passwordMismatch']) {
+        <small class="form-error-pill" role="alert">
+          Las contraseñas no coinciden
+        </small>
+      }
+    </div>
+  }
+
+    <!-- Actions -->
+    <div class="actions-end">
+      @if (showCancel)
+      {
+        <app-generic-button
+          [text]="cancelLabel"
+          type="cancel"
+          [disabled]="saving"
+          (click)="onCancel()">
+        </app-generic-button>
+      }
+
+      @if (showSubmit) {
+        <app-generic-button
+          [text]="saving ? 'Guardando...' : submitLabel"
+          [type]="submitType"
+          [icon]="submitIcon || ''"
+          [color]="buttonColor || '--brand-primary-700'"
+          [customTextColor]="buttonTextColor || '--canvas'"
+          [disabled]="saving">
+        </app-generic-button>
+      }
+    </div>
+  </form>
+</section>

@@ -1,0 +1,26 @@
+<div class="top-section">
+  <app-billing-date-filters (filtersChanged)="onFiltersChanged($event)"></app-billing-date-filters>
+</div>
+
+@if (kpis.length) {
+  <section class="kpi-section my-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      @for (metric of kpis; track $index) {
+        <app-dashboard-metric-card [metric]="metric"></app-dashboard-metric-card>
+      }
+    </div>
+  </section>
+}
+
+@if (showLoader) {
+  <div class="loader-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 3rem; color: #3b82f6;"></i>
+    <p>Cargando reportes de facturación...</p>
+  </div>
+} @else {
+  <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    @for (card of cards; track $index) {
+      <app-care-reporting-card [reportingData]="card"></app-care-reporting-card>
+    }
+  </section>
+}

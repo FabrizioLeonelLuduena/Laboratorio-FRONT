@@ -1,0 +1,1077 @@
+/**
+ * patients-card-detail.component.css
+ * ===================================
+ * Styles for patient detail view component.
+ *
+ * Architecture:
+ * - Container and page layout
+ * - Loading and error states
+ * - Card header with patient name and status
+ * - Personal information grid (6 items including phone/email)
+ * - 2-column responsive grid for coverages/addresses
+ * - Primary items (highlighted cards with icons)
+ * - Secondary items (list style)
+ * - Footer actions
+ * - Responsive breakpoints (768px, 880px, 480px)
+ *
+ * Design principles:
+ * - All primary items have same height using CSS grid align-self:stretch
+ * - Secondary sections start at same vertical position
+ * - Consistent spacing and visual hierarchy
+ * - Smooth animations for content loading
+ * - Accessible focus states
+ */
+
+
+/* =========================================
+   MAIN CONTAINER
+   ========================================= */
+.patient-detail-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 4rem);
+}
+
+
+/* =========================================
+   HEADER (not currently used in template)
+   ========================================= */
+.patients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 4px 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* =========================================
+   LOADING STATE
+   ========================================= */
+
+/* Centered spinner with message */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1.5rem;
+}
+
+.loading-state p {
+  color: var(--on-surface-muted, #5b6670);
+  font-size: 15px;
+  margin: 0;
+}
+
+
+/* =========================================
+   ERROR STATE
+   ========================================= */
+
+/* Centered error message with icon */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.error-state i {
+  font-size: 3rem;
+  color: var(--brand-warn);
+}
+
+.error-state p {
+  color: var(--on-surface-muted, #5b6670);
+  font-size: 15px;
+  margin: 0;
+  max-width: 500px;
+}
+
+
+/* =========================================
+   DETAIL CONTENT
+   ========================================= */
+
+/* Fade-in animation for content load */
+.detail-content {
+  animation: fade-in 0.3s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   PATIENT CARD
+   ========================================= */
+
+/* Main card container with shadow */
+.patient-card {
+  background: var(--card, #fff);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+  overflow: hidden;
+}
+
+/* Remove default PrimeNG padding */
+:host ::ng-deep .patient-card .p-card-body,
+:host ::ng-deep .patient-card .p-card-content {
+  padding: 0;
+}
+
+/* Footer with action buttons */
+.patients-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+
+/* =========================================
+   CARD HEADER
+   ========================================= */
+
+/* Gradient background with patient info */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.25rem;
+  background: var(--toolbar-gradient);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 1rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-icon {
+  font-size: 2rem;
+  opacity: 0.9;
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-name {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.patient-dni {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+}
+
+.patient-age {
+  margin-left: 0.35rem;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   CARD BODY
+   ========================================= */
+
+.card-body {
+  padding: 0 1.5rem 1.5rem;
+  margin-top: 1rem;
+}
+
+
+/* =========================================
+   SECTIONS
+   ========================================= */
+
+/* Generic section styling */
+.info-section {
+  margin-bottom: 2rem;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.coverage-section .section-title,
+.directions-section .section-title {
+  margin-bottom: 3rem; /* Reduce from 1rem (default) to 0.5rem */
+}
+
+/* Section header with title and actions (e.g., PDF button) */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Section titles with icon and bottom border */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color, #d5e2e4);
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.section-title i {
+  color: var(--brand-primary-700, #008f8c);
+  font-size: 1.25rem;
+}
+
+/* Subsection titles for "Others..." sections */
+.subsection-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface-muted, #5b6670);
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   INFO GRID (Personal Information)
+   ========================================= */
+
+/* Responsive grid for personal info */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.info-item label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-muted, #5b6670);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.info-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--on-surface, #00435d);
+  font-weight: 500;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-active {
+  color: var(--brand-success);
+}
+
+.status-inactive {
+  color: var(--brand-warn);
+}
+
+/* Contact value styling */
+.contact-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-icon-inline {
+  font-size: 1rem;
+  color: var(--brand-primary-700, #008f8c);
+}
+
+
+/* =========================================
+   PRIMARY ITEMS
+   ========================================= */
+
+/* Highlighted cards for primary items */
+
+/* Features: gradient background, left border, icon, and content layout */
+
+.primary-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--surface-alt, #edeff4) 0%, #f7f9fa 100%);
+  border-radius: 8px;
+  border-left: 4px solid var(--brand-primary-700, #008f8c);
+}
+
+/* Placeholder to maintain grid layout */
+.primary-item-placeholder {
+  min-height: 80px;
+}
+
+.contact-icon {
+  font-size: 1.75rem;
+  color: var(--brand-primary-700, #008f8c);
+  margin-top: 0.25rem;
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.25rem;
+}
+
+.item-type {
+  font-size: 11px;
+  color: var(--on-surface-muted, #5b6670);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.item-value {
+  font-size: 14px;
+  color: var(--on-surface, #00435d);
+  font-weight: 500;
+}
+
+
+/* =========================================
+   ADDRESS PRIMARY
+   ========================================= */
+
+/* Specific styling for primary address */
+.address-primary {
+  justify-content: space-between;
+}
+
+.address-street {
+  margin: 0 0 0.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+}
+
+.address-location {
+  font-size: 13px;
+  color: var(--on-surface-muted, #5b6670);
+  margin-bottom: 0.25rem;
+}
+
+.address-zip {
+  font-size: 12px;
+  color: var(--on-surface-muted, #757477);
+  font-weight: 500;
+}
+
+
+/* =========================================
+   SECONDARY ITEMS
+   ========================================= */
+
+/* List-style items for secondary entries */
+.secondary-items {
+  margin-top: 0;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--card, #fff);
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 8px;
+}
+
+.list-item:hover {
+  background: var(--surface-alt, #edeff4);
+}
+
+.list-item i {
+  color: var(--on-surface-muted, #5b6670);
+  font-size: 1.25rem;
+}
+
+.item-label {
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+  font-size: 13px;
+}
+
+.item-text {
+  color: var(--on-surface-muted, #5b6670);
+  font-size: 13px;
+}
+
+
+/* =========================================
+   ADDRESS ITEMS (Secondary)
+   ========================================= */
+
+.address-item {
+  align-items: flex-start;
+}
+
+/* Medium screens: 2 columns for personal info grid */
+@media (881px <= width <= 1100px) {
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.address-item i {
+  margin-top: 0.25rem;
+}
+
+.address-content {
+  flex: 1;
+}
+
+.address-content p {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+  color: var(--on-surface, #00435d);
+  font-size: 13px;
+}
+
+.address-sub {
+  font-size: 12px;
+  color: var(--on-surface-muted, #757477);
+}
+
+
+/* =========================================
+   COVERAGES
+   ========================================= */
+
+/* Primary Coverage - matches primary-item style */
+.coverage-primary {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--surface-alt, #edeff4) 0%, #f7f9fa 100%);
+  border-radius: 8px;
+  border-left: 4px solid var(--brand-primary-700, #008f8c);
+}
+
+.coverage-primary .contact-icon {
+  color: var(--brand-primary-700, #008f8c);
+}
+
+.coverage-primary .item-type {
+  font-size: 11px;
+  color: var(--on-surface-muted, #5b6670);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coverage-primary .item-value {
+  font-size: 14px;
+  color: var(--on-surface, #00435d);
+  font-weight: 600;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.coverage-primary .coverage-id {
+  font-size: 13px;
+  color: var(--on-surface-muted, #5b6670);
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Secondary Coverages - matches list-item style */
+.coverage-secondary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--card, #fff);
+  border: 1px solid var(--border-color, #d5e2e4);
+  border-radius: 8px;
+}
+
+.coverage-secondary:hover {
+  background: var(--surface-alt, #edeff4);
+}
+
+.coverage-secondary i {
+  color: var(--brand-success);
+  font-size: 1.25rem;
+}
+
+.coverage-secondary .item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.coverage-secondary .item-label {
+  font-weight: 600;
+  color: var(--on-surface, #00435d);
+  font-size: 13px;
+}
+
+.coverage-secondary .item-text {
+  color: var(--on-surface-muted, #5b6670);
+  font-size: 13px;
+}
+
+
+/* =========================================
+   2-COLUMN GRID
+   ========================================= */
+
+/* Grid layout for coverages/addresses
+   Structure: 2 columns x 3 rows
+   Row 1: Section titles
+   Row 2: Primary items (same height)
+   Row 3: Secondary items (aligned start) */
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+/* Section titles go in the first row */
+
+.sections-grid > .section-title {
+  align-self: start;
+}
+
+/* Primary items go in the second row */
+
+/* IMPORTANT: align-self:stretch makes all primary items same height */
+.sections-grid > .primary-item,
+.sections-grid > .coverage-primary,
+.sections-grid > .address-primary,
+
+.sections-grid > .primary-item-placeholder {
+  align-self: stretch;
+}
+
+/* Secondary items go in the third row */
+
+/* All start at same vertical position */
+
+.sections-grid > .secondary-items {
+  align-self: start;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+/* Mobile: Single column layout */
+@media (width <= 768px) {
+  .sections-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sections-grid > .section-title {
+    margin-top: 1rem;
+  }
+
+  .sections-grid > .section-title:first-child {
+    margin-top: 0;
+  }
+}
+
+/* Medium screens: Adjust padding and header */
+@media (width <= 880px) {
+  .patient-detail-page {
+    padding: 1rem;
+  }
+
+  .patients-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .patient-name {
+    font-size: 1.25rem;
+  }
+
+  /* Mobile: 1 column */
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stack primary items vertically */
+  .primary-item {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .coverage-primary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+  /* Small mobile: Further adjustments */
+@media (width <= 480px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-icon {
+    font-size: 2rem;
+  }
+
+  .patient-name {
+    font-size: 1.15rem;
+  }
+
+  .header-actions button {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+/* Focus states for keyboard navigation */
+.patient-detail-page button:focus-visible {
+  outline: 2px solid var(--brand-secondary, #00435d);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Close button (cross) top right */
+.close-button {
+  margin-left: 8px;
+  color: white;
+}
+
+.close-button .pi {
+  font-size: 1.25rem;
+}
+
+/* Adjustment to maintain header alignment */
+.card-header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guardian-card {
+  margin-bottom: 1rem;
+}
+
+.guardian-number {
+  color: var(--brand-primary-700, #008f8c);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--brand-primary-700, #008f8c);
+}
+
+.guardian-card:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   TABS NAVIGATION
+   ========================================= */
+
+.tabs-navigation {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--surface-200, #e5e7eb);
+  margin-bottom: 1.5rem;
+  background-color: var(--surface-50, #f9fafb);
+  border-radius: 8px 8px 0 0;
+  padding: 0.5rem 0.5rem 0;
+  width: 100%;
+}
+
+.tab-button {
+  padding: 0.875rem 2rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--on-surface-muted, #6b7280);
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 6px 6px 0 0;
+  flex: 1;
+  text-align: center;
+}
+
+.tab-button:hover {
+  background-color: var(--surface-100, #f3f4f6);
+  color: var(--on-surface, #111827);
+}
+
+.tab-button.active {
+  color: var(--brand-primary, #00a99d);
+  background-color: var(--surface-0, #fff);
+  border-bottom-color: var(--brand-primary, #00a99d);
+  font-weight: 600;
+}
+
+.tab-button:focus-visible {
+  outline: 2px solid var(--brand-primary, #00a99d);
+  outline-offset: -2px;
+}
+
+.tab-content {
+  animation: fade-in-tabs 0.3s ease-in-out;
+}
+
+@keyframes fade-in-tabs {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.analysis-tab {
+  min-height: 400px;
+}
+
+.no-studies-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  gap: 1rem;
+  background-color: var(--surface-50, #f9fafb);
+  border-radius: 8px;
+  border: 1px dashed var(--border-color, #d1d5db);
+}
+
+.no-studies-message i {
+  font-size: 2.5rem;
+  color: var(--on-surface-muted, #9ca3af);
+}
+
+.no-studies-message p {
+  margin: 0;
+  color: var(--on-surface-muted, #6b7280);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* =========================================
+   EXPANDED ROW (Protocol and Payment details) — 2-column layout
+   Matches the visual style of personal information
+   ========================================= */
+.expanded-row-wrapper {
+  padding: 1rem 1rem 0.5rem;
+  background: var(--surface-50, #f9fafb);
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #d5e2e4);
+}
+
+/* Stack protocol and payment sections vertically */
+.details-split-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* Each detail section (protocol or payment) */
+.detail-section {
+  background: var(--card, #fff);
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #d5e2e4);
+  padding: 1rem;
+}
+
+.protocol-section {
+  padding: 1rem;
+}
+
+.protocol-order-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+.detail-column {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.protocol-divider-vertical {
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    rgb(0 143 140 / 20%) 0%,
+    rgb(0 143 140 / 60%) 50%,
+    rgb(0 143 140 / 20%) 100%
+  );
+  border-radius: 4px;
+}
+
+.detail-inline-group {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.detail-item-inline {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.doctor-inline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.doctor-inline .detail-text {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (width <= 768px) {
+  .protocol-order-wrapper {
+    flex-direction: column;
+  }
+
+  .protocol-divider-vertical {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgb(0 143 140 / 20%) 0%,
+      rgb(0 143 140 / 60%) 50%,
+      rgb(0 143 140 / 20%) 100%
+    );
+  }
+}
+
+.detail-section .expanded-title,
+.nested-analyses-table .subsection-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-primary-700, #008f8c);
+  margin: 0 0 1rem;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--brand-primary-700, #008f8c);
+}
+
+.expanded-row-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: flex-start;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.payment-section .detail-item {
+  flex: 1 1 160px;
+  min-width: 150px;
+}
+
+/* Full width item (for payment date) */
+.detail-item-full {
+  flex: 1 1 100%;
+}
+
+.detail-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-muted, #5b6670);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.35rem;
+}
+
+.detail-value {
+  margin: 0;
+  font-size: 14px;
+  color: var(--on-surface, #00435d);
+  font-weight: 500;
+}
+
+/* Hide toolbar (search, downloads, create) for nested analyses table */
+.nested-analyses-table {
+  margin-top: 1rem;
+}
+
+.nested-analyses-table .subsection-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-primary-700, #008f8c);
+  margin: 0 0 1rem;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--brand-primary-700, #008f8c);
+}
+
+:host ::ng-deep .nested-analyses-table .table-wrapper .toolbar {
+  display: none;
+}
+
+/* Responsive: stack columns on mobile */
+@media (width <= 768px) {
+  .details-split-container {
+    gap: 0.75rem;
+  }
+
+  .detail-item {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .tabs-navigation {
+    flex-wrap: wrap;
+  }
+
+  .tab-button {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+  }
+}
+
+@media (width <= 480px) {
+  .tab-button {
+    padding: 0.625rem 0.75rem;
+    font-size: 13px;
+  }
+
+  .expanded-row-content {
+    flex-direction: column;
+  }
+}
+
+/* =========================================
+   ACTION CELL (Download PDF Button)
+   ========================================= */
+.action-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.action-cell button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-cell button:hover {
+  transform: scale(1.1);
+}
+
+.action-cell button:active {
+  transform: scale(0.95);
+}
+
+

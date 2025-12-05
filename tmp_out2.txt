@@ -1,0 +1,60 @@
+<div class="top-section">
+  <app-report-filters
+    [insurerOptions]="insurerOptions"
+    [minDate]="minSettlementDate"
+    [maxDate]="maxDate"
+    (filtersChanged)="onFiltersChanged($event)">
+  </app-report-filters>
+
+  @if (summary) {
+    <app-report-cards [summary]="summary"></app-report-cards>
+  }
+</div>
+
+<hr class="section-divider" />
+
+@if (showLoader) {
+  <div class="loader-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 3rem; color: #3b82f6;"></i>
+    <p>Cargando reportes...</p>
+  </div>
+} @else {
+  <div class="charts-grid">
+
+    <!-- Gráfico Pie: prestaciones mensuales -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h4>Prestaciones por mes</h4>
+        <app-filter [filters]="pie2Filters" (filterChange)="onPie2FilterChange($event)"></app-filter>
+      </div>
+      <app-report-pie-chart [labels]="timeLabels" [data]="timeValues"></app-report-pie-chart>
+    </div>
+
+    <!-- Gráfico Bar: montos mensuales -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h4>Plata por mes</h4>
+        <app-filter [filters]="bar2Filters" (filterChange)="onBar2FilterChange($event)"></app-filter>
+      </div>
+      <app-report-bar-chart [labels]="timeLabels" [data]="timeValues" [title]="'Plata por mes'"></app-report-bar-chart>
+    </div>
+
+    <!-- Gráfico Pie: prestaciones por aseguradora -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h4>Prestaciones por aseguradora</h4>
+        <app-filter [filters]="pie1Filters" (filterChange)="onPie1FilterChange($event)"></app-filter>
+      </div>
+      <app-report-pie-chart [labels]="insuranceLabels" [data]="insuranceValues"></app-report-pie-chart>
+    </div>
+
+    <!-- Gráfico Bar: montos por aseguradora -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h4>Comparativa de montos por aseguradora</h4>
+        <app-filter [filters]="bar1Filters" (filterChange)="onBar1FilterChange($event)"></app-filter>
+      </div>
+      <app-report-bar-chart [labels]="insuranceLabels" [data]="insuranceValues" [title]="'Plata por aseguradora'"></app-report-bar-chart>
+    </div>
+  </div>
+}

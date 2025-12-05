@@ -1,0 +1,124 @@
+<ng-container *ngIf="isHandset; else desktopAside">
+  <p-sidebar
+    [(visible)]="visible"
+    [modal]="isHandset"
+    [dismissible]="isHandset"
+    [showCloseIcon]="isHandset"
+    position="left"
+    [baseZIndex]="1000"
+    class="app-sidebar"
+    (onHide)="closeSidebar()"
+  >
+    <!-- Navegación -->
+    <nav class="sidebar-nav">
+      <ul class="menu-list">
+        @for (item of menuItems; track item.path) {
+          <li class="menu-group">
+            @if (item.children?.length) {
+              <!-- Grupo con submenú -->
+              <div
+                class="menu-group-content"
+                [class.active]="isAnyChildActive(item)"
+                (click)="toggleExpand(item.path!); $event.stopPropagation()"
+              >
+                <i class="{{ item.icon }}"></i>
+                <span class="menu-group-title">{{ item.label }}</span>
+                <i
+                  class="pi"
+                  [ngClass]="{
+                    'pi-angle-down': !isExpanded(item.path!),
+                    'pi-angle-up': isExpanded(item.path!)
+                  }"
+                ></i>
+              </div>
+
+              @if (isExpanded(item.path!)) {
+                <ul class="submenu">
+                  @for (child of item.children; track child.path) {
+                    <li>
+                      <a
+                        [routerLink]="child.path"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: child.exactMatch || false }"
+                        class="submenu-item"
+                        (click)="isHandset && closeSidebar()"
+                      >
+                        <i class="{{ child.icon }}"></i>
+                        <span>{{ child.label }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              }
+            } @else {
+              <!-- Enlace simple -->
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                class="menu-group-content"
+                (click)="isHandset && closeSidebar()"
+              >
+                <i class="{{ item.icon }}"></i>
+                <span>{{ item.label }}</span>
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  </p-sidebar>
+</ng-container>
+
+<ng-template #desktopAside>
+  <aside class="sidenav" [class.sidenav--open]="visible">
+    <nav class="sidenav__nav">
+      <ul class="sidenav__list">
+        @for (item of menuItems; track item.path) {
+          <li class="sidenav__item">
+            @if (item.children?.length) {
+              <button
+                type="button"
+                class="sidenav__link"
+                [class.active]="isAnyChildActive(item)"
+                (click)="toggleExpand(item.path!)"
+              >
+                <i class="{{ item.icon }}"></i>
+                <span class="sidenav__label">{{ item.label }}</span>
+                <i
+                  class="pi"
+                  [ngClass]="{
+                    'pi-angle-down': !isExpanded(item.path!),
+                    'pi-angle-up': isExpanded(item.path!)
+                  }"
+                ></i>
+              </button>
+
+              @if (isExpanded(item.path!)) {
+                <ul class="sidenav__sublist">
+                  @for (child of item.children; track child.path) {
+                    <li>
+                      <a
+                        class="sidenav__sublink"
+                        [routerLink]="child.path"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: child.exactMatch || false }"
+                      >
+                        <i class="{{ child.icon }}"></i>
+                        <span class="sidenav__label">{{ child.label }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              }
+            } @else {
+              <a class="sidenav__link" [routerLink]="item.path" routerLinkActive="active">
+                <i class="{{ item.icon }}"></i>
+                <span class="sidenav__label">{{ item.label }}</span>
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  </aside>
+</ng-template>

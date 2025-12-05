@@ -1,0 +1,36 @@
+<!--<p-card class="">-->
+
+@if (showAlert) {
+  <app-generic-alert
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText">
+  </app-generic-alert>
+}
+  <app-generic-form
+    #formComponent
+    [fields]="formFields"
+    [showHeader]="false"
+    size="full"
+    [saving]="saving"
+    [initialValue]="initialValue"
+    submitType="save"
+    submitIcon="pi pi-check"
+    submitLabel="Agregar"
+    (submitForm)="onSubmit($event)"
+    (cancelForm)="onCancel()"
+    [showCancel]="mode==='editar'">
+  </app-generic-form>
+
+  <app-generic-table
+    [data]="tableRows"
+    [columns]="columns"
+    [pageable]="false"
+    [loading]="loading"
+    [getActions]="getActions"
+    [showFilters]="false"
+    [showDownloadMenu]="false"
+    [showCreateButton]="false"
+    [showSearch]="false"
+  ></app-generic-table>
+<!--</p-card>-->

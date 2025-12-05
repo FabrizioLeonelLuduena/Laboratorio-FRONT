@@ -1,0 +1,214 @@
+<div class="invoice-items-step-wrapper">
+  <div class="step-layout-full-width">
+    <div class="items-grid-section">
+      <div class="custom-items-grid">
+        <div class="grid-header">
+          <div class="grid-header-cell col-descripcion">Descripción</div>
+          <div class="grid-header-cell col-cantidad">Cantidad</div>
+          <div class="grid-header-cell col-precio">Precio unitario</div>
+          <div class="grid-header-cell col-descuento">Descuento</div>
+          <div class="grid-header-cell col-iva">IVA %</div>
+          <div class="grid-header-cell col-subtotal">Subtotal</div>
+          <div class="grid-header-cell col-total">Total</div>
+          <div class="grid-header-cell col-actions">
+            <button
+              type="button"
+              class="grid-action-btn add-btn header-add-btn"
+              (click)="addNewItem()"
+              title="Agregar ítem"
+            >
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-body">
+          @for (item of editableItems; track i; let i = $index) {
+            <div
+              class="grid-row"
+              [class.editing]="editingIndex === i"
+            >
+              <div class="grid-cell col-descripcion">
+                <input
+                  type="text"
+                  pInputText
+                  class="grid-input"
+                  [(ngModel)]="item.description"
+                  (keydown)="onKeyDown($event, i, 'description')"
+                  (focus)="onCellFocus(i, 'description')"
+                  [attr.data-row]="i"
+                  [attr.data-col]="'description'"
+                  placeholder="Descripción del ítem"
+                />
+              </div>
+
+              <div class="grid-cell col-cantidad">
+                <p-inputNumber
+                  [(ngModel)]="item.quantity"
+                  (ngModelChange)="onItemChange(i)"
+                  (onKeyDown)="onKeyDown($event, i, 'quantity')"
+                  (onFocus)="onCellFocus(i, 'quantity')"
+                  inputStyleClass="text-right"
+                  mode="decimal"
+                  [min]="1"
+                  [minFractionDigits]="0"
+                  [maxFractionDigits]="0"
+                  [useGrouping]="false"
+                  placeholder="0"
+                  [inputId]="'quantity-' + i"
+                ></p-inputNumber>
+              </div>
+
+              <div class="grid-cell col-precio">
+                <p-inputNumber
+                  [(ngModel)]="item.unitPrice"
+                  (ngModelChange)="onItemChange(i)"
+                  (onKeyDown)="onKeyDown($event, i, 'unitPrice')"
+                  (onFocus)="onCellFocus(i, 'unitPrice')"
+                  inputStyleClass="text-right"
+                  mode="decimal"
+                  [min]="0"
+                  [minFractionDigits]="2"
+                  [maxFractionDigits]="2"
+                  [useGrouping]="false"
+                  placeholder="0,00"
+                  (onFocus)="selectAll($event)"
+                  [inputId]="'unitPrice-' + i"
+                ></p-inputNumber>
+              </div>
+
+              <div class="grid-cell col-descuento">
+                <p-inputNumber
+                  [(ngModel)]="item.discountPercentage"
+                  (ngModelChange)="onItemChange(i)"
+                  (onKeyDown)="onKeyDown($event, i, 'discountPercentage')"
+                  (onFocus)="onCellFocus(i, 'discountPercentage')"
+                  inputStyleClass="text-right"
+                  mode="decimal"
+                  [min]="0"
+                  [max]="100"
+                  [minFractionDigits]="0"
+                  [maxFractionDigits]="2"
+                  [useGrouping]="false"
+                  placeholder="0"
+                  suffix="%"
+                  [inputId]="'discountPercentage-' + i"
+                ></p-inputNumber>
+              </div>
+
+              <div class="grid-cell col-iva"
+                   (keydown)="onKeyDown($event, i, 'vatRate')"
+                   [attr.data-row]="i"
+                   [attr.data-col]="'vatRate'">
+                <p-dropdown
+                  [(ngModel)]="item.vatRate"
+                  (ngModelChange)="onItemChange(i)"
+                  [options]="vatOptions"
+                  (onFocus)="onCellFocus(i, 'vatRate')"
+                  styleClass="grid-dropdown"
+                  placeholder="IVA"
+                  appendTo="body"
+                  [inputId]="'vatRate-' + i"
+                  [tabindex]="0"
+                ></p-dropdown>
+              </div>
+
+
+              <div class="grid-cell col-subtotal">
+              <span class="grid-value text-right">
+                ${{ item.subtotal?.toLocaleString('es-AR', { minimumFractionDigits: 2 }) || '0.00' }}
+              </span>
+              </div>
+
+              <div class="grid-cell col-total">
+              <span class="grid-value text-right font-bold">
+                ${{ item.totalAmount?.toLocaleString('es-AR', { minimumFractionDigits: 2 }) || '0.00' }}
+              </span>
+              </div>
+
+              <div class="grid-cell col-actions">
+                <button
+                  type="button"
+                  class="grid-action-btn delete-btn"
+                  (click)="deleteItem(i)"
+                  title="Eliminar ítem"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (editableItems.length === 0) {
+          <div class="empty-grid-message">
+            <i class="pi pi-inbox"></i>
+            <p>No hay ítems cargados</p>
+            <small>Presioná el botón "+" para agregar un nuevo ítem</small>
+          </div>
+        }
+      </div>
+
+      <div class="grid-totals">
+        <div class="totals-row">
+          <span class="totals-label">Total IVA:</span>
+          <span class="totals-value">${{ getTotalVat().toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+        </div>
+        <div class="totals-row">
+          <span class="totals-label">Total no gravado:</span>
+          <span class="totals-value">${{ getTotalNonTaxable().toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+        </div>
+        <div class="totals-row">
+          <span class="totals-label">Total gravado:</span>
+          <span class="totals-value">${{ getTotalTaxable().toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+        </div>
+        <div class="totals-row total-row">
+          <span class="totals-label">Total general:</span>
+          <span class="totals-value">${{ getTotalAmount().toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+        </div>
+      </div>
+
+      <div class="payment-method-section">
+        <button
+          type="button"
+          pButton
+          label="Agregar medio de pago"
+          icon="pi pi-plus"
+          class="p-button-outlined"
+          (click)="openPaymentModal()"
+        ></button>
+
+        @if (paymentMethods.length > 0) {
+          <div class="payment-methods-list">
+            <h4>Medios de pago cargados:</h4>
+            @for (payment of paymentMethods; track i; let i = $index) {
+              <div class="payment-item">
+                <div class="payment-info">
+                  <span class="payment-method">{{ getPaymentMethodLabel(payment.paymentMethod)  + (payment.bank ? ` - ${payment.bank}` : '') }}</span>
+                  <span class="payment-amount">${{ payment.amount?.toLocaleString('es-AR', { minimumFractionDigits: 2 }) }}</span>
+                </div>
+                <button
+                  type="button"
+                  class="payment-delete-btn"
+                  (click)="deletePaymentMethod(i)"
+                  title="Eliminar"
+                >
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+
+  <app-edit-payment-modal
+    [visible]="showPaymentModal"
+    [totalAmount]="getTotalAmount()"
+    [remainingBalance]="getRemainingBalance()"
+    (closed)="closePaymentModal()"
+    (saved)="onPaymentMethodSaved($event)"
+  ></app-edit-payment-modal>
+</div>

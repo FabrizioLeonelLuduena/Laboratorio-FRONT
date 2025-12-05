@@ -1,0 +1,245 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Configuración del Sistema",
+  "intro": "Personaliza tu experiencia en el sistema, ajustando preferencias visuales, notificaciones y opciones de privacidad.",
+
+  "sections": [
+    {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Usuarios internos del laboratorio"
+        }
+
+      ]
+    },
+    {
+      "id": "preferencias-aplicacion",
+      "title": "Preferencias de la aplicación",
+      "open": false,
+
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta sección permite adaptar el comportamiento visual y funcional de la aplicación a tus necesidades diarias."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/config/config-preferences.jpg",
+          "alt": "Pantalla de preferencias generales"
+        },
+        {
+          "type": "subtitle",
+          "text": "Opciones de Personalización"
+        },
+        {
+          "type": "table",
+          "columns": ["Opción", "Descripción"],
+          "rows": [
+            [
+              "Formato de fecha",
+              "Define cómo se <strong>visualizan las fechas</strong> en todo el sistema (ej. DD/MM/YYYY)."
+            ],
+            [
+              "Formato de hora",
+              "Selecciona el formato de <strong>visualización horaria</strong> (ej. 24 horas o AM/PM)."
+            ],
+            [
+              "Filas por página en tablas",
+              "Establece la <strong>cantidad predeterminada</strong> de resultados que se muestran en los listados."
+            ],
+            [
+              "Sucursal por defecto",
+              "Selecciona la sucursal que aparecerá <strong>preseleccionada</strong> al crear nuevos registros."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": ["Botón", "Acción"],
+          "rows": [
+            [
+              "Restablecer valores",
+              "Vuelve todas las configuraciones a sus <strong>opciones originales</strong> por defecto."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota importante",
+          "text": "<br>Tenga en cuenta que los cambios impactarán en todo el sistema y <strong>no podrán deshacerse</strong> los cambios una vez que restableció la configuración."
+        }
+      ]
+    },
+    {
+      "id": "configuracion-notificaciones",
+      "title": "Configuración de Notificaciones",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Controla cómo y cuándo recibes alertas del sistema mediante los interruptores de activación."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/config/config-notification.jpg",
+          "alt": "Panel de configuración de notificaciones"
+        },
+        {
+          "type": "subtitle",
+          "text": "Canales de Comunicación"
+        },
+        {
+          "type": "table",
+          "columns": ["Canal", "Función"],
+          "rows": [
+            [
+              "Notificaciones del navegador",
+              "Habilita la recepción de alertas en <strong>tiempo real</strong> directamente en tu navegador web."
+            ],
+            [
+              "Notificaciones por correo",
+              "Activa el envío de <strong>resúmenes y alertas importantes</strong> a tu email registrado."
+            ],
+            [
+              "Notificaciones del sistema",
+              "Controla las alertas internas sobre <strong>operaciones del laboratorio</strong> y actualizaciones de estado."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": ["Botón", "Acción"],
+          "rows": [
+            [
+              "Restablecer valores",
+              "Devuelve la configuración de alertas al <strong>estado inicial</strong> recomendado."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota importante",
+          "text": "<br>Tenga en cuenta que los cambios impactarán en todo el sistema y <strong>no podrán deshacerse</strong> los cambios una vez que restableció la configuración."
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Recomendación",
+          "text": "<br>Las notificaciones del navegador requieren permiso de tu sistema operativo. Si las activas y no ves las alertas, verifica la <strong>configuración de permisos</strong> de tu navegador (generalmente en el ícono del candado junto a la URL)."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Ejemplo en Google Chrome"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 1: Dirigirse a configuración"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/config/config-notification-1.jpg",
+          "alt": "Opciones de notificaciones 1"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paso 2: Habilitar las notificaciones"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/config/config-notification-2.jpg",
+          "alt": "Opciones de notificaciones 2"
+        }
+      ]
+    },
+    {
+      "id": "seguridad-privacidad",
+      "title": "Seguridad y privacidad",
+      "open": false,
+
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Panel para la administración de la seguridad de tu cuenta y la gestión de tus datos personales."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/access/config/config-security.jpg",
+          "alt": "Opciones de seguridad y privacidad"
+        },
+        {
+          "type": "subtitle",
+          "text": "Gestión de Cuenta"
+        },
+        {
+          "type": "table",
+          "columns": ["Sección", "Descripción"],
+          "rows": [
+            [
+              "Información de la cuenta",
+              "Muestra tu <strong>Usuario y Email</strong> actuales para confirmación visual."
+            ],
+            [
+              "Contraseña",
+              "Provee un acceso directo al <strong>Centro de Seguridad</strong> de tu perfil para realizar cambios de clave."
+            ],
+            [
+              "Descargar mis datos",
+              "Permite descargar una copia de tu <strong>información personal</strong> almacenada en el sistema (sujeto a disponibilidad)."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": ["Botón", "Acción"],
+          "rows": [
+            [
+              "Restablecer valores",
+              "Reinvierte cualquier cambio de configuración de privacidad a los <strong>valores predeterminados</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota importante",
+          "text": "<br>Tenga en cuenta que los cambios impactarán en todo el sistema y <strong>no podrán deshacerse</strong> los cambios una vez que restableció la configuración."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "configuración",
+    "preferencias",
+    "notificaciones",
+    "seguridad",
+    "privacidad",
+    "sistema"
+  ]
+}

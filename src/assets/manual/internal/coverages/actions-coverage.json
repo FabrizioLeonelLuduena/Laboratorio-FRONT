@@ -1,0 +1,1079 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Acciones de Coberturas",
+  "intro": "A continuación se detallan los pasos que los usuarios pueden realizar para crear una nueva aseguradora, registrar sus planes y revisar el resumen final.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "<strong>Administrador</strong>",
+      "<strong>Facturista</strong>"
+    ]
+  },
+  "sections": [
+        {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador - Facturista"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-aseguradora",
+      "title": "Crear Nueva Aseguradora",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cuando el usuario hace clic en el ícono de <i class='pi pi-plus'></i> ubicado en la parte superior de la pantalla principal, se abre un <strong>formulario</strong> dividido en tres etapas: <strong>Paso 1: Datos generales de la aseguradora</strong>, <strong>Paso 2: Planes y Coberturas</strong>, <strong>Paso 3: Resumen</strong>."
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 1: Datos Generales de la Aseguradora</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-create1.jpg",
+          "alt": "Formulario de creación de aseguradora"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Campo</strong>",
+            "<strong>Obligatorio</strong>",
+            "<strong>Descripción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Código</strong>",
+              "Sí",
+              "Identificador único de la aseguradora."
+            ],
+            [
+              "<strong>Nombre</strong>",
+              "Sí",
+              "Denominación completa de la aseguradora."
+            ],
+            [
+              "<strong>Sigla</strong>",
+              "Sí",
+              "Abreviatura representativa."
+            ],
+            [
+              "<strong>Tipo</strong>",
+              "Sí",
+              "Obra Social / Prepaga / Particular."
+            ],
+            [
+              "<strong>URL de autorización</strong>",
+              "No",
+              "Enlace para autorizaciones online."
+            ],
+            [
+              "<strong>Descripción</strong>",
+              "No",
+              "Observaciones o notas adicionales."
+            ],
+            [
+              "<strong>Teléfono / Email</strong>",
+              "No",
+              "Datos de contacto principales."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos adicionales según el tipo de Aseguradora"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Tipo</strong>",
+            "<strong>Campo</strong>",
+            "<strong>Obligatorio</strong>",
+            "<strong>Descripción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Prepaga</strong>",
+              "<strong>CUIT</strong>",
+              "Sí",
+              "Número de identificación fiscal de la prepaga."
+            ],
+            [
+              "<strong>Prepaga</strong>",
+              "<strong>Política de Copagos</strong>",
+              "Sí",
+              "Indica cómo se aplican los copagos a las prestaciones (monto fijo, porcentaje, excepciones)."
+            ],
+            [
+              "<strong>Obra Social</strong>",
+              "<strong>CUIT</strong>",
+              "Sí",
+              "Número de identificación fiscal de la obra social."
+            ],
+            [
+              "<strong>Particular</strong>",
+              "<strong>Método de Pago</strong>",
+              "Sí",
+              "Selección del medio de pago habilitado (Efectivo o Tarjetas de crédito)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Opciones de Método de Pago"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Opción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Efectivo</strong>"
+            ],
+            [
+              "<strong>Tarjetas de crédito</strong>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Botón</strong>",
+            "<strong>Acción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Cancelar</strong>",
+              "Vuelve a la pantalla principal de <strong>coberturas</strong>."
+            ],
+            [
+              "<strong>Siguiente</strong>",
+              "Redirige al <strong>Paso 2: Planes y Coberturas</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 2: Planes y Coberturas</strong>"
+        },
+        {
+          "type": "paragraph",
+          "text": "En esta segunda etapa, se definen los <strong>planes</strong> asociados a la <strong>aseguradora</strong> y se registran los <strong>datos de cobertura</strong> correspondientes."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-create2.jpg",
+          "alt": "Formulario de planes y coberturas"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos a completar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Campo</strong>",
+            "<strong>Obligatorio</strong>",
+            "<strong>Descripción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Código</strong>",
+              "Sí",
+              "Identificador único del plan dentro de la aseguradora."
+            ],
+            [
+              "<strong>Sigla</strong>",
+              "Si",
+              "Abreviatura interna del plan."
+            ],
+            [
+              "<strong>Nombre del Plan</strong>",
+              "Sí",
+              "Nombre completo del plan."
+            ],
+            [
+              "<strong>Fecha de Vigencia</strong>",
+              "Sí",
+              "Fecha desde la cual el plan entra en vigencia."
+            ],
+            [
+              "<strong>Versión NBU</strong>",
+              "Sí",
+              "Versión del Nomenclador Bioquímico Unificado utilizada."
+            ],
+            [
+              "<strong>Valor U.B.</strong>",
+              "Sí",
+              "Valor de la Unidad Bioquímica para ese plan."
+            ],
+            [
+              "<strong>Porcentaje de Cobertura</strong>",
+              "Sí",
+              "Porcentaje que cubre la aseguradora."
+            ],
+            [
+              "<strong>Descripción del Plan</strong>",
+              "No",
+              "Breve explicación del alcance o características del plan."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al terminar de ingresar todos los datos tocar el botón <strong>Guardar</strong>. Este generará una tabla debajo con los siguientes datos:"
+        },
+        {
+          "type": "subtitle",
+          "text": "Tabla generada al guardar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Campo</strong>",
+            "<strong>Ejemplo</strong>"
+          ],
+          "rows": [
+            [
+              "Código",
+              "PL-001"
+            ],
+            [
+              "Nombre",
+              "Plan Básico"
+            ],
+            [
+              "Sigla",
+              "PB"
+            ],
+            [
+              "Vigente Desde",
+              "01/02/2025"
+            ],
+            [
+              "Versión NBU",
+              "2024"
+            ],
+            [
+              "Valor U.B.",
+              "$150"
+            ],
+            [
+              "Cobertura (%)",
+              "80%"
+            ],
+            [
+              "IVA (%)",
+              "10.5%"
+            ],
+            [
+              "Acciones",
+              "Editar | Eliminar"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Botón</strong>",
+            "<strong>Acción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Anterior</strong>",
+              "Vuelve al <strong>Paso 1: Datos Generales de la Aseguradora</strong>."
+            ],
+            [
+              "<strong>Siguiente</strong>",
+              "Redirige al <strong>Paso 3: Resumen</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Paso 3: Resumen</strong>"
+        },
+        {
+          "type": "paragraph",
+          "text": "En esta última etapa, el sistema muestra un <strong>resumen completo</strong> de la <strong>aseguradora</strong> y sus <strong>planes</strong> registrados. Aquí el usuario puede revisar toda la <strong>información</strong> antes de <strong>guardar</strong> definitivamente."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-create3.jpg",
+          "alt": "Resumen final de la aseguradora"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Botón</strong>",
+            "<strong>Acción</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Anterior</strong>",
+              "Vuelve al <strong>Paso 2: Planes y Coberturas</strong>"
+            ],
+            [
+              "<strong>Guardar</strong>",
+              "Finaliza la <strong>creación</strong> de la <strong>aseguradora</strong> y sus <strong>planes</strong>, registrando toda la <strong>información</strong> en el <strong>sistema</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "editar-aseguradora",
+      "title": "Editar Aseguradora",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cuando el usuario se ubique sobre la aseguradora que desea modificar, deberá hacer clic en el ícono ⋮ de la columna de acciones. Allí se desplegará un menú en el que deberá seleccionar la opción <strong>Ver</strong>. Lo redirigirá a una ventana donde por cada sección tendrá el ícono de <i class='pi pi-pen-to-square'></i> para <strong>Editar</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info.jpg",
+          "alt": "Formulario de edición de info "
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Información General (Se puede editar todo)</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info-edit.jpg",
+          "alt": "Formulario de edición de info "
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Campo</strong>",
+            "<strong>Obligatorio</strong>",
+            "<strong>Descripción</strong>"
+          ],
+          "rows": [
+            [
+              "Código",
+              "Sí",
+              "Identificador único de la aseguradora."
+            ],
+            [
+              "Nombre",
+              "Sí",
+              "Denominación completa de la aseguradora."
+            ],
+            [
+              "Sigla",
+              "Sí",
+              "Abreviatura representativa."
+            ],
+            [
+              "Tipo de Cobertura",
+              "Sí",
+              "Obra Social / Prepaga / Particular."
+            ],
+            [
+              "CUIT",
+              "Sí",
+              "Número de identificación fiscal."
+            ],
+            [
+              "URL de autorización",
+              "Sí",
+              "Enlace para autorizaciones online."
+            ],
+            [
+              "Descripción",
+              "No",
+              "Observaciones o notas adicionales."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos adicionales según el tipo de Aseguradora"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Tipo</strong>",
+            "<strong>Campo</strong>",
+            "<strong>Obligatorio</strong>",
+            "<strong>Descripción</strong>"
+          ],
+          "rows": [
+            [
+              "Prepaga",
+              "CUIT",
+              "Sí",
+              "Número de identificación fiscal de la prepaga."
+            ],
+            [
+              "Prepaga",
+              "Política de Copagos",
+              "Sí",
+              "Indica cómo se aplican los copagos a las prestaciones (monto fijo, porcentaje, excepciones)."
+            ],
+            [
+              "Obra Social",
+              "CUIT",
+              "Sí",
+              "Número de identificación fiscal de la obra social."
+            ],
+            [
+              "Particular",
+              "Método de Pago",
+              "Sí",
+              "Selección del medio de pago habilitado (Efectivo o Tarjetas de crédito)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Opciones de Método de Pago"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción"
+          ],
+          "rows": [
+            [
+              "<strong>Efectivo</strong>"
+            ],
+            [
+              "<strong>Tarjetas de crédito</strong>"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Botón</strong>",
+            "<strong>Función</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Anterior</strong>",
+              "Vuelve a la pantalla anterior (<strong>listado de aseguradoras</strong>)."
+            ],
+            [
+              "<strong>Guardar</strong>",
+              "Almacena los <strong>cambios</strong> y vuelve al detalle."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Descarta los <strong>cambios</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Contactos (Solo se puede eliminar o agregar, no modificar)</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info-contact.jpg",
+          "alt": "Formulario de edición de contactos "
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de contacto"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Columna</strong>",
+            "<strong>Descripción</strong>",
+            "<strong>Tipo</strong>"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Teléfono, Email, etc.",
+              "Texto"
+            ],
+            [
+              "Contacto",
+              "Número, correo u otro dato.",
+              "Texto"
+            ],
+            [
+              "Acciones",
+              "Eliminar o agregar. **No modificar**.",
+              "Ícono"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Al terminar de ingresar todos los datos tocar el botón <strong>Guardar</strong>. Este generará una tabla debajo con los siguientes datos:"
+        },
+         {
+          "type": "subtitle",
+          "text": "Tabla generada al guardar"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Campo</strong>",
+            "<strong>Ejemplo</strong>"
+          ],
+          "rows": [
+            [
+              "Tipo de contacto",
+              "Teléfono"
+            ],
+            [
+              "Contacto",
+              "3516924982"
+            ],
+            [
+              "Acciones",
+              ""
+            ]
+
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Herramientas Inferiores"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Elemento</strong>",
+            "<strong>Ícono</strong>",
+            "<strong>Función</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Buscar...</strong>",
+              "<i class='pi pi-search'></i>",
+              "Permite buscar el contacto deseado."
+            ],
+            [
+              "<strong>Descargar</strong>",
+              "<i class='pi pi-download'></i>",
+              "Permite descargar la tabla completa de contactos en formato PDF o Excel."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Botón</strong>",
+            "<strong>Función</strong>"
+          ],
+          "rows": [
+            [
+              "<strong>Anterior</strong>",
+              "Vuelve a la pantalla anterior (<strong>listado de aseguradoras</strong>)."
+            ],
+            [
+              "<strong>Guardar</strong>",
+              "Registra el <strong>contacto agregado</strong>."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Regresa al <strong>listado de contactos</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Planes y Convenios (Solo se puede eliminar o agregar, no modificar)</strong>"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta sección permite el <strong>detalle</strong>, <strong>edición de atributos internos del plan</strong> y <strong>gestión</strong> (Agregar/Eliminar) del listado de <strong>planes de cobertura</strong>."
+        },
+        {
+          "type": "subtitle",
+          "text": "Detalle del plan (Formulario de Edición)"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info-plains&agreements-edit.jpg",
+          "alt": "Formulario de planes y convenios de contactos "
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Columna</strong>",
+            "<strong>Descripción</strong>",
+            "<strong>Tipo</strong>",
+            "<strong>Ejemplos de Dato</strong>"
+          ],
+          "rows": [
+            [
+              "Código",
+              "Identificador único del plan.",
+              "Numérico",
+              "11"
+            ],
+            [
+              "Sigla",
+              "Sigla de la aseguradora.",
+              "Texto",
+              "CABRED"
+            ],
+            [
+              "Nombre",
+              "Nombre completo del plan.",
+              "Texto",
+              "CABRED SALUD Plan General"
+            ],
+            [
+              "Vigente desde</strong>",
+              "Fecha de inicio de vigencia (Editable).",
+              "Fecha",
+              "31/12/2023"
+            ],
+            [
+              "Versión NBU",
+              "Versión del Nomenclador Básico Uniforme asociado.",
+              "Menú Desplegable",
+              "Selecciona la versión del NBU"
+            ],
+            [
+              "Valor U.B.",
+              "Valor de la Unidad de Base (Editable).",
+              "Moneda",
+              "1,132"
+            ],
+            [
+              "Porcentaje de cobertura",
+              "Porcentaje de cobertura del plan (Editable).",
+              "Porcentaje",
+              "100"
+            ],
+            [
+              "IVA",
+              "Impuesto al Valor Agregado (Editable).",
+              "Porcentaje",
+              "--"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Acciones del Formulario</strong>",
+            "<strong>Función</strong>"
+          ],
+          "rows": [
+            [
+              "Guardar",
+              "Registra las modificaciones realizadas en el plan."
+            ],
+            [
+              "Cancelar",
+              "Descarta las modificaciones y sale del modo edición."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Listado de Planes"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Columna</strong>",
+            "<strong>Descripción</strong>",
+            "<strong>Tipo</strong>"
+          ],
+          "rows": [
+            [
+              "Código",
+              "Identificador del plan.",
+              "Numérico"
+            ],
+            [
+              "Nombre",
+              "Nombre completo del plan.",
+              "Texto"
+            ],
+            [
+              "Sigla",
+              "Sigla de la aseguradora.",
+              "Texto"
+            ],
+            [
+              "Vigente desde",
+              "Fecha de inicio de vigencia de la versión.",
+              "Fecha"
+            ],
+            [
+              "Versión NBU",
+              "Versión del Nomenclador Básico Uniforme.",
+              "Texto/Numérico"
+            ],
+            [
+              "Valor U.B.",
+              "Valor monetario de la Unidad de Base.",
+              "Moneda"
+            ],
+            [
+              "Cobertura (%)",
+              "Porcentaje de cobertura.",
+              "Porcentaje"
+            ],
+            [
+              "Estado",
+              "Situación actual del plan.",
+              "Etiqueta (ACTIVO)"
+            ],
+            [
+              "Acciones",
+              "Opciones de gestión para el plan (Editar/Eliminar/<strong>Agregar</strong>).",
+              "Ícono (... )"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "visualizar-aseguradora",
+      "title": "Visualizar Aseguradora",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cuando el usuario se ubique sobre la aseguradora que desea consultar, deberá hacer clic en el ícono ⋮ de la columna de acciones y seleccionar la opción <strong>Ver</strong>. Esto lo llevará a una pantalla donde podrá revisar toda la información de la aseguradora y sus planes."
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Información General</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info.jpg",
+          "alt": "Visualización de información general"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Campo</strong>",
+            "<strong>Valor</strong>"
+          ],
+          "rows": [
+            [
+              "Código",
+              "CAB123"
+            ],
+            [
+              "Nombre",
+              "Aseguradora Ejemplo S.A."
+            ],
+            [
+              "Sigla",
+              "AES"
+            ],
+            [
+              "Tipo de Cobertura",
+              "Prepaga"
+            ],
+            [
+              "CUIT",
+              "30-12345678-9"
+            ],
+            [
+              "URL de autorización",
+              "https://autorizaciones.ejemplo.com"
+            ],
+            [
+              "Descripción",
+              "Aseguradora de ejemplo para demostración."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos adicionales según el tipo de Aseguradora"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Tipo</strong>",
+            "<strong>Campo</strong>",
+            "<strong>Valor</strong>"
+          ],
+          "rows": [
+            [
+              "Prepaga",
+              "CUIT",
+              "30-12345678-9"
+            ],
+            [
+              "Prepaga",
+              "Política de Copagos",
+              "Monto fijo por prestación"
+            ],
+            [
+              "Obra Social",
+              "CUIT",
+              "30-87654321-0"
+            ],
+            [
+              "Particular",
+              "Método de Pago",
+              "Efectivo / Tarjeta"
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Opciones de Método de Pago"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción"
+          ],
+          "rows": [
+            [
+              "<strong>Efectivo</strong>"
+            ],
+            [
+              "<strong>Tarjetas de crédito</strong>"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Contactos</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info-contact.jpg",
+          "alt": "Visualización de contactos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Tipo</strong>",
+            "<strong>Contacto</strong>"
+          ],
+          "rows": [
+            [
+              "Teléfono",
+              "+54 351 1234567"
+            ],
+            [
+              "Email",
+              "contacto@ejemplo.com"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "<strong>Planes y Convenios</strong>"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-info-plains&agreements.jpg",
+          "alt": "Formulario de planes y convenios de contactos "
+        },
+        {
+          "type": "table",
+          "columns": [
+            "<strong>Elemento</strong>",
+            "<strong>Valor</strong>"
+          ],
+          "rows": [
+            [
+              "Plan",
+              "CABRED SALUD Plan General"
+            ],
+            [
+              "Período",
+              "Últimos 2 años"
+            ],
+            [
+              "Versión NBU",
+              "2012_2024"
+            ],
+            [
+              "Valor U.B.",
+              "$1.132,00"
+            ],
+            [
+              "Cobertura (%)",
+              "100%"
+            ],
+            [
+              "Vigente desde",
+              "01/01/2024"
+            ],
+            [
+              "Vigente hasta",
+              "--"
+            ]
+          ]
+        }
+      ],
+      "tags": [
+        "aseguradoras",
+        "visualizar",
+        "solo lectura",
+        "planes",
+        "coberturas"
+      ]
+    },
+    {
+      "id": "eliminar-aseguradora",
+      "title": "Eliminar Aseguradora",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Esta acción permite eliminar permanentemente una aseguradora del listado principal. Para iniciar el proceso, el usuario debe hacer clic en el ícono de opciones (⋮) en la columna <strong>Acciones</strong> de la aseguradora deseada y seleccionar <strong>Eliminar</strong>. Al hacerlo, se abre una ventana de confirmación de seguridad."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-details-delete.jpg",
+          "alt": "Ventana de confirmación de eliminación de aseguradora"
+        },
+        {
+          "type": "subtitle",
+          "text": "Confirmación de Eliminación"
+        },
+        {
+          "type": "paragraph",
+          "text": "El sistema presenta un cuadro de diálogo para confirmar la acción, indicando explícitamente el nombre de la aseguradora a eliminar (ejemplo: CABRED SALUD)."
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Opción",
+            "Resultado"
+          ],
+          "rows": [
+            [
+              "<strong>Aceptar</strong>",
+              "La aseguradora es <strong>eliminada</strong> permanentemente del sistema."
+            ],
+            [
+              "<strong>Cancelar</strong>",
+              "Se cancela la operación y la aseguradora <strong>permanece en el listado</strong>."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "descargar-listado-aseguradoras",
+      "title": "Descargar Listado de Aseguradoras",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El sistema permite exportar la base de datos completa o filtrada de las aseguradoras visualizadas en la grilla. El ícono de descarga (<i class='pi pi-download'></i>), que suele ubicarse cerca del paginador o en la barra de herramientas superior, permite seleccionar el formato de exportación."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-table.jpg",
+          "alt": "Listado de Aseguradoras con opciones de descarga"
+        },
+        {
+          "type": "subtitle",
+          "text": "Columnas en el Listado"
+        },
+        {
+          "type": "subtitle",
+          "text": "Formatos disponibles de Exportación"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Formato",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Excel",
+              "Genera una hoja de cálculo editable (<strong>.xlsx</strong>) con todos los datos de la grilla. Útil para análisis y reportes externos."
+            ],
+            [
+              "PDF",
+              "Genera un documento no editable (<strong>.pdf</strong>), ideal para archivar o imprimir el listado tal como se ve."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>La descarga reflejará el conjunto de datos que está visible en la pantalla. Si se aplicaron filtros de búsqueda por Código, Sigla o Nombre, el archivo exportado contendrá únicamente los resultados filtrados."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "aseguradoras",
+    "creación",
+    "formulario",
+    "planes",
+    "coberturas"
+  ]
+}

@@ -1,0 +1,143 @@
+<section class="opening container">
+  <header class="opening__header">
+    <div class="opening__headline">
+      <h2 class="opening-card__title">Datos de apertura</h2>
+    </div>
+  </header>
+  @if (alert()) {
+    <app-generic-alert
+      [type]="alert()!.type"
+      [title]="alert()!.title"
+      [text]="alert()!.text">
+    </app-generic-alert>
+  }
+  @if (isLoading()) {
+    <div class="opening__state">
+      <app-spinner label="Cargando informacion de la caja..."></app-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="form" class="opening-form">
+      <div class="opening__layout">
+        <article class="opening-card">
+          <header class="opening-card__header">
+          </header>
+          <div class="opening-card__body opening-fields">
+            <div class="opening-fields__grid">
+              <div class="opening-field">
+                <label for="openingDate" class="opening-field__label">
+                  Fecha de apertura
+                </label>
+                <input
+                  id="openingDate"
+                  type="text"
+                  class="opening-input opening-input--readonly"
+                  [value]="openingDate.value | date:'dd/MM/yyyy'"
+                  readonly>
+              </div>
+
+              <div class="opening-field">
+                <label for="user" class="opening-field__label">
+                  Usuario responsable
+                </label>
+                <input
+                  id="user"
+                  type="text"
+                  class="opening-input opening-input--readonly"
+                  formControlName="user"
+                  placeholder="Nombre del responsable"
+                  readonly>
+              </div>
+            </div>
+
+            <!-- Sucursal -->
+            <div class="opening-fields__grid">
+
+              <div class="opening-field">
+                <label class="opening-field__label">Sucursal</label>
+                <p-select
+                  inputId="branch"
+                  formControlName="branch"
+                  [options]="branches"
+                  optionLabel="description"
+                  dataKey="id"
+                  (onChange)="onBranchChanged($event)"
+                  [style]="{ 'width': '100%' }">
+                </p-select>
+              </div>
+
+              @if (form.get('branch')?.value) { <div class="opening-field">
+                <label class="opening-field__label">Caja</label>
+                <p-select
+                  inputId="cashRegister"
+                  formControlName="cashRegister"
+                  [options]="availableCashRegisters"
+                  optionLabel="description"
+                  optionValue="id"
+                  dataKey="id"
+                  [style]="{ 'width': '100%' }"
+                  placeholder="Seleccione una caja">
+                </p-select>
+              </div>
+              }
+            </div>
+
+            <div class="opening-fields__grid opening-fields__grid--balanced">
+              <div class="opening-field opening-field--notes">
+                <label for="observations" class="opening-field__label">
+                  Observaciones (opcional)
+                </label>
+                <textarea
+                  id="observations"
+                  rows="1"
+                  class="opening-textarea"
+                  formControlName="observations"
+                  placeholder="Notas adicionales para la apertura de la caja"
+                  [class.opening-textarea--invalid]="form.get('observations')?.invalid && (form.get('observations')?.touched || form.get('observations')?.dirty || formSubmitted())">
+                </textarea>
+                <span class="opening-field__feedback" [class.opening-field__feedback--error]="observationsError">
+                  {{ observationsError }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <footer class="opening-card__footer opening-actions opening-actions--inline">
+            <app-generic-button
+              text="Cancelar"
+              icon="pi pi-times"
+              type="cancel"
+              [disabled]="isSubmitting()"
+              (pressed)="cancel()">
+            </app-generic-button>
+            <app-generic-button
+              type="custom"
+              [text]="isSubmitting() ? 'Abriendo...' : 'Abrir caja'"
+              icon="pi pi-unlock"
+              color="--brand-primary-700"
+              customTextColor="--on-primary"
+              [disabled]="form.invalid || isSubmitting() || isLoading()"
+              (pressed)="openConfirmationModal()">
+            </app-generic-button>
+          </footer>
+        </article>
+      </div>
+    </form>
+  }
+</section>
+@if (showConfirmationModal()) {
+  <app-confirmation-modal
+    [title]="'Confirmar apertura de caja'"
+    [message]="'¿Confirma abrir la caja?'"
+    (confirmed)="onSubmit()"
+    (dismissed)="closeConfirmationModal()"
+  >
+  </app-confirmation-modal>
+}
+@if (showCancelConfirmationModal()) {
+  <app-confirmation-modal
+    title="Cancelar apertura"
+    message="¿Está seguro que desea cancelar? Se perderán los datos ingresados."
+    (confirmed)="onCancelConfirmed()"
+    (dismissed)="showCancelConfirmationModal.set(false)">
+  </app-confirmation-modal>
+}

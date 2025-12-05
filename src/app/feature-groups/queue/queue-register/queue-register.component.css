@@ -1,0 +1,369 @@
+.queue-register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  padding: 3rem;
+  background: var(--background);
+}
+
+.queue-register-card {
+  background: var(--card);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  padding: 4rem;
+  max-width: 1100px;
+  width: 100%;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.card-header app-generic-button {
+  position: absolute;
+  left: 0;
+}
+
+.card-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.appointment-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: var(--brand-accent);
+  color: var(--on-surface);
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 80%, black);
+  font-size: 1.25rem;
+}
+
+.appointment-badge.with-appointment {
+  background: var(--brand-primary-700);
+  color: var(--on-primary);
+  border: none;
+}
+
+.appointment-badge i {
+  font-size: 1.5rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+
+.form-input {
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1.5rem;
+  background: var(--card);
+  color: var(--on-surface);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--brand-primary-700);
+}
+
+.form-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  font-size: 1.1rem;
+  color: var(--on-surface-muted);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.button-group app-generic-button {
+  width: 100%;
+}
+
+.button-group app-generic-button::ng-deep button {
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.75rem;
+}
+
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  color: var(--brand-primary-700);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.loading-indicator i {
+  font-size: 2rem;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.public-code-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 8px;
+  border: 2px solid var(--brand-primary-700);
+}
+
+.public-code-display label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--on-surface-muted);
+}
+
+.code-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--brand-primary-700);
+  text-align: center;
+  letter-spacing: 2px;
+  padding: 0.5rem;
+}
+
+.public-code-display small {
+  font-size: 0.85rem;
+  color: var(--on-surface-muted);
+  text-align: center;
+}
+
+.modal-content app-generic-button {
+  width: 100%;
+}
+
+.modal-content app-generic-button::ng-deep button {
+  width: 100%;
+}
+
+/* Estilos para el código de turno en el modal de confirmación */
+.turno-code-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  background: var(--background);
+  border-radius: 8px;
+  border: 2px solid var(--brand-primary-700);
+}
+
+.turno-code-display p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--on-surface-muted);
+  margin: 0;
+}
+
+.turno-code {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--brand-primary-700);
+  text-align: center;
+  letter-spacing: 3px;
+  padding: 0.5rem 1rem;
+  background: color-mix(in srgb, var(--brand-primary) 20%, white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+/* Ocultar el botón cancelar en el modal de confirmación de éxito */
+::ng-deep app-confirmation-modal .button-container app-generic-button[type="cancel"],
+::ng-deep app-confirmation-modal .button-container button:has(.pi-times) {
+  display: none;
+}
+
+/* Asegurar que el botón aceptar ocupe todo el ancho disponible */
+::ng-deep app-confirmation-modal .button-container {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep app-confirmation-modal .button-container app-generic-button {
+  flex: 1;
+  max-width: 200px;
+}
+
+/* Estilos para el modal de éxito */
+.success-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+/* Header con icono inline */
+.modal-header-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-title-custom {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.success-icon-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand-success) 15%, transparent);
+}
+
+.success-icon-inline i {
+  font-size: 1.75rem;
+  color: var(--brand-success);
+}
+
+.error-icon-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand-warn) 15%, transparent);
+}
+
+.error-icon-inline i {
+  font-size: 1.75rem;
+  color: var(--brand-warn);
+}
+
+/* Remover los estilos antiguos del icono grande */
+.success-icon,
+.error-icon {
+  display: none;
+}
+
+.button-container {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.button-container app-generic-button {
+  width: 100%;
+}
+
+.button-container app-generic-button::ng-deep button {
+  width: 100%;
+}
+
+/* Estilos para el modal de error/conflicto */
+.error-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  align-items: center;
+}
+
+.error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand-warn) 15%, transparent);
+}
+
+.error-icon i {
+  font-size: 3rem;
+  color: var(--brand-warn);
+}
+
+.error-message {
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--on-surface);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Estilos para el modal del código QR */
+.qr-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.qr-message {
+  font-size: 1.1rem;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--background);
+  border-radius: 8px;
+  border: 2px solid var(--brand-primary-700);
+}
+
+.qr-code-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

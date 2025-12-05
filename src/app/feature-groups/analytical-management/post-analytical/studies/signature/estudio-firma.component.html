@@ -1,0 +1,78 @@
+<div class="firma-container" *ngIf="estudio">
+  <!-- Header -->
+  <div class="firma-header">
+    <h3><i class="pi pi-file-edit"></i> Firma Electrónica</h3>
+  </div>
+
+  <!-- Mensaje de ayuda -->
+  <div class="firma-mensaje"
+       [ngClass]="{
+         'mensaje-info': puedeFirmarTotal || puedeFirmarParcial,
+         'mensaje-warning': !puedeFirmarTotal && !puedeFirmarParcial && estudio.currentStatus !== 'CLOSED',
+         'mensaje-success': estudio.currentStatus === 'CLOSED'
+       }">
+    <i class="pi"
+       [ngClass]="{
+         'pi-info-circle': puedeFirmarTotal || puedeFirmarParcial,
+         'pi-exclamation-triangle': !puedeFirmarTotal && !puedeFirmarParcial && estudio.currentStatus !== 'CLOSED',
+         'pi-check-circle': estudio.currentStatus === 'CLOSED'
+       }"></i>
+    <p>{{ getMensajeAyuda() }}</p>
+  </div>
+
+  <!-- Botones de Firma -->
+  <div class="firma-actions" *ngIf="estudio.currentStatus !== 'CLOSED'">
+
+    <!-- Botón Firma Parcial -->
+    <button
+      pButton
+      label="Firmar Parcial"
+      icon="pi pi-check"
+      [loading]="firmando"
+      [disabled]="!puedeFirmarParcial || firmando"
+      class="p-button-warning"
+      (click)="firmarEstudio()">
+    </button>
+
+    <!-- Botón Firma Total -->
+    <button
+      pButton
+      label="Firmar Total"
+      icon="pi pi-check-circle"
+      [loading]="firmando"
+      [disabled]="!puedeFirmarTotal || firmando"
+      class="p-button-success"
+      (click)="firmarEstudio()">
+    </button>
+
+    <!-- Info sobre qué se va a firmar -->
+    <div class="firma-info" *ngIf="puedeFirmarParcial && !puedeFirmarTotal">
+      <i class="pi pi-info-circle"></i>
+      <span>Se firmarán solo los análisis que tienen todas sus determinaciones validadas</span>
+    </div>
+
+    <div class="firma-info" *ngIf="puedeFirmarTotal">
+      <i class="pi pi-info-circle"></i>
+      <span>Se firmarán todos los análisis y se cerrará el estudio</span>
+    </div>
+  </div>
+
+  <!-- Reglas de firma -->
+  <div class="firma-reglas">
+    <p class="reglas-title"><i class="pi pi-info-circle"></i> Reglas de Firma:</p>
+    <ul class="reglas-list">
+      <li>
+        <i class="pi pi-check"></i>
+        <strong>Firma Total:</strong> Todos los análisis tienen todas sus determinaciones validadas
+      </li>
+      <li>
+        <i class="pi pi-check"></i>
+        <strong>Firma Parcial:</strong> Al menos un análisis tiene todas sus determinaciones validadas
+      </li>
+      <li>
+        <i class="pi pi-times"></i>
+        <strong>No se puede firmar:</strong> Ningún análisis con todas sus determinaciones validadas
+      </li>
+    </ul>
+  </div>
+</div>

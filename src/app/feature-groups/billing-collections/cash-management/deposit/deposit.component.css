@@ -1,0 +1,117 @@
+:host {
+  display: block;
+}
+
+::ng-deep .mat-mdc-form-field-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+::ng-deep .mat-mdc-form-field-hint {
+  font-size: 14px;
+  color: #666;
+}
+
+::ng-deep .mat-mdc-form-field-error {
+  font-size: 14px;
+  font-weight: 500;
+  color: #d32f2f;
+}
+
+::ng-deep .mat-mdc-input-element,
+::ng-deep .mat-mdc-select-trigger {
+  font-size: 18px;
+  padding: 12px;
+  line-height: 1.4;
+}
+
+::ng-deep .mat-mdc-select-value {
+  font-size: 18px;
+  color: #333;
+}
+
+::ng-deep .mat-mdc-form-field {
+  margin-bottom: 24px;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 60px;
+  padding: 20px 0 12px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 60px;
+}
+
+::ng-deep .mat-mdc-form-field-outline {
+  border-width: 2px;
+}
+
+::ng-deep .mat-mdc-option {
+  font-size: 18px;
+  height: 52px;
+  padding: 0 16px;
+}
+
+.section-title,
+.v2-heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.v2-title-24 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.v2-title-20 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.v2-subtle {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.amount-value,
+.total-value,
+.compact-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.amount-label,
+.total-label,
+.compact-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-button,
+::ng-deep .mat-mdc-raised-button,
+::ng-deep .mat-mdc-stroked-button {
+  font-size: 16px;
+  font-weight: 500;
+  min-height: 44px;
+  padding: 0 20px;
+}
+
+::ng-deep .mat-mdc-chip {
+  font-size: 14px;
+  height: 36px;
+  padding: 0 12px;
+}
+
+::ng-deep .mat-mdc-input-element::placeholder {
+  font-size: 15px;
+  opacity: 0.6;
+}
+
+::ng-deep input[type='number'] {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}

@@ -1,0 +1,126 @@
+<div class="dialog-content">
+  <form [formGroup]="extractionForm" class="extraction-form">
+    <!-- Primera fila: Protocolo, Documento, Apellido-Nombre -->
+    <div class="form-row first-row">
+      <div class="form-field">
+        <label for="protocolId">Protocolo</label>
+        <input
+          pInputText
+          id="protocolId"
+          type="text"
+          formControlName="protocolId"
+          class="p-inputtext-sm" />
+      </div>
+
+      <div class="form-field">
+        <label for="dni">Documento</label>
+        <input
+          pInputText
+          id="dni"
+          type="text"
+          formControlName="dni"
+          class="p-inputtext-sm" />
+      </div>
+
+      <div class="form-field">
+        <label for="fullName">Apellido y Nombre</label>
+        <input
+          pInputText
+          id="fullName"
+          type="text"
+          formControlName="fullName"
+          class="p-inputtext-sm" />
+      </div>
+    </div>
+
+    <!-- Segunda fila: Cantidad de Análisis y Cantidad de Tubos -->
+    <div class="form-row second-row">
+      <div class="form-field">
+        <label for="analysisCount">Cant. Análisis</label>
+        <input
+          pInputText
+          id="analysisCount"
+          type="text"
+          formControlName="analysisCount"
+          class="p-inputtext-sm" />
+      </div>
+
+      <div class="form-field">
+        <label for="tubesCount">Cant. Tubos</label>
+        <input
+          pInputText
+          id="tubesCount"
+          type="text"
+          formControlName="tubesCount"
+          class="p-inputtext-sm" />
+      </div>
+    </div>
+
+    <!-- Tercera fila: Indicaciones (Secretaría) y Observaciones (Extractor) -->
+    <div class="form-row third-row">
+      <div class="form-field">
+        <label for="indications">Indicaciones</label>
+        <textarea
+          pInputTextarea
+          id="indications"
+          formControlName="indications"
+          rows="3"
+          class="p-inputtext-sm"></textarea>
+      </div>
+
+      @if (mode === 'close') {
+        <div class="form-field">
+          <label for="extractorNotes">Observaciones</label>
+          <textarea
+            pInputTextarea
+            id="extractorNotes"
+            formControlName="extractorNotes"
+            rows="3"
+            placeholder="Ingrese observaciones sobre la extracción..."
+            class="p-inputtext-sm"></textarea>
+        </div>
+      }
+    </div>
+
+    <!-- Botones según el modo -->
+    <div class="form-actions">
+      @if (mode === 'start') {
+        <app-generic-button
+          type="cancel"
+          (pressed)="onCancel()">
+        </app-generic-button>
+        <app-generic-button
+          type="custom"
+          [text]="'Confirmar'"
+          [icon]="'pi pi-check-circle'"
+          [color]="'success'"
+          (pressed)="onConfirm()">
+        </app-generic-button>
+      }
+
+      @if (mode === 'close') {
+
+        <app-generic-button
+          type="cancel"
+          (pressed)="onCancel()">
+        </app-generic-button>
+
+        <app-generic-button
+          type="custom"
+          [text]="'Liberar'"
+          [icon]="'pi pi-unlock'"
+          [color]="'--brand-secondary'"
+          (pressed)="onLiberar()">
+        </app-generic-button>
+
+        <app-generic-button
+          type="custom"
+          [text]="'Finalizar Extracción'"
+          [icon]="'pi pi-check-circle'"
+          [color]="'--brand-ig-stop-1'"
+          (pressed)="onConfirm()">
+        </app-generic-button>
+      }
+    </div>
+  </form>
+</div>

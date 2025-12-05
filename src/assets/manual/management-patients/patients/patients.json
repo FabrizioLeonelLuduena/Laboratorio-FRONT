@@ -1,0 +1,278 @@
+{
+  "id": "gestion-pacientes",
+  "moduleId": "pacientes",
+  "title": "Gestión de Pacientes",
+  "intro": "El módulo Gestión de Pacientes reúne las funcionalidades que permiten el registro, consulta y actualización de la información personal de los pacientes atendidos en el laboratorio.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador",
+      "Secretaría",
+      "Bioquímico",
+      "Técnico de laboratorio"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador - Secretaría - Bioquímico - Técnico de laboratorio"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "pantalla-principal",
+      "title": "Pantalla principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La pantalla principal de este módulo permite consultar los <strong>pacientes registrados</strong> en el sistema. Presenta un listado de los pacientes junto con la información más relevante."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/patients-table-actions.jpg",
+          "alt": "Listado principal de pacientes"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite ingresar texto para <strong>filtrar rápidamente</strong> los resultados de la tabla por nombre o documento."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Abre las opciones de filtrado para seleccionar el <strong>estado del paciente</strong>."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Exporta los registros visibles en formato <strong>Excel o PDF</strong>."
+            ],
+            [
+              "Nuevo paciente",
+              "<i class='pi pi-plus'></i>",
+              "Abre el formulario para <strong>crear un nuevo paciente</strong>."
+            ],
+            [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-patients/patients/patients-filters.jpg",
+          "alt": "Opciones de filtros por estado"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Estado del paciente:</strong> Permite visualizar pacientes según la completitud de sus datos (Todos, Mínimo, Completo, Verificado)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar</strong> para restablecer todos los filtros a su estado original."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "listado-pacientes",
+      "title": "Contenido de la tabla de Pacientes",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información detallada mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "<i class='pi pi-angle-right'></i>",
+              "Despliega <strong>datos adicionales</strong> del paciente",
+              "-"
+            ],
+            [
+              "Documento",
+              "Número de documento del paciente.",
+              "33451234"
+            ],
+            [
+              "Nombre completo",
+              "Apellido y nombre del paciente.",
+              "Gómez, Juan Pablo"
+            ],
+            [
+              "Edad",
+              "Edad calculada automáticamente según la fecha de nacimiento.",
+              "34 años"
+            ],
+            [
+              "Cobertura",
+              "Plan de <strong>obra social o prepaga</strong>. Si no posee, se muestra “—”.",
+              "OSDE 210"
+            ],
+            [
+              "Estado",
+              "Estado actual del registro (Mínimo, Completo, Verificado).",
+              "VERIFICADO"
+            ],
+            [
+              "Acciones",
+              "<strong>Menú desplegable</strong> que permite <strong>editar, desactivar o gestionar Firma del empleado</strong>.",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "<strong>Las columnas Documento, Nombre completo y Edad permiten ordenamiento ascendente o descendente.</strong>"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos Adicionales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Género",
+              "Sexo declarado por el paciente.",
+              "Femenino / Masculino"
+            ],
+            [
+              "Sexo al nacer",
+              "Sexo biológico registrado al nacer.",
+              "Masculino"
+            ],
+            [
+              "Cobertura",
+              " Obra social o prepaga del paciente",
+              "OSPECOR"
+            ],
+            [
+              "Teléfono",
+              "Número de contacto del paciente.",
+              "+54 9 261 555 0505"
+            ],
+            [
+              "Edad",
+              "Edad del paciente calculada según fecha de nacimiento.",
+              "36 años"
+            ],
+            [
+              "Estado",
+              "Estado del paciente según validación documental.",
+              "VERIFICADO / COMPLETO / MÍNIMO"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+
+      ]
+    },
+    {
+      "id": "estado-paciente",
+      "title": "Estados del Paciente",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El estado de un paciente depende de la <strong>cantidad de datos personales</strong> que tenga cargados en el sistema."
+        },
+        {
+          "type": "badge",
+          "text": "TODOS",
+          "color": "#FD6464"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestra a <strong>todos los pacientes</strong>, independientemente de su estado."
+        },
+        {
+          "type": "badge",
+          "text": "MÍNIMO",
+          "color": "#F5ECAE"
+        },
+        {
+          "type": "paragraph",
+          "text": "Incluye pacientes que solo tienen cargados los <strong>datos obligatorios</strong>: Documento, Apellido, Nombre y Fecha de nacimiento."
+        },
+        {
+          "type": "badge",
+          "text": "COMPLETO",
+          "color": "#B0D1FD"
+        },
+        {
+          "type": "paragraph",
+          "text": "Incluye pacientes que tienen cargados los datos <strong>obligatorios + opcionales</strong>: Género, Sexo al nacer, Cobertura, Domicilio, Email y Teléfono."
+        },
+        {
+          "type": "badge",
+          "text": "VERIFICADO",
+          "color": "#ADEFD1"
+        },
+        {
+          "type": "paragraph",
+          "text": "Incluye pacientes cuyos datos han sido <strong>verificados presencialmente</strong> por una secretaria."
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "Nota importante",
+          "text": "<br>Los pacientes registrados desde el Portal de Pacientes se almacenarán como Mínimo o Completo. Para ser Verificados, deben presentarse físicamente en el laboratorio. <br><br> Si el registro lo realiza una Secretaría o Administrador, el paciente se guarda directamente como <strong>Verificado</strong>.<br><br><strong>Si un Bioquímico o Técnico de Laboratorio registra a un paciente, el estado será Mínimo o Completo, según la cantidad de datos que haya ingresado.</strong>"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "pacientes",
+    "gestión",
+    "registro",
+    "datos",
+    "tutorial"
+  ]
+}

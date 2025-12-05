@@ -1,0 +1,246 @@
+{
+  "id": "gestion-empleados",
+  "moduleId": "empleados",
+  "title": "Gestión de Empleados",
+  "intro": "Este módulo permite la administración integral del personal del laboratorio. Desde esta sección, los usuarios autorizados pueden registrar nuevos empleados, actualizar su información o gestionar su baja. También se asignan roles de seguridad y se gestionan datos específicos (matrícula, firma digital).",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador "
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla Principal",
+      "open": true,
+      "blocks": [
+
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> de este módulo muestra el padrón de empleados registrados, permitiendo una administración rápida mediante la tabla de datos."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employee-table-detail.jpeg",
+          "alt": "Interfaz principal de empleados"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles en la parte superior"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Icono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite localizar rápidamente un empleado ingresando <strong>nombre</strong>, <strong>apellido</strong> o <strong>documento</strong>."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Permite acotar el listado por <strong>estado del empleado</strong> (Activo/Inactivo)."
+            ],
+            [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ],
+            [
+              "Descargar",
+              "<i class='pi pi-download'></i>",
+              "Exporta los registros visibles en formato <strong>Excel</strong> o <strong>PDF</strong>."
+            ],
+            [
+              "Nuevo empleado",
+              "<i class='pi pi-plus'></i>",
+              "Abre el formulario para <strong>crear un nuevo empleado</strong>."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>La búsqueda es tolerante a coincidencias parciales. Puede ingresar los últimos números del documento o parte del apellido para encontrar el registro rápidamente."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/employees/employees-filters.jpg",
+          "alt": "Filtros de empleados"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Estado:</strong> Permite buscar al empleado por su estado (Inactivo/Activo)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar Filtros</strong> para restablecer todos los campos de la ventana a su estado predeterminado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-employees",
+      "title": "Contenido de la tabla de Empleados",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Las columnas del listado de empleados presentan la siguiente información:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "<i class='pi pi-angle-right'></i>",
+              "Permite <strong>desplegar datos adicionales</strong> y laborales del empleado.",
+              ""
+            ],
+            [
+              "Apellido",
+              "Apellido del empleado.",
+              "Gómez"
+            ],
+            [
+              "Nombre",
+              "Nombre del empleado.",
+              "María"
+            ],
+            [
+              "Documento",
+              "Número de <strong>documento</strong> del empleado.",
+              "30.123.456"
+            ],
+            [
+              "Estado",
+              "Indica si el usuario tiene acceso al sistema (<strong>Activo/Inactivo</strong>).",
+              "Activo"
+            ],
+            [
+              "Acciones",
+              "<strong>Menú desplegable</strong> que permite <strong>editar</strong>, <strong>desactivar</strong> y <strong>Gestionar firma</strong> de un empleado",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type":"paragraph",
+          "text":" Las columnas<strong> Apellido, Nombre y Documento</strong> permiten ordenamiento ascendente o descendente."
+
+        },
+
+        {
+          "type": "subtitle",
+          "text": "Datos Adicionales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            ["Salario neto", "Salario percibido por el empleado luego de descuentos.", "$320.000"],
+            ["Salario bruto", "Monto total antes de aplicar retenciones.", "$410.000"],
+            ["Matrícula", "Número de matrícula profesional (si aplica).", "12345"],
+            ["Empleado externo", "Indica si el empleado pertenece a un servicio tercerizado.", "Sí/No"],
+            ["Zona", "Área o sucursal de trabajo.", "Sucursal Centro"],
+            ["Fecha de ingreso", "Fecha en que el empleado comenzó a trabajar.", "12/03/2021"],
+            ["Fecha de nacimiento", "Fecha de nacimiento del empleado.", "20/08/1990"]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+
+    {
+      "id": "estado-empleado",
+      "title": "Estados del Empleado",
+      "open": false,
+      "blocks": [
+
+        {
+          "type": "paragraph",
+          "text": "Los empleados pueden tener <strong>dos estados posibles</strong> dentro del sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#86EFAC"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un empleado se encuentra en estado <strong>Activo</strong> cuando tiene acceso al sistema según su rol."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#FCA5A5"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un empleado se encuentra en estado <strong>Inactivo</strong> cuando tiene restringido el acceso por baja lógica."
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Recuerde que un empleado en estado <strong>Inactivo</strong> no podrá iniciar sesión en ninguna terminal, aunque sus credenciales (usuario y contraseña) sigan siendo válidas."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "empleados",
+    "administración",
+    "personal",
+    "roles",
+    "exportación"
+  ]
+}

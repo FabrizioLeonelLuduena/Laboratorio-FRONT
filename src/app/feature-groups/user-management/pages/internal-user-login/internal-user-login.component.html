@@ -1,0 +1,45 @@
+<div class="login-wrapper font-body">
+  <!-- error message fuera del contenedor para que sea visible -->
+  @if (errorMsg) {
+    <div class="error-message-overlay">
+      <app-generic-alert 
+       [type]="'error'" 
+       [text]="errorMsg">
+      </app-generic-alert>
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="spinner-overlay">
+      <app-spinner 
+       [overlay]=true 
+       label="Validando credenciales...">
+      </app-spinner>
+    </div>
+  }
+
+  <div class="login-center-container">
+    <div class="full-width-container">
+      <app-login-form
+        (submitLogin)="onLogin($event)"
+        [buttonType]="'custom'"
+        [buttonColor]="'--brand-accent'"
+        [buttonIcon]="'pi pi-sign-in'"
+        [buttonFullWidth]="true"
+        [backgroundImage]="'laboratory-background.jpg'"
+        [buttonStyle]="{ width: '100%', display: 'block' }">
+        
+        <!-- Quick access button for portfolio demo -->
+        <div extra-actions class="quick-access-section">
+          <button 
+            class="quick-access-btn"
+            (click)="quickLoginStock()"
+            [disabled]="isLoading">
+            <i class="pi pi-bolt"></i>
+            Inicio Rápido
+          </button>
+        </div>
+      </app-login-form>
+    </div>
+  </div>
+</div>

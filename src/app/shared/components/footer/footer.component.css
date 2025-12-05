@@ -1,0 +1,148 @@
+:root {
+  --footer-height-mobile: 88px; /* altura extendida para multilinea */
+}
+
+.app-footer {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--brand-primary-700);
+  color: var(--on-primary);
+  z-index: 1100;
+  flex-shrink: 0;
+}
+
+/* Footer fijo solo en escritorio */
+@media (width >= 960px) {
+  .app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--footer-height);
+  }
+}
+
+/* =========================
+   🖥️ Desktop footer
+   ========================= */
+.footer-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--footer-height);
+}
+
+.footer-toolbar {
+  width: 100%;
+  max-width: 1440px;
+  background: var(--brand-primary-700);
+  color: var(--on-primary);
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+
+.brand-app {
+  font-weight: 600;
+  font-size: var(--font-size-medium);
+}
+
+.brand-version {
+  color: var(--brand-primary);
+}
+
+.footer-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-links a {
+  color: var(--on-primary);
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus {
+  text-decoration: underline;
+}
+
+/* =========================
+   📱 Mobile footer
+   ========================= */
+.footer-mobile {
+  display: none;
+  background-color: var(--brand-primary-700);
+  text-align: center;
+  color: var(--on-primary);
+  padding: 8px 12px;
+  justify-content: center;
+}
+
+.footer-mobile-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: var(--footer-height-mobile);
+}
+
+.footer-brand-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 14px;
+}
+
+.footer-links-mobile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.footer-links-mobile a {
+  color: var(--on-primary);
+  text-decoration: none;
+}
+
+.footer-links-mobile a:hover,
+.footer-links-mobile a:focus {
+  text-decoration: underline;
+}
+
+.footer-links-mobile .divider {
+  opacity: 0.6;
+}
+
+/* =========================
+   🔄 Responsive switch
+   ========================= */
+@media (width <= 959px) {
+  .footer-desktop {
+    display: none;
+  }
+
+  .footer-mobile {
+    display: flex;
+  }
+}

@@ -1,0 +1,29 @@
+
+<div class="billing-home-container">
+  @if (isLoading()) {
+    <p-card>
+      <div class="loading-content">
+        <p-skeleton height="100px" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="200px"></p-skeleton>
+      </div>
+    </p-card>
+  } @else if (isSessionOpen()) {
+    <app-cash-dashboard></app-cash-dashboard>
+  } @else {
+    <p-card header="Caja cerrada" styleClass="no-session-card">
+      <div class="no-session-content">
+        <i class="pi pi-lock no-session-icon"></i>
+        <p class="message">No hay una caja abierta actualmente.</p>
+        <p class="submessage">Debe abrir una caja para registrar operaciones de facturación y cobros.</p>
+        <app-generic-button
+          type="custom"
+          text="Abrir caja"
+          icon="pi pi-unlock"
+          [color]="'--brand-primary-700'"
+          [customTextColor]="'--on-primary'"
+          (pressed)="navigateToOpening()">
+        </app-generic-button>
+      </div>
+    </p-card>
+  }
+</div>

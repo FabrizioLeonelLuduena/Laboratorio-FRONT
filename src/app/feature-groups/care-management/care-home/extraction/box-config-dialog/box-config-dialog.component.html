@@ -1,0 +1,66 @@
+<div class="box-config-content">
+  <div class="config-section">
+    <h3>Seleccione un box</h3>
+    <div class="extractors-grid">
+      @for (ext of extractors; track ext.id) {
+        <div
+          class="extractor-item"
+          [class.selected]="selectedBox?.id === ext.id"
+          [class.busy]="isExtractorBusy(ext.id)"
+          (click)="selectExtractor(ext)">
+          <span class="extractor-key">{{ ext.key }}</span>
+          <div class="extractor-name">{{ ext.assignedUser?.lastName || ext.name }}</div>
+          <div class="busy-indicator" *ngIf="isExtractorBusy(ext.id)">En atención</div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="config-section">
+    <h3>Seleccione usuario</h3>
+    <p-autoComplete
+      [(ngModel)]="selectedUser"
+      [suggestions]="filteredUsers"
+      (completeMethod)="filterUsers($event)"
+      field="username"
+      [dropdown]="true"
+      appendTo="body"
+      [panelStyle]="{'max-height':'220px','overflow':'auto'}"
+      placeholder="Buscar usuario..."
+      styleClass="w-100"
+      [disabled]="selectedExtractorBusy">
+    </p-autoComplete>
+    <div class="busy-note" *ngIf="selectedExtractorBusy">
+      No se puede reasignar ni limpiar este box porque actualmente tiene una atención en curso.
+    </div>
+  </div>
+
+  <div class="actions">
+    <app-generic-button
+      type="custom"
+      [text]="'Limpiar box'"
+      [icon]="'pi pi-trash'"
+      [color]="'danger'"
+      [disabled]="!selectedBox || selectedExtractorBusy"
+      (pressed)="clearBox()">
+    </app-generic-button>
+    <app-generic-button
+      type="cancel"
+      [text]="'Cancelar'"
+      (pressed)="cancel()">
+    </app-generic-button>
+    <app-generic-button
+      [type]="'accept'"
+      [text]="'Confirmar'"
+      [disabled]="!selectedBox || !selectedUser || selectedExtractorBusy"
+      (pressed)="confirm()">
+    </app-generic-button>
+  </div>
+</div>
+
+@if (alert()) {
+  <app-generic-alert
+    [type]="alert()!.type"
+    [text]="alert()!.text">
+  </app-generic-alert>
+}

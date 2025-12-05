@@ -1,0 +1,49 @@
+<div class="selector-container-inline">
+  @if (loading && showLoadingBanner) {
+    <div class="loading">Cargando aseguradoras y planes…</div>
+  }
+
+  <div class="field">
+    <label class="field-label">Aseguradora <span class="required">*</span></label>
+    <p-autoComplete
+      [formControl]="insurerControl"
+      [suggestions]="filteredInsurers"
+      (completeMethod)="filterInsurers($event)"
+      [field]="'display'"
+      [dropdown]="true"
+      [forceSelection]="true"
+      [minLength]="0"
+      placeholder="Seleccione..."
+      [appendTo]="'body'"
+    >
+      <ng-template let-item pTemplate="item">
+        <div class="item-row">{{ item.display }}</div>
+      </ng-template>
+      <ng-template pTemplate="empty">
+        <div class="empty">No se encontraron resultados</div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+
+  <div class="field">
+    <label class="field-label">Plan <span class="required">*</span></label>
+    <p-autoComplete
+      [formControl]="planControl"
+      [suggestions]="filteredPlans"
+      (completeMethod)="filterPlans($event)"
+      [field]="'display'"
+      [dropdown]="true"
+      [forceSelection]="true"
+      [minLength]="0"
+      placeholder="Seleccione..."
+      [appendTo]="'body'"
+    >
+      <ng-template let-item pTemplate="item">
+        <div class="item-row">{{ item.display }}</div>
+      </ng-template>
+      <ng-template pTemplate="empty">
+        <div class="empty">No se encontraron resultados</div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+</div>

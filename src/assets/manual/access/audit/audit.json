@@ -1,0 +1,77 @@
+{
+  "id": "audit",
+  "moduleId": "autenticacion",
+  "title": "Auditoría y trazabilidad",
+
+  "intro": "El sistema incorpora mecanismos de auditoría y trazabilidad que permiten registrar todas las acciones relevantes realizadas por los usuarios dentro de las distintas áreas del laboratorio. Estos registros son generados automáticamente para garantizar la transparencia, el control interno y la integridad de la información.",
+
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+
+    ]
+
+  },
+
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Secretaría - Administradores - Usuarios con permisos especiales - Supervisión del laboratorio"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "registro-acciones",
+      "title": "Registro automático de acciones",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Cada vez que un dato es creado, editado o eliminado, el sistema almacena qué usuario realizó la acción, qué acción fue realizada y la fecha y hora exactas en que ocurrió."
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta información queda registrada en la base de datos correspondiente y puede ser consultada por el administrador del sistema y aquellos usuarios con los permisos necesarios."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+
+    },
+
+    {
+      "id": "trazabilidad",
+      "title": "Importancia de la trazabilidad",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La trazabilidad de las operaciones constituye un apoyo fundamental para el trabajo diario del laboratorio, ya que asegura que toda modificación tenga un responsable identificado y que el registro histórico se mantenga accesible y protegido."
+        },
+        {
+          "type": "note",
+          "variant": "success",
+          "title": "✓ Nota importante",
+          "text": "<br>Para mantener la integridad del sistema, es fundamental evitar accesos no autorizados y mantener las credenciales de usuario en estricta confidencialidad."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    }
+  ],
+
+  "tags": [
+    "auditoría",
+    "trazabilidad",
+    "seguridad",
+    "registro",
+    "manual"
+  ]
+}

@@ -1,0 +1,54 @@
+@if (alertType) {
+  <app-generic-alert
+    [type]="alertType"
+    [text]="alertMessage">
+  </app-generic-alert>
+}
+
+<!-- Status column badge template is no longer needed as GenericTable renders is_active badge -->
+@if (showForm) {
+  <app-plan-form
+    [plan]="selectedPlan"
+    [insurerId]="insurerId"
+    [mode]="mode"
+    (saved)="onPlanSaved()"
+    (cancelled)="onPlanCanceled()">
+  </app-plan-form>
+
+}
+
+
+<app-generic-table
+  [data]="plans"
+  [columns]="columns"
+  [pageable]="true"
+  [rows]="10"
+  [loading]="loading"
+  [getActions]="getActions"
+  (create)="addPlan()"
+  [showSearch]="true"
+  [showCreateButton]="!showForm"
+  (downloadExcel)="onExportExcel()"
+  (downloadPdf)="onExportPdf()"
+></app-generic-table>
+
+<!-- Confirmation Modal -->
+@if (showDeleteModal) {
+  <app-confirmation-modal
+    icon="pi pi-trash"
+    title="Confirmar eliminación"
+    [message]="'¿Seguro que quieres eliminar este plan?'"
+    (confirmed)="confirmDelete()"
+    (dismissed)="cancelDelete()">
+  </app-confirmation-modal>
+}
+<!-- Confirmation Modal -->
+@if (showActivateModal) {
+  <app-confirmation-modal
+    icon="pi pi-check"
+    title="Confirmar activación"
+    [message]="'¿Seguro que quieres activar este plan?'"
+    (confirmed)="confirmActivate()"
+    (dismissed)="cancelActivate()">
+  </app-confirmation-modal>
+}

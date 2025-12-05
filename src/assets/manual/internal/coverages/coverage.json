@@ -1,0 +1,157 @@
+{
+  "id": "gestion-coberturas",
+  "moduleId": "coberturas",
+  "title": "Gestión de coberturas",
+  "intro": "Esta pantalla permite visualizar, buscar y administrar aseguradoras, sus planes y sus coberturas asociadas.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrador",
+      "Facturista"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador - Facturista"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla rincipal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>pantalla principal</strong> muestra el listado de aseguradoras registradas junto con sus datos básicos. Desde aquí, el usuario puede <strong>buscar</strong>, <strong>filtrar</strong>, <strong>crear nuevas aseguradoras</strong> o <strong>consultar su detalle</strong>."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-table.jpg",
+          "alt": "Interfaz principal de coberturas"
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones disponibles fuera del contenido principal"
+        },
+        {
+          "type": "table",
+          "columns": ["Elemento", "Ícono", "Función"],
+          "rows": [
+            ["Búsqueda", "<i class='pi pi-search'></i>", "Permite buscar por nombre, código o sigla."],
+            ["Nueva Aseguradora", "<i class='pi pi-plus'></i>", "Abre el formulario para registrar una nueva aseguradora (solo Administrador)."],
+            ["Descargar", "<i class='pi pi-download'></i>", "Genera un archivo Excel/PDF con el listado actual."],
+            ["Búsqueda Avanzada", "<i class='pi pi-filter'></i>", "Despliega la selección de filtros por estado (Todos, Activos, Inactivos) o tipo (Obra Social, Prepaga, Particular)."]
+            , [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+          {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/coverages/healt-insurance-filters-table.jpg",
+          "alt": "Filtros de coberturas"
+        },
+         {
+          "type": "list",
+          "items": [
+            "<strong>Estado:</strong> Permite buscar a la cobertura por su estado (Inactivo/Activo/Todos)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar Filtros</strong> para restablecer todos los campos de la ventana a su estado predeterminado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-aseguradoras",
+      "title": "Contenido de la Tabla de Aseguradoras",
+      "blocks": [
+        {
+          "type": "table",
+          "columns": ["Columna", "Descripción", "Ejemplo"],
+          "rows": [
+            ["Código", "Identificador único de la aseguradora", "INS001"],
+            ["Sigla", "Abreviatura representativa", "CABRED "],
+            ["Nombre", "Nombre completo de la aseguradora", "CABRED SALUD"],
+            ["Tipo", "Obra Social / Prepaga / Particular", ""],
+            ["Estado", "Define si la aseguradora está Activa o Inactiva", ""],
+          [
+              "Acciones",
+              "<strong>Menú desplegable</strong> que permite <strong>editar</strong>, <strong>ver detalle</strong> y <strong>desactivar</strong> una cobertura",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estado-aseguradora",
+      "title": "Estados de la Aseguradora",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Las aseguradoras pueden tener <strong>dos estados posibles</strong> dentro del sistema:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVA",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una aseguradora pasa automáticamente al estado <strong>Activa</strong> desde el momento en que es <strong>registrada</strong> en el sistema."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVA",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una aseguradora puede pasar de <strong>Activa</strong> a <strong>Inactiva</strong> por los siguientes motivos:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "• La aseguradora es eliminada.",
+            "• Ha sido deshabilitada temporalmente."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "text": "<strong>¿Se puede pasar una aseguradora de estado Inactiva a Activa?</strong><br><strong>No, no es posible reactivar</strong> una aseguradora una vez que ha sido marcada como Inactiva."
+        }
+      ]
+    }
+  ],
+  "tags": ["aseguradoras", "configuración", "planes", "tutorial"]
+}

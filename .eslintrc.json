@@ -1,0 +1,137 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects//*"
+  ],
+  "plugins": [
+    "unused-imports"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "ecmaVersion": 2022,
+        "sourceType": "module"
+      },
+      "plugins": [
+        "@typescript-eslint",
+        "jsdoc",
+        "unused-imports",
+        "import"
+      ],
+      "rules": {
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "semi": [
+          "error",
+          "always"
+        ],
+        "indent": [
+          "error",
+          2
+        ],
+        "comma-dangle": [
+          "error",
+          "never"
+        ],
+        "object-curly-spacing": [
+          "error",
+          "always"
+        ],
+        "array-bracket-spacing": [
+          "error",
+          "never"
+        ],
+        "no-console": "error",
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index"
+            ],
+            "pathGroups": [
+              {
+                "pattern": "@angular/**",
+                "group": "external",
+                "position": "before"
+              },
+              {
+                "pattern": "rxjs/**",
+                "group": "external",
+                "position": "after"
+              },
+              {
+                "pattern": "@/**",
+                "group": "internal",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": [
+              "builtin"
+            ],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "jsdoc/require-jsdoc": [
+          "error",
+          {
+            "require": {
+              "ClassDeclaration": true,
+              "MethodDefinition": true,
+              "FunctionDeclaration": true,
+              "ArrowFunctionExpression": false
+            },
+            "contexts": [
+              "TSInterfaceDeclaration",
+              "TSTypeAliasDeclaration"
+            ]
+          }
+        ],
+        "jsdoc/require-description": "error"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/template/no-negated-async": "off"
+      }
+    }
+  ]
+}

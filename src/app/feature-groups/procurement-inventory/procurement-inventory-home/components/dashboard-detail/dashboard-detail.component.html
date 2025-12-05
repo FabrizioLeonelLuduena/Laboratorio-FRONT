@@ -1,0 +1,106 @@
+<p-toast />
+
+<div class="min-h-screen bg-[var(--background)]">
+  <div class="max-w-full mx-auto px-4 py-4 md:pb-[calc(24px+var(--footer-height,52px)+16px)]">
+    <!-- KPI Title -->
+    <section class="mb-4">
+      <div class="flex items-center gap-3 px-2">
+        <i [class]="pageIcon()" class="text-3xl text-[var(--primary-color)]"></i>
+        <h1 class="text-2xl font-bold text-[var(--on-surface)] m-0">
+          {{ pageTitle() }}
+        </h1>
+      </div>
+    </section>
+
+    <!-- Filters and export in single row -->
+    <section class="mb-4">
+      <p-card>
+        <div class="flex flex-wrap items-end gap-3 justify-between">
+          <div class="flex flex-wrap items-end gap-3 flex-1 min-w-[300px]">
+            <app-reporting-filters 
+              [metricType]="metricType()"
+              (filtersApplied)="onFiltersApplied($event)">
+            </app-reporting-filters>
+          </div>
+          <div class="shrink-0">
+            <app-generic-download-menu
+              [disabled]="!hasData()"
+              (downloadExcel)="exportToExcel()"
+              (downloadPdf)="exportToPdf()">
+            </app-generic-download-menu>
+          </div>
+        </div>
+      </p-card>
+    </section>
+
+    <!-- Chart visualization -->
+    <section>
+      @if (isLoading()) {
+        <p-card>
+          <div class="flex items-center justify-center" [style.height]="chartMinHeight">
+            <div class="text-center">
+              <i class="pi pi-spin pi-spinner text-5xl text-[var(--brand-primary)] mb-4"></i>
+              <p class="text-lg text-[var(--on-surface-muted)]">Cargando datos...</p>
+            </div>
+          </div>
+        </p-card>
+      } @else if (hasData()) {
+        <p-card [style]="{'overflow': 'visible'}">
+          <div [style.min-height]="chartMinHeight" [style.max-height]="chartMaxHeight" style="width: 100%;">
+            <p-chart
+              [type]="chartType()"
+              [data]="currentChartData()"
+              [options]="currentChartOptions()"
+              style="display: block; width: 100%; height: 100%;">
+            </p-chart>
+          </div>
+        </p-card>
+      } @else {
+        <p-card>
+          <div class="flex items-center justify-center" [style.height]="chartMinHeight">
+            <div class="text-center">
+              <i class="pi pi-chart-bar text-8xl text-[var(--on-surface-muted)]/30 mb-6"></i>
+              <p class="text-2xl font-medium text-[var(--on-surface-muted)] mb-3">
+                Sin datos disponibles
+              </p>
+              <p class="text-base text-[var(--on-surface-muted)]">
+                Ajusta los filtros para visualizar información
+              </p>
+            </div>
+          </div>
+        </p-card>
+      }
+    </section>
+
+    <!-- Data Table -->
+    @if (!isLoading() && tableData().length > 0) {
+      <section class="mt-4">
+        <p-card>
+          <p-table
+            [value]="tableData()"
+            [rows]="10"
+            [paginator]="true"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            [tableStyle]="{ 'min-width': '100%' }"
+            styleClass="p-datatable-sm">
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="text-left">{{ tableCategoryLabel() }}</th>
+                <th class="text-right">{{ tableValueLabel() }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td class="text-left">{{ item.label }}</td>
+                <td class="text-right font-semibold">
+                  {{ item.value | number: '1.0-2' }}{{ item.unit ? ' ' + item.unit : '' }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </section>
+    }
+  </div>
+</div>

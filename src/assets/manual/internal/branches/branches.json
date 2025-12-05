@@ -1,0 +1,217 @@
+{
+  "id": "gestion-sucursales",
+  "moduleId": "sucursales",
+  "title": "Gestión de Sucursales",
+  "intro": "El módulo Gestión de Sucursales permite administrar toda la información relacionada con las distintas sedes del laboratorio. Su objetivo es asegurar que cada sede cuente con datos completos, actualizados y centralizados, facilitando la organización interna y la correcta derivación de órdenes, muestras y consultas.",
+  "roles": {
+    "title": "Rol autorizado",
+    "items": [
+      "Administrador"
+    ]
+  },
+  "sections": [
+     {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong><br>Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Pantalla principal",
+      "open": true,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "En la pantalla principal se muestra el listado de sucursales registradas. Además, permite realizar consultas y acceder al formulario para registrar una nueva sucursal."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-table.jpg",
+          "alt": "Pantalla principal de sucursales"
+        }
+      ]
+    },
+    {
+      "id": "acciones-superiores",
+      "title": "Acciones disponibles fuera de la tabla",
+      "open": false,
+      "blocks": [
+        {
+          "type": "table",
+          "columns": [
+            "Elemento",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Búsqueda",
+              "<i class='pi pi-search'></i>",
+              "Permite <strong>localizar rápidamente</strong> una sucursal por nombre o código."
+            ],
+            [
+              "Filtros",
+              "<i class='pi pi-filter'></i>",
+              "Permite <strong>acotar el listado</strong> por el estado de la sucursal."
+            ],
+            [
+              "Descargar listado",
+              "<i class='pi pi-download'></i>",
+              "Descarga los registros visibles en formato <strong>Excel o PDF</strong>."
+            ],
+            [
+              "Paginación",
+              "<i class='pi pi-angle-double-right'></i>",
+              "Controla la <strong>navegación</strong> entre páginas del listado."
+            ],
+            [
+              "Nueva sucursal",
+              "<i class='pi pi-plus'></i>",
+              "Abre el formulario para <strong>crear una nueva sucursal</strong>."
+            ]
+          ]
+        },
+
+        {
+          "type": "subtitle",
+          "text": "Filtros"
+        },
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el ícono de filtro <i class='pi pi-filter'></i>, se despliega un panel con las siguientes opciones para refinar la búsqueda:"
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/internal/branches/branches-filters.jpg",
+          "alt": "Filtros de estado"
+        },
+        {
+          "type": "list",
+          "items": [
+            "<strong>Estado:</strong> Permite buscar a la sucursal por su estado (Inactivo/Activo/Mantenimiento/Todos)."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "Información",
+          "text": "<br>Utilice el botón <strong><i class='pi pi-refresh'></i> Limpiar Filtros</strong> para restablecer todos los campos de la ventana a su estado predeterminado."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "listado-sucursales",
+      "title": "Contenido de la tabla de sucursales",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La tabla organiza la información detallada de cada sede mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Código",
+              "<strong>Número de identificación</strong> único de la sede.",
+              "001"
+            ],
+            [
+              "Descripción",
+              "<strong>Nombre asignado</strong> a la sucursal.",
+              "Sucursal Centro"
+            ],
+            [
+              "Nombre del responsable",
+              "Apellido y Nombre de la <strong>persona a cargo</strong>.",
+              "Pérez, Juan"
+            ],
+            [
+              "Dirección",
+              "<strong>Ubicación física</strong> de la sucursal.",
+              "Av. Siempre Viva 123"
+            ],
+            [
+              "Estado",
+              "Indica la <strong>disponibilidad</strong> actual en el sistema.",
+              "Activo"
+            ],
+            [
+              "Acciones",
+              "<strong>Menú desplegable</strong> que permite <strong>editar</strong>, <strong>ver detalle</strong> y <strong>desactivar</strong> una sucursal",
+              "⋮"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Las columnas <strong>Código</strong>, <strong>Descripción</strong> y <strong>Estado</strong> permiten ordenamiento ascendente o descendente."
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "estados-sucursal",
+      "title": "Estados de la Sucursal",
+      "open": false,
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Las sucursales pueden presentar los siguientes estados operativos:"
+        },
+        {
+          "type": "badge",
+          "text": "ACTIVO",
+          "color": "#027d46"
+        },
+        {
+          "type": "paragraph",
+          "text": "Muestra solo aquellas sucursales que están <strong>funcionando con normalidad</strong>."
+        },
+        {
+          "type": "badge",
+          "text": "INACTIVO",
+          "color": "#a3261d"
+        },
+        {
+          "type": "paragraph",
+          "text": "Sucursales <strong>deshabilitadas temporalmente</strong>."
+        },
+        {
+          "type": "badge",
+          "text": "MANTENIMIENTO",
+          "color": "#f0ad4e"
+        },
+        {
+          "type": "paragraph",
+          "text": "Sucursales que están en obras o reformas y <strong>no disponibles</strong> momentáneamente."
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "sucursales",
+    "configuración",
+    "administración",
+    "tutorial",
+    "sedes"
+  ]
+}

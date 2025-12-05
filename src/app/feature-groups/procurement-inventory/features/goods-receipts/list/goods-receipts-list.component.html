@@ -1,0 +1,192 @@
+<div class="goods-receipts-list-container">
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+
+  <!-- Alert Component -->
+   @if(showAlert()) {
+  <app-generic-alert
+    [title]="alertTitle()"
+    [text]="alertText()"
+    [type]="alertType()"
+  >
+  </app-generic-alert>
+  }
+
+  <!-- Selector de tipo de recepción -->
+  <div class="movement-type-selector-container rounded-xl p-2 shadow-[0_2px_8px_rgba(0,79,87,0.08)] border border-[#e8eef3] transition-shadow duration-300 hover:shadow-[0_4px_12px_rgba(0,79,87,0.12)] mb-4">
+    <p-tabs [(value)]="selectedReceiptType">
+      <p-tablist>
+        @for (option of receiptTypeOptions; track option.value) {
+          <p-tab [value]="option.value" (click)="onTabChange(option.value)">
+            <div class="flex flex-col items-center gap-1 px-3 py-2 transition-all duration-200">
+              <i [class]="option.icon" class="text-[1.75rem] text-[#01786f] transition-transform duration-200"></i>
+              <span class="text-sm font-semibold text-[#004f57]">{{ option.label }}</span>
+            </div>
+          </p-tab>
+        }
+      </p-tablist>
+      <p-tabpanels>
+        @for (option of receiptTypeOptions; track option.value) {
+          <p-tabpanel [value]="option.value">
+            <!-- Content will be rendered below the tabs -->
+          </p-tabpanel>
+        }
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+
+  <!-- Tabla genérica con filas expandibles -->
+  <app-generic-table
+    #genericTable
+    [data]="deliveryNotes"
+    [columns]="columns"
+    [filters]="genericFilters"
+    [expandedRowTemplate]="expandedTpl"
+    [expandable]="true"
+    [getActions]="getActionsForTable"
+    [showActions]="selectedReceiptType() === ReceiptType.INTERNAL"
+    [loading]="loading"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [pageable]="true"
+    [rows]="10"
+    [rowsOptions]="[5, 10, 25]"
+    [dataKey]="'id'"
+    (filterChange)="onFilterChange($event)"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+    (downloadExcel)="onExportExcelGeneric($event)"
+    (downloadPdf)="onExportPdfGeneric($event)"
+    (create)="onCreate()">
+  </app-generic-table>
+
+  <!-- Template para contenido expandido: detalles del remito -->
+  <ng-template #expandedTpl let-row>
+    @if(row.originalStatus === 'RECEIVED') {
+      <div class="mb-3">
+        @if(!isReturnModeActive(row.id)) {
+          <p-button
+            icon="pi pi-replay"
+            label="Gestionar Devoluciones"
+            severity="danger"
+            [outlined]="true"
+            size="small"
+            (onClick)="activateReturnMode(row.id)">
+          </p-button>
+        } @else {
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-sm font-medium text-gray-700">
+              {{ getSelectedCountForRow(row.id) }} producto(s) seleccionado(s)
+            </span>
+            <p-button
+              icon="pi pi-check"
+              label="Devolver Seleccionados"
+              severity="danger"
+              size="small"
+              [disabled]="getSelectedCountForRow(row.id) === 0"
+              (onClick)="onCreateReturnMovement()">
+            </p-button>
+            <p-button
+              icon="pi pi-times"
+              label="Cancelar"
+              severity="secondary"
+              [outlined]="true"
+              size="small"
+              (onClick)="deactivateReturnMode(row.id)">
+            </p-button>
+          </div>
+        }
+      </div>
+    }
+
+    @if(getDetails(row).length === 0) {
+      <div class="text-gray-600 italic">No hay detalles para este remito.</div>
+    } @else if(row.originalStatus === 'RECEIVED' && isReturnModeActive(row.id)) {
+      <!-- Mantener tabla HTML original cuando está en modo devolución (necesita checkboxes) -->
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="p-2 text-left border border-gray-300" style="width: 50px;">
+              <input
+                type="checkbox"
+                [checked]="areAllDetailsSelected(row)"
+                (change)="onSelectAllDetails(row, $any($event.target).checked)"
+                title="Seleccionar todos"
+                class="cursor-pointer" />
+            </th>
+            <th class="p-2 text-left border border-gray-300">Producto</th>
+            <th class="p-2 text-right border border-gray-300">Cantidad</th>
+            <th class="p-2 text-left border border-gray-300">Lote</th>
+            <th class="p-2 text-left border border-gray-300">Vencimiento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of getDetails(row); trackBy: trackByDetailId" class="border-b border-gray-300">
+            <td class="p-2 border border-gray-300">
+              <input
+                type="checkbox"
+                [checked]="isDetailSelected(row.id, detail.id)"
+                (change)="onDetailSelectionChange(row, detail, $any($event.target).checked)"
+                class="cursor-pointer" />
+            </td>
+            <td class="p-2 border border-gray-300">
+              @if(selectedReceiptType() === ReceiptType.INTERNAL) {
+                {{ detail.supply?.name || detail.supplyName || 'N/A' }}
+              } @else {
+                {{ detail.supplierItemName || detail.productName || detail.supplyName || 'N/A' }}
+              }
+            </td>
+            <td class="p-2 text-right border border-gray-300 font-semibold">
+              @if(selectedReceiptType() === ReceiptType.INTERNAL) {
+                {{ detail.requestedQuantity || 0 }}
+              } @else {
+                {{ detail.receivedQuantity || detail.quantityReceived || 0 }}
+              }
+            </td>
+            <td class="p-2 border border-gray-300">{{ detail.batchNumber || 'N/A' }}</td>
+            <td class="p-2 border border-gray-300">{{ detail.expirationDate || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    } @else {
+      <!-- Usar tabla genérica cuando NO está en modo devolución -->
+      <app-generic-table
+        [data]="getDetailsForTable(row)"
+        [columns]="detailColumns"
+        [showFilters]="false"
+        [showCreateButton]="false"
+        [showActions]="false"
+        [showSearch]="false"
+        [showDownloadMenu]="false"
+        [pageable]="false"
+        [loading]="false"
+        [expandable]="false"
+      >
+      </app-generic-table>
+    }
+  </ng-template>
+
+  <!-- Modal para cancelar transferencia (MD: POST /delivery-notes/{id}/cancel) -->
+  @if (showCancelConfirmModal) {
+    <app-confirmation-modal
+      icon="pi pi-times-circle"
+      title="Cancelar Transferencia"
+      message="¿Está seguro que desea cancelar esta transferencia? El sistema creará un movimiento inverso para devolver el stock a la ubicación de origen."
+      (confirmed)="onConfirmCancelTransfer()"
+      (dismissed)="onDismissCancelTransfer()">
+    </app-confirmation-modal>
+  }
+
+  <!-- Modal para confirmar transferencia (MD: POST /delivery-notes/{id}/confirm) -->
+  @if (showConfirmTransferModal) {
+    <app-confirmation-modal
+      icon="pi pi-check-circle"
+      title="Confirmar Transferencia"
+      message="¿Está seguro que desea confirmar esta transferencia como completada? El stock ya ha sido actualizado en la ubicación destino."
+      (confirmed)="onConfirmTransfer()"
+      (dismissed)="onDismissConfirmTransfer()">
+    </app-confirmation-modal>
+  }
+
+  <!-- Tutorial Overlay -->
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+</div>

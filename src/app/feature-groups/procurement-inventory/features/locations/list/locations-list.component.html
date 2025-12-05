@@ -1,0 +1,130 @@
+<div class="page-container">
+  <!-- Alert Component -->
+   @if(showAlert) {
+  <app-generic-alert
+    [message]="alertMessage"
+    [type]="alertType"
+    (close)="showAlert = false"
+  ></app-generic-alert>
+  }
+  <!-- Generic Table Component with LAZY mode -->
+  <app-generic-table
+    #genericTable
+    [data]="locations"
+    [columns]="columns"
+    [filters]="filters"
+    [getActions]="getActionsForLocation"
+    [loading]="loading"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [rows]="pageSize"
+    [pageable]="true"
+    [dataKey]="'id'"
+    (filterChange)="onFilterChange($event)"
+    (globalFilterChange)="onGlobalFilter($event)"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+    (create)="createLocation()"
+    (downloadExcel)="onExport($event, { type: 'excel' })"
+    (downloadPdf)="onExport($event, { type: 'pdf' })"
+  >
+  </app-generic-table>
+
+  <!-- Expanded row template -->
+  <ng-template #expandedRowTpl let-row>
+    <div
+      class="expansion-content bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-lg border-l-4 shadow-inner border-brand-primary"
+    >
+      <!-- Sección de Estado -->
+      <div class="info-card bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <div class="flex items-start gap-3">
+          <div class="icon-wrapper p-2 rounded-lg icon-bg-brand">
+            <i
+              [class]="row.isActive ? 'pi pi-check-circle text-lg text-green-600' : 'pi pi-times-circle text-lg text-red-600'"
+            ></i>
+          </div>
+          <div class="flex-1">
+            <label
+              class="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+            >Estado de la Ubicación</label>
+            <div class="mt-2">
+              <span
+                class="status-badge"
+                [class.status-badge--active]="row.isActive"
+                [class.status-badge--inactive]="!row.isActive"
+              >
+                {{ row.isActive ? 'Activo' : 'Inactivo' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Descripción -->
+      @if (row.description) {
+      <div class="info-card bg-white p-4 rounded-lg shadow-sm border border-gray-200 mt-4">
+        <div class="flex items-start gap-3">
+          <div class="icon-wrapper p-2 rounded-lg icon-bg-brand">
+            <i class="pi pi-info-circle text-lg text-blue-600"></i>
+          </div>
+          <div class="flex-1">
+            <label
+              class="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+            >Descripción</label>
+            <p class="mt-2 text-gray-700 text-sm">
+              {{ row.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </ng-template>
+
+  <!-- Deactivation Modal -->
+  @if(showDeactivationModal) {
+  <div class="modal-overlay" (click)="closeDeactivationModal()">
+    <div (click)="$event.stopPropagation()">
+      <app-confirmation-modal
+        [icon]="'pi pi-exclamation-triangle'"
+        [title]="'Desactivar ubicación'"
+        [message]="deactivationModalMessage"
+        [showContent]="childLocations.length > 1"
+        (confirmed)="confirmDeactivation()"
+        (dismissed)="closeDeactivationModal()"
+      >
+        @if(childLocations.length > 1) {
+          <div style="margin-top: 12px; text-align: left;">
+            <p style="margin-bottom: 8px; font-weight: 500;">Si continúa, se desactivarán también las siguientes ubicaciones:</p>
+            <ul style="margin: 0; padding-left: 20px; list-style: disc;">
+              @for(location of childLocations; track location.id) {
+                <li style="margin-bottom: 4px;">{{ location.name }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </app-confirmation-modal>
+    </div>
+  </div>
+  }
+  <!-- Reactivation Modal -->
+  @if(showReactivationModal) {
+  <div
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-[9999] animate-fade-in"
+  >
+    <app-confirmation-modal
+      [icon]="'pi pi-exclamation-triangle'"
+      [title]="'Reactivar ubicación'"
+      [message]="reactivationModalMessage"
+      (confirmed)="confirmReactivation()"
+      (dismissed)="closeReactivationModal()"
+    ></app-confirmation-modal>
+  </div>
+  }
+
+  <!-- Tutorial Overlay -->
+  <app-tutorial-overlay
+    #tutorialOverlay
+    [config]="tutorialConfig"
+  ></app-tutorial-overlay>
+</div>

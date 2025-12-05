@@ -1,0 +1,43 @@
+{
+  "data": [
+    {
+      "label": "Emergencias",
+      "value": 456
+    },
+    {
+      "label": "UCI",
+      "value": 389
+    },
+    {
+      "label": "Quirófano Central",
+      "value": 321
+    },
+    {
+      "label": "Laboratorio",
+      "value": 298
+    },
+    {
+      "label": "Pediatría",
+      "value": 234
+    },
+    {
+      "label": "Farmacia Central",
+      "value": 187
+    },
+    {
+      "label": "Consultorios Externos",
+      "value": 156
+    },
+    {
+      "label": "Almacén Principal",
+      "value": 98
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

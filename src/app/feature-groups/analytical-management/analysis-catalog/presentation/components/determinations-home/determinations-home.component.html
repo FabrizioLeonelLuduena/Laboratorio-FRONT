@@ -1,0 +1,455 @@
+<div class="determinations-container">
+  <!-- Flash Notification Alert -->
+  @if (showAlert()) {
+    <div class="alert-container">
+      <app-generic-alert
+        [type]="alertType()"
+        [title]="alertTitle()"
+        [text]="alertText()"
+        (closed)="showAlert.set(false)" />
+    </div>
+  }
+
+  <!-- Custom Templates for Columns -->
+  <ng-template #measurementUnitTpl let-item>
+    <div class="measurement-unit">
+      @if (item.analyticalPhaseSetting?.analyticalMethod?.measurementUnit) {
+        <span>{{ item.analyticalPhaseSetting.analyticalMethod.measurementUnit.name || item.analyticalPhaseSetting.analyticalMethod.measurementUnit.symbol || 'N/A' }}</span>
+      } @else {
+        <span class="text-muted">No especificado</span>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #handlingTimeTpl let-item>
+    <div class="handling-time">
+      @if (item.handlingTime) {
+        <span class="time-value">
+          <i class="pi pi-clock"></i>
+          {{ formatHandlingTime(item.handlingTime) }}
+        </span>
+      } @else {
+        <span class="text-muted">No especificado</span>
+      }
+    </div>
+  </ng-template>
+
+  <!-- Main Table Section -->
+  <div class="table-section">
+    <app-generic-table
+      [data]="determinations()"
+      [columns]="columns"
+      [loading]="loading()"
+      [dataKey]="'id'"
+      [pageable]="true"
+      [rows]="10"
+      [rowsOptions]="[5, 10, 20, 50]"
+      [showSearch]="true"
+      [showActions]="true"
+      [getActions]="getRowActions"
+      [showCreateButton]="true"
+      (create)="onAddNew()"
+      [showDownloadMenu]="true"
+      (downloadExcel)="onDeterminationExport($event, { type: 'excel' })"
+      (downloadPdf)="onDeterminationExport($event, { type: 'pdf' })">
+
+      <!-- Expanded Content Template -->
+      <ng-template let-item>
+        <div class="expanded-content">
+          <!-- Basic Information -->
+          <div class="detail-grid">
+            <div class="detail-item">
+              <label><i class="pi pi-tag"></i> Número de determinación</label>
+              <span>{{ item.id }}</span>
+            </div>
+
+            <div class="detail-item">
+              <label><i class="pi pi-ruler"></i> Unidad de Medida</label>
+              <span>{{ getMeasurementUnit(item) }}</span>
+            </div>
+
+            @if (item.percentageVariationTolerated !== null && item.percentageVariationTolerated !== undefined) {
+              <div class="detail-item">
+                <label><i class="pi pi-percentage"></i> Variación Tolerada</label>
+                <span>
+                  <p-tag
+                    [value]="item.percentageVariationTolerated + '%'"
+                    [severity]="getVariationSeverity(item.percentageVariationTolerated)">
+                  </p-tag>
+                </span>
+              </div>
+            }
+
+            @if (item.handlingTime) {
+              <div class="detail-item">
+                <label><i class="pi pi-clock"></i> Tiempo de Manejo</label>
+                <span>{{ formatHandlingTime(item.handlingTime) }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Phase Settings Section -->
+          @if (item.preAnalyticalPhaseSetting || item.analyticalPhaseSetting || item.postAnalyticalPhaseSetting) {
+            <div class="detail-section">
+              <label><i class="pi pi-sliders-h"></i> Configuración de Fases</label>
+              <div class="phase-grid">
+                @if (item.preAnalyticalPhaseSetting) {
+                  <div class="phase-card">
+                    <h4>Pre-Analítica</h4>
+                    <p><strong>Tipo:</strong> {{ item.preAnalyticalPhaseSetting.type || 'N/A' }}</p>
+                    @if (item.preAnalyticalPhaseSetting.message) {
+                      <p><strong>Mensaje:</strong> {{ item.preAnalyticalPhaseSetting.message }}</p>
+                    }
+                  </div>
+                }
+
+                @if (item.analyticalPhaseSetting) {
+                  <div class="phase-card">
+                    <h4>Analítica</h4>
+                    <p><strong>Tipo:</strong> {{ item.analyticalPhaseSetting.type || 'N/A' }}</p>
+                    @if (item.analyticalPhaseSetting.message) {
+                      <p><strong>Mensaje:</strong> {{ item.analyticalPhaseSetting.message }}</p>
+                    }
+                  </div>
+                }
+
+                @if (item.postAnalyticalPhaseSetting) {
+                  <div class="phase-card">
+                    <h4>Post-Analítica</h4>
+                    <p><strong>Tipo:</strong> {{ item.postAnalyticalPhaseSetting.type || 'N/A' }}</p>
+                    @if (item.postAnalyticalPhaseSetting.message) {
+                      <p><strong>Mensaje:</strong> {{ item.postAnalyticalPhaseSetting.message }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Additional Settings -->
+          @if (item.labelSetting || item.resultSetting || item.worksheetSetting) {
+            <div class="detail-section">
+              <label><i class="pi pi-cog"></i> Configuraciones Adicionales</label>
+              <div class="settings-grid">
+                @if (item.labelSetting) {
+                  <div class="setting-card">
+                    <h4><i class="pi pi-bookmark"></i> Configuración de Etiqueta</h4>
+                    <p>Configurado</p>
+                  </div>
+                }
+
+                @if (item.resultSetting) {
+                  <div class="setting-card">
+                    <h4><i class="pi pi-check-circle"></i> Configuración de Resultado</h4>
+                    <p>Configurado</p>
+                  </div>
+                }
+
+                @if (item.worksheetSetting) {
+                  <div class="setting-card">
+                    <h4><i class="pi pi-file"></i> Configuración de Hoja de Trabajo</h4>
+                    <p>Configurado</p>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Metadata -->
+          @if (item.createdDatetime || item.lastUpdatedDatetime) {
+            <div class="detail-section">
+              <label><i class="pi pi-info-circle"></i> Metadatos</label>
+              <div class="metadata-grid">
+                @if (item.createdDatetime) {
+                  <div class="metadata-item">
+                    <span class="label">Creado:</span>
+                    <span class="value">{{ item.createdDatetime | date:'medium' }}</span>
+                    @if (item.createdUser) {
+                      <span class="user">por {{ item.createdUser }}</span>
+                    }
+                  </div>
+                }
+
+                @if (item.lastUpdatedDatetime) {
+                  <div class="metadata-item">
+                    <span class="label">Última Actualización:</span>
+                    <span class="value">{{ item.lastUpdatedDatetime | date:'medium' }}</span>
+                    @if (item.lastUpdatedUser) {
+                      <span class="user">por {{ item.lastUpdatedUser }}</span>
+                    }
+                  </div>
+                }
+
+                @if (item.entityVersion) {
+                  <div class="metadata-item">
+                    <span class="label">Versión:</span>
+                    <span class="value">{{ item.entityVersion }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </ng-template>
+    </app-generic-table>
+  </div>
+
+  <!-- Edit/Add Dialog -->
+  <app-generic-modal-form
+    [visible]="showEditDialog()"
+    [title]="selectedDetermination() ? 'Editar Determinación' : 'Nueva Determinación'"
+    [width]="'600px'"
+    (closed)="closeDialogs()">
+
+    @if (selectedDetermination()) {
+      <div class="dialog-header">
+        <div class="header-content">
+          <span class="header-id">Número de determinación: {{ selectedDetermination()!.id }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="dialog-content">
+      <app-determination-edit-form
+        [determination]="selectedDetermination()"
+        (saved)="onDeterminationSaved($event)"
+        (cancelled)="closeDialogs()" />
+    </div>
+  </app-generic-modal-form>
+
+  <!-- Details Dialog -->
+  <app-generic-modal-form
+    [visible]="showDetailsDialog()"
+    title="Detalles de la determinación"
+    [width]="'800px'"
+    (closed)="closeDialogs()">
+
+    <div class="dialog-header">
+      <div class="header-content">
+        <span class="header-id">Número de determinación: {{ selectedDetermination()?.id }}</span>
+      </div>
+    </div>
+
+    <div class="dialog-content">
+      @if (selectedDetermination()) {
+        <!-- Basic Info -->
+        <div class="info-grid">
+          <div class="info-card">
+            <label><i class="pi pi-tag"></i> Nombre de la determinación</label>
+            <div class="value">{{ selectedDetermination()!.name }}</div>
+          </div>
+
+          <div class="info-card">
+            <label><i class="pi pi-ruler"></i> Unidad de medida</label>
+            <div class="value">{{ getMeasurementUnit(selectedDetermination()!) }}</div>
+          </div>
+
+          @if (selectedDetermination()!.analyticalPhaseSetting?.analyticalMethod) {
+            <div class="info-card">
+              <label><i class="pi pi-flask"></i> Método analítico</label>
+              <div class="value">
+                <p-tag 
+                  [value]="selectedDetermination()!.analyticalPhaseSetting!.analyticalMethod!.analyticalType || 'N/A'" 
+                  severity="info">
+                </p-tag>
+              </div>
+            </div>
+          }
+
+          @if (selectedDetermination()!.percentageVariationTolerated !== null && selectedDetermination()!.percentageVariationTolerated !== undefined) {
+            <div class="info-card">
+              <label><i class="pi pi-percentage"></i> Variación tolerada</label>
+              <div class="value">
+                <p-tag
+                  [value]="selectedDetermination()!.percentageVariationTolerated + '%'"
+                  [severity]="getVariationSeverity(selectedDetermination()!.percentageVariationTolerated)">
+                </p-tag>
+              </div>
+            </div>
+          }
+
+          @if (selectedDetermination()!.handlingTime) {
+            <div class="info-card">
+              <label><i class="pi pi-clock"></i> Tiempo de manejo</label>
+              <div class="value">{{ formatHandlingTime(selectedDetermination()!.handlingTime) }}</div>
+            </div>
+          }
+        </div>
+
+        <p-divider></p-divider>
+
+        <!-- Phase Settings -->
+        @if (selectedDetermination()!.preAnalyticalPhaseSetting || selectedDetermination()!.analyticalPhaseSetting || selectedDetermination()!.postAnalyticalPhaseSetting) {
+          <div class="info-section">
+            <h4 class="section-title">
+              <i class="pi pi-sliders-h"></i>
+              Configuración
+            </h4>
+            <div class="phase-grid">
+              @if (selectedDetermination()!.preAnalyticalPhaseSetting) {
+                <div class="phase-card">
+                  <h4><i class="pi pi-arrow-right"></i> Pre-analítica</h4>
+                  <p><strong>Número:</strong> {{ selectedDetermination()!.preAnalyticalPhaseSetting?.id }}</p>
+                  @if (selectedDetermination()!.preAnalyticalPhaseSetting?.preIndications) {
+                    <p><strong>Indicaciones previas:</strong> {{ selectedDetermination()!.preAnalyticalPhaseSetting?.preIndications }}</p>
+                  }
+                  @if (selectedDetermination()!.preAnalyticalPhaseSetting?.observations) {
+                    <p><strong>Observaciones:</strong> {{ selectedDetermination()!.preAnalyticalPhaseSetting?.observations }}</p>
+                  }
+                </div>
+              }
+
+              @if (selectedDetermination()!.analyticalPhaseSetting) {
+                <div class="phase-card">
+                  <h4><i class="pi pi-flask"></i> Analítica</h4>
+                  <p><strong>Número:</strong> {{ selectedDetermination()!.analyticalPhaseSetting?.id }}</p>
+                  @if (selectedDetermination()!.analyticalPhaseSetting?.analyticalMethod) {
+                    <p><strong>Método analítico:</strong> {{ selectedDetermination()!.analyticalPhaseSetting?.analyticalMethod?.id }}</p>
+                    @if (selectedDetermination()!.analyticalPhaseSetting?.analyticalMethod?.analyticalType) {
+                      <p><strong>Tipo:</strong> {{ selectedDetermination()!.analyticalPhaseSetting?.analyticalMethod?.analyticalType }}</p>
+                    }
+                  }
+                </div>
+              }
+
+              @if (selectedDetermination()!.postAnalyticalPhaseSetting) {
+                <div class="phase-card">
+                  <h4><i class="pi pi-check-circle"></i> Post-analítica</h4>
+                  <p><strong>Número:</strong> {{ selectedDetermination()!.postAnalyticalPhaseSetting?.id }}</p>
+                  @if ((selectedDetermination()!.postAnalyticalPhaseSetting?.referenceValues?.length || 0) > 0) {
+                    <p><strong>Valores de referencia:</strong> {{ selectedDetermination()!.postAnalyticalPhaseSetting?.referenceValues?.length }} configurado(s)</p>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <p-divider></p-divider>
+
+        <!-- Result Settings -->
+        @if (selectedDetermination()!.resultSetting) {
+          <div class="info-section">
+            <h4 class="section-title">
+              <i class="pi pi-file-edit"></i>
+              Configuración de resultados
+            </h4>
+            <div class="info-grid">
+              <div class="info-card">
+                <label><i class="pi pi-print"></i> Imprimible</label>
+                <div class="value">
+                  <p-tag
+                    [value]="selectedDetermination()!.resultSetting?.isPrintable ? 'Sí' : 'No'"
+                    [severity]="selectedDetermination()!.resultSetting?.isPrintable ? 'success' : 'secondary'">
+                  </p-tag>
+                </div>
+              </div>
+
+              @if (selectedDetermination()!.resultSetting?.isPrintable) {
+                @if (selectedDetermination()!.resultSetting?.printOrder !== null && selectedDetermination()!.resultSetting?.printOrder !== undefined) {
+                  <div class="info-card">
+                    <label><i class="pi pi-sort-numeric-up"></i> Orden de impresión</label>
+                    <div class="value">{{ selectedDetermination()!.resultSetting?.printOrder }}</div>
+                  </div>
+                }
+
+                @if (selectedDetermination()!.resultSetting?.printGroup !== null && selectedDetermination()!.resultSetting?.printGroup !== undefined) {
+                  <div class="info-card">
+                    <label><i class="pi pi-objects-column"></i> Grupo de impresión</label>
+                    <div class="value">{{ selectedDetermination()!.resultSetting?.printGroup }}</div>
+                  </div>
+                }
+
+                @if (selectedDetermination()!.resultSetting?.specialPrintName) {
+                  <div class="info-card">
+                    <label><i class="pi pi-tag"></i> Nombre especial de impresión</label>
+                    <div class="value">{{ selectedDetermination()!.resultSetting?.specialPrintName }}</div>
+                  </div>
+                }
+              }
+
+              @if (selectedDetermination()!.resultSetting?.loadingResultOrder !== null && selectedDetermination()!.resultSetting?.loadingResultOrder !== undefined) {
+                <div class="info-card">
+                  <label><i class="pi pi-upload"></i> Orden de carga</label>
+                  <div class="value">{{ selectedDetermination()!.resultSetting?.loadingResultOrder }}</div>
+                </div>
+              }
+
+              <div class="info-card">
+                <label><i class="pi pi-pencil"></i> Requiere valor de carga</label>
+                <div class="value">
+                  <p-tag
+                    [value]="selectedDetermination()!.resultSetting?.requiresLoadValue ? 'Sí' : 'No'"
+                    [severity]="selectedDetermination()!.resultSetting?.requiresLoadValue ? 'info' : 'secondary'">
+                  </p-tag>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <label><i class="pi pi-verified"></i> Requiere aprobación</label>
+                <div class="value">
+                  <p-tag
+                    [value]="selectedDetermination()!.resultSetting?.requiresApproval ? 'Sí' : 'No'"
+                    [severity]="selectedDetermination()!.resultSetting?.requiresApproval ? 'warning' : 'secondary'">
+                  </p-tag>
+                </div>
+              </div>
+
+              @if (selectedDetermination()!.resultSetting?.requiresApproval) {
+                <div class="info-card">
+                  <label><i class="pi pi-user-edit"></i> Puede auto-aprobarse</label>
+                  <div class="value">
+                    <p-tag
+                      [value]="selectedDetermination()!.resultSetting?.canSelfApprove ? 'Sí' : 'No'"
+                      [severity]="selectedDetermination()!.resultSetting?.canSelfApprove ? 'success' : 'danger'">
+                    </p-tag>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <p-divider></p-divider>
+
+        <!-- Metadata -->
+        @if (selectedDetermination()!.createdDatetime || selectedDetermination()!.lastUpdatedDatetime) {
+          <div class="info-section">
+            <h4 class="section-title">
+              <i class="pi pi-info-circle"></i>
+              Metadatos
+            </h4>
+            <div class="metadata-grid">
+              @if (selectedDetermination()!.createdDatetime) {
+                <div class="metadata-item">
+                  <span class="label">Creado:</span>
+                  <span class="value">{{ selectedDetermination()!.createdDatetime | date:'medium' }}</span>
+                  @if (selectedDetermination()!.createdUser) {
+                    <span class="user">por {{ selectedDetermination()!.createdUser }}</span>
+                  }
+                </div>
+              }
+
+              @if (selectedDetermination()!.lastUpdatedDatetime) {
+                <div class="metadata-item">
+                  <span class="label">Última actualización:</span>
+                  <span class="value">{{ selectedDetermination()!.lastUpdatedDatetime | date:'medium' }}</span>
+                  @if (selectedDetermination()!.lastUpdatedUser) {
+                    <span class="user">por {{ selectedDetermination()!.lastUpdatedUser }}</span>
+                  }
+                </div>
+              }
+
+              @if (selectedDetermination()!.entityVersion) {
+                <div class="metadata-item">
+                  <span class="label">Versión:</span>
+                  <span class="value">{{ selectedDetermination()!.entityVersion }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </app-generic-modal-form>
+</div>

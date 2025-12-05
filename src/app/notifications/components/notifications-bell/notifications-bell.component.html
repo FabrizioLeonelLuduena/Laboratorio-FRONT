@@ -1,0 +1,68 @@
+<div class="dropdown-header text-gray-900 flex justify-between items-center">
+  <span>{{ title }}</span>
+
+  <!-- Button to mark all as read -->
+  <button
+    type="button"
+    class="flex items-center gap-2 text-sm text-gray-600 hover:text-[var(--brand-primary)] transition-colors mark-all-btn"
+    (click)="markAllAsRead()"
+    [disabled]="unreadCount === 0"
+    [attr.aria-disabled]="unreadCount === 0"
+    [title]="unreadCount > 0 ? 'Marcar todas como leídas' : 'Sin no leídas'"
+  >
+    <i class="pi" [ngClass]="unreadCount > 0 ? 'pi-eye' : 'pi-eye-slash'"></i>
+    <span>Marcar todas</span>
+  </button>
+</div>
+
+@if (!isLoading && !errorMsg) {
+  <div class="dropdown-body">
+    @if (notifications.length === 0) {
+      <div class="empty">Sin notificaciones</div>
+    } @else {
+      <ul class="notif-list">
+        @for (n of notifications; track n.id) {
+          <li
+            class="notif-item border-b last:border-none cursor-pointer"
+            (click)="openNotification(n)"
+          >
+            <div
+              class="flex flex-col gap-1 w-full"
+              [class.opacity-60]="n.isRead"
+              [class.cursor-default]="!(n.notification.metadata?.link)"
+            >
+              <div class="flex items-center justify-between w-full">
+                <span class="font-semibold text-gray-900 flex-1 truncate">
+                  {{ n.notification.title }}
+                </span>
+
+                <span
+                  class="text-xs font-bold px-2 py-0.5 rounded whitespace-nowrap"
+                  [ngClass]="{
+                    'bg-red-100 text-red-700 border border-red-200': n.notification.priority === 'high',
+                    'bg-yellow-100 text-yellow-800 border border-yellow-300': n.notification.priority === 'medium',
+                    'bg-blue-100 text-blue-700 border border-blue-200': n.notification.priority === 'low'
+                  }"
+                >
+                  {{ n.notification!.priority | priorityLabelPipe }}
+                </span>
+
+                <button
+                  type="button"
+                  class="flex items-center justify-center w-6 h-6 rounded text-gray-700 hover:bg-gray-200 transition-colors"
+                  [title]="n.isRead ? 'Marcar como no leída' : 'Marcar como leída'"
+                  (click)="toggleRead(n, $event)"
+                >
+                  <i class="pi" [ngClass]="n.isRead ? 'pi-eye-slash' : 'pi-eye'" style="font-size: .9rem"></i>
+                </button>
+              </div>
+
+              <p class="text-gray-600 text-sm">{{ n.notification.message }}</p>
+              <span class="notif-time">{{ toDate(n.timestamp) | date:'short' }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+}

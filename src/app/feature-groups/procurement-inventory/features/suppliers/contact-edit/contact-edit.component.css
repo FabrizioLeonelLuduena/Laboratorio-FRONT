@@ -1,0 +1,8 @@
+:host ::ng-deep .page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+:host ::ng-deep app-generic-form {
+  display: block;
+}

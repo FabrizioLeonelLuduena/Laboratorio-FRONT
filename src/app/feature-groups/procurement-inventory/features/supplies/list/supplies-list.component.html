@@ -1,0 +1,73 @@
+<div>
+
+  <!-- Alertas -->
+  @if (showAlert()) {
+  <app-generic-alert
+    [type]="alertType()"
+    [title]="alertTitle()"
+    [text]="alertText()"
+  />
+  }
+
+  <!-- Tabla Genérica -->
+  <app-generic-table
+    #genericTable
+    [data]="suppliesData()"
+    [columns]="columns()"
+    [rows]="10"
+    [rowsOptions]="[5, 10, 25]"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [loading]="loadingTable()"
+    [dataKey]="'id'"
+    [getActions]="getActions.bind(this)"
+    [filters]="filters"
+    [columnTemplates]="columnTemplates"
+    (create)="onCreateSupply()"
+    (downloadExcel)="onExportExcel($event)"
+    (downloadPdf)="onExportPdf($event)"
+    (filterChange)="onFilterChange($event)"
+    (pageChange)="onPageChange($event)"
+    [expandedRowTemplate]="suppliesDetailTemplate"
+  >
+  </app-generic-table>
+
+  <!-- Templates personalizados -->
+
+  <ng-template #packaging let-supply>
+    <span class="text-sm">
+      @if (supply.packaging) {
+        {{ supply.packaging.uomName }} X {{ supply.packaging.unitsPerPackage }}
+      } @else {
+        <span class="text-gray-400">Sin empaque</span>
+      }
+    </span>
+  </ng-template>
+
+  <ng-template #suppliesDetailTemplate let-supply>
+    <div class="p-3 bg-gray-50 border-l-4 border-[#01786f]">
+      @if (supply.notes && supply.notes.trim().length > 0) {
+        <p class="text-sm text-gray-600">{{ supply.notes }}</p>
+      } @else {
+        <p class="text-gray-600 italic text-sm">Sin notas disponibles</p>
+      }
+    </div>
+  </ng-template>
+  <!-- Modal de confirmación -->
+  @if (showConfirmation()) {
+  <div class="modal-overlay" (click)="onConfirmationDismissed()">
+    <div (click)="$event.stopPropagation()">
+      <app-confirmation-modal
+        [title]="confirmationTitle()"
+        [message]="confirmationMessage()"
+        (confirmed)="onConfirmationAccepted()"
+        (dismissed)="onConfirmationDismissed()"
+      >
+      </app-confirmation-modal>
+    </div>
+  </div>
+  }
+
+  <!-- Tutorial Overlay -->
+  <app-tutorial-overlay #tutorialOverlay [config]="tutorialConfig"></app-tutorial-overlay>
+</div>

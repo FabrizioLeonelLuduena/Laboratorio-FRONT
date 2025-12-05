@@ -1,0 +1,202 @@
+{
+  "id": "gestion-rotulos",
+  "moduleId": "analitica",
+  "title": "Impresión de Rótulos",
+  "intro": "La pantalla de Impresión de Rótulos permite buscar protocolos para reimprimir etiquetas y configurar la cantidad de rótulos necesarios por cada tipo de análisis.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Bioquímico",
+      "Técnico",
+      "Administrador"
+    ]
+  },
+  "sections": [
+    {
+      "id": "roles-note",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Bioquímico - Técnico - Administrador"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "interfaz-principal",
+      "title": "Interfaz Principal",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "La <strong>interfaz principal</strong> está dividida en dos paneles funcionales: uno para la <strong>impresión directa</strong> por protocolo y otro para la <strong>configuración</strong> de cantidades por análisis."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/labels/labels-home.jpg",
+          "alt": "Interfaz de impresión de rótulos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Paneles de Gestión"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Panel",
+            "Ícono",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Impresión de rótulos",
+              "<i class='pi pi-print'></i>",
+              "Permite <strong>escanear o ingresar</strong> manualmente un número de protocolo para generar las etiquetas correspondientes."
+            ],
+            [
+              "Configuración de rótulos",
+              "<i class='pi pi-cog'></i>",
+              "Permite definir la <strong>cantidad predeterminada</strong> de etiquetas que se deben imprimir para cada tipo de análisis."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Herramientas disponibles"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ambos paneles cuentan con buscadores específicos para agilizar la tarea:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Herramienta",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Buscador de Protocolo (Izquierda)",
+              "Ingrese al menos 3 caracteres del número de protocolo o utilice un <strong>lector de código de barras</strong>."
+            ],
+            [
+              "Buscador de Análisis (Derecha)",
+              "Permite <strong>localizar un análisis</strong> específico por nombre para ajustar su configuración."
+            ],
+            [
+              "<i class='pi pi-plus'></i>",
+              "Permite <strong>crear una nueva configuración</strong> de rótulos."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "contenido-tabla-configuracion",
+      "title": "Tabla de Configuración de Rótulos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "El panel derecho contiene una tabla para gestionar cuántas etiquetas emite el sistema por defecto para cada práctica. La tabla organiza la información mediante las siguientes columnas:"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción",
+            "Ejemplo"
+          ],
+          "rows": [
+            [
+              "Análisis",
+              "<strong>Nombre</strong> del análisis clínico.",
+              "Hemograma"
+            ],
+            [
+              "Cantidad",
+              "<strong>Número de etiquetas</strong> definidas para imprimir por ese análisis.",
+              "1"
+            ],
+            [
+              "Acciones",
+              "El menú (botones) permite <strong>editar la cantidad</strong> o eliminar la configuración.",
+              "<i class='pi pi-pencil'></i>"
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "crear-configuracion",
+      "title": "Crear Nueva Configuración",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Al hacer clic en el botón <strong><i class='pi pi-plus'></i></strong> del panel derecho, se abrirá una ventana emergente para establecer una nueva regla de impresión."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/management-analitic/labels/labels-new-configuration.jpg",
+          "alt": "Nueva configuración de rótulos"
+        },
+        {
+          "type": "subtitle",
+          "text": "Campos del Formulario"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Análisis *",
+              "Seleccione del desplegable el <strong>nombre del análisis</strong> al que desea asignar una cantidad de etiquetas."
+            ],
+            [
+              "Cantidad a Imprimir *",
+              "Ingrese el número de rótulos (etiquetas) que se deben generar <strong>automáticamente</strong> cada vez que ingrese este análisis."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones Finales"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Acción"
+          ],
+          "rows": [
+            [
+              "Aceptar",
+              "Guarda la configuración y la agrega a la tabla."
+            ],
+            [
+              "Cancelar",
+              "Cierra la ventana sin guardar cambios."
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "rótulos",
+    "etiquetas",
+    "impresión",
+    "protocolo",
+    "configuración"
+  ]
+}

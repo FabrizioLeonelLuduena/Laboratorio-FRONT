@@ -1,0 +1,48 @@
+<!-- Global alerts -->
+<app-generic-alert
+  *ngIf="showAlert"
+  [message]="alertMessage"
+  [type]="alertType"
+  (close)="showAlert = false">
+</app-generic-alert>
+
+<div class="flex flex-col min-h-[calc(100vh-13rem)] overflow-x-hidden px-8 py-4 text-[#003b4a] bg-white">
+  <div class="w-full max-w-[1200px] mx-auto">
+    <!-- Generic form -->
+    <app-generic-form
+      [fields]="formFields"
+      [saving]="false"
+      [maxCols]="gridColumns"
+      [showHeader]="false"
+      [showCancel]="false"
+      [showSubmit]="false"
+      (submitForm)="onFormSubmit($event)">
+    </app-generic-form>
+
+    <div class="flex justify-between items-center pt-6">
+      <app-generic-button
+        type="back"
+        icon="pi pi-arrow-left"
+        (pressed)="onBack()">
+      </app-generic-button>
+
+      <div class="flex gap-3">
+        <app-generic-button
+          text="Cancelar"
+          type="cancel"
+          [disabled]="saving"
+          (pressed)="onFormCancel()">
+        </app-generic-button>
+
+        <app-generic-button
+          [text]="saving ? 'Guardando...' : 'Crear insumo'"
+          type="create"
+          icon="pi pi-plus"
+          [disabled]="saving"
+          (pressed)="triggerSubmit()">
+        </app-generic-button>
+      </div>
+    </div>
+  </div>
+</div>
+

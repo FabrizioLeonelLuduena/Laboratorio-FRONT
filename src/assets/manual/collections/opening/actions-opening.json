@@ -1,0 +1,296 @@
+{
+  "id": "actions-appointments",
+  "moduleId": "turnos",
+  "title": "Gestión de Caja",
+  "intro": "Guía para las operaciones diarias de caja: apertura, registro de movimientos (ingresos y egresos) y cierre de jornada con validación de saldos.",
+  "roles": {
+    "title": "Roles autorizados a interactuar",
+    "items": [
+      "Administrativo",
+      "Secretaria"
+    ]
+  },
+  "sections": [
+     {
+      "id": "roles-note",
+      "introBlocks": [
+        {
+          "type": "note",
+          "variant": "info",
+          "text": "<strong>Roles autorizados a interactuar:</strong> <br> Administrador - Facturación"
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    },
+    {
+      "id": "abrir-caja",
+      "title": "Abrir Caja",
+      "blocks": [
+
+        {
+          "type": "paragraph",
+          "text": "Para abrir la caja, ingrese a la sección de Apertura de Caja y seleccione la opción <strong>Abrir Caja</strong> (identificada con el ícono de candado). El sistema lo llevará a la pantalla de configuración inicial."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-open-box-facturation.jpg",
+          "alt": "Pantalla de apertura de caja"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos de apertura"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Fecha de apertura",
+              "Registra el día en que se inicia la jornada de caja."
+            ],
+            [
+              "Usuario responsable",
+              "Indica la persona a cargo. (Campo de solo lectura)."
+            ],
+            [
+              "Sucursal",
+              "Menú desplegable para seleccionar la <strong>ubicación física</strong> donde se realiza la apertura."
+            ],
+            [
+              "Monto inicial",
+              "Campo numérico para ingresar el <strong>dinero base</strong> (fondo de caja o cambio). Valor predeterminado: $ 0.00."
+            ],
+            [
+              "Observaciones",
+              "Campo opcional para agregar notas o detalles relevantes sobre la apertura."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "info",
+          "title": "✓ Nota importante",
+          "text": "<br>El <strong>Monto Inicial</strong> ingresado en el sistema debe coincidir exactamente con el dinero físico existente en la caja al momento de la apertura para asegurar una cuadratura correcta al final del día."
+        }
+      ]
+    },
+    {
+      "id": "registrar-movimientos",
+      "title": "Registrar Movimientos",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Para registrar un nuevo movimiento haga clic en el botón <strong>Registrar (icono +)</strong> en la pantalla principal. Esto lo llevará a la pantalla de Operaciones."
+        },
+        {
+          "type": "subtitle",
+          "text": "Tipos de Operación"
+        },
+        {
+          "type": "badge",
+          "text": "DEPÓSITO (Ingreso)",
+          "color": "#86EFAC"
+        },
+        {
+          "type": "paragraph",
+          "text": "Aumenta el saldo de la caja. Asegúrese de que el botón seleccionado sea <strong>Registrar Depósito</strong>."
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "badge",
+          "text": "EXTRACCIÓN (Egreso)",
+          "color": "#FCA5A5"
+        },
+        {
+          "type": "paragraph",
+          "text": "Disminuye el saldo de la caja. Asegúrese de que el botón seleccionado sea <strong>Registrar Extracción</strong>."
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Verifique siempre qué pestaña está activa antes de guardar. Registrar una extracción como depósito (o viceversa) afectará directamente el saldo final y generará diferencias en el cierre."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-deposit.jpg",
+          "alt": "Pantalla de registro de depósito"
+        },
+        {
+          "type": "subtitle",
+          "text": "Datos del Movimiento"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Campo",
+            "Detalle"
+          ],
+          "rows": [
+            [
+              "Concepto (Obligatorio)",
+              "Motivo del movimiento (Ej: Consulta médica, Tratamientos, Medicamentos, etc.)."
+            ],
+            [
+              "Método",
+              "Forma de pago: Efectivo, Tarjeta de débito/crédito, Transferencia o QR."
+            ],
+            [
+              "Monto",
+              "Cantidad total de dinero de la transacción."
+            ],
+            [
+              "N° Comprobante",
+              "Campo opcional para ingresar el número de referencia o folio."
+            ],
+            [
+              "Observaciones",
+              "Información adicional relevante (máximo 250 caracteres)."
+            ]
+          ]
+        },
+        {
+          "type": "subtitle",
+          "text": "Acciones"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Registrar",
+              "Despliega el cartel de confirmación de la operación."
+            ],
+            [
+              "Confirmar",
+              "Efectúa definitivamente la transacción y <strong>actualiza el saldo</strong> de la caja automáticamente."
+            ]
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-deposit-confirmation.jpg",
+          "alt": "Confirmación de depósito"
+        }
+      ]
+    },
+    {
+      "id": "cerrar-caja",
+      "title": "Cerrar Caja",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Para finalizar la jornada, acceda al botón <strong>Cerrar Caja</strong> (icono candado) en la pantalla principal. Se mostrará el reporte final."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-close-box.jpg",
+          "alt": "Pantalla de cierre de caja"
+        },
+        {
+          "type": "subtitle",
+          "text": "Resumen de Movimientos"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Columna",
+            "Descripción"
+          ],
+          "rows": [
+            [
+              "Tipo",
+              "Categoría del movimiento (Atención, Depósitos, Retiros, Total)."
+            ],
+            [
+              "Efectivo",
+              "Monto correspondiente solo a movimientos en efectivo."
+            ],
+            [
+              "Total",
+              "Monto acumulado independientemente del medio de pago."
+            ]
+          ]
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "badge",
+          "text": "CUADRATURA DE CAJA",
+          "color": "#93C5FD"
+        },
+        {
+          "type": "paragraph",
+          "text": "Esta sección permite declarar el monto físico para verificar la coincidencia con el sistema."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            "<strong>Saldo Inicial:</strong> Dinero con el que comenzó la caja.",
+            "<strong>Saldo Final:</strong> Cálculo del sistema (Saldo Inicial + Ingresos - Egresos).",
+            "<strong>Monto Declarado:</strong> Ingrese aquí el dinero contado físicamente.",
+            "<strong>Diferencia:</strong> Discrepancia entre el Monto Declarado y el Saldo Final."
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Si el campo <strong>Diferencia</strong> muestra un valor distinto de cero, deberá justificar la discrepancia en el campo de Observaciones antes de cerrar."
+        },
+        {
+          "type": "subtitle",
+          "text": "Finalización"
+        },
+        {
+          "type": "table",
+          "columns": [
+            "Botón",
+            "Función"
+          ],
+          "rows": [
+            [
+              "Cerrar Caja",
+              "Confirma el cierre del día, guarda el registro y <strong>bloquea modificaciones</strong>."
+            ],
+            [
+              "Cancelar",
+              "Descarta los cambios y regresa a la pantalla principal sin cerrar la caja."
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "variant": "warning",
+          "title": "✓ Nota importante",
+          "text": "<br>Una vez cerrada la caja, la acción es <strong>irreversible</strong>. No se podrán registrar nuevos movimientos ni editar los existentes para esa jornada."
+        },
+        {
+          "type": "image",
+          "src": "assets/manual/collections/opening/billing-close-box-confirmation.jpg",
+          "alt": "Confirmación de cierre de caja"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "caja",
+    "apertura",
+    "cierre",
+    "movimientos",
+    "depósitos",
+    "extracciones"
+  ]
+}

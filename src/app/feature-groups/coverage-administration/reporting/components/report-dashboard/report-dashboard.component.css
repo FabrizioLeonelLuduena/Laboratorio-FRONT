@@ -1,0 +1,76 @@
+.dashboard-section {
+  padding: 0.3rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow: hidden;
+  height: calc(100vh - 90px);
+  width: 100%;
+}
+
+.section-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0.15rem 0;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+  align-items: stretch;
+  width: 100%;
+}
+
+.chart-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%), 0 1px 3px rgb(0 0 0 / 6%);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  height: 300px;
+  align-items: center;
+  transition: box-shadow 0.2s ease;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.1rem;
+  width: 100%;
+}
+
+
+.chart-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 0.6rem 0;
+  opacity: 0.6;
+}
+
+.top-section {
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  align-items: start;
+}
+
+.kpi-section {
+  margin: 0.5rem 0;
+}
+
+

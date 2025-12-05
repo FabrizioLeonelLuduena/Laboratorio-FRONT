@@ -1,0 +1,64 @@
+<div class="edit-form-container">
+  <!-- Alert -->
+  <app-generic-alert
+    *ngIf="showAlert"
+    [type]="alertType"
+    [title]="alertTitle"
+    [text]="alertText">
+  </app-generic-alert>
+
+  <!-- Formulario -->
+  <app-generic-form
+    #genericForm
+    title=""
+    [fields]="formFields"
+    [initialValue]="initialValue"
+    [saving]="saving"
+    size="md"
+    [maxCols]="2"
+    [showHeader]="false"
+    [showSubmit]="false"
+    [showCancel]="false"
+    (submitForm)="onSubmit($event)"
+    (cancelForm)="onCancel()">
+  </app-generic-form>
+
+  <!-- Metadata (only for existing determinations) -->
+  @if (determination) {
+    <div class="info-section">
+      <div class="metadata-grid">
+        <div class="metadata-item">
+          <label>Número de determinación</label>
+          <span>{{ determination.id }}</span>
+        </div>
+        <div class="metadata-item">
+          <label>Creado</label>
+          <span>{{ determination.createdDatetime ? (determination.createdDatetime | date: 'dd/MM/yyyy') : '-' }}</span>
+        </div>
+        <div class="metadata-item">
+          <label>Última actualización</label>
+          <span>{{ determination.lastUpdatedDatetime ? (determination.lastUpdatedDatetime | date: 'dd/MM/yyyy HH:mm') : '-' }}</span>
+        </div>
+      </div>
+      
+      <div class="info-note">
+        <i class="pi pi-info-circle"></i>
+        <p><strong>Nota:</strong> Este formulario permite editar información básica de la determinación. Las configuraciones de fase, etiquetas y otras configuraciones avanzadas se gestionan a través de interfaces dedicadas.</p>
+      </div>
+    </div>
+  }
+
+  <!-- Action buttons -->
+  <div class="actions-footer">
+    <app-generic-button
+      type="cancel"
+      [disabled]="saving"
+      (pressed)="onCancel()">
+    </app-generic-button>
+    <app-generic-button
+      type="save"
+      [disabled]="saving"
+      (pressed)="triggerSubmit()">
+    </app-generic-button>
+  </div>
+</div>

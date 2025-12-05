@@ -1,0 +1,108 @@
+<section class="insurer-history">
+
+  <!-- Alertas -->
+  @if (alert) {
+    <app-generic-alert
+      [type]="alert.type"
+      [text]="alert.text">
+    </app-generic-alert>
+  }
+
+
+  <!-- Filtros -->
+  <div class="filtros-container">
+    <div class="filtros-grid items-center filtros-flex">
+
+      <!-- Plan -->
+      <div class="filtro-field">
+        <label for="planSelect" class="filtro-label">Plan</label>
+        <span class="filtro-input-wrapper">
+        <p-select
+          id="planSelect"
+          [(ngModel)]="selectedPlanId"
+          [options]="planOptions"
+          (onChange)="onPlanChange()"
+          scrollHeight="200px"
+          [filter]="false"
+          [showClear]="false"
+          [style]="{'width': '100%'}"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar plan"
+          class="filtro-input"
+        >
+        </p-select>
+        </span>
+      </div>
+
+      <!-- Periodo -->
+      <div class="filtro-field">
+        <label for="rangoRapido" class="filtro-label">Periodo</label>
+        <span class="filtro-input-wrapper">
+        <p-select
+          id="rangoRapido"
+          [(ngModel)]="quickRange"
+          [options]="quickRanges"
+          optionLabel="label"
+          optionValue="value"
+          (onChange)="onQuickRangeChange($event.value)"
+          placeholder="Seleccionar periodo"
+          [style]="{'width': '100%'}"
+          class="filtro-input"
+        >
+        </p-select>
+        </span>
+      </div>
+
+      <!-- Fechas personalizadas -->
+      <div class="fecha-container" [class.visible]="quickRange === 'custom'">
+        <div class="filtro-field fade-item">
+          <label for="fechaDesde" class="filtro-label">Desde</label>
+          <span class="filtro-input-wrapper">
+            <p-datePicker
+              id="fechaDesde"
+              [(ngModel)]="dateFrom"
+              (onSelect)="onDateChange()"
+              dateFormat="dd/mm/yy"
+              [showIcon]="true"
+              placeholder="Desde (dd/mm/aaaa)"
+              class="filtro-input"
+              [appendTo]="'body'" [autoZIndex]="true" [baseZIndex]="11000"
+            >
+            </p-datePicker>
+          </span>
+        </div>
+
+        <div class="filtro-field fade-item">
+          <label for="fechaHasta" class="filtro-label">Hasta</label>
+          <span class="filtro-input-wrapper">
+          <p-datePicker
+            id="fechaHasta"
+            [(ngModel)]="dateTo"
+            (onSelect)="onDateChange()"
+            dateFormat="dd/mm/yy"
+            [showIcon]="true"
+            placeholder="Hasta (dd/mm/aaaa)"
+            class="filtro-input"
+            [appendTo]="'body'" [autoZIndex]="true" [baseZIndex]="11000"
+          >
+          </p-datePicker>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <app-generic-table
+    [data]="historyRows"
+    [showActions]="false"
+    [columns]="historyColumns"
+    [pageable]="false"
+    [loading]="loading"
+    [showCreateButton]="false"
+    [showSearch]="false"
+    (downloadExcel)="onExportExcel()"
+    (downloadPdf)="onExportPdf()"
+  ></app-generic-table>
+</section>

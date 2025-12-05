@@ -1,0 +1,250 @@
+@if(showAlert)
+{
+  <app-generic-alert [type]="alertType" [message]="alertMessage"></app-generic-alert>
+}
+
+      <div class="p-6">
+        <!-- Formulario de datos básicos -->
+        <div class="bg-[#fafbfc] p-5 rounded-lg mb-6 border border-[#e8eef3]">
+          @if (loadingPreloadedData) {
+            <!-- Loading skeletons para dropdowns -->
+            <div class="grid grid-cols-2 gap-4">
+              <div class="flex flex-col gap-2">
+                <p-skeleton width="8rem" height="1rem"></p-skeleton>
+                <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+              </div>
+              <div class="flex flex-col gap-2">
+                <p-skeleton width="6rem" height="1rem"></p-skeleton>
+                <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+              </div>
+            </div>
+          } @else {
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Orden de Compra -->
+            <div class="flex flex-col relative">
+              <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">
+                Orden de Compra <span class="text-red-500">*</span>
+              </label>
+              <p-select
+                [(ngModel)]="basicData.purchaseOrderId"
+                [options]="purchaseOrders"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Seleccionar orden de compra"
+                [filter]="true"
+                filterBy="label"
+                [showClear]="!isPurchaseOrderPreselected"
+                [disabled]="isPurchaseOrderPreselected"
+                styleClass="w-full"
+                [style]="{'width': '100%'}">
+              </p-select>
+            </div>
+
+            <!-- Proveedor -->
+            <div class="flex flex-col relative">
+              <label class="mb-1.5 text-sm font-semibold text-[#677c8e] tracking-[0.3px]">
+                Proveedor <span class="text-red-500">*</span>
+              </label>
+              <p-select
+                [(ngModel)]="basicData.supplierId"
+                [options]="suppliers"
+                optionLabel="companyName"
+                optionValue="id"
+                placeholder="Seleccionar proveedor"
+                [filter]="true"
+                filterBy="companyName"
+                [showClear]="!isPurchaseOrderPreselected"
+                [disabled]="isPurchaseOrderPreselected"
+                (onChange)="onSupplierChange()"
+                styleClass="w-full"
+                [style]="{'width': '100%'}">
+                <ng-template let-supplier pTemplate="item">
+                  <div>
+                    <div class="font-medium">{{ supplier.companyName }}</div>
+                    @if (supplier.cuit) {
+                      <div class="text-xs text-gray-500">CUIT: {{ supplier.cuit }}</div>
+                    }
+                  </div>
+                </ng-template>
+              </p-select>
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Grilla de items - Estructura idéntica a invoice-items-step -->
+        @if (loadingPreloadedData) {
+          <!-- Loading skeleton para la grilla -->
+          <div class="border border-gray-200 rounded-lg p-4 bg-white">
+            <p-skeleton width="12rem" height="1.25rem" styleClass="mb-4"></p-skeleton>
+            <div class="space-y-3">
+              @for (item of [1,2,3]; track item) {
+                <div class="grid grid-cols-7 gap-3">
+                  <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+                  <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+                  <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+                  <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+                  <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+                  <p-skeleton width="100%" height="2.5rem" borderRadius="6px"></p-skeleton>
+                  <p-skeleton width="2.5rem" height="2.5rem" borderRadius="6px"></p-skeleton>
+                </div>
+              }
+            </div>
+          </div>
+        } @else {
+        <div class="receipt-items-grid-wrapper">
+          <div class="custom-items-grid">
+            <!-- Header de la grilla -->
+            <div class="grid-header">
+              <div class="grid-header-cell col-descripcion">Producto</div>
+              <div class="grid-header-cell col-solicitada">Cantidad solicitada</div>
+              <div class="grid-header-cell col-recibida">Cantidad recibida</div>
+              <div class="grid-header-cell col-lote">Lote</div>
+              <div class="grid-header-cell col-vencimiento">Vencimiento</div>
+              <div class="grid-header-cell col-notas">Observaciones</div>
+              <div class="grid-header-cell col-actions">
+                @if (!isPurchaseOrderPreselected) {
+                  <button
+                    type="button"
+                    class="grid-action-btn add-btn header-add-btn"
+                    (click)="addNewItem()"
+                    title="Agregar producto">
+                    <i class="pi pi-plus"></i>
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Rows de items -->
+            <div class="grid-body">
+              @for (item of details; track item; let i = $index) {
+                <div class="grid-row">
+
+                  <!-- Item del Proveedor -->
+                  <div class="grid-cell col-descripcion">
+                    <p-dropdown
+                      [(ngModel)]="item.supplierItemId"
+                      [options]="supplierItems"
+                      optionLabel="name"
+                      optionValue="id"
+                      placeholder="Seleccionar producto"
+                      [filter]="true"
+                      filterBy="name"
+                      [showClear]="false"
+                      [disabled]="isPurchaseOrderPreselected"
+                      appendTo="body"
+                      styleClass="grid-dropdown"
+                      [pTooltip]="item.supplierItemId ? getSupplierItemName(item.supplierItemId) : ''"
+                      tooltipPosition="top"
+                      (onChange)="onSupplierItemChange(item.supplierItemId, i)">
+                      <ng-template let-supplierItem pTemplate="item">
+                        <div class="font-medium">{{ supplierItem.name }}</div>
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+
+                  <!-- Cantidad Solicitada -->
+                  <div class="grid-cell col-solicitada">
+                    <input
+                      type="text"
+                      inputmode="numeric"
+                      class="grid-input text-right"
+                      [(ngModel)]="item.requestedQuantity"
+                      [disabled]="isPurchaseOrderPreselected"
+                      placeholder="0" />
+                  </div>
+
+                  <!-- Cantidad Recibida -->
+                  <div class="grid-cell col-recibida">
+                    <input
+                      type="text"
+                      inputmode="numeric"
+                      class="grid-input text-right"
+                      [(ngModel)]="item.receivedQuantity"
+                      placeholder="0"
+                      required />
+                  </div>
+
+                  <!-- Lote -->
+                  <div class="grid-cell col-lote">
+                    <input
+                      type="text"
+                      class="grid-input"
+                      [(ngModel)]="item.batchNumber"
+                      placeholder="Ej: L-001" />
+                  </div>
+
+                  <!-- Vencimiento -->
+                  <div class="grid-cell col-vencimiento">
+                    <p-datepicker
+                      [(ngModel)]="item.expirationDate"
+                      dateFormat="dd/mm/yy"
+                      [showIcon]="true"
+                      [iconDisplay]="'input'"
+                      placeholder="dd/mm/aaaa"
+                      appendTo="body"
+                      styleClass="grid-calendar">
+                    </p-datepicker>
+                  </div>
+
+                  <!-- Observaciones -->
+                  <div class="grid-cell col-notas">
+                    <input
+                      type="text"
+                      class="grid-input"
+                      [(ngModel)]="item.batchNotes"
+                      placeholder="Observaciones..." />
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="grid-cell col-actions">
+                    @if (!isPurchaseOrderPreselected) {
+                      <button
+                        type="button"
+                        class="grid-action-btn delete-btn"
+                        (click)="removeDetail(i)"
+                        title="Eliminar">
+                        <i class="pi pi-trash"></i>
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Empty state -->
+            @if (details.length === 0) {
+              <div class="empty-grid-message">
+                <i class="pi pi-inbox"></i>
+                <p>No hay productos agregados</p>
+                <small>Presiona el botón "+" para agregar productos</small>
+              </div>
+            }
+          </div>
+        </div>
+        }
+
+        <div class="flex justify-between items-center pt-6">
+        <app-generic-button
+          type="back"
+          icon="pi pi-arrow-left"
+          (pressed)="onBack()">
+        </app-generic-button>
+
+        <div class="flex gap-4">
+          <app-generic-button
+            text="Cancelar"
+            type="cancel"
+            [disabled]="saving"
+            (pressed)="onCancel()">
+          </app-generic-button>
+          <app-generic-button
+            [text]="saving ? 'Guardando...' : 'Crear remito'"
+            type="create"
+            icon="pi pi-check"
+            [disabled]="details.length === 0 || saving"
+            (pressed)="onSubmit()">
+          </app-generic-button>
+        </div>
+      </div>
+      </div>

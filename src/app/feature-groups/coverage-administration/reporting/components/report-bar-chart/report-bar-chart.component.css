@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-chart {
+  height: 140px ;
+  max-height: 140px ;
+  width: 100% ;
+}
+
+:host ::ng-deep .p-chart canvas {
+  max-height: 140px ;
+  height: 140px ;
+  max-width: 100% ;
+}

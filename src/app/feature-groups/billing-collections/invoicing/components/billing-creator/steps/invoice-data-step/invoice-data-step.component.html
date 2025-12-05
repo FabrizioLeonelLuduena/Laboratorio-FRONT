@@ -1,0 +1,163 @@
+<div class="invoice-data-step-wrapper">
+  <app-generic-alert
+    *ngIf="alertVisible"
+    [type]="alertType!"
+    [title]="alertTitle"
+    [message]="alertText"
+    class="mb-2">
+  </app-generic-alert>
+
+  <div class="step-layout-full-width">
+    <div class="form-section">
+      <form [formGroup]="invoiceDataForm" class="invoice-form">
+        <div class="form-row form-row-four-cols">
+          <div class="form-field">
+            <label for="invoiceDate">Fecha</label>
+            <p-calendar
+              id="invoiceDate"
+              formControlName="invoiceDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              placeholder="Seleccioná una fecha"
+              [disabled]="true"
+            ></p-calendar>
+          </div>
+
+          <div class="form-field">
+            <label for="invoiceNumberFull" class="required">Número de factura</label>
+            <input
+              id="invoiceNumberFull"
+              type="text"
+              pInputText
+              formControlName="fullInvoiceNumber"
+              placeholder="0001-00000000"
+              (input)="onInvoiceNumberInput($event)"
+              (blur)="onInvoiceNumberBlur()"
+              maxlength="13"
+            />
+            @if (isFieldInvalid('fullInvoiceNumber')) {
+              <small class="error-message">
+                {{ getFieldError('fullInvoiceNumber') }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="kind" class="required">Tipo de comprobante</label>
+            <p-dropdown
+              id="kind"
+              formControlName="kind"
+              [options]="invoiceKindOptions"
+              placeholder="Seleccioná un tipo"
+              [styleClass]="isFieldInvalid('kind') ? 'ng-invalid ng-dirty' : ''"
+              optionLabel="label"
+              optionValue="value"
+            ></p-dropdown>
+            @if (isFieldInvalid('kind')) {
+              <small class="error-message">
+                {{ getFieldError('kind') }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field field-with-button">
+            <label for="customerId" class="required">Cliente</label>
+            <div class="customer-select">
+              <p-dropdown
+                id="customerId"
+                formControlName="customerId"
+                [options]="customers"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Seleccionar cliente"
+                [filter]="true"
+                filterPlaceholder="Buscar cliente..."
+                [disabled]="loadingCustomers"
+                [styleClass]="isFieldInvalid('customerId') ? 'ng-invalid ng-dirty' : ''"
+              >
+              </p-dropdown>
+              <button
+                type="button"
+                class="btn-add-customer"
+                (click)="openClientModal()"
+                title="Agregar nuevo cliente"
+              >
+                +
+              </button>
+            </div>
+            @if (isFieldInvalid('customerId')) {
+              <small class="error-message">
+                {{ getFieldError('customerId') }}
+              </small>
+            } @else if (customersError) {
+              <small class="error-message">
+                {{ customersError }}
+              </small>
+            }
+          </div>
+        </div>
+
+        @if (selectedClient) {
+          <div class="form-row client-info-row">
+            <div class="client-info-card">
+              <div class="client-info-item">
+                <span class="label">CUIT:</span>
+                <span class="value">{{ selectedClient.cuit }}</span>
+              </div>
+              <div class="client-info-item">
+                <span class="label">Correo electrónico:</span>
+                <span class="value">{{ selectedClient.email }}</span>
+              </div>
+              @if (selectedClient.telefono) {
+                <div class="client-info-item">
+                  <span class="label">Teléfono:</span>
+                  <span class="value">{{ selectedClient.telefono }}</span>
+                </div>
+              }
+              @if (selectedClient.direccion) {
+                <div class="client-info-item">
+                  <span class="label">Domicilio:</span>
+                  <span class="value">{{ selectedClient.direccion }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="form-row">
+          <div class="form-field form-field-full">
+            <label for="observations" class="required">Observaciones</label>
+            <textarea
+              id="observations"
+              pInputTextarea
+              formControlName="observations"
+              rows="2"
+              placeholder="Ingresá las observaciones"
+              [class.ng-invalid]="isFieldInvalid('observations')"
+              [class.ng-dirty]="isFieldInvalid('observations')"
+            ></textarea>
+            @if (isFieldInvalid('observations')) {
+              <small class="error-message">
+                {{ getFieldError('observations') }}
+              </small>
+            }
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-generic-modal-form
+    [visible]="showClientModal"
+    title="Agregar Nuevo Cliente"
+    [width]="'50vw'"
+    (closed)="closeClientModal()"
+  >
+    <app-generic-dynamic-form
+      [fields]="clientFormFields"
+      [title]="''"
+      (submitForm)="onClientFormSubmit($event)"
+      (cancelForm)="closeClientModal()"
+    ></app-generic-dynamic-form>
+  </app-generic-modal-form>
+</div>

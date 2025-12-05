@@ -1,0 +1,136 @@
+<div class="queue-register-container">
+  <div class="queue-register-card">
+    <div class="card-header">
+      <app-generic-button
+        type="back"
+        (pressed)="onBack()">
+      </app-generic-button>
+      <h2 class="card-title">Registrarse en cola</h2>
+    </div>
+
+    <div class="appointment-badge" [class.with-appointment]="hasAppointment">
+      <i [class]="hasAppointment ? 'pi pi-calendar-plus' : 'pi pi-user-plus'"></i>
+      <span>{{ hasAppointment ? 'Con Turno' : 'Sin Turno' }}</span>
+    </div>
+
+    <form class="register-form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nationalId" class="form-label">Número de Documento (DNI)</label>
+        <input
+          type="text"
+          id="nationalId"
+          name="nationalId"
+          class="form-input"
+          [(ngModel)]="nationalId"
+          (input)="onNationalIdInput($event)"
+          (keypress)="onNationalIdKeypress($event)"
+          [disabled]="isLoading"
+          placeholder="Ingrese entre 7 y 8 dígitos"
+          minlength="7"
+          maxlength="8"
+          pattern="[0-9]{7,8}"
+          required>
+        <small class="form-hint">Solo se permiten números (7 a 8 dígitos)</small>
+      </div>
+
+      <div class="button-group">
+        <app-generic-button
+          type="accept"
+          [disabled]="!isValidNationalId || isLoading">
+        </app-generic-button>
+      </div>
+
+      <div *ngIf="isLoading" class="loading-indicator">
+        <i class="pi pi-spin pi-spinner"></i>
+        <span>Registrando paciente...</span>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal de éxito -->
+<app-generic-modal-form
+  [visible]="showSuccessModal"
+  title=""
+  width="700px"
+  (closed)="onCloseSuccessModal()">
+  <div class="modal-content success-content">
+    <div class="modal-header-with-icon">
+      <div class="success-icon-inline">
+        <i class="pi pi-check-circle"></i>
+      </div>
+      <h2 class="modal-title-custom">¡Registro exitoso!</h2>
+    </div>
+
+    <p class="success-message">Ha ingresado en la fila, aguarde a ser llamado.</p>
+
+    <div class="turno-code-display">
+      <p>Su código de turno es:</p>
+      <strong class="turno-code">{{ publicCode }}</strong>
+    </div>
+
+    <div class="button-container">
+      <app-generic-button
+        type="accept"
+        text="Aceptar"
+        (pressed)="onCloseSuccessModal()">
+      </app-generic-button>
+    </div>
+  </div>
+</app-generic-modal-form>
+
+<!-- Modal de error/conflicto -->
+<app-generic-modal-form
+  [visible]="showErrorModal"
+  title=""
+  width="700px"
+  (closed)="onCloseErrorModal()">
+  <div class="modal-content error-content">
+    <div class="modal-header-with-icon">
+      <div class="error-icon-inline">
+        <i class="pi {{ errorModalIcon }}"></i>
+      </div>
+      <h2 class="modal-title-custom">{{ errorModalTitle }}</h2>
+    </div>
+
+    <p class="error-message">{{ errorMessage }}</p>
+
+    <div class="button-container">
+      <app-generic-button
+        type="accept"
+        text="Entendido"
+        (pressed)="onCloseErrorModal()">
+      </app-generic-button>
+    </div>
+  </div>
+</app-generic-modal-form>
+
+<!-- Modal del código QR -->
+<app-generic-modal-form
+  [visible]="showQrModal"
+  title=""
+  width="800px"
+  (closed)="onCloseQrModal()">
+  <div class="modal-content qr-content">
+    <div class="modal-header-with-icon">
+      <div class="success-icon-inline">
+        <i class="pi pi-qrcode"></i>
+      </div>
+      <h2 class="modal-title-custom">¡Escanea tu código QR!</h2>
+    </div>
+
+    <p class="qr-message">Escanea este código para acceder a nuestro portal:</p>
+
+    <div class="qr-code-container">
+      <img [src]="qrCodeUrl" alt="Código QR" class="qr-code-image" />
+    </div>
+
+    <div class="button-container">
+      <app-generic-button
+        type="accept"
+        text="Aceptar"
+        (pressed)="onCloseQrModal()">
+      </app-generic-button>
+    </div>
+  </div>
+</app-generic-modal-form>

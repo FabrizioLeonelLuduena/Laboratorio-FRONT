@@ -1,0 +1,204 @@
+<link rel="stylesheet" href="invoice.component.css" />
+
+<app-generic-alert
+  *ngIf="alertVisible"
+  [type]="alertType!"
+  [title]="alertTitle"
+  [message]="alertText"
+  class="mb-2">
+</app-generic-alert>
+
+<div class="billing-container">
+
+  <section id="invoice-data-section" class="section-box">
+    <div class="section-title-with-button">
+      <div class="section-title">Datos de la factura</div>
+    </div>
+
+    <div class="df-grid">
+
+      <div class="field">
+        <label>Cliente <span class="required-field">*</span></label>
+        <div class="customer-select">
+          <p-dropdown
+            [options]="customers"
+            [(ngModel)]="selectedCustomerId"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar cliente"
+            [filter]="true"
+            filterPlaceholder="Buscar cliente..."
+            [disabled]="loadingCustomers">
+          </p-dropdown>
+          <button class="btn-add-customer" (click)="openClientModal()" title="Agregar nuevo cliente">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Empresa <span class="required-field">*</span></label>
+        <p-dropdown
+          [options]="companies"
+          [(ngModel)]="selectedCompanyId"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar empresa">
+        </p-dropdown>
+      </div>
+
+      <div class="field">
+        <label>Moneda <span class="required-field">*</span></label>
+        <p-dropdown
+          [options]="currencies"
+          [(ngModel)]="selectedCurrencyId"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar moneda">
+        </p-dropdown>
+      </div>
+
+      <div class="fieldF">
+        <label>Fecha de factura <span class="required-field">*</span></label>
+        <p-calendar [(ngModel)]="invoiceDate" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+
+      <div class="field">
+        <label>Tipo de comprobante <span class="required-field">*</span></label>
+        <p-dropdown
+          [options]="voucherTypes"
+          [(ngModel)]="invoiceType"
+          optionLabel="label"
+          optionValue="value">
+        </p-dropdown>
+      </div>
+
+      <div class="field">
+        <label>Tipo de factura</label>
+        <p-dropdown
+          [options]="invoiceTypes"
+          [(ngModel)]="invoiceType"
+          optionLabel="label"
+          optionValue="value">
+        </p-dropdown>
+      </div>
+
+      <div class="field">
+        <label>N.º de factura <span class="required-field">*</span></label>
+        <div class="num-box">
+          <input pInputText maxlength="4" [(ngModel)]="invoicePrefix" />
+          <span>-</span>
+          <input pInputText maxlength="8" [(ngModel)]="invoiceNumber" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Fecha de pago</label>
+        <p-calendar [(ngModel)]="paymentDate" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+
+      <div class="field">
+        <label>Condición de pago</label>
+        <p-dropdown
+          [options]="paymentConditions"
+          [(ngModel)]="paymentCondition"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar">
+        </p-dropdown>
+      </div>
+
+      <div class="field">
+        <label>Tipo de pago</label>
+        <p-dropdown
+          [options]="paymentTypes"
+          [(ngModel)]="paymentType"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccionar">
+        </p-dropdown>
+      </div>
+
+      <div class="field full-width">
+        <label>Descripción</label>
+        <input pInputText [(ngModel)]="invoiceDescription" />
+      </div>
+
+    </div>
+  </section>
+
+  <section id="invoice-items-section" class="section-box collapsible">
+    <div class="section-title collapsible-header" (click)="toggleItemsSection()">
+      <i class="toggle-icon" [class.rotated]="!itemsSectionCollapsed"></i>
+      Ítems de factura
+      <span class="badge-info">{{ invoiceItems.length }} ítems</span>
+    </div>
+
+    <div class="collapsible-content" [class.collapsed]="itemsSectionCollapsed">
+      <app-basic-table
+        [columns]="tableColumns"
+        [data]="invoiceItems">
+      </app-basic-table>
+
+      <div class="totals-box">
+        <div class="total-row">
+          <span class="label">Neto gravado</span>
+          <span class="value">{{ invoiceTotals.taxableSubtotal | currency:'ARS' }}</span>
+        </div>
+        <div class="total-row">
+          <span class="label">Iva</span>
+          <span class="value">{{ invoiceTotals.totalVat | currency:'ARS' }}</span>
+        </div>
+        <div class="total-row grand">
+          <span class="label">Total factura</span>
+          <span class="value">{{ invoiceTotals.grandTotal | currency:'ARS' }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="invoice-payments-section" class="section-box">
+    <div class="collapsible-header" (click)="togglePaymentSection()">
+      <i class="toggle-icon" [class.rotated]="!paymentSectionCollapsed"></i>
+      Medios de pago
+      <span class="badge-info">{{ invoicePayments.length }} pagos</span>
+    </div>
+
+    <div class="collapsible-content" [class.collapsed]="paymentSectionCollapsed">
+      <app-basic-table
+        [columns]="paymentColumns"
+        [data]="invoicePayments">
+      </app-basic-table>
+    </div>
+  </section>
+
+  <ng-template #currencyTemplate let-value>
+    {{ value | currency:'ARS':'symbol':'1.2-2' }}
+  </ng-template>
+
+<app-generic-modal-form
+  [visible]="showClientModal"
+  title="Agregar Nuevo Cliente"
+  [width]="'50vw'"
+  (closed)="showClientModal = false">
+
+  <app-generic-dynamic-form
+    [fields]="clientFormFields"
+    [title]="''"
+    (submitForm)="saveClient($event)">
+  </app-generic-dynamic-form>
+</app-generic-modal-form>
+
+<app-confirmation-modal
+  *ngIf="showConfirmModal"
+  icon="pi pi-check-circle"
+  title="Confirmar emisión de factura"
+  message="¿Deseas emitir esta factura? Esta acción no se puede deshacer."
+  (confirmed)="finishInvoice()"
+  (dismissed)="showConfirmModal = false">
+</app-confirmation-modal>
+</div>
+
+<!-- Tutorial Overlay -->
+<app-tutorial-overlay
+  #tutorialOverlay
+  [config]="tutorialConfig"
+></app-tutorial-overlay>

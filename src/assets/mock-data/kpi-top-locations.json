@@ -1,0 +1,43 @@
+{
+  "data": [
+    {
+      "label": "Emergencias",
+      "value": 987654.30
+    },
+    {
+      "label": "UCI",
+      "value": 876543.20
+    },
+    {
+      "label": "Quirófano Central",
+      "value": 765432.10
+    },
+    {
+      "label": "Laboratorio",
+      "value": 654321.00
+    },
+    {
+      "label": "Pediatría",
+      "value": 543210.00
+    },
+    {
+      "label": "Farmacia Central",
+      "value": 432100.00
+    },
+    {
+      "label": "Consultorios Externos",
+      "value": 321000.00
+    },
+    {
+      "label": "Almacén Principal",
+      "value": 210000.00
+    }
+  ],
+  "appliedFilters": {
+    "startDate": null,
+    "endDate": null,
+    "supplierId": null,
+    "locationId": null,
+    "supplyId": null
+  }
+}

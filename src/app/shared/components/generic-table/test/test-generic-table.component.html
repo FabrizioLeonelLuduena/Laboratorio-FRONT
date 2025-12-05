@@ -1,0 +1,55 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h2 class="text-xl font-semibold mb-4 text-brand-primary-700">🧪 Prueba de tabla genérica</h2>
+
+  <!-- Tabla genérica completa -->
+  <app-generic-table
+    [data]="filteredData()"
+    [columns]="columns"
+    [filters]="filters"
+    [expandedRowTemplate]="rowExpansion"
+    [getActions]="getActionsForRow.bind(this)"
+    (filterChange)="onFilterChange($event)"
+  ></app-generic-table>
+
+  <!-- Fila expandida con formato estandarizado -->
+  <ng-template #rowExpansion let-item>
+    <div class="expanded-row-content">
+      <!-- Sección: Información Personal -->
+      <div class="expanded-row-section">
+        <h3>Información Personal</h3>
+        <div class="expanded-row-fields">
+          <p><strong>Nombre completo</strong><span>{{ item.name }}</span></p>
+          <p><strong>Email</strong><span>{{ item.email }}</span></p>
+          <p><strong>Teléfono</strong><span>{{ item.phone }}</span></p>
+          <p><strong>Ubicación</strong><span>{{ item.location }}</span></p>
+        </div>
+      </div>
+
+      <div class="expanded-row-divider"></div>
+
+      <!-- Sección: Información Laboral -->
+      <div class="expanded-row-section">
+        <h3>Información Laboral</h3>
+        <div class="expanded-row-fields">
+          <p><strong>Rol</strong><span>{{ item.role }}</span></p>
+          <p><strong>Departamento</strong><span>{{ item.department }}</span></p>
+          <p><strong>Salario</strong><span>{{ item.salary }}</span></p>
+          <p><strong>Estado</strong><span>{{ item.is_active ? 'Activo' : 'Inactivo' }}</span></p>
+        </div>
+      </div>
+
+      <div class="expanded-row-divider"></div>
+
+      <!-- Sección: Actividad y Estadísticas -->
+      <div class="expanded-row-section">
+        <h3>Actividad y Estadísticas</h3>
+        <div class="expanded-row-fields">
+          <p><strong>Fecha de inicio</strong><span>{{ item.start_date }}</span></p>
+          <p><strong>Fecha de alta</strong><span>{{ item.created_at }}</span></p>
+          <p><strong>Último acceso</strong><span>{{ item.last_login }}</span></p>
+          <p><strong>Proyectos activos</strong><span>{{ item.projects }}</span></p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

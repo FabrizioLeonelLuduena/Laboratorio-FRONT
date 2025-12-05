@@ -1,0 +1,47 @@
+<nav class="manual-nav">
+
+  <div class="nav-item inicio" routerLink="/manual">
+    <i class="pi pi-home"></i>
+    <span>Inicio</span>
+  </div>
+
+  <div class="nav-section-title">Módulos</div>
+
+  <ng-container *ngFor="let module of modules()">
+
+    <div class="nav-group">
+
+      <!-- GRUPO DEL MÓDULO -->
+      <div class="nav-item expandable" (click)="toggle(module.id)">
+        <div class="left">
+
+          <!-- ICONO DEL MÓDULO -->
+          <i [class]="module.icon + ' module-icon'"></i>
+
+          <span>{{ module.label }}</span>
+        </div>
+
+        <i class="pi"
+           [ngClass]="isOpen(module.id) ? 'pi-chevron-down' : 'pi-chevron-right'">
+        </i>
+      </div>
+
+      <div class="nav-subitems" *ngIf="isOpen(module.id)">
+        <div
+          class="nav-subitem"
+          *ngFor="let page of module.sidebar"
+          [routerLink]="['/manual', module.id, page.id]"
+          routerLinkActive="active">
+
+          <!-- ICONO DEL ITEM -->
+          <i *ngIf="page.icon" [class]="page.icon + ' page-icon'"></i>
+
+          <span>{{ page.label }}</span>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</nav>

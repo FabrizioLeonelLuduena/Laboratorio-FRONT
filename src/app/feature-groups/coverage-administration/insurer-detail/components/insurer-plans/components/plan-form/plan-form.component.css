@@ -1,0 +1,33 @@
+.stack-16 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Quitar bordes/fondo de addons ($, ARS, %) en VIEW */
+:host ::ng-deep app-plan-form.view-mode .p-inputgroup .p-inputgroup-addon,
+:host ::ng-deep app-plan-form.view-mode .p-inputgroup-addon {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding-inline: .25rem;
+  color: #222;
+}
+
+/* Evitar borde doble del input contiguo (opcional) */
+:host ::ng-deep app-plan-form.view-mode .p-inputgroup > .p-inputtext,
+:host ::ng-deep app-plan-form.view-mode .p-inputgroup > .p-inputwrapper,
+:host ::ng-deep app-plan-form.view-mode .p-inputgroup > .p-inputnumber {
+  border-left: 0;
+}
+
+/* Ocultar el “cosito” del p-datepicker en VIEW */
+:host ::ng-deep app-plan-form.view-mode .p-datepicker-trigger {
+  display: none;
+}
+
+/* (Opcional) si el select muestra flecha/botón de dropdown */
+:host ::ng-deep app-plan-form.view-mode .p-select .p-select-dropdown {
+  display: none;
+}

@@ -1,0 +1,46 @@
+<div class="waiting-room-screen">
+
+  @if(alertVisible){
+    <app-generic-alert
+      [type]="alertType"
+      [title]="alertTitle"
+      [message]="alertMessage">
+    </app-generic-alert>
+  }
+
+  <!-- TÍTULO PRINCIPAL -->
+  <div class="screen-title">
+    TURNOS
+  </div>
+
+  <!-- LISTA DE FILAS -->
+  <div class="rows-container">
+
+    @for (slot of displaySlots; track slot?.publicCode) {
+      <div
+        class="row"
+        [class.empty]="!slot"
+      >
+        <!-- CÓDIGO -->
+        <div class="code">
+          {{ slot?.publicCode || '—' }}
+        </div>
+
+        <!-- BOX -->
+        <div class="box">
+          {{ slot ? ('BOX ' + slot.boxNumber) : '—' }}
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <!-- OVERLAY DE LLAMADO -->
+  <div class="call-overlay" [class.show]="showCallOverlay">
+    <div class="call-card">
+      <h1 class="call-code">{{ lastCalledCode }}</h1>
+      <h1 class="call-code">Box {{ lastCalledBox }}</h1>
+    </div>
+  </div>
+
+</div>

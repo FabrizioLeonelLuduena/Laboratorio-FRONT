@@ -1,0 +1,157 @@
+<div class="toolbar">
+  <div class="left-inputs">
+    <input
+      #shortCodeInput
+      type="number"
+      pInputText
+      min="1"
+      [formControl]="shortCodeCtrl"
+      [disabled]="isLoading()"
+      placeholder="Código de análisis"
+      autocomplete="off"
+      aria-label="Código de análisis"
+      (keydown.enter)="addByShortCode()"
+    />
+
+    <input
+      id="authNumber"
+      type="text"
+      pInputText
+      [formControl]="authorizationCtrl"
+      placeholder="N° de autorización"
+      autocomplete="off"
+      class="auth-input"
+      required
+    />
+  </div>
+
+  <div class="urgent-section">
+    <p-checkbox
+      [formControl]="isUrgentCtrl"
+      [binary]="true"
+      inputId="isUrgent">
+    </p-checkbox>
+    <label for="isUrgent" class="urgent-label">Urgente</label>
+  </div>
+</div>
+
+@if (isLoading()) {
+  <app-spinner [label]="'Buscando análisis...'"></app-spinner>
+}
+
+@if (alert()) {
+  <app-generic-alert
+    [type]="alert()!.type"
+    [text]="alert()!.text">
+  </app-generic-alert>
+}
+
+<div class="analysis-counter">
+  <strong>Total de análisis:</strong> {{ analysisCount() }}
+</div>
+
+<ng-template #authorizedCheckbox let-rowData>
+  <div class="authorized-cell">
+    <p-checkbox
+      [ngModel]="rowData.authorized"
+      [binary]="true"
+      (onChange)="toggleAuthorization(rowData)">
+    </p-checkbox>
+  </div>
+</ng-template>
+
+<app-advanced-table
+  [data]="analyses()"
+  [columns]="columns"
+  [config]="tableConfig"
+  [actionItems]="actions"
+  (action)="onAction($event)"
+></app-advanced-table>
+
+<app-generic-modal-form
+  [visible]="showDetailsModal()"
+  [title]="'Detalles del análisis'"
+  [width]="'600px'"
+  (closed)="closeDetailsModal()">
+
+  @if (selectedAnalysis()) {
+    <div class="details-content">
+      <div class="detail-item">
+        <span class="detail-label">Código:</span> <span class="detail-value">{{ selectedAnalysis()!.shortCode }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Nombre:</span> <span class="detail-value">{{ selectedAnalysis()!.name }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Descripción:</span> <span class="detail-value">{{ selectedAnalysis()!.description || 'N/A' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Familia:</span> <span class="detail-value">{{ selectedAnalysis()!.familyName || 'N/A' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Código NBU:</span> <span class="detail-value">{{ selectedAnalysis()!.nbuCode || 'N/A' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Autorizado:</span>
+        <app-generic-badge
+          [status]="getAuthorizationBadgeStatus(selectedAnalysis()!.authorized)"
+          [text]="getAuthorizationBadgeText(selectedAnalysis()!.authorized)">
+        </app-generic-badge>
+      </div>
+      @if (selectedAnalysis()!.determinations && selectedAnalysis()!.determinations!.length > 0) {
+        <div class="detail-item">
+          <span class="detail-label">Determinaciones:</span>
+          <ul class="determinations-list">
+            @for (det of selectedAnalysis()!.determinations; track $index) {
+              <li>
+                {{ det.name || 'Sin nombre' }}
+                @if (det.handlingTime) {
+                  <span class="handling-time">
+                    (Tiempo: {{ det.handlingTime.timeValue }} {{ translateTimeUnit(det.handlingTime.timeUnit) }})
+                  </span>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      } @else {
+        <div class="detail-item">
+          <span class="detail-label">Determinaciones:</span> <span class="detail-value">No hay determinaciones disponibles</span>
+        </div>
+      }
+    </div>
+
+    <div class="modal-actions">
+      <app-generic-button
+        type="cancel"
+        text="Cerrar"
+        (pressed)="closeDetailsModal()">
+      </app-generic-button>
+    </div>
+  }
+</app-generic-modal-form>
+
+<div class="next-button-container">
+  <div class="next-button-left">
+    <app-generic-button
+      type="cancel"
+      text="Cancelar Atención"
+      icon="pi pi-times-circle"
+      (pressed)="onCancelAttention()">
+    </app-generic-button>
+
+    <app-generic-button
+      type="back"
+      text="Volver"
+      (pressed)="onGoBack()">
+    </app-generic-button>
+  </div>
+
+  <app-generic-button
+    type="advance"
+    text="Siguiente"
+    icon="pi pi-arrow-right"
+    [disabled]="!hasItems()"
+    (pressed)="onSaveAndNext()">
+  </app-generic-button>
+</div>

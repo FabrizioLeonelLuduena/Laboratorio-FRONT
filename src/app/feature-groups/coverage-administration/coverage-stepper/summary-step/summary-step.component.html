@@ -1,0 +1,93 @@
+<section class="summary-step space-y-6">
+
+  <!-- Contenido sin card -->
+  <div class="summary-content">
+
+    <!-- Nombre -->
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">
+      {{ insurerData.name }}
+    </h2>
+    <p-divider></p-divider>
+
+    <!-- Fila principal de información -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-y-4 text-base">
+
+      <!-- Tipo -->
+      <div>
+        <p class="text-gray-500 font-medium">Tipo</p>
+        <p class="text-gray-800 font-semibold">{{ insurerTypeName }}</p>
+      </div>
+
+      <!-- Código -->
+      <div>
+        <p class="text-gray-500 font-medium">Código</p>
+        <p class="text-gray-800 font-semibold">{{ insurerData.code }}</p>
+      </div>
+
+      <!-- Sigla -->
+      <div>
+        <p class="text-gray-500 font-medium">Sigla</p>
+        <p class="text-gray-800 font-semibold">{{ insurerData.acronym || '—' }}</p>
+      </div>
+
+
+      <!-- CUIT -->
+      @if (insurerData.specificData?.socialHealth?.cuit
+      || insurerData.specificData?.privateHealth?.cuit) {
+        <div>
+          <p class="text-gray-500 font-medium">CUIT</p>
+          <p class="text-gray-800 font-semibold">
+            {{
+              insurerData.specificData?.socialHealth?.cuit ||
+              insurerData.specificData?.privateHealth?.cuit
+            }}
+          </p>
+        </div>
+      }
+
+      <!-- Descripción -->
+      <div>
+        <p class="text-gray-500 font-medium">Descripción</p>
+        <p class="text-gray-800 font-semibold">
+          {{ insurerData.description || '—' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-y-4 text-base">
+    <!-- URL Autorización -->
+    <div class="mt-6">
+      <p class="text-gray-500 font-medium">URL Autorización</p>
+      @if (insurerData.autorizationUrl) {
+        <a
+          [href]="insurerData.autorizationUrl"
+          target="_blank"
+          class="text-primary-600 hover:text-primary-700 underline decoration-dotted break-all"
+        >
+          {{ insurerData.autorizationUrl }}
+        </a>
+      } @else {
+        <p class="text-gray-400">—</p>
+      }
+    </div>
+
+  </div>
+
+  </div>
+
+  <!-- Tabla de planes -->
+  <div>
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">Planes y convenios</h3>
+    <app-generic-table
+      [data]="tableData"
+      [showDownloadMenu]="false"
+      [showCreateButton]="false"
+      [showSearch]="false"
+      [showActions]="false"
+      [columns]="columns"
+      [pageable]="false"
+      [loading]="loading"
+    ></app-generic-table>
+  </div>
+
+</section>

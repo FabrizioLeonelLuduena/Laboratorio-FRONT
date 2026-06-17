@@ -255,7 +255,7 @@ export class MockDataService {
   update<T extends { id: number }>(
     entity: string,
     id: number,
-    updates: Partial<T>
+    updates: Partial<T> | Record<string, any>
   ): Observable<HttpResponse<T>> {
     const data = this.mockData.get(entity) || [];
     const index = data.findIndex((d: any) => d.id === id);

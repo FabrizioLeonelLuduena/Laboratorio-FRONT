@@ -1,108 +1,92 @@
 {
   "content": [
     {
-      "id": 1,
       "supplyId": 1,
       "supplyName": "Guantes de Nitrilo - Caja x100",
+      "supplyCode": "GLN-001",
       "locationId": 3,
       "locationName": "Emergencias",
       "currentStock": 5,
-      "minStock": 20,
-      "maxStock": 200,
-      "alertType": "CRITICAL_LOW",
-      "createdAt": "2025-12-04T10:30:00",
-      "resolved": false
+      "minimumStock": 20,
+      "deficit": 15,
+      "severity": "CRITICAL"
     },
     {
-      "id": 2,
       "supplyId": 4,
       "supplyName": "Solución Salina 0.9% 500ml",
+      "supplyCode": "SSH-004",
       "locationId": 4,
       "locationName": "UCI",
       "currentStock": 8,
-      "minStock": 30,
-      "maxStock": 300,
-      "alertType": "CRITICAL_LOW",
-      "createdAt": "2025-12-04T09:15:00",
-      "resolved": false
+      "minimumStock": 30,
+      "deficit": 22,
+      "severity": "CRITICAL"
     },
     {
-      "id": 3,
       "supplyId": 6,
       "supplyName": "Catéter Intravenoso Nº 22",
+      "supplyCode": "CAT-006",
       "locationId": 2,
       "locationName": "Quirófano Central",
       "currentStock": 12,
-      "minStock": 40,
-      "maxStock": 400,
-      "alertType": "CRITICAL_LOW",
-      "createdAt": "2025-12-04T08:45:00",
-      "resolved": false
+      "minimumStock": 40,
+      "deficit": 28,
+      "severity": "CRITICAL"
     },
     {
-      "id": 4,
       "supplyId": 2,
       "supplyName": "Jeringas Descartables 10ml",
+      "supplyCode": "JRG-002",
       "locationId": 5,
       "locationName": "Pediatría",
       "currentStock": 18,
-      "minStock": 50,
-      "maxStock": 500,
-      "alertType": "LOW",
-      "createdAt": "2025-12-04T07:20:00",
-      "resolved": false
+      "minimumStock": 50,
+      "deficit": 32,
+      "severity": "WARNING"
     },
     {
-      "id": 5,
       "supplyId": 5,
       "supplyName": "Alcohol en Gel 500ml",
+      "supplyCode": "ALC-005",
       "locationId": 3,
       "locationName": "Emergencias",
       "currentStock": 22,
-      "minStock": 60,
-      "maxStock": 600,
-      "alertType": "LOW",
-      "createdAt": "2025-12-03T16:30:00",
-      "resolved": false
+      "minimumStock": 60,
+      "deficit": 38,
+      "severity": "WARNING"
     },
     {
-      "id": 6,
       "supplyId": 8,
       "supplyName": "Tubos de Ensayo con EDTA",
+      "supplyCode": "TUB-008",
       "locationId": 4,
       "locationName": "Laboratorio",
       "currentStock": 45,
-      "minStock": 100,
-      "maxStock": 1000,
-      "alertType": "LOW",
-      "createdAt": "2025-12-03T14:10:00",
-      "resolved": false
+      "minimumStock": 100,
+      "deficit": 55,
+      "severity": "WARNING"
     },
     {
-      "id": 7,
       "supplyId": 7,
       "supplyName": "Barbijos Quirúrgicos Triple Capa",
+      "supplyCode": "BBJ-007",
       "locationId": 1,
       "locationName": "Almacén Principal",
       "currentStock": 78,
-      "minStock": 150,
-      "maxStock": 2000,
-      "alertType": "LOW",
-      "createdAt": "2025-12-03T11:00:00",
-      "resolved": false
+      "minimumStock": 150,
+      "deficit": 72,
+      "severity": "WARNING"
     },
     {
-      "id": 8,
       "supplyId": 3,
       "supplyName": "Gasas Estériles 10x10cm",
+      "supplyCode": "GAS-003",
       "locationId": 2,
       "locationName": "Quirófano Central",
       "currentStock": 15,
-      "minStock": 80,
-      "maxStock": 800,
-      "alertType": "CRITICAL_LOW",
-      "createdAt": "2025-12-02T19:45:00",
-      "resolved": false
+      "minimumStock": 80,
+      "deficit": 65,
+      "severity": "CRITICAL"
     }
   ],
   "totalElements": 8,

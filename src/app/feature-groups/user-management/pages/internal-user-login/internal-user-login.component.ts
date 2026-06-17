@@ -86,7 +86,7 @@ export class InternalUserLoginComponent {
    */
   quickLoginStock() {
     this.isLoading = true;
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJNQU5BR0VSX1NUT0NLIiwiT1BFUkFET1JfQ09NUFJBUyJdLCJpZCI6MSwic3ViIjoiTUFOQUdFUl9TVE9DS19PUEVSQURPUl9DT01QUkFTIiwiaWF0IjoxNzYyNDc3MzYwLCJleHAiOjE4MjU1NDkzNjB9.8DTRagaybgxvhG39GovRdUX6-ScKWVXXQsBqaewALv4';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJNQU5BR0VSX1NUT0NLIiwiT1BFUkFET1JfQ09NUFJBUyJdLCJpZCI6MSwic3ViIjoiTUFOQUdFUl9TVE9DS19PUEVSQURPUl9DT01QUkFTIiwiaWF0IjoxNzgxNzIyNDc2LCJleHAiOjE4NzYzMzA0NzZ9.8DTRagaybgxvhG39GovRdUX6-ScKWVXXQsBqaewALv4';
     
     // Store token in localStorage
     localStorage.setItem('auth_token', token);

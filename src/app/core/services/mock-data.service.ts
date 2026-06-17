@@ -235,8 +235,8 @@ export class MockDataService {
     const newItem = {
       ...item,
       id: newId,
-      createdDatetime: new Date().toISOString(),
-      lastUpdatedDatetime: new Date().toISOString(),
+      createdDateTime: new Date().toISOString(),
+      lastUpdatedDateTime: new Date().toISOString(),
       isActive: true
     } as T;
 
@@ -272,7 +272,7 @@ export class MockDataService {
       ...data[index],
       ...updates,
       id: id, // Preservar ID
-      lastUpdatedDatetime: new Date().toISOString()
+      lastUpdatedDateTime: new Date().toISOString()
     } as T;
 
     data[index] = updatedItem;
@@ -314,24 +314,47 @@ export class MockDataService {
    * Aplica filtros a los datos
    */
   private applyFilters(data: any[], filters: any): any[] {
+    const skipParams = new Set(['page', 'size', 'sort', 'direction']);
+
     return data.filter(item => {
       for (const key in filters) {
-        if (filters[key] === null || filters[key] === undefined || filters[key] === '') {
+        const filterValue = filters[key];
+
+        if (filterValue === null || filterValue === undefined || filterValue === '') continue;
+        if (skipParams.has(key)) continue;
+
+        // searchTerm: búsqueda cross-field sobre todos los campos string
+        if (key === 'searchTerm') {
+          const search = String(filterValue).toLowerCase();
+          const matches = Object.values(item).some(v =>
+            typeof v === 'string' && v.toLowerCase().includes(search)
+          );
+          if (!matches) return false;
+          continue;
+        }
+
+        // isActive: convertir string 'true'/'false' a boolean
+        if (key === 'isActive') {
+          const boolValue = filterValue === 'true' || filterValue === true;
+          if (item.isActive !== boolValue) return false;
           continue;
         }
 
         const itemValue = item[key];
-        const filterValue = filters[key];
 
-        // Búsqueda por texto (case insensitive)
         if (typeof filterValue === 'string') {
-          if (typeof itemValue === 'string' && 
-              !itemValue.toLowerCase().includes(filterValue.toLowerCase())) {
-            return false;
+          // Si el valor es numérico (ej: categoryId='1'), comparar como número
+          const numericValue = Number(filterValue);
+          if (filterValue !== '' && !isNaN(numericValue)) {
+            if (itemValue !== numericValue) return false;
+          } else {
+            // Búsqueda por texto parcial (case insensitive)
+            if (typeof itemValue === 'string' &&
+                !itemValue.toLowerCase().includes(filterValue.toLowerCase())) {
+              return false;
+            }
           }
-        }
-        // Comparación exacta para otros tipos
-        else if (itemValue !== filterValue) {
+        } else if (itemValue !== filterValue) {
           return false;
         }
       }

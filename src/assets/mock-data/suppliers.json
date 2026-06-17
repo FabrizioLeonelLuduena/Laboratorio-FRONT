@@ -27,8 +27,8 @@
       }
     ],
     "isActive": true,
-    "createdDatetime": "2024-01-15T10:00:00",
-    "lastUpdatedDatetime": "2024-11-20T15:30:00"
+    "createdDateTime": "2024-01-15T10:00:00",
+    "lastUpdatedDateTime": "2024-11-20T15:30:00"
   },
   {
     "id": 2,
@@ -51,8 +51,8 @@
       }
     ],
     "isActive": true,
-    "createdDatetime": "2024-02-10T09:15:00",
-    "lastUpdatedDatetime": "2024-10-05T11:20:00"
+    "createdDateTime": "2024-02-10T09:15:00",
+    "lastUpdatedDateTime": "2024-10-05T11:20:00"
   },
   {
     "id": 3,
@@ -75,8 +75,8 @@
       }
     ],
     "isActive": true,
-    "createdDatetime": "2024-03-05T14:00:00",
-    "lastUpdatedDatetime": "2024-11-15T16:45:00"
+    "createdDateTime": "2024-03-05T14:00:00",
+    "lastUpdatedDateTime": "2024-11-15T16:45:00"
   },
   {
     "id": 4,
@@ -99,8 +99,8 @@
       }
     ],
     "isActive": true,
-    "createdDatetime": "2024-01-20T08:30:00",
-    "lastUpdatedDatetime": "2024-09-30T10:00:00"
+    "createdDateTime": "2024-01-20T08:30:00",
+    "lastUpdatedDateTime": "2024-09-30T10:00:00"
   },
   {
     "id": 5,
@@ -123,7 +123,7 @@
       }
     ],
     "isActive": false,
-    "createdDatetime": "2023-11-10T11:00:00",
-    "lastUpdatedDatetime": "2024-08-15T13:30:00"
+    "createdDateTime": "2023-11-10T11:00:00",
+    "lastUpdatedDateTime": "2024-08-15T13:30:00"
   }
 ]

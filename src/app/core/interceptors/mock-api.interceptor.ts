@@ -135,6 +135,20 @@ function handleSuppliersRequest(url: string, method: string, body: any, mockServ
     return mockService.update('suppliers', id, body);
   }
 
+  // PATCH /api/v1/stock/suppliers/{id}/deactivate
+  const deactivateMatch = url.match(/\/suppliers\/(\d+)\/deactivate$/);
+  if (method === 'PATCH' && deactivateMatch) {
+    const id = parseInt(deactivateMatch[1]);
+    return mockService.update('suppliers', id, { isActive: false });
+  }
+
+  // PATCH /api/v1/stock/suppliers/{id}/reactivate
+  const reactivateMatch = url.match(/\/suppliers\/(\d+)\/reactivate$/);
+  if (method === 'PATCH' && reactivateMatch) {
+    const id = parseInt(reactivateMatch[1]);
+    return mockService.update('suppliers', id, { isActive: true });
+  }
+
   // DELETE /api/v1/stock/suppliers/{id}
   const deleteMatch = url.match(/\/suppliers\/(\d+)$/);
   if (method === 'DELETE' && deleteMatch) {
@@ -183,6 +197,20 @@ function handleSuppliesRequest(url: string, method: string, body: any, mockServi
     return mockService.update('supplies', id, body);
   }
 
+  // PATCH /api/v1/stock/supplies/{id}/deactivate
+  const deactivateMatch = url.match(/\/supplies\/(\d+)\/deactivate$/);
+  if (method === 'PATCH' && deactivateMatch) {
+    const id = parseInt(deactivateMatch[1]);
+    return mockService.update('supplies', id, { isActive: false });
+  }
+
+  // PATCH /api/v1/stock/supplies/{id}/reactivate
+  const reactivateMatch = url.match(/\/supplies\/(\d+)\/reactivate$/);
+  if (method === 'PATCH' && reactivateMatch) {
+    const id = parseInt(reactivateMatch[1]);
+    return mockService.update('supplies', id, { isActive: true });
+  }
+
   // DELETE /api/v1/stock/supplies/{id}
   const deleteMatch = url.match(/\/supplies\/(\d+)$/);
   if (method === 'DELETE' && deleteMatch) {
@@ -229,6 +257,20 @@ function handlePurchaseOrdersRequest(url: string, method: string, body: any, moc
   if (method === 'PUT' && updateMatch) {
     const id = parseInt(updateMatch[1]);
     return mockService.update('purchase-orders', id, body);
+  }
+
+  // PATCH /api/v1/stock/purchase-orders/{id}/deactivate
+  const deactivateMatch = url.match(/\/purchase-orders\/(\d+)\/deactivate$/);
+  if (method === 'PATCH' && deactivateMatch) {
+    const id = parseInt(deactivateMatch[1]);
+    return mockService.update('purchase-orders', id, { is_active: false });
+  }
+
+  // PATCH /api/v1/stock/purchase-orders/{id}/reactivate
+  const reactivateMatch = url.match(/\/purchase-orders\/(\d+)\/reactivate$/);
+  if (method === 'PATCH' && reactivateMatch) {
+    const id = parseInt(reactivateMatch[1]);
+    return mockService.update('purchase-orders', id, { is_active: true });
   }
 
   // DELETE /api/v1/stock/purchase-orders/{id}
@@ -311,6 +353,20 @@ function handleLocationsRequest(url: string, method: string, body: any, mockServ
   if (method === 'PUT' && updateMatch) {
     const id = parseInt(updateMatch[1]);
     return mockService.update('locations', id, body);
+  }
+
+  // PATCH /api/v1/stock/locations/{id}/deactivate
+  const deactivateMatch = url.match(/\/locations\/(\d+)\/deactivate$/);
+  if (method === 'PATCH' && deactivateMatch) {
+    const id = parseInt(deactivateMatch[1]);
+    return mockService.update('locations', id, { isActive: false });
+  }
+
+  // PATCH /api/v1/stock/locations/{id}/reactivate
+  const reactivateMatch = url.match(/\/locations\/(\d+)\/reactivate$/);
+  if (method === 'PATCH' && reactivateMatch) {
+    const id = parseInt(reactivateMatch[1]);
+    return mockService.update('locations', id, { isActive: true });
   }
 
   // DELETE /api/v1/stock/locations/{id}
@@ -449,9 +505,9 @@ function handleLoginRequest(url: string, method: string, body: any) {
 
   const { username, password } = body || {};
 
-  // Check for Admin user
-  if (username === 'Admin' && password === 'Superadmin') {
-    const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBRE9SIiwiQklPUVVJTUlDTyIsIkVYVEVSTk8iLCJGQUNUVVJJU1RBIiwiTUFOQUdFUl9TVE9DSyIsIk9QRVJBRE9SX0NPTVBSQVMiLCJSRVNQT05TQUJMRV9TRUNSRVRBUklBIiwiU0VDUkVUQVJJQSIsIlRFQ05JQ09fTEFCT1JBVE9SSU8iXSwiaWQiOjEsInN1YiI6IlNVUEVSQURNSU4iLCJpYXQiOjE3NjI0NzczNjAsImV4cCI6MTgyNTU0OTM2MH0.B-Dnc-jIkbUzJZK6x3YRzEAE-3NI5lwB89ZFRYVpxyg';
+  // Check for Admin user (case-insensitive username comparison)
+  if (username?.toLowerCase() === 'admin' && password === 'Superadmin') {
+    const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBRE9SIiwiQklPUVVJTUlDTyIsIkVYVEVSTk8iLCJGQUNUVVJJU1RBIiwiTUFOQUdFUl9TVE9DSyIsIk9QRVJBRE9SX0NPTVBSQVMiLCJSRVNQT05TQUJMRV9TRUNSRVRBUklBIiwiU0VDUkVUQVJJQSIsIlRFQ05JQ09fTEFCT1JBVE9SSU8iXSwiaWQiOjEsInN1YiI6IlNVUEVSQURNSU4iLCJpYXQiOjE3ODE3MjI0MDYsImV4cCI6MTg3NjMzMDQwNn0.B-Dnc-jIkbUzJZK6x3YRzEAE-3NI5lwB89ZFRYVpxyg';
     
     const loginResponse = {
       token: adminToken,

@@ -103,6 +103,7 @@ export class InternalUserLoginComponent {
     // Simulate loading delay for UX
     setTimeout(() => {
       this.isLoading = false;
+      this.authService.refreshRoles();
       this.authService.redirectToDashboard();
     }, 1000);
   }

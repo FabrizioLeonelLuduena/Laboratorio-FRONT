@@ -97,6 +97,14 @@ export class AuthService {
   }
 
   /**
+   * Re-reads roles from the current JWT and updates the signal.
+   * Call this after writing a token to localStorage without going through login().
+   */
+  refreshRoles(): void {
+    try { this.rolesSignal.set(this.getUserRoles()); } catch { this.rolesSignal.set([]); }
+  }
+
+  /**
    * Marks the first login as completed by updating the user data in localStorage
    * and clearing the first-login token.
    */
